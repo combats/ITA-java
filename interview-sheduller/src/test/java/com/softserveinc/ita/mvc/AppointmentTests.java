@@ -10,9 +10,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -51,4 +54,31 @@ public class AppointmentTests extends BaseMVCTest {
 //
 //	@Test
 //	public vo
+
+    @Test
+    public void testGetAppointmentByApplicantIdAndExpectRightString() throws Exception {
+        Appointment appointment = new Appointment(Arrays.asList("1", "2"), Arrays.asList("1", "2"), System.currentTimeMillis() + 10000);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                get("/appointments/applicants/1")
+
+                .content(appointmentJson)
+        )
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    public void testGetappointmentByApplicantIdAndExpectWrongString() throws Exception {
+        Appointment appointment = new Appointment(Arrays.asList("3", "2"), Arrays.asList("4", "1"), System.currentTimeMillis() + 20000);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                get("/appointments/applicants/2")
+                .content(appointmentJson)
+        )
+                .andExpect(status().isOk());
+
+    }
 }
