@@ -7,7 +7,7 @@ public class Appointment {
 	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
 	private List <String> userIdList = new ArrayList<>();
 	private List <String> applicantIdList = new ArrayList<>();
-	private long startTime = System.currentTimeMillis();
+	private long startTime = 1401866602;
 	private long durationTime = DEFAULT_DURATION_TIME;
 
 	public Appointment() {}
