@@ -2,6 +2,7 @@ package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.exceptions.dateException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,8 +11,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -51,4 +55,54 @@ public class AppointmentTests extends BaseMVCTest {
 //
 //	@Test
 //	public vo
+
+    @Test
+    public void dateExceptionTest1() {
+
+        List<String> applicants = new ArrayList();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList();
+        users.add("testUserId");
+        Appointment app = new Appointment(users, applicants,Long.valueOf(11), Long.valueOf(2));
+        try {
+            app.dateValidation(app.getStartTime(), app.getDurationTime());
+            fail("Expected dateException to be thrown");
+        } catch (dateException ex) {
+            assertEquals(ex.getMessage(), "Start time has already passed");
+        }
+    }
+
+    @Test
+    public void dateExceptionTest2() {
+
+        List<String> applicants = new ArrayList();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList();
+        users.add("testUserId");
+        Appointment app = new Appointment(users, applicants,Long.valueOf(11), Long.valueOf(-2));
+        try {
+            app.dateValidation(app.getStartTime(), app.getDurationTime());
+            fail("Expected dateException to be thrown");
+        } catch (dateException ex) {
+            assertEquals(ex.getMessage(), "Wrong duration time");
+        }
+    }
+
+    @Test
+    public void dateExceptionTest3() {
+
+        List<String> applicants = new ArrayList();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList();
+        users.add("testUserId");
+        long currentDate=new Date().getTime() + 1;
+        long bigDurationTime = 1000 * 60 * 60 * 12 + 1;
+        Appointment app = new Appointment(users, applicants, currentDate, bigDurationTime);
+        try {
+            app.dateValidation(app.getStartTime(), app.getDurationTime());
+            fail("Expected dateException to be thrown");
+        } catch (dateException ex) {
+            assertEquals(ex.getMessage(), "Too long duration time");
+        }
+    }
 }

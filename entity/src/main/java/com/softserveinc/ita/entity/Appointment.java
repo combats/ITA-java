@@ -1,6 +1,9 @@
 package com.softserveinc.ita.entity;
 
+import com.softserveinc.ita.entity.exceptions.dateException;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Appointment {
@@ -90,4 +93,15 @@ public class Appointment {
 		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
 		return result;
 	}
+
+    public void dateValidation(long startTime, long durationTime) throws dateException{
+
+        if (durationTime < 0) throw new dateException("Wrong duration time");
+
+        long currentDate=new Date().getTime();
+        if (startTime < currentDate) throw new dateException("Start time has already passed");
+
+        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
+        if (durationTime > bigDurationTime) throw new dateException("Too long duration time");
+    }
 }
