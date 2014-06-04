@@ -52,9 +52,6 @@ public class AppointmentTests extends BaseMVCTest {
 		)
 				.andExpect(status().isOk());
 	}
-//
-//	@Test
-//	public vo
 
     @Test
     public void dateExceptionTest1() {
