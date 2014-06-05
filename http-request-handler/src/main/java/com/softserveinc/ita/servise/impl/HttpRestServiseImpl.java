@@ -12,33 +12,32 @@ import java.util.LinkedList;
  @ContextConfiguration("file:spring-config.xml")
 public class HttpRestServiseImpl<T>  implements HttpRestService {
 
- private   String  baseUrl;
+
+     private RestTemplate restTemplate = new RestTemplate();
+
+     private String  baseUrl;
+
+
     @Autowired
     private JsonUtil utilJson;
 
-    public HttpRestServiseImpl() {
-    }
 
-    RestTemplate restTemplate = new RestTemplate();
+     public HttpRestServiseImpl(String baseUrl) {
+         this.baseUrl = baseUrl;
 
-    public HttpRestServiseImpl(String baseUrl) {
-        this.baseUrl = baseUrl;
+     }
 
-    }
 
-    /**
-     * REST client that makes a call to a URL and handle success and error by
-     * returning them in error String.
-     */
+
 
     @Override
-    public List<Integer> getAllObjectsID(Class objectClass) {
+    public List<String> getAllObjectsID(Class objectClass) {
         String response="";
 
 
         String subclass = objectClass.getSimpleName().toLowerCase();
 
-        List<Integer> list = new LinkedList<Integer>();
+        List<String> list = new LinkedList<String>();
 
 
 
@@ -53,7 +52,7 @@ public class HttpRestServiseImpl<T>  implements HttpRestService {
 
 
     @Override
-    public T getObjectByID(int id, Class objectClass) {
+    public T getObjectByID(String id, Class objectClass) {
 
         T obj =null;
          String response = "{}";

@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config />
 
-    <bean id="jsonUtil" class="com.softserveinc.ita.JsonUtilJaxsonImpl"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="service" class="com.softserveinc.ita.servise.impl.HttpRestServiseImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
 

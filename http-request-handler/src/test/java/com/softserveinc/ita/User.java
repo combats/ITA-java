@@ -2,11 +2,11 @@ package com.softserveinc.ita;
 
 public class User {
 
-    private int id;
+    private String id;
     private String name;
     private String lastname;
 
-    public User(int id, String name, String lastname) {
+    public User(String id, String name, String lastname) {
         this.id = id;
         this.name = name;
         this.lastname = lastname;
@@ -15,7 +15,7 @@ public class User {
 
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
     public String getName() {
@@ -41,7 +41,7 @@ public class User {
 
         User user = (User) o;
 
-        if (id != user.id) return false;
+        if (!id.equals(user.id)) return false;
         if (!lastname.equals(user.lastname)) return false;
         if (!name.equals(user.name)) return false;
 
@@ -50,7 +50,7 @@ public class User {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = id.hashCode();
         result = 31 * result + name.hashCode();
         result = 31 * result + lastname.hashCode();
         return result;

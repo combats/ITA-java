@@ -33,22 +33,22 @@ public class HttpRestServiseTests extends BaseHttpReqTest {
 
 
     private User user;
-    private List<Integer> listID;
+    private List<String> listID;
     private  String subclass;
 
     @Before
     public void setUp() {
 
         mockServer = MockRestServiceServer.createServer(service.getRestTemplate()); // (1)
-        user = new User(23,"Mike","Jonson");
-        listID = new LinkedList<Integer>();
+        user = new User("14","Mike","Jonson");
+        listID = new LinkedList<String>();
         subclass = user.getClass().getSimpleName().toLowerCase();
-        listID.add(new Integer(1));
-        listID.add(new Integer(2));
-        listID.add(new Integer(3));
-        listID.add(new Integer(4));
-        listID.add(new Integer(5));
-        listID.add(new Integer(6));
+        listID.add("1");
+        listID.add("2");
+        listID.add("3");
+        listID.add("4");
+        listID.add("5");
+        listID.add("6");
 
 
     }

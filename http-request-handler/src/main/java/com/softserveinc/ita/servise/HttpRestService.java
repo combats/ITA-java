@@ -17,7 +17,7 @@ public interface HttpRestService<T> {
      * @param objectClass the type of the return value
      * @return List<Integer>
      */
-    List<Integer> getAllObjectsID(Class<T> objectClass);
+    List<String> getAllObjectsID(Class<T> objectClass);
 
     /**
      * The method makes a request,
@@ -26,7 +26,7 @@ public interface HttpRestService<T> {
      * @param objectClass the type of the return object
      * @return the converted object type Class objectClass;
      */
-    <T>T getObjectByID(int id, Class<T> objectClass);
+    <T>T getObjectByID(String id, Class<T> objectClass);
 
     RestTemplate getRestTemplate();
 
