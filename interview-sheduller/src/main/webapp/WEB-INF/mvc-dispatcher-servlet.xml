@@ -18,7 +18,7 @@
 
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
-    <bean id="appointmentDAOMock" class="com.softserveinc.ita.entity.AppointmentDAOMockImpl"/>
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
 
 
 </beans>
