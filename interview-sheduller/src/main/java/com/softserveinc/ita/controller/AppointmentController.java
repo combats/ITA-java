@@ -1,13 +1,13 @@
 package com.softserveinc.ita.controller;
 
-
+import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.AppointmentDAOMock;
-import com.softserveinc.ita.entity.AppointmentDAOMockImpl;
 import com.softserveinc.ita.utils.JsonUtil;
-import com.softserveinc.ita.utils.impl.JsonUtilGsonImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -15,22 +15,25 @@ import org.springframework.web.bind.annotation.*;
 public class AppointmentController {
 
     @Autowired
-    JsonUtil jsonUtil;
+    AppointmentDAO appointmentDAO;
     @Autowired
-    AppointmentDAOMock appointmentDAOMock;
+    JsonUtil jsonUtil;
 
-	@RequestMapping(method = RequestMethod.POST)
-	@ResponseBody
-	public String addNewAppointment() {
-        return "{}";
-	}
+	@RequestMapping(method = RequestMethod.POST, consumes = {"application/json"})
+    @ResponseStatus(HttpStatus.ACCEPTED)
+
+    public void addNewAppointment(String appointment) {
+
+        System.out.println(appointment + "In Controller");
+
+
+         }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public String getAppointmentByAppointmentID(@PathVariable("id") int id) {
+    public Appointment getAppointmentByAppointmentID(@PathVariable("id") int id) {
 
-        System.out.println("PathVariable is" + id);
-
-       return jsonUtil.toJson(appointmentDAOMock.getAppointmentByAppointmentID(id));
+       return appointmentDAO.getAppointmentByAppointmentID(id);
     }
 }
