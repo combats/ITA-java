@@ -4,17 +4,11 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.utils.impl.JsonUtilGsonImpl;
 
-
-/**
- * Created by vshkotc on 03.06.2014.
- */
 public class AppointmentDAOImpl implements AppointmentDAO {
 
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    private List<Appointment> appointmentsList;
-    private Appointment appointment;
+    private LinkedList<Appointment> appointmentsList;
 
     public AppointmentDAOImpl(){
         List<String> applicants = new ArrayList<>();
@@ -43,13 +37,9 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         return appointmentsList.get(ID);
     }
 
-    public void putAppointment(Appointment appointment){
-        System.out.println(appointment.getClass());
-        this.appointment = appointment;
+    public String putAppointment(Appointment appointment){
 
         appointmentsList.add(appointment);
-
-        System.out.println(getAppointmentByAppointmentID(3));
-
+        return String.valueOf(appointmentsList.size());
     }
 }
