@@ -6,13 +6,20 @@ import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -48,7 +55,35 @@ public class AppointmentTests extends BaseMVCTest {
 		)
 				.andExpect(status().isOk());
 	}
-//
-//	@Test
-//	public vo
+
+    @Test
+    public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2");
+        List<String> applicantIdList = new ArrayList<>();
+        Collections.addAll(applicantIdList, "1", "2");
+        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        ResultActions expect = mockMvc.perform(
+                get("/appointments/applicants/1")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string(appointmentJson));
+    }
+
+    @Test
+    public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2");
+        List<String> applicantIdList = new ArrayList<>();
+        Collections.addAll(applicantIdList, "1", "2");
+        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401952037427L);
+
+        ResultActions expect = mockMvc.perform(
+                get("/appointments/applicants/2")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
 }
