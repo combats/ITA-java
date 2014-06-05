@@ -1,5 +1,7 @@
 package com.softserveinc.ita.controller;
 
+import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/appointments")
@@ -23,8 +27,9 @@ public class AppointmentController {
 		return "{}";
 	}
 
-    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET)
-    public @ResponseBody String getAppointmentByApplicantId(@PathVariable String applicantId) {
-        return jsonUtil.toJson(appointmentService.getAppointmentByApplicantId(applicantId));
+    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public Appointment getAppointmentByApplicantId(@PathVariable String applicantId) {
+        return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 }
