@@ -59,6 +59,28 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
+    public void testPostNewAppointmentAndGetAppointmentID() throws Exception {
+
+        List<String> applicants = new ArrayList<>();
+        applicants.add("My test Appointment");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+
+        Appointment appointment = new Appointment(users, applicants, 555);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                post("/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
+        )
+                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().string("4"))
+                .andExpect(status().isAccepted());
+
+    }
+
+    @Test
     public void testGetAppointmentByIDAndExpectIsOk() throws Exception {
 
         List<String> applicants2 = new ArrayList<>();
