@@ -125,7 +125,6 @@ public class AppointmentTests extends BaseMVCTest {
                 get("/appointments/2/")
         )
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(status().isOk())
                 .andReturn();
 
         assertFalse("Appointment 2 not appropriate for this request", objectTest.toString().equals(appointmentJson));
