@@ -79,59 +79,5 @@ public class AppointmentTests extends BaseMVCTest {
                 .andExpect(status().isAccepted());
 
     }
-
-    @Test
-    public void testGetAppointmentByIDAndExpectIsOk() throws Exception {
-
-        List<String> applicants2 = new ArrayList<>();
-        applicants2.add("My test Appointment");
-        List<String> users2 = new ArrayList<>();
-        users2.add("testUserId");
-
-        Appointment appointment2 = new Appointment(users2, applicants2, 555);
-        String appointmentJson2 = jsonUtil.toJson(appointment2);
-
-        MvcResult TestAppointmentID = mockMvc.perform(
-                post("/appointments")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(appointmentJson2)
-        )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(status().isAccepted())
-                .andReturn();
-
-        String AppointmentID = TestAppointmentID.getResponse().getContentAsString();
-
-        mockMvc.perform(
-                get("/appointments/" + AppointmentID)
-                .contentType(MediaType.APPLICATION_JSON)
-            )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(content().string(appointmentJson2))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetAppointmentByIDAndExpectBadRequest() throws Exception {
-        List<String> applicants = new ArrayList<>();
-        applicants.add("testApplicantId");
-        List<String> users = new ArrayList<>();
-        users.add("testUserId");
-
-        Appointment appointment = new Appointment(users, applicants, 1401866602 + TOMORROW);
-        String appointmentJson = jsonUtil.toJson(appointment);
-
-        MvcResult objectTest = mockMvc.perform(
-                get("/appointments/2/")
-        )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
-                .andExpect(status().isOk())
-                .andReturn();
-
-        assertFalse("Appointment 2 not appropriate for this request", objectTest.toString().equals(appointmentJson));
-    }
-
-
-
 }
 

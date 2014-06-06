@@ -21,12 +21,4 @@ public class AppointmentController {
 
           return appointmentDAO.putAppointment(appointment);
        }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
-    @ResponseBody
-    public Appointment getAppointmentByAppointmentID(@PathVariable("id") int id) {
-
-       return appointmentDAO.getAppointmentByAppointmentID(id);
-    }
 }
