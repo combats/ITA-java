@@ -40,6 +40,6 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public String putAppointment(Appointment appointment){
 
         appointmentsList.add(appointment);
-        return String.valueOf(appointmentsList.size());
+        return String.valueOf(appointmentsList.size() - 1);
     }
 }
