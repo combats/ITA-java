@@ -111,7 +111,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetAppointmentByIDAndExpectBadRequest() throws Exception {
+    public void testGetAppointmentByIDAndExpectNotAppropriateAppointment() throws Exception {
         List<String> applicants = new ArrayList<>();
         applicants.add("testApplicantId");
         List<String> users = new ArrayList<>();
