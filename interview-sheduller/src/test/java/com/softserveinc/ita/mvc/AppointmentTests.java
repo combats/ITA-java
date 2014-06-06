@@ -54,7 +54,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json"))
                 .andExpect(status().isAccepted());
 
     }
@@ -75,7 +75,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json"))
                 .andExpect(content().string("4"))
                 .andExpect(status().isAccepted());
     }
