@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 
 public class AppointmentTests extends BaseMVCTest {
 	public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -77,7 +78,6 @@ public class AppointmentTests extends BaseMVCTest {
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(content().string("4"))
                 .andExpect(status().isAccepted());
-
     }
 }
 
