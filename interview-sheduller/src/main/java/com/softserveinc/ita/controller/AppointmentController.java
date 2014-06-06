@@ -18,7 +18,6 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.ACCEPTED)
 
     public @ResponseBody String addNewAppointment(@RequestBody Appointment appointment ) {
-
-        return appointmentDAO.putAppointment(appointment);
+       return appointmentDAO.putAppointment(appointment);
        }
 }
