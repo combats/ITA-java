@@ -1,8 +1,7 @@
 package com.softserveinc.ita.servise.impl;
-
 import com.softserveinc.ita.BaseHttpReqTest;
 import com.softserveinc.ita.User;
-import com.softserveinc.ita.servise.HttpRestService;
+import com.softserveinc.ita.servise.exeption.HttpHandlerRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,22 +16,24 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.method;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
+import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-public class HttpRestServiseTests extends BaseHttpReqTest {
+public class HttpRestServiceTests extends BaseHttpReqTest {
 
 
 
     private MockRestServiceServer mockServer;
 
     @Autowired
-    private HttpRestService service;
+    private HttpRestServiceImpl service;
 
     @Autowired
     private JsonUtil utilJson;
 
-
+    @Autowired
     private User user;
+
     private List<String> listID;
     private  String subclass;
 
@@ -40,8 +41,8 @@ public class HttpRestServiseTests extends BaseHttpReqTest {
     public void setUp() {
 
         mockServer = MockRestServiceServer.createServer(service.getRestTemplate()); // (1)
-        user = new User("14","Mike","Jonson");
-        listID = new LinkedList<String>();
+
+        listID = new LinkedList<>();
         subclass = user.getClass().getSimpleName().toLowerCase();
         listID.add("1");
         listID.add("2");
@@ -56,7 +57,7 @@ public class HttpRestServiseTests extends BaseHttpReqTest {
      @Test
     public void testGetAllObjectsID() throws Exception {
 
-        mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"/"))
+        mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"s_id"))
                 .andExpect(method(HttpMethod.GET))
                 .andRespond(withSuccess(utilJson.toJson(listID), MediaType.TEXT_PLAIN));
 
@@ -69,12 +70,31 @@ public class HttpRestServiseTests extends BaseHttpReqTest {
 
     @Test
     public void testGetObjectByID() throws Exception {
-        mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"/id="+user.getId()))
+        mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"s/"+user.getId()))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(utilJson.toJson(user), MediaType.TEXT_PLAIN));
+                .andRespond(withSuccess(utilJson.toJson(user),MediaType.APPLICATION_JSON));
 
-        assertEquals(user, service.getObjectByID(user.getId(),user.getClass()));
+        assertEquals(user, service.getObjectByID(user.getId(),user.getClass()) );
         mockServer.verify();
 
     }
+
+    @Test (expected = HttpHandlerRequestException.class )
+    public void testGetObjectByIdAndReturnException() throws Exception {
+        mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"s/"+user.getId()))
+                .andExpect(method(HttpMethod.GET))
+                .andRespond(withServerError());
+
+
+        //noinspection unchecked
+        service.getObjectByID(user.getId(), user.getClass());
+
+
+        mockServer.verify();
+
+    }
+
+
+
+
 }

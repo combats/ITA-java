@@ -1,6 +1,11 @@
 package com.softserveinc.ita;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
+    public User() {
+
+    }
 
     private String id;
     private String name;
@@ -43,9 +48,8 @@ public class User {
 
         if (!id.equals(user.id)) return false;
         if (!lastname.equals(user.lastname)) return false;
-        if (!name.equals(user.name)) return false;
+        return name.equals(user.name);
 
-        return true;
     }
 
     @Override
@@ -58,7 +62,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "com.khoroshevskiy.service.com.softserveinc.ita.User{" +
+        return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", lastname='" + lastname + '\'' +
