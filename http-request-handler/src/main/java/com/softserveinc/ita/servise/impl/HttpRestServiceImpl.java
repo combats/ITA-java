@@ -1,5 +1,6 @@
 package com.softserveinc.ita.servise.impl;
 
+import com.softserveinc.ita.servise.HttpRequestHandler;
 import com.softserveinc.ita.servise.exeption.HttpHandlerRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +16,10 @@ import java.util.List;
 import java.util.LinkedList;
 
 @ContextConfiguration("file:spring-config.xml")
-public class HttpRestServiceImpl<T>  {
+public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
 
 
-    public static void main(String[] args) {
-        try {
-            new HttpRestServiceImpl<>("http://www.1111111111.111.111").getAllObjectsID(new Object().getClass());
-        } catch (HttpHandlerRequestException e) {
-            e.printStackTrace();
-        }
-    }
+
 
     private final int STATUS_CODE_OK = 200;
     private final RestTemplate restTemplate = new RestTemplate();
@@ -41,7 +36,7 @@ public class HttpRestServiceImpl<T>  {
 
     }
 
-
+        @Override
     public List<String> getAllObjectsID(Class objectClass) throws HttpHandlerRequestException {
 
 
@@ -58,8 +53,8 @@ public class HttpRestServiceImpl<T>  {
         return (List<String>) getObject(urlReq, list.getClass());
     }
 
-
-    public T getObjectByID(String id, Class<T> objectClass) throws HttpHandlerRequestException {
+        @Override
+    public <T> T getObjectByID(String id, Class<T> objectClass) throws HttpHandlerRequestException {
 
 
         // name subdirectory
@@ -68,7 +63,7 @@ public class HttpRestServiceImpl<T>  {
         // add to URL path
         String urlReq = baseUrl + "/" + subclass + "s/" + id;
 
-        return getObject(urlReq, objectClass);
+        return (T) getObject(urlReq, objectClass);
 
     }
 

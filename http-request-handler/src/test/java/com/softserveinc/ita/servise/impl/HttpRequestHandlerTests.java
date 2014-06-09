@@ -1,6 +1,7 @@
 package com.softserveinc.ita.servise.impl;
 import com.softserveinc.ita.BaseHttpReqTest;
 import com.softserveinc.ita.User;
+import com.softserveinc.ita.servise.HttpRequestHandler;
 import com.softserveinc.ita.servise.exeption.HttpHandlerRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -19,14 +20,14 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withServerError;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-public class HttpRestServiceTests extends BaseHttpReqTest {
+public class HttpRequestHandlerTests extends BaseHttpReqTest {
 
 
 
     private MockRestServiceServer mockServer;
 
     @Autowired
-    private HttpRestServiceImpl service;
+    private HttpRequestHandler service;
 
     @Autowired
     private JsonUtil utilJson;
