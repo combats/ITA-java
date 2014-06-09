@@ -10,13 +10,11 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.net.UnknownHostException;
+
 import java.util.List;
 import java.util.LinkedList;
 
-@ContextConfiguration("file:spring-config.xml")
-public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
+public class HttpRestServiceImpl  implements HttpRequestHandler {
 
 
 
@@ -24,11 +22,10 @@ public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
     private final int STATUS_CODE_OK = 200;
     private final RestTemplate restTemplate = new RestTemplate();
 
+
     private String baseUrl;
 
 
-    @Autowired
-    private JsonUtil utilJson;
 
 
     public HttpRestServiceImpl(String baseUrl) {
@@ -39,18 +36,12 @@ public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
         @Override
     public List<String> getAllObjectsID(Class objectClass) throws HttpHandlerRequestException {
 
-
         // add to URL path
         String subclass = objectClass.getSimpleName().toLowerCase();
 
         String urlReq = baseUrl + "/" + subclass + "s_id";
 
-        // for generated from Json Objects
-        LinkedList<String> list = new LinkedList<>();
-
-
-
-        return (List<String>) getObject(urlReq, list.getClass());
+        return  getObject(urlReq, LinkedList.class);
     }
 
         @Override
@@ -63,19 +54,19 @@ public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
         // add to URL path
         String urlReq = baseUrl + "/" + subclass + "s/" + id;
 
-        return (T) getObject(urlReq, objectClass);
+        return getObject(urlReq, objectClass);
 
     }
 
 
-    private T getObject(String urlPath, Class clazz) throws HttpHandlerRequestException {
+    private <T> T getObject(String urlPath, Class<T> clazz) throws HttpHandlerRequestException {
 
-        ResponseEntity<String> entity;
+        ResponseEntity<T> entity;
 
         try {
-            entity = restTemplate.getForEntity(urlPath, String.class);
+            entity = restTemplate.getForEntity(urlPath, clazz );
         }catch (HttpServerErrorException httpServError) {
-            throw new HttpHandlerRequestException(printException(httpServError));
+            throw new HttpHandlerRequestException(printException(httpServError), httpServError);
         }
 
         if (entity.getStatusCode().value() != STATUS_CODE_OK) {
@@ -86,7 +77,7 @@ public class HttpRestServiceImpl<T>  implements HttpRequestHandler {
 
 
 
-        return (T) utilJson.fromJson(entity.getBody(), clazz);
+        return entity.getBody();
     }
 
 

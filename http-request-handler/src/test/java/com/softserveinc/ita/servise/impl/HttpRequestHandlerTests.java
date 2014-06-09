@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class HttpRequestHandlerTests extends BaseHttpReqTest {
 
         mockServer = MockRestServiceServer.createServer(service.getRestTemplate()); // (1)
 
-        listID = new LinkedList<>();
+        listID = new ArrayList<>();
         subclass = user.getClass().getSimpleName().toLowerCase();
         listID.add("1");
         listID.add("2");
@@ -60,7 +61,7 @@ public class HttpRequestHandlerTests extends BaseHttpReqTest {
 
         mockServer.expect(requestTo(service.getBaseUrl()+"/"+subclass+"s_id"))
                 .andExpect(method(HttpMethod.GET))
-                .andRespond(withSuccess(utilJson.toJson(listID), MediaType.TEXT_PLAIN));
+                .andRespond(withSuccess(utilJson.toJson(listID), MediaType.APPLICATION_JSON));
 
         assertEquals(listID, service.getAllObjectsID(user.getClass()));
         mockServer.verify();
