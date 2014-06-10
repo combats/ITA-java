@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
@@ -32,10 +33,12 @@ public class AppointmentTests extends BaseMVCTest {
 	@SuppressWarnings("SpringJavaAutowiringInspection")
 	@Autowired
 	protected WebApplicationContext wac;
-
-	@Before
+    /*@Autowired
+    private FilterChainProxy springSecurityFilterChain;
+*/
+    @Before
 	public void setup() {
-		this.mockMvc = webAppContextSetup(this.wac).build();
+		this.mockMvc = webAppContextSetup(this.wac)/*.addFilter(this.springSecurityFilterChain)*/.build();
 	}
 
 	@Test

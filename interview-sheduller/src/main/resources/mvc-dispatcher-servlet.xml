@@ -17,9 +17,8 @@
     </bean>
 
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
-
     <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
-
+    <!--<bean id="springSecurityFilterChain" class="org.springframework.security.web.FilterChainProxy"/>-->
 
 </beans>
