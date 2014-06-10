@@ -17,6 +17,7 @@ import java.util.List;
 import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -75,7 +76,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .content(appointmentJson)
         )
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string("4"))
+                .andExpect(content().string("3"))
                 .andExpect(status().isAccepted());
     }
 
@@ -130,7 +131,47 @@ public class AppointmentTests extends BaseMVCTest {
         assertFalse("Appointment 2 not appropriate for this request", objectTest.toString().equals(appointmentJson));
     }
 
+    @Test
+    public void testEditAppointment() throws Exception {
+        List<String> applicants = new ArrayList<>();
+        applicants.add("someApplicant");
+        List<String> users = new ArrayList<>();
+        users.add("someUser");
 
+        Appointment appointment = new Appointment(users, applicants, 1501812387);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                put("/appointments/edit/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().string(appointmentJson))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void testEditAppointmentAndGetSameAppointmentAsAnswer() throws Exception {
+        List<String> applicants = new ArrayList<>();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+
+        Appointment appointment = new Appointment(users, applicants, 1401866602 + TOMORROW);
+        String AppointmentBeforeEdit = jsonUtil.toJson(appointment);
+
+        MvcResult AppointmentAfterEdit = mockMvc.perform(
+                put("/appointments/edit/2")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(AppointmentBeforeEdit)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+         assertTrue("Appointments are not equal", AppointmentAfterEdit.getResponse().getContentAsString().equals(AppointmentBeforeEdit));
+    }
 
 }
 
