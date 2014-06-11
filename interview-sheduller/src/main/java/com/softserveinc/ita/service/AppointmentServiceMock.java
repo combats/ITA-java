@@ -1,10 +1,9 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Appointment;
+import org.joda.time.DateTime;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by mskryntc on 03.06.2014.
@@ -25,5 +24,34 @@ public class AppointmentServiceMock implements AppointmentService {
         } else {
             return appointmentTwo;
         }
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByDay(long date) {
+
+        DateTime requirementDate = new DateTime(date);
+        List<Appointment> resultList = new LinkedList<>();
+
+        if(requirementDate.getMillis() < new DateTime(0).getMillis()){
+             return resultList;
+        }
+
+        MokDataProvider<Appointment> dataProvider =  MokDataProvider.getDataProvider();
+
+
+
+         Iterator<Appointment> dataIterator = dataProvider.getDataList().iterator();
+      while (dataIterator.hasNext()){
+           Appointment appointment  =  dataIterator.next();
+          DateTime appDate = new DateTime(appointment.getStartTime());
+          if(requirementDate.getYear() == appDate.getYear() &&
+                  requirementDate.getMonthOfYear() == appDate.getMonthOfYear() &&
+                  requirementDate.getDayOfMonth() == appDate.getDayOfMonth()){
+              resultList.add(appointment);
+          }
+
+      }
+
+        return resultList;
     }
 }
