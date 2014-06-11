@@ -1,0 +1,39 @@
+﻿UserManager:
+
+
+resource path: "/users"
+        method: GET - returns list of all Users
+resource path: "/users"
+method: POST - adds a new User in a list
+        resource path: "/users/{user_id}"
+                methods: GET - returns a User by his ID
+                         PUT - edit User by his ID
+                         DELETE - delete User by his ID
+        resource path: "/users/roles"
+                method: GET - get all users with roles??? or get all roles???
+        resource path: "/users/roles/{role_id}"
+                method: GET - get User by his role_id??? or get his role by his ID???
+
+
+
+
+ApplicantManager:
+
+
+resource path: "/applicants"
+        methods: GET - returns list of all Applicants
+                 POST - adds a new Applicant in a list
+        resource path: "/applicants/{applicant_id}"
+                methods: GET - returns a Applicant by his ID
+                         PUT - edit Applicant by his ID
+        resource path: "applicants/groups"
+                merhod: GET - returns a list of all groups???
+        resource path: "applicants/groups/{group_id}"
+                method: GET - returns Applicant by group ID???
+
+
+WADL generator:
+
+
+resource path: "/application.wadl"
+        method: GET - returns xml file with REST API of web application
