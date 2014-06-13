@@ -42,4 +42,9 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         appointmentsList.add(appointment);
         return String.valueOf(appointmentsList.size() - 1);
     }
+
+    public Appointment editAppointmentById (int ID, Appointment appointment){
+        appointmentsList.add(ID, appointment);
+        return appointmentsList.get(ID);
+    }
 }

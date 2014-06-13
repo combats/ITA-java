@@ -6,4 +6,5 @@ import com.softserveinc.ita.entity.Appointment;
 
     public Appointment getAppointmentByAppointmentID(int i);
     public String putAppointment(Appointment appointment);
+    public Appointment editAppointmentById(int id, Appointment appointment);
 }
