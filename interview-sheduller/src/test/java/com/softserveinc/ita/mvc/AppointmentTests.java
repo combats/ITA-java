@@ -15,34 +15,31 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public class AppointmentTests extends BaseMVCTest {
-	public static final int TOMORROW = 24 * 60 * 60 * 1000;
-	private MockMvc mockMvc;
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    protected WebApplicationContext wac;
+    private MockMvc mockMvc;
+    @Autowired
+    private JsonUtil jsonUtil;
 
-	@Autowired
-	private JsonUtil jsonUtil;
+    @Before
+    public void setup() {
+        this.mockMvc = webAppContextSetup(this.wac).build();
+    }
 
-	@SuppressWarnings("SpringJavaAutowiringInspection")
-	@Autowired
-	protected WebApplicationContext wac;
-
-	@Before
-	public void setup() {
-		this.mockMvc = webAppContextSetup(this.wac).build();
-	}
-
-	@Test
-	public void testPostNewAppointmentAndExpectIsOk() throws Exception {
-		List<String> applicants = new ArrayList<>();
-		applicants.add("testApplicantId");
-		List<String> users = new ArrayList<>();
-		users.add("testUserId");
+    @Test
+    public void testPostNewAppointmentAndExpectIsOk() throws Exception {
+        List<String> applicants = new ArrayList<>();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
 
 		Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
 		String appointmentJson = jsonUtil.toJson(appointment);
@@ -60,20 +57,11 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
         String appointmentJson = jsonUtil.toJson(appointment);
 
-        ResultActions expect = mockMvc.perform(get("/appointments/applicants/1"))
-                .andExpect(status().isOk()).andExpect(content().string(appointmentJson));
-    }
-
-    @Test
-    public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
-        List<String> userIdList = new ArrayList<>();
-        Collections.addAll(userIdList, "1", "2");
-        List<String> applicantIdList = new ArrayList<>();
-        Collections.addAll(applicantIdList, "1", "2");
-        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401952037427L);
-
-        ResultActions expect = mockMvc.perform(get("/appointments/applicants/2"))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+        mockMvc.perform(
+                get("/appointments/applicants/1")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().string(appointmentJson));
     }
 
     @Test
@@ -88,5 +76,29 @@ public class AppointmentTests extends BaseMVCTest {
 
         mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
                 .andExpect(status().isBadRequest());
+    public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
+        mockMvc.perform(
+                get("/appointments/applicants/2")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testRemoveAppointmentByIdAndExpectIsOk() throws Exception {
+        String appointmentId = "1";
+        mockMvc.perform(
+                delete("/appointments/{appointmentId}", appointmentId)
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testRemoveAppointmentByNonExistIdAndExpectInternalServerError() throws Exception {
+        String appointmentId = "2";
+        mockMvc.perform(
+                delete("/appointments/{appointmentId}", appointmentId)
+        )
+                .andExpect(status().isInternalServerError());
     }
 }
