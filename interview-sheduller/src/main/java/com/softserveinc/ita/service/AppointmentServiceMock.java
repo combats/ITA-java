@@ -1,14 +1,10 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
-/**
- * Created by mskryntc on 03.06.2014.
- */
 public class AppointmentServiceMock implements AppointmentService {
 
     @Override
@@ -24,6 +20,29 @@ public class AppointmentServiceMock implements AppointmentService {
             return appointmentOne;
         } else {
             return appointmentTwo;
+        }
+    }
+
+    @Override
+    public void removeAppointmentById(String appointmentId) throws AppointmentNotFoundException {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2");
+        List<String> applicantIdList = new ArrayList<>();
+        Collections.addAll(applicantIdList, "1", "2");
+        Appointment appointmentOne = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        Appointment appointmentTwo = new Appointment(userIdList, applicantIdList, 1401952037427L);
+
+        Map<String, Appointment> appointments = new HashMap<>();
+        appointments.put("1", appointmentOne);
+        appointments.put("2", appointmentTwo);
+
+        if (appointmentId.equals("1")) {
+            Appointment remove = appointments.remove("1");
+            if (remove == null) {
+                throw new AppointmentNotFoundException();
+            }
+        } else {
+            throw new AppointmentNotFoundException();
         }
     }
 }

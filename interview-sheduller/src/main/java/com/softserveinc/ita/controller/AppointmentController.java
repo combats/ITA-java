@@ -4,6 +4,9 @@ import javax.validation.Valid;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
+import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
+import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.utils.JsonUtil;
 import com.softserveinc.ita.validators.AppointmentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +43,15 @@ public class AppointmentController {
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(appointmentValidator);
     }
-
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Appointment getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
+    }
+
+    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
+    public void removeAppointmentById(@PathVariable String appointmentId) throws AppointmentNotFoundException {
+        appointmentService.removeAppointmentById(appointmentId);
     }
  	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
