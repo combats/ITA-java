@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="interview-sheduller:war">
+    <output-path>$PROJECT_DIR$/interview-sheduller/target</output-path>
+    <root id="archive" name="interview-sheduller.war">
+      <element id="artifact" artifact-name="interview-sheduller:war exploded" />
+    </root>
+  </artifact>
+</component>
