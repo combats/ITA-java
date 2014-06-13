@@ -12,6 +12,7 @@
     <modules>
         <module>entity</module>
         <module>common</module>
+        <module>applicantManager</module>
         <module>interview-sheduller</module>
     </modules>
 
