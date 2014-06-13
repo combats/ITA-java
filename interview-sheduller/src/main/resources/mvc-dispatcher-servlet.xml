@@ -11,7 +11,6 @@
      <context:component-scan base-package="com.softserveinc.ita"/>
      <mvc:annotation-driven/>
 
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
@@ -24,4 +23,8 @@
     <bean id="service" class="com.softserveinc.ita.service.impl.HttpRestServiceMock"/>
 
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
+    <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
+
+
 </beans>
