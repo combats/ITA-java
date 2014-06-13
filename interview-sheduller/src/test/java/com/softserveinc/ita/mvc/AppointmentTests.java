@@ -8,12 +8,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -49,11 +47,8 @@ public class AppointmentTests extends BaseMVCTest {
 		Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
 		String appointmentJson = jsonUtil.toJson(appointment);
 
-		mockMvc.perform(
-				post("/appointments")
-				.content(appointmentJson)
-		)
-				.andExpect(status().isOk());
+		mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
+                .andExpect(status().isOk());
 	}
 
     @Test
@@ -65,11 +60,8 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
         String appointmentJson = jsonUtil.toJson(appointment);
 
-        ResultActions expect = mockMvc.perform(
-                get("/appointments/applicants/1")
-        )
-                .andExpect(status().isOk())
-                .andExpect(content().string(appointmentJson));
+        ResultActions expect = mockMvc.perform(get("/appointments/applicants/1"))
+                .andExpect(status().isOk()).andExpect(content().string(appointmentJson));
     }
 
     @Test
@@ -80,10 +72,21 @@ public class AppointmentTests extends BaseMVCTest {
         Collections.addAll(applicantIdList, "1", "2");
         Appointment appointment = new Appointment(userIdList, applicantIdList, 1401952037427L);
 
-        ResultActions expect = mockMvc.perform(
-                get("/appointments/applicants/2")
-        )
-                .andExpect(status().isOk())
+        ResultActions expect = mockMvc.perform(get("/appointments/applicants/2"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostAppointmentAndExpectErrorDueToNonexistentUserAndApplicant() throws Exception {
+        List<String> applicants = new ArrayList<>();
+        applicants.add("some_unexisting_applicant_id");
+        List<String> users = new ArrayList<>();
+        users.add("some_unexisting_user_id");
+
+        Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
+                .andExpect(status().isBadRequest());
     }
 }
