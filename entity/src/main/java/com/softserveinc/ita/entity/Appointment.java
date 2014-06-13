@@ -1,7 +1,7 @@
 package com.softserveinc.ita.entity;
 
-import com.softserveinc.ita.entity.exceptions.DateException;
 
+import com.softserveinc.ita.entity.exceptions.DateException;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -95,7 +95,7 @@ public class Appointment {
 		return result;
 	}
 
-    public void dateValidation(long startTime, long durationTime) throws DateException{
+    public void dateValidation(long startTime, long durationTime) throws DateException {
 
         if (durationTime < 0) throw new DateException("Wrong duration time");
 
