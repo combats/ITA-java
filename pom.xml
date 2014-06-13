@@ -17,7 +17,7 @@
         <module>entity</module>
         <module>common</module>
         <module>interview-sheduller</module>
-        <module>DAO</module>
+        <module>dao</module>
      </modules>
 
     <dependencies>
