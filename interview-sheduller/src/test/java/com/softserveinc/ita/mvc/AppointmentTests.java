@@ -11,7 +11,6 @@ import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class AppointmentTests extends BaseMVCTest {
     public ExpectedException thrown= ExpectedException.none();
 
     @Test
-    public void StartTimeAlreadyPassedException() throws DateException{
+    public void StartTimeAlreadyPassedException() throws DateException {
         thrown.expect(DateException.class);
         thrown.expectMessage("Start time has already passed");
 
@@ -69,7 +68,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void WrongDurationTimeException() throws DateException{
+    public void WrongDurationTimeException() throws DateException {
         thrown.expect(DateException.class);
         thrown.expectMessage("Wrong duration time");
 
@@ -82,7 +81,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void TooLongDurationTimeException() throws DateException{
+    public void TooLongDurationTimeException() throws DateException {
         thrown.expect(DateException.class);
         thrown.expectMessage("Too long duration time");
 
@@ -123,6 +122,8 @@ public class AppointmentTests extends BaseMVCTest {
 
         mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
                 .andExpect(status().isBadRequest());
+    }
+    @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
         mockMvc.perform(
                 get("/appointments/applicants/2")
