@@ -24,6 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
+import static org.junit.Assert.*;
 
 public class AppointmentTests extends BaseMVCTest {
 	public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -42,7 +43,7 @@ public class AppointmentTests extends BaseMVCTest {
 	}
 
 	@Test
-	public void testPostNewAppointmentAndExpectIsOk() throws Exception {
+	public void testPostNewAppointmentAndExpectIsAccepted() throws Exception {
 		List<String> applicants = new ArrayList<>();
 		applicants.add("testApplicantId");
 		List<String> users = new ArrayList<>();
@@ -52,7 +53,7 @@ public class AppointmentTests extends BaseMVCTest {
 		String appointmentJson = jsonUtil.toJson(appointment);
 
 		mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
-                .andExpect(status().isOk());
+                .andExpect(status().isAccepted());
     }
 
     @Test
