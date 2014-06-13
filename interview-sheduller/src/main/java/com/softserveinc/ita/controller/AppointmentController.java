@@ -4,27 +4,16 @@ import javax.validation.Valid;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
-import com.softserveinc.ita.service.AppointmentService;
+import com.softserveinc.ita.dao.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.utils.JsonUtil;
-import com.softserveinc.ita.validators.AppointmentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import com.softserveinc.ita.dao.AppointmentDAO;
-import com.softserveinc.ita.entity.Appointment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/appointments")

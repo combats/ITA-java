@@ -1,4 +1,4 @@
-package com.softserveinc.ita.exceptions;
+package com.softserveinc.ita.dao.exceptions;
 
 /**
  * Created by mskryntc on 09.06.2014.
