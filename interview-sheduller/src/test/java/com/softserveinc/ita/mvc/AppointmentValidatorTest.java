@@ -2,12 +2,9 @@ package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.validators.AppointmentValidator;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindException;
-import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import java.util.ArrayList;
@@ -18,10 +15,9 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 public class AppointmentValidatorTest extends BaseMVCTest{
-
     @Autowired
     private Validator validator;
-    //supports method
+
     @Test
          public void testSupportsAppointmentClass(){
         //Arrange
@@ -38,8 +34,6 @@ public class AppointmentValidatorTest extends BaseMVCTest{
         //Assert
         assertFalse(result);
     }
-
-    //validate method
     @Test
     public void testValidatesAppointmentAndGivesErrors(){
         //Arrange
@@ -55,5 +49,4 @@ public class AppointmentValidatorTest extends BaseMVCTest{
         //Assert
         assertTrue(errors.getErrorCount() > 0);
     }
-
 }
