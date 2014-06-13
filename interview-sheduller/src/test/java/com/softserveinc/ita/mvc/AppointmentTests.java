@@ -53,7 +53,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json"))
                 .andExpect(status().isAccepted());
 
     }
@@ -74,10 +74,9 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json"))
                 .andExpect(content().string("4"))
                 .andExpect(status().isAccepted());
-
     }
 
     @Test
@@ -96,7 +95,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson2)
         )
-                .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(content().contentType("application/json"))
                 .andExpect(status().isAccepted())
                 .andReturn();
 
@@ -112,7 +111,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetAppointmentByIDAndExpectBadRequest() throws Exception {
+    public void testGetAppointmentByIDAndExpectNotAppropriateAppointment() throws Exception {
         List<String> applicants = new ArrayList<>();
         applicants.add("testApplicantId");
         List<String> users = new ArrayList<>();
@@ -125,6 +124,7 @@ public class AppointmentTests extends BaseMVCTest {
                 get("/appointments/2/")
         )
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
+                .andExpect(status().isOk())
                 .andReturn();
 
         assertFalse("Appointment 2 not appropriate for this request", objectTest.toString().equals(appointmentJson));
