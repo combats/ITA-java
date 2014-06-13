@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,15 +70,20 @@ public class AppointmentTests extends BaseMVCTest {
 
         Appointment appointment = new Appointment(users, applicants, 555);
         String appointmentJson = jsonUtil.toJson(appointment);
+        String exptectedIdJson = jsonUtil.toJson(4);
 
-        mockMvc.perform(
+      MvcResult ExpectingObject = mockMvc.perform(
                 post("/appointments")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
                 .andExpect(content().contentType("application/json"))
-                .andExpect(content().string("4"))
-                .andExpect(status().isAccepted());
-    }
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        String ExpectID = ExpectingObject.getResponse().getContentAsString();
+
+        assertEquals("Return Appointment ID in JSON in response to Post appointment request", exptectedIdJson, ExpectID);
+        }
 }
 
