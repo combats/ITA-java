@@ -10,8 +10,9 @@ public class AppointmentDAOImpl implements AppointmentDAO {
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
     private LinkedList<Appointment> appointmentsList;
 
-    public AppointmentDAOImpl(){
-        List<String> applicants = new ArrayList<>();
+    public AppointmentDAOImpl(){}
+
+    {List<String> applicants = new ArrayList<>();
         applicants.add("testApplicantId");
         List<String> users = new ArrayList<>();
         users.add("testUserId");
@@ -30,7 +31,7 @@ public class AppointmentDAOImpl implements AppointmentDAO {
         appointmentsList.add(new Appointment(users, applicants, 1401866602 + TOMORROW));
         appointmentsList.add(new Appointment(users2, applicants2, 1401866603 + TOMORROW));
         appointmentsList.add(new Appointment(users3, applicants3, 1401866604 + TOMORROW));
-         }
+    }
 
     public Appointment getAppointmentByAppointmentID(int ID){
 
