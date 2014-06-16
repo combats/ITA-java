@@ -5,9 +5,10 @@ import java.util.List;
 
 public class Appointment {
 	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
 	private List <String> userIdList = new ArrayList<>();
 	private List <String> applicantIdList = new ArrayList<>();
-	private long startTime = System.currentTimeMillis();
+    private long startTime = System.currentTimeMillis() + TOMORROW;
 	private long durationTime = DEFAULT_DURATION_TIME;
 
 	public Appointment() {}

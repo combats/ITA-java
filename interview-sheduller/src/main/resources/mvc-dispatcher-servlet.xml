@@ -11,14 +11,14 @@
      <context:component-scan base-package="com.softserveinc.ita"/>
      <mvc:annotation-driven/>
 
-
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.AppointmentServiceMock" />
-
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
+    <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
+    <bean id="appointmentService" class="com.softserveinc.ita.service.AppointmentServiceMock" />
 
 </beans>
