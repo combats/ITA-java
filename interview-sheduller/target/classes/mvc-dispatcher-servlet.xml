@@ -21,5 +21,4 @@
     <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
 
-
 </beans>
