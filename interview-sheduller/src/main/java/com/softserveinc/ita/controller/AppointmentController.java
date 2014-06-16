@@ -33,15 +33,15 @@ public class AppointmentController {
 
     public @ResponseBody String addNewAppointment(@RequestBody Appointment appointment) {
 
-          return appointmentDAO.putAppointment(appointment);
-       }
+          return appointmentService.putAppointment(appointment);
+}
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Appointment getAppointmentByAppointmentID(@PathVariable("id") int id) {
 
-       return appointmentDAO.getAppointmentByAppointmentID(id);
+       return appointmentService.getAppointmentByAppointmentID(id);
     }
    
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")

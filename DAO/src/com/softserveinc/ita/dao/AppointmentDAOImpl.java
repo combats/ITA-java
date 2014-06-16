@@ -1,6 +1,7 @@
 package com.softserveinc.ita.dao;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import com.softserveinc.ita.entity.Appointment;
@@ -42,5 +43,20 @@ public class AppointmentDAOImpl implements AppointmentDAO {
 
         appointmentsList.add(appointment);
         return String.valueOf(appointmentsList.size() - 1);
+    }
+
+     public Appointment getAppointmentByApplicantId(String applicantId) {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2");
+        List<String> applicantIdList = new ArrayList<>();
+        Collections.addAll(applicantIdList, "1", "2");
+        Appointment appointmentOne = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        Appointment appointmentTwo = new Appointment(userIdList, applicantIdList, 1401952037427L);
+
+        if (applicantId.equals("1")) {
+            return appointmentOne;
+        } else {
+            return appointmentTwo;
+        }
     }
 }

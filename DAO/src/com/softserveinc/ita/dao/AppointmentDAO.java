@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.Appointment;
 
    public interface AppointmentDAO {
 
-    public Appointment getAppointmentByAppointmentID(int i);
-    public String putAppointment(Appointment appointment);
+    Appointment getAppointmentByAppointmentID(int i);
+    String putAppointment(Appointment appointment);
+    Appointment getAppointmentByApplicantId(String applicantId);
 }

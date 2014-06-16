@@ -8,4 +8,6 @@ import com.softserveinc.ita.entity.Appointment;
 public interface AppointmentService {
 
     Appointment getAppointmentByApplicantId(String applicantId);
+    Appointment getAppointmentByAppointmentID(int ID);
+    String putAppointment(Appointment appointment);
 }

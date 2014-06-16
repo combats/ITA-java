@@ -1,6 +1,8 @@
 package com.softserveinc.ita.service;
 
+import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,19 +13,21 @@ import java.util.List;
  */
 public class AppointmentServiceMock implements AppointmentService {
 
+    @Autowired
+    private AppointmentDAO appointmentDAO;
+
     @Override
     public Appointment getAppointmentByApplicantId(String applicantId) {
-        List<String> userIdList = new ArrayList<>();
-        Collections.addAll(userIdList, "1", "2");
-        List<String> applicantIdList = new ArrayList<>();
-        Collections.addAll(applicantIdList, "1", "2");
-        Appointment appointmentOne = new Appointment(userIdList, applicantIdList, 1401951895035L);
-        Appointment appointmentTwo = new Appointment(userIdList, applicantIdList, 1401952037427L);
+        return appointmentDAO.getAppointmentByApplicantId(applicantId);
+    }
 
-        if (applicantId.equals("1")) {
-            return appointmentOne;
-        } else {
-            return appointmentTwo;
-        }
+    @Override
+    public Appointment getAppointmentByAppointmentID(int ID) {
+        return appointmentDAO.getAppointmentByAppointmentID(ID);
+    }
+
+    @Override
+    public String putAppointment(Appointment appointment) {
+        return appointmentDAO.putAppointment(appointment);
     }
 }
