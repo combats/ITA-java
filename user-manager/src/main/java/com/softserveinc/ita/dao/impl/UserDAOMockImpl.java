@@ -1,15 +1,13 @@
-package service;
+package com.softserveinc.ita.dao.impl;
 
+import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 
-/**
- * Created by Anton on 04.06.2014.
- */
-//Mock DAO realization.
-public class UserMockService implements UserService {
-
+@Repository
+public class UserDAOMockImpl implements UserDAO {
     @Override
     public User getUserByID(String UserID) {
         User user = null;

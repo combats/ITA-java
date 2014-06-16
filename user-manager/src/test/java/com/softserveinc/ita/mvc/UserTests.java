@@ -1,4 +1,4 @@
-package mvc;
+package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.mvc.BaseMVCTest;

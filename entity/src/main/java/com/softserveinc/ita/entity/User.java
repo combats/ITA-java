@@ -1,8 +1,5 @@
 package com.softserveinc.ita.entity;
 
-/**
- * Created by Anton on 04.06.2014.
- */
 public class User {
     private String userID;
 

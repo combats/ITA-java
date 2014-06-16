@@ -9,7 +9,7 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <context:annotation-config />
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
-    <bean id="userService" class="service.UserMockService"/>
+    <bean id="userService" class="com.softserveinc.ita.service.impl.UserServiceImpl"/>
     <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
 
