@@ -42,7 +42,7 @@ public class AppointmentTests extends BaseMVCTest {
 	}
 
 	@Test
-     public void testPostNewAppointmentAndExpectIsOk() throws Exception {
+    public void testPostNewAppointmentAndExpectIsOk() throws Exception {
 
         List<String> applicants = new ArrayList<>();
         applicants.add("My test Appointment");
