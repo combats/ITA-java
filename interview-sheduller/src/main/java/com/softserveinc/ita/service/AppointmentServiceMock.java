@@ -4,8 +4,6 @@ import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,5 +27,10 @@ public class AppointmentServiceMock implements AppointmentService {
     @Override
     public String putAppointment(Appointment appointment) {
         return appointmentDAO.putAppointment(appointment);
+    }
+
+    @Override
+    public List<Appointment> getAppointmentsByDate(long date) {
+        return appointmentDAO.getAppointmentsByDate(date);
     }
 }

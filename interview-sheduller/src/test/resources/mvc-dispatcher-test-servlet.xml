@@ -1,15 +1,15 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns="http://www.springframework.org/schema/beans"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-     <context:component-scan base-package="com.softserveinc.ita"/>
-     <mvc:annotation-driven/>
+    <context:component-scan base-package="com.softserveinc.ita"/>
+    <mvc:annotation-driven/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -18,7 +18,7 @@
 
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="appointment" class="com.softserveinc.ita.entity.Appointment"/>
-    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOImpl"/>
-    <bean id="appointmentService" class="com.softserveinc.ita.service.AppointmentServiceMock" />
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.AppointmentDAOMokImpl"/>
+    <bean id="appointmentService" class="com.softserveinc.ita.service.AppointmentServiceMock"/>
 
 </beans>

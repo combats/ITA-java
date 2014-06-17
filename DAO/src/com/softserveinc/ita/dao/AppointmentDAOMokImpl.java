@@ -5,13 +5,14 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import com.softserveinc.ita.entity.Appointment;
+import org.joda.time.DateTime;
 
-public class AppointmentDAOImpl implements AppointmentDAO {
+public class AppointmentDAOMokImpl implements AppointmentDAO {
 
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    private LinkedList<Appointment> appointmentsList;
+    private static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private final LinkedList<Appointment> appointmentsList;
 
-    public AppointmentDAOImpl(){}
+    public AppointmentDAOMokImpl(){}
 
     {List<String> applicants = new ArrayList<>();
         applicants.add("testApplicantId");
@@ -59,4 +60,30 @@ public class AppointmentDAOImpl implements AppointmentDAO {
             return appointmentTwo;
         }
     }
+
+    @Override
+    public List<Appointment> getAppointmentsByDate(long date) {
+
+        DateTime requirementDate = new DateTime(date);
+        List<Appointment> resultList = new LinkedList<>();
+
+        //if  required date less  than 1970 year then return empty result
+        if(requirementDate.getMillis() < new DateTime(0).getMillis()){
+            return resultList;
+        }
+
+        for (Appointment appointment : appointmentsList) {
+
+            DateTime appointmentDate = new DateTime(appointment.getStartTime());
+
+            if (requirementDate.getYear() == appointmentDate.getYear() &&
+                    requirementDate.getMonthOfYear() == appointmentDate.getMonthOfYear() &&
+                    requirementDate.getDayOfMonth() == appointmentDate.getDayOfMonth()) {
+                resultList.add(appointment);
+            }
+        }
+
+        return resultList;
+    }
+
 }

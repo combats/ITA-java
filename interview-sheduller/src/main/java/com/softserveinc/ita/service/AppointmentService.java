@@ -2,12 +2,12 @@ package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Appointment;
 
-/**
- * Created by mskryntc on 03.06.2014.
- */
+import java.util.List;
+
 public interface AppointmentService {
 
     Appointment getAppointmentByApplicantId(String applicantId);
     Appointment getAppointmentByAppointmentID(int ID);
     String putAppointment(Appointment appointment);
+    List<Appointment> getAppointmentsByDate(long date);
 }
