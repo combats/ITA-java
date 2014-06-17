@@ -49,4 +49,5 @@ public class AppointmentController {
     public Appointment getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
+
 }
