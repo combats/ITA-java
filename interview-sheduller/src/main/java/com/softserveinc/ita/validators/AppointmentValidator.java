@@ -10,7 +10,7 @@ import java.util.List;
 
 public class AppointmentValidator implements Validator {
     @Autowired
-    HttpRestService service;
+    private HttpRestService service;
 
     @Override
     public boolean supports(Class<?> aClass) {
