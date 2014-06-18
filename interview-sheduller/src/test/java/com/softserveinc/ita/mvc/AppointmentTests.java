@@ -174,4 +174,52 @@ public class AppointmentTests extends BaseMVCTest {
         )
                 .andExpect(status().isInternalServerError());
     }
+
+    @Test
+    public void testPostNewAppointmentAndExpectIsOk() throws Exception {
+
+        List<String> applicants = new ArrayList<>();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+
+        Appointment appointment = new Appointment(users, applicants, 555);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                post("/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(status().isAccepted());
+
+    }
+
+    @Test
+    public void testPostNewAppointmentAndGetAppointmentID() throws Exception {
+
+        List<String> applicants = new ArrayList<>();
+        applicants.add("testApplicantId");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+
+        Appointment appointment = new Appointment(users, applicants, 555);
+
+        String appointmentJson = jsonUtil.toJson(appointment);
+        String exptectedIdJson = jsonUtil.toJson(4);
+
+        MvcResult ExpectingObject = mockMvc.perform(
+                post("/appointments")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        String ExpectID = ExpectingObject.getResponse().getContentAsString();
+
+        assertEquals("Return Appointment ID in JSON in response to Post appointment request", exptectedIdJson, ExpectID);
+    }
 }
