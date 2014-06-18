@@ -22,24 +22,21 @@ public class AppointmentValidator implements Validator {
         Appointment appointment = (Appointment) o;
 
         validateUsers(appointment, errors);
-        validateApplicants(appointment, errors);
+        validateApplicant(appointment, errors);
     }
 
     private void validateUsers(Appointment appointment, Errors errors) {
         List<String> userIdList = appointment.getUserIdList();
-        for(String userId : userIdList){
-            if(!service.userExists(userId)){
-                errors.reject("400","There is no user with id " + userId);
+        for (String userId : userIdList) {
+            if (!service.userExists(userId)) {
+                errors.reject("400", "There is no user with id " + userId);
             }
         }
     }
 
-    private void validateApplicants(Appointment appointment, Errors errors) {
-        List<String> applicantIdList = appointment.getApplicantIdList();
-        for(String applicantId: applicantIdList){
-            if(!service.applicantExists(applicantId)){
-                errors.reject("400","There is no applicant with id " + applicantId);
-            }
+    private void validateApplicant(Appointment appointment, Errors errors) {
+        if (!service.applicantExists(appointment.getApplicantId())) {
+            errors.reject("400", "There is no applicant with id " + appointment.getApplicantId());
         }
     }
 }

@@ -44,12 +44,11 @@ public class AppointmentTests extends BaseMVCTest {
 
 	@Test
 	public void testPostNewAppointmentAndExpectIsAccepted() throws Exception {
-		List<String> applicants = new ArrayList<>();
-		applicants.add("testApplicantId");
+		String applicantId = "testApplicantId";
 		List<String> users = new ArrayList<>();
 		users.add("testUserId");
 
-		Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
+		Appointment appointment = new Appointment(users, applicantId, System.currentTimeMillis() + TOMORROW);
 		String appointmentJson = jsonUtil.toJson(appointment);
 
 		mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
@@ -58,12 +57,11 @@ public class AppointmentTests extends BaseMVCTest {
 
     @Test
     public void testGetAppointmentByIDAndExpectNotAppropriateAppointment() throws Exception {
-        List<String> applicants = new ArrayList<>();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList<>();
         users.add("testUserId");
 
-        Appointment appointment = new Appointment(users, applicants, 1401866602 + TOMORROW);
+        Appointment appointment = new Appointment(users, applicantId, 1401866602 + TOMORROW);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         MvcResult objectTest = mockMvc.perform(
@@ -84,11 +82,10 @@ public class AppointmentTests extends BaseMVCTest {
         thrown.expect(DateException.class);
         thrown.expectMessage("Start time has already passed");
 
-        List<String> applicants = new ArrayList();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList();
         users.add("testUserId");
-        Appointment app = new Appointment(users, applicants,Long.valueOf(11), Long.valueOf(2));
+        Appointment app = new Appointment(users, applicantId,Long.valueOf(11), Long.valueOf(2));
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
 
@@ -97,11 +94,10 @@ public class AppointmentTests extends BaseMVCTest {
         thrown.expect(DateException.class);
         thrown.expectMessage("Wrong duration time");
 
-        List<String> applicants = new ArrayList();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList();
         users.add("testUserId");
-        Appointment app = new Appointment(users, applicants,Long.valueOf(11), Long.valueOf(-2));
+        Appointment app = new Appointment(users, applicantId,Long.valueOf(11), Long.valueOf(-2));
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
 
@@ -110,22 +106,20 @@ public class AppointmentTests extends BaseMVCTest {
         thrown.expect(DateException.class);
         thrown.expectMessage("Too long duration time");
 
-        List<String> applicants = new ArrayList();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList();
         users.add("testUserId");
         long currentDate=new Date().getTime() + 1;
         long bigDurationTime = 1000 * 60 * 60 * 12 + 1;
-        Appointment app = new Appointment(users, applicants, currentDate, bigDurationTime);
+        Appointment app = new Appointment(users, applicantId, currentDate, bigDurationTime);
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
         List<String> userIdList = new ArrayList<>();
         Collections.addAll(userIdList, "1", "2");
-        List<String> applicantIdList = new ArrayList<>();
-        Collections.addAll(applicantIdList, "1", "2");
-        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        String applicantId = "1";
+        Appointment appointment = new Appointment(userIdList, applicantId, 1401951895035L);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
@@ -137,12 +131,11 @@ public class AppointmentTests extends BaseMVCTest {
 
     @Test
     public void testPostAppointmentAndExpectErrorDueToNonexistentUserAndApplicant() throws Exception {
-        List<String> applicants = new ArrayList<>();
-        applicants.add("some_unexisting_applicant_id");
+        String applicantId = "some_unexisting_applicant_id";
         List<String> users = new ArrayList<>();
         users.add("some_unexisting_user_id");
 
-        Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
+        Appointment appointment = new Appointment(users, applicantId, System.currentTimeMillis() + TOMORROW);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
@@ -178,12 +171,11 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testPostNewAppointmentAndExpectIsOk() throws Exception {
 
-        List<String> applicants = new ArrayList<>();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList<>();
         users.add("testUserId");
 
-        Appointment appointment = new Appointment(users, applicants, 555);
+        Appointment appointment = new Appointment(users, applicantId, 555);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
@@ -199,12 +191,11 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testPostNewAppointmentAndGetAppointmentID() throws Exception {
 
-        List<String> applicants = new ArrayList<>();
-        applicants.add("testApplicantId");
+        String applicantId = "testApplicantId";
         List<String> users = new ArrayList<>();
         users.add("testUserId");
 
-        Appointment appointment = new Appointment(users, applicants, 555);
+        Appointment appointment = new Appointment(users, applicantId, 555);
 
         String appointmentJson = jsonUtil.toJson(appointment);
         String exptectedIdJson = jsonUtil.toJson(4);
