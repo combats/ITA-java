@@ -44,7 +44,6 @@ public class AppointmentController {
     }
  	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-
     public @ResponseBody String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
           return appointmentDAO.putAppointment(appointment);

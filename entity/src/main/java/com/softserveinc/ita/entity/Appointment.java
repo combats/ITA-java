@@ -11,7 +11,7 @@ public class Appointment {
 	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 	private List <String> userIdList = new ArrayList<>();
-	private String applicantId;
+	private String applicantId = "lol";
     private long startTime = System.currentTimeMillis() + TOMORROW;
 	private long durationTime = DEFAULT_DURATION_TIME;
 
@@ -43,7 +43,7 @@ public class Appointment {
 	}
 
     //TODO: Think if we need this method
-	public void setApplicantId(List<String> applicantIdList) {
+	public void setApplicantId(String applicantId) {
 		this.applicantId = applicantId;
 	}
 
@@ -67,7 +67,7 @@ public class Appointment {
 	public String toString() {
 		return "Appointment{" +
 				"userIdList=" + userIdList +
-				", applicantIdList=" + applicantId +
+				", applicantId=" + applicantId +
 				", startTime=" + startTime +
 				", durationTime=" + durationTime +
 				'}';
