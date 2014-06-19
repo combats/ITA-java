@@ -8,4 +8,8 @@ public interface AppointmentService {
     Appointment getAppointmentByApplicantId(String applicantId);
 
     void removeAppointmentById(String appointmentId) throws AppointmentNotFoundException;
+
+    Appointment getAppointmentByAppointmentID(String appointmentId);
+
+    void putAppointment(Appointment appointment);
 }
