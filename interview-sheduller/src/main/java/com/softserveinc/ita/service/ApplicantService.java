@@ -1,6 +1,5 @@
 package com.softserveinc.ita.service;
 
-public interface HttpRestService {
-    public boolean userExists(String userId);
+public interface ApplicantService {
     public boolean applicantExists(String applicantId);
 }
