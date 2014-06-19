@@ -1,7 +1,7 @@
-package com.softserveinc.ita.servise.impl;
+package com.softserveinc.ita.service.impl;
 
-import com.softserveinc.ita.servise.HttpRequestExecutor;
-import com.softserveinc.ita.servise.exeption.HttpRequestException;
+import com.softserveinc.ita.service.HttpRequestExecutor;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;

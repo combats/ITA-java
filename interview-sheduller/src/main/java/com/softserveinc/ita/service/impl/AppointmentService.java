@@ -1,11 +1,11 @@
-package com.softserveinc.ita.service;
+package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.dao.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.entity.Appointment;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AppointmentServiceMock implements AppointmentService {
+public class AppointmentService implements com.softserveinc.ita.service.AppointmentService {
 
     @Autowired
     private AppointmentDAO appointmentDAO;

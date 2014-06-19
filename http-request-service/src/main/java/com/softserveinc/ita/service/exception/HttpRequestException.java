@@ -1,4 +1,4 @@
-package com.softserveinc.ita.servise.exeption;
+package com.softserveinc.ita.service.exception;
 
 
 public class HttpRequestException extends Exception {
