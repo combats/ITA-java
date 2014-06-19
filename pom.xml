@@ -19,6 +19,7 @@
         <module>http-request-sevice</module>
         <module>interview-sheduller</module>
         <module>DAO</module>
+        <module>user-manager</module>
      </modules>
 
     <dependencies>
