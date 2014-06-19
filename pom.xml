@@ -16,9 +16,9 @@
     <modules>
         <module>entity</module>
         <module>common</module>
-        <module>http-request-sevice</module>
+        <module>http-request-service</module>
         <module>interview-sheduller</module>
-        <module>DAO</module>
+        <module>dao</module>
      </modules>
 
     <dependencies>

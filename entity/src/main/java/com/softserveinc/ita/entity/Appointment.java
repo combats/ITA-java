@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+
 import com.softserveinc.ita.entity.exceptions.DateException;
 
 import java.util.ArrayList;
@@ -10,22 +11,22 @@ public class Appointment {
 	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 	private List <String> userIdList = new ArrayList<>();
-	private List <String> applicantIdList = new ArrayList<>();
+	private String applicantId = "lol";
     private long startTime = System.currentTimeMillis() + TOMORROW;
 	private long durationTime = DEFAULT_DURATION_TIME;
 
 	public Appointment() {}
 
-	public Appointment(List<String> userIdList, List<String> applicantIdList, long startTime, long durationTime) {
+	public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
 		this.userIdList = userIdList;
-		this.applicantIdList = applicantIdList;
+		this.applicantId = applicantId;
 		this.startTime = startTime;
 		this.durationTime = durationTime;
 	}
 
-	public Appointment(List<String> userIdList, List<String> applicantIdList, long startTime) {
+	public Appointment(List<String> userIdList, String applicantId, long startTime) {
 		this.userIdList = userIdList;
-		this.applicantIdList = applicantIdList;
+		this.applicantId = applicantId;
 		this.startTime = startTime;
 	}
 
@@ -37,12 +38,13 @@ public class Appointment {
 		this.userIdList = userIdList;
 	}
 
-	public List<String> getApplicantIdList() {
-		return applicantIdList;
+	public String getApplicantId() {
+		return applicantId;
 	}
 
-	public void setApplicantIdList(List<String> applicantIdList) {
-		this.applicantIdList = applicantIdList;
+    //TODO: Think if we need this method
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
 	}
 
 	public long getStartTime() {
@@ -65,7 +67,7 @@ public class Appointment {
 	public String toString() {
 		return "Appointment{" +
 				"userIdList=" + userIdList +
-				", applicantIdList=" + applicantIdList +
+				", applicantId=" + applicantId +
 				", startTime=" + startTime +
 				", durationTime=" + durationTime +
 				'}';
@@ -80,7 +82,7 @@ public class Appointment {
 
 		if (durationTime != that.durationTime) return false;
 		if (startTime != that.startTime) return false;
-		if (!applicantIdList.equals(that.applicantIdList)) return false;
+		if (!applicantId.equals(that.applicantId)) return false;
 		if (!userIdList.equals(that.userIdList)) return false;
 
 		return true;
@@ -89,7 +91,7 @@ public class Appointment {
 	@Override
 	public int hashCode() {
 		int result = userIdList.hashCode();
-		result = 31 * result + applicantIdList.hashCode();
+		result = 31 * result + applicantId.hashCode();
 		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
 		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
 		return result;

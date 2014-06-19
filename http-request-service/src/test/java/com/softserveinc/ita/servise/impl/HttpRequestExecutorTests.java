@@ -1,8 +1,8 @@
 package com.softserveinc.ita.servise.impl;
 import com.softserveinc.ita.BaseHttpReqTest;
 import com.softserveinc.ita.User;
-import com.softserveinc.ita.servise.HttpRequestExecutor;
-import com.softserveinc.ita.servise.exeption.HttpRequestException;
+import com.softserveinc.ita.service.HttpRequestExecutor;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
