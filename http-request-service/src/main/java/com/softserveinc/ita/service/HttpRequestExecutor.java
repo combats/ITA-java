@@ -1,6 +1,6 @@
-package com.softserveinc.ita.servise;
+package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.servise.exeption.HttpRequestException;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
