@@ -40,7 +40,7 @@ public class AppointmentTests extends BaseMVCTest {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
 
-		Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
+		Appointment appointment = new Appointment(users, "1", System.currentTimeMillis() + TOMORROW);
 		String appointmentJson = jsonUtil.toJson(appointment);
 
 		mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
@@ -53,7 +53,7 @@ public class AppointmentTests extends BaseMVCTest {
         Collections.addAll(userIdList, "1", "2");
         List<String> applicantIdList = new ArrayList<>();
         Collections.addAll(applicantIdList, "1", "2");
-        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        Appointment appointment = new Appointment(userIdList, "1", 1401951895035L);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
@@ -70,7 +70,7 @@ public class AppointmentTests extends BaseMVCTest {
         List<String> users = new ArrayList<>();
         users.add("some_unexisting_user_id");
 
-        Appointment appointment = new Appointment(users, applicants, System.currentTimeMillis() + TOMORROW);
+        Appointment appointment = new Appointment(users,"1" , System.currentTimeMillis() + TOMORROW);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))

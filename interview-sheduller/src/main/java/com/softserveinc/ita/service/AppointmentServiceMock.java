@@ -1,5 +1,6 @@
 package com.softserveinc.ita.service;
 
+
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.exceptions.AppointmentNotFoundException;

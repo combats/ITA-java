@@ -12,7 +12,10 @@
     <modules>
         <module>entity</module>
         <module>common</module>
+        <module>DAO</module>
         <module>interview-sheduller</module>
+
+
     </modules>
 
 </project>

@@ -41,7 +41,7 @@ public class AppointmentValidatorTest extends BaseMVCTest{
         Collections.addAll(userIdList, "some_unexisting_applicant_id1", "some_unexisting_applicant_id2");
         List<String> applicantIdList = new ArrayList<>();
         Collections.addAll(applicantIdList, "some_unexisting_applicant_id1", "some_unexisting_applicant_id2");
-        Appointment appointment = new Appointment(userIdList, applicantIdList, 1401951895035L);
+        Appointment appointment = new Appointment(userIdList, "1", 1401951895035L);
 
         Errors errors = new BindException(appointment, "appointment");
         //Act
