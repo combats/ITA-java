@@ -3,7 +3,11 @@ package com.softserveinc.ita.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
+import com.softserveinc.ita.entity.exceptions.DateException;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -11,7 +15,8 @@ import java.util.List;
 public class Appointment {
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
-
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -27,7 +32,7 @@ public class Appointment {
 	private String applicantId;
 
     @Column(name = "StartTime")
-	private long startTime = System.currentTimeMillis();
+	private long startTime = System.currentTimeMillis() + TOMORROW;
 
     @Column(name = "DurationTime")
 	private long durationTime = DEFAULT_DURATION_TIME;
@@ -112,4 +117,15 @@ public class Appointment {
 		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
 		return result;
 	}
+
+    public void dateValidation(long startTime, long durationTime) throws DateException {
+
+        if (durationTime < 0) throw new DateException("Wrong duration time");
+
+        long currentDate=new Date().getTime();
+        if (startTime < currentDate) throw new DateException("Start time has already passed");
+
+        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
+        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
+    }
 }

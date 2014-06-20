@@ -1,18 +1,16 @@
-package com.softserveinc.ita.service;
+package com.softserveinc.ita.service.mocks;
 
 
-import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.softserveinc.ita.service.AppointmentService;
 
 import java.util.*;
 
 public class AppointmentServiceMock implements AppointmentService {
 
 
-    @Autowired
-    AppointmentDAO dao;
+//    @Autowired
+//    AppointmentDAO dao;
 
     @Override
     public Appointment getAppointmentByApplicantId(String applicantId) {
@@ -30,7 +28,7 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public void removeAppointmentById(String appointmentId) throws AppointmentNotFoundException {
+    public void removeAppointmentById(String appointmentId) {
         List<String> userIdList = new ArrayList<>();
         Collections.addAll(userIdList, "1", "2");
         String applId = "3";
@@ -43,14 +41,7 @@ public class AppointmentServiceMock implements AppointmentService {
 
         if (appointmentId.equals("1")) {
             Appointment remove = appointments.remove("1");
-            if (remove == null) {
-                throw new AppointmentNotFoundException();
-            }
-        } else {
-            throw new AppointmentNotFoundException();
         }
-
-
     }
 
     @Override
@@ -59,8 +50,8 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public void putAppointment(Appointment appointment) {
-        //NOP
+    public String putAppointment(Appointment appointment) {
+        return "";
     }
 
 
