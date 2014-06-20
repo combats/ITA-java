@@ -6,7 +6,3 @@ function hide() {
         $("p").show();
     });
 };
-
-function getGroups(){
-    $.getJ
-}

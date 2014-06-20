@@ -14,6 +14,7 @@ public class Group {
     public Group(Status groupStatus, String groupID, Course course){
         this.groupStatus = groupStatus;
         this.groupID = groupID;
+        this.course = course;
     }
 
     public String getGroupID() {

@@ -13,7 +13,7 @@
         <module>entity</module>
         <module>common</module>
         <module>interview-sheduller</module>
-        <module>interview-webui</module>
+        <module>appointment-webui</module>
     </modules>
 
 </project>
