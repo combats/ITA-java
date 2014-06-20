@@ -1,6 +1,6 @@
 package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.BaseMVCTest;
+import com.softserveinc.ita.BaseITATest;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.utils.JsonUtil;
 
@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-public class ApplicantTests extends BaseMVCTest {
+public class ApplicantTest extends BaseITATest {
 
     private MockMvc mockMvc;
 

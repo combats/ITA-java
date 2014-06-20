@@ -1,13 +1,13 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.BaseMVCTest;
+import com.softserveinc.ita.BaseITATest;
 import com.softserveinc.ita.entity.Applicant;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static junit.framework.Assert.assertEquals;
 
-public class ApplicantServiceTests extends BaseMVCTest {
+public class ApplicantServiceTest extends BaseITATest {
 
     @Autowired
     private ApplicantService applicantService;
