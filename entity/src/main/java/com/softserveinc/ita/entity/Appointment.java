@@ -1,11 +1,9 @@
 package com.softserveinc.ita.entity;
 
+import com.softserveinc.ita.entity.exceptions.DateException;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-
-import com.softserveinc.ita.entity.exceptions.DateException;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +14,8 @@ public class Appointment {
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    
+
+
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -83,6 +82,14 @@ public class Appointment {
 	public void setDurationTime(long durationTime) {
 		this.durationTime = durationTime;
 	}
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
 
 	@Override
 	public String toString() {

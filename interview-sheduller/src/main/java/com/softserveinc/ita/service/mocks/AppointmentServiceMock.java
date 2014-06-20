@@ -8,50 +8,57 @@ import java.util.*;
 
 public class AppointmentServiceMock implements AppointmentService {
 
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private LinkedList<Appointment> appointmentsList;
 
-//    @Autowired
-//    AppointmentDAO dao;
+    {
+        String applicantId = "testApplicantId";
+        String appointmentId = "testAppointmentId";
+
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
+        appointment1.setAppointmentId(appointmentId);
+
+        List<String> users2 = new ArrayList<>();
+        Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
+        appointment2.setAppointmentId(appointmentId);
+
+        List<String> users3 = new ArrayList<>();
+        Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
+        appointment3.setAppointmentId(appointmentId);
+
+        appointmentsList = new LinkedList<>();
+        Collections.addAll(appointmentsList, appointment1, appointment2, appointment3);
+    }
+
 
     @Override
     public Appointment getAppointmentByApplicantId(String applicantId) {
-        List<String> userIdList = new ArrayList<>();
-        Collections.addAll(userIdList, "1", "2");
-        String applId = "3";
-        Appointment appointmentOne = new Appointment(userIdList, applId, 1401951895035L);
-        Appointment appointmentTwo = new Appointment(userIdList, applId, 1401952037427L);
-
-        if (applicantId.equals("1")) {
-            return appointmentOne;
+        if (applicantId.equals("testApplicantId")) {
+            return appointmentsList.get(0);
         } else {
-            return appointmentTwo;
+            return appointmentsList.get(2);
         }
     }
 
     @Override
     public void removeAppointmentById(String appointmentId) {
-        List<String> userIdList = new ArrayList<>();
-        Collections.addAll(userIdList, "1", "2");
-        String applId = "3";
-        Appointment appointmentOne = new Appointment(userIdList, applId, 1401951895035L);
-        Appointment appointmentTwo = new Appointment(userIdList, applId, 1401952037427L);
 
-        Map<String, Appointment> appointments = new HashMap<>();
-        appointments.put("1", appointmentOne);
-        appointments.put("2", appointmentTwo);
+    }
 
-        if (appointmentId.equals("1")) {
-            Appointment remove = appointments.remove("1");
+    @Override
+    public Appointment getAppointmentByAppointmentId(String appointmentId) {
+        if (appointmentId.equals("testAppointmentId")) {
+            return appointmentsList.get(0);
+        } else {
+            return appointmentsList.get(2);
         }
     }
 
     @Override
-    public Appointment getAppointmentByAppointmentID(String appointmentId) {
-        return null;
-    }
-
-    @Override
-    public String putAppointment(Appointment appointment) {
-        return "";
+    public String addAppointment(Appointment appointment) {
+        return "testAppointmentId";
     }
 
 

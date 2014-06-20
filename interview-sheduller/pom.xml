@@ -77,15 +77,7 @@
             <version>1.1.0.Final</version>
         </dependency>
 
-
-
         <!--Common-->
-        <dependency>
-            <groupId>com.softserveinc.ita</groupId>
-            <artifactId>DAO</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
             <artifactId>entity</artifactId>
@@ -94,11 +86,6 @@
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
             <artifactId>common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.softserveinc.ita</groupId>
-            <artifactId>dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

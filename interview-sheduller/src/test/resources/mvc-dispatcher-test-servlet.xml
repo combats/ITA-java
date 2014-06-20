@@ -20,11 +20,11 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.AppointmentServiceMock" />
-
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
-
-    <bean id="service" class="com.softserveinc.ita.service.impl.HttpRestServiceMock"/>
-
+    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
+    <!--aux/utils-->
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
+    <!--external services-->
+    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
+    <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
 </beans>
