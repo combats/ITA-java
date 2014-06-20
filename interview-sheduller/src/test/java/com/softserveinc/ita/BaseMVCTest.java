@@ -16,6 +16,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 @RunWith(SpringJUnit4ClassRunner.class)
+
 @WebAppConfiguration
 @ContextConfiguration(locations={"classpath:/interview-sheduller-spring-config.xml"})
 public abstract class BaseMVCTest {
