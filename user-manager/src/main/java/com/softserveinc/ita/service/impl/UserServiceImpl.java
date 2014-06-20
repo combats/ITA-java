@@ -1,9 +1,10 @@
-package com.softserveinc.ita.service;
+package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
-import com.softserveinc.ita.userDAO.UserDAOMockImpl;
+import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
+import com.softserveinc.ita.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

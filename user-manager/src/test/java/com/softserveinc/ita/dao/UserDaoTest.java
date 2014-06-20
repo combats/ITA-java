@@ -1,4 +1,4 @@
-package com.softserveinc.ita.userDAO;
+package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.User;
 import org.junit.Test;

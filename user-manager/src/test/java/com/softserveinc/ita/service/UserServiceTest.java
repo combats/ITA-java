@@ -1,13 +1,12 @@
-package com.softserveinc.ita.userService;
+package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
-import com.softserveinc.ita.service.UserService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class UserServiceTest extends UserServiceBaseTest{
+public class UserServiceTest extends BaseServiceTest {
 
     @Autowired
     private UserService userServiceImpl;
