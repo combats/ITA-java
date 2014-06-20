@@ -1,5 +1,6 @@
-package com.softserveinc.ita.dao;
+package com.softserveinc.ita.dao.impl;
 
+import com.softserveinc.ita.dao.ApplicantDao;
 import com.softserveinc.ita.entity.Applicant;
 import org.springframework.stereotype.Repository;
 
@@ -7,9 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class ApplicantDAOMockImpl implements ApplicantDAO {
+public class ApplicantDaoMockImpl implements ApplicantDao {
 
-    public ApplicantDAOMockImpl(){
+    public ApplicantDaoMockImpl(){
     }
 
     @Override

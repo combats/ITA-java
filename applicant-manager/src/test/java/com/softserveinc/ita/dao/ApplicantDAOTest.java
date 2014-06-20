@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static junit.framework.Assert.assertEquals;
 
-public class ApplicantDAOTest extends BaseDAOTest {
+public class ApplicantDaoTest extends BaseApplicantDaoTest {
 
     @Autowired
-    private ApplicantDAO applicantDAOMockImpl;
+    private ApplicantDao applicantDAOMockImpl;
 
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {

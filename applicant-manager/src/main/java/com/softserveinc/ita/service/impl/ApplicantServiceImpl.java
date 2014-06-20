@@ -1,8 +1,9 @@
-package com.softserveinc.ita.service;
+package com.softserveinc.ita.service.impl;
 
-        import com.softserveinc.ita.dao.ApplicantDAO;
+        import com.softserveinc.ita.dao.ApplicantDao;
         import com.softserveinc.ita.entity.Applicant;
         import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
+        import com.softserveinc.ita.service.ApplicantService;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ package com.softserveinc.ita.service;
 public class ApplicantServiceImpl implements ApplicantService {
 
     @Autowired
-    private ApplicantDAO applicantDAOMockImpl;
+    private ApplicantDao applicantDAOMockImpl;
 
     public Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException {
         Applicant searchedApplicant = applicantDAOMockImpl.getApplicantById(applicantId);

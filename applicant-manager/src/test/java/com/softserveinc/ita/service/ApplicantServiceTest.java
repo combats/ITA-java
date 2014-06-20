@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import static junit.framework.Assert.assertEquals;
 
-public class ApplicantServiceTest extends BaseServiceTest{
+public class ApplicantServiceTest extends BaseApplicantServiceTest {
 
     @Autowired
     private ApplicantService applicantServiceImpl;
