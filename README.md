@@ -1,14 +1,13 @@
-Few sprints have passed
-======
-And this branch is finally fixed. It simply works and this is important.
----
+I had a few tasks to do:
 
-Пам'ятка на майбутнє:
-------
-### *Squash потрібен тільки в рамках фічі, бо review'еру НЕ ЦІКАВО слідкувати за процесом польоту фантазії, проб, помилок, тощо. Тільки кінцевий результат.*
+1) Create Interview Entity;
+2) Create Interview factory. I want to be able to create several types of interview - without questions; only with standard questions; with user and standard questions.
+3) Create dao, service and controller for Interview.
+4) Create "addNewInterview" and "getInterviewByApplicantId" in service, controller and dao.
+5) Create question entity, question information entity and question block entity.
+Question information - with question, answer, mark, comment etc.
+Question block - block of questions (in practice List<QuestionsInformation>) from each user.
+Now we can also create standard questions for every user.
+6) I merged my last task - "editAppointmentByAppointmentId" with this one. Now I think I can delete this branch from pull request.
 
-In code we trust!
-
-<a href="http://www.youtube.com/watch?feature=player_embedded&v=Eq3CuMDXaPs
-" target="_blank"><img src="http://img.youtube.com/vi/Eq3CuMDXaPs/0.jpg" 
-alt="AND SO YOU CODE" width="240" height="180" border="10" /></a>
+Vadim Naumenko.

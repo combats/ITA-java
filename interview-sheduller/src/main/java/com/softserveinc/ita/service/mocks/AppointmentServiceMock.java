@@ -112,4 +112,16 @@ public class AppointmentServiceMock implements AppointmentService {
         Appointment appointment = getAppointmentByAppointmentId(appointmentId);
         return appointment.getUserIdList();
     }
+
+    @Override
+    public Appointment editAppointmentById(String appointmentId, Appointment appointment) throws ApppoinmentNotFoundException{
+        for (int i=0; i < appointmentList.size(); i++){
+            if (appointmentList.get(i).getAppointmentId().equals(appointmentId)){
+                appointmentList.add(i, appointment);
+            return appointmentList.get(i);
+            }
+
+        }
+        throw new ApppoinmentNotFoundException("Wrong Id");
+    }
 }

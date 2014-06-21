@@ -11,4 +11,5 @@ public interface AppointmentService {
     void removeAppointmentById(String appointmentId);
     Appointment getAppointmentByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException;
     List<String> getUsersListByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException;
+    Appointment editAppointmentById(String id, Appointment appointment) throws ApppoinmentNotFoundException;
 }

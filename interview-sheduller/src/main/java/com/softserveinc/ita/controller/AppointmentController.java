@@ -54,4 +54,14 @@ public class AppointmentController {
 
        return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
+
+    @RequestMapping(value = "/edit/{id}", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+
+    public @ResponseBody Appointment editAppointmentById(@PathVariable("id") String appointmentId, @RequestBody Appointment appointment)
+    throws ApppoinmentNotFoundException{
+
+        appointmentService.editAppointmentById(appointmentId, appointment);
+        return appointment;
+    }
 }
