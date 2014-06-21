@@ -2,11 +2,13 @@ package com.softserveinc.ita.interviewfactory;
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
+
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.service.UserService;
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
 import com.softserveinc.ita.service.mocks.UserServiceMock;
+
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 

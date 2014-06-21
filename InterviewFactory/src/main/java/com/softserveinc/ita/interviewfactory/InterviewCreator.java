@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
 
+
 /**
  * Created with IntelliJ IDEA.
  * User: Вадим

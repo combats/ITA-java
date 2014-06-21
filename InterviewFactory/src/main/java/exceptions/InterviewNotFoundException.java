@@ -1,14 +1,13 @@
-package com.softserveinc.ita.dao.exceptions;
+package exceptions;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Вадим
- * Date: 18.06.14
- * Time: 15:49
+ * Date: 21.06.14
+ * Time: 21:41
  * To change this template use File | Settings | File Templates.
  */
 public class InterviewNotFoundException extends InterviewException {
-
     public InterviewNotFoundException() {
     }
 
