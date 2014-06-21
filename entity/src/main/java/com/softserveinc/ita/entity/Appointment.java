@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import com.softserveinc.ita.entity.exceptions.DateException;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,68 +21,75 @@ public class Appointment {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "AppointmentId", unique = true)
+    @Expose
     private String appointmentId;
 
     @ElementCollection
     @CollectionTable(name = "Users", joinColumns = @JoinColumn(name = "UserId"))
-	@Column(name = "UserIdList")
-	private List <String> userIdList = new ArrayList<>();
+    @Column(name = "UserIdList")
+    private List <String> userIdList = new ArrayList<>();
+
 
     @Column(name = "ApplicantId")
-	private String applicantId;
+    @Expose
+    private String applicantId;
+
 
     @Column(name = "StartTime")
-	private long startTime = System.currentTimeMillis() + TOMORROW;
+    @Expose
+    private long startTime = System.currentTimeMillis() + TOMORROW;
+
 
     @Column(name = "DurationTime")
-	private long durationTime = DEFAULT_DURATION_TIME;
+    @Expose
+    private long durationTime = DEFAULT_DURATION_TIME;
 
-	public Appointment() {}
+    public Appointment() {}
 
-	public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
-		this.userIdList = userIdList;
-		this.applicantId = applicantId;
-		this.startTime = startTime;
-		this.durationTime = durationTime;
-	}
+    public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
+        this.userIdList = userIdList;
+        this.applicantId = applicantId;
+        this.startTime = startTime;
+        this.durationTime = durationTime;
+    }
 
-	public Appointment(List<String> userIdList, String applicantId, long startTime) {
-		this.userIdList = userIdList;
-		this.applicantId = applicantId;
-		this.startTime = startTime;
-	}
+    public Appointment(List<String> userIdList, String applicantId, long startTime) {
+        this.userIdList = userIdList;
+        this.applicantId = applicantId;
+        this.startTime = startTime;
+    }
 
-	public List<String> getUserIdList() {
-		return userIdList;
-	}
+    public List<String> getUserIdList() {
+        return userIdList;
+    }
 
-	public void setUserIdList(List<String> userIdList) {
-		this.userIdList = userIdList;
-	}
+    public void setUserIdList(List<String> userIdList) {
+        this.userIdList = userIdList;
+    }
 
-	public String getApplicantId() {
-		return applicantId;
-	}
+    public String getApplicantId() {
+        return applicantId;
+    }
 
-	public void setApplicantId(String applicantId) {
-		this.applicantId = applicantId;
-	}
+    public void setApplicantId(String applicantId) {
+        this.applicantId = applicantId;
+    }
 
-	public long getStartTime() {
-		return startTime;
-	}
+    public long getStartTime() {
+        return startTime;
+    }
 
-	public void setStartTime(long startTime) {
-		this.startTime = startTime;
-	}
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
 
-	public long getDurationTime() {
-		return durationTime;
-	}
+    public long getDurationTime() {
+        return durationTime;
+    }
 
-	public void setDurationTime(long durationTime) {
-		this.durationTime = durationTime;
-	}
+    public void setDurationTime(long durationTime) {
+        this.durationTime = durationTime;
+    }
 
     public String getAppointmentId() {
         return appointmentId;
@@ -91,39 +99,40 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
-	@Override
-	public String toString() {
-		return "Appointment{" +
-				"userIdList=" + userIdList +
-				", applicantId=" + applicantId +
-				", startTime=" + startTime +
-				", durationTime=" + durationTime +
-				'}';
-	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "userIdList=" + userIdList +
+                ", applicantId=" + applicantId +
+                ", startTime=" + startTime +
+                ", durationTime=" + durationTime +
+                '}';
+    }
 
-		Appointment that = (Appointment) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
-		if (durationTime != that.durationTime) return false;
-		if (startTime != that.startTime) return false;
-		if (!applicantId.equals(that.applicantId)) return false;
-		if (!userIdList.equals(that.userIdList)) return false;
+        Appointment that = (Appointment) o;
 
-		return true;
-	}
+        if (durationTime != that.durationTime) return false;
+        if (startTime != that.startTime) return false;
+        if (!applicantId.equals(that.applicantId)) return false;
+        if (!userIdList.equals(that.userIdList)) return false;
 
-	@Override
-	public int hashCode() {
-		int result = userIdList.hashCode();
-		result = 31 * result + applicantId.hashCode();
-		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
-		return result;
-	}
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userIdList.hashCode();
+        result = 31 * result + applicantId.hashCode();
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
+        return result;
+    }
 
     public void dateValidation(long startTime, long durationTime) throws DateException {
 

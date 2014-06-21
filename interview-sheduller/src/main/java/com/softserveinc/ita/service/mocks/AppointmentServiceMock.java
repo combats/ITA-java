@@ -1,45 +1,90 @@
 package com.softserveinc.ita.service.mocks;
 
 
-import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 
 public class AppointmentServiceMock implements AppointmentService {
 
+
+    private long startTime = 1403308782454L;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    private LinkedList<Appointment> appointmentsList;
 
-    {
-        String applicantId = "testApplicantId";
-        String appointmentId = "testAppointmentId";
+    //-------------VadimNaumenko mock for tests------------------------------------
 
-        List<String> users = new ArrayList<>();
-        users.add("testUserId");
-        Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
-        appointment1.setAppointmentId(appointmentId);
+//
+//    @Autowired
+//    private User user1;
+//
+//    @Autowired
+//    private User user2;
+//
+//    @Autowired
+//    private User user3;
+//
+//    @Autowired
+//    private Applicant applicant1;
+//
+//    @Autowired
+//    private Applicant applicant2;
+    //  @Autowired
+    //  private User user2;
 
-        List<String> users2 = new ArrayList<>();
-        Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
-        appointment2.setAppointmentId(appointmentId);
+    //  @Autowired
+    //  private User user3;
 
-        List<String> users3 = new ArrayList<>();
-        Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
-        appointment3.setAppointmentId(appointmentId);
+    Appointment appointment1;
+    Appointment appointment2;
 
-        appointmentsList = new LinkedList<>();
-        Collections.addAll(appointmentsList, appointment1, appointment2, appointment3);
+    private User user1 = new User("1", "IT Project Manager");
+    private User user2 = new User("2", "Software Developer");
+    private User user3 = new User("3", "HR Manager");
+
+    private Applicant applicant1 = new Applicant("1", "Gena");
+    private Applicant applicant2 = new Applicant("2", "Gesha");
+
+    List<String> usersIdList = new ArrayList<String>(); {
+
+        Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
+        Question question2 = new Question("Have you ever were connected with database developing?", 3);
+        Question question3 = new Question("Tell me something about JUnit testing.", 2);
+        Question question4 = new Question("Your last book you read?", 3);
+        Question question5 = new Question("Where did you study?", 2);
+        Question question6 = new Question("Are you married?", 3);
+        List<Question> questionsList1 = new ArrayList<>();
+        Collections.addAll(questionsList1, question1, question2);
+        user1.setQuestion(questionsList1);
+        List<Question> questionsList2 = new ArrayList<>();
+        Collections.addAll(questionsList2, question3, question4);
+        user2.setQuestion(questionsList1);
+        List<Question> questionsList3 = new ArrayList<>();
+        Collections.addAll(questionsList3, question5, question6);
+        user3.setQuestion(questionsList1);
+        Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
     }
 
+    List<Appointment> appointmentList = new ArrayList<>();{
+    appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
+        appointment1.setAppointmentId("1");
+    appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment2.setAppointmentId("2");
+        appointmentList.add(appointment1);
+        appointmentList.add(appointment2);
+    }
+    //-------------VadimNaumenko mock from tests
 
     @Override
     public Appointment getAppointmentByApplicantId(String applicantId) {
-        if (applicantId.equals("testApplicantId")) {
-            return appointmentsList.get(0);
-        } else {
-            return appointmentsList.get(2);
+        if (applicantId.equals("1")) {
+            return appointmentList.get(0);
+        } else if (applicantId.equals("2")){
+            return appointmentList.get(1);
         }
+        else return null;
     }
 
     @Override
@@ -48,12 +93,13 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public Appointment getAppointmentByAppointmentId(String appointmentId) {
-        if (appointmentId.equals("testAppointmentId")) {
-            return appointmentsList.get(0);
-        } else {
-            return appointmentsList.get(2);
+    public Appointment getAppointmentByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException{
+        for (Appointment appointment : appointmentList){
+            if (appointment.getAppointmentId().equals(appointmentId)) return appointment;
+
         }
+
+        throw new ApppoinmentNotFoundException("Wrong Id");
     }
 
     @Override
@@ -61,5 +107,9 @@ public class AppointmentServiceMock implements AppointmentService {
         return "testAppointmentId";
     }
 
-
+    @Override
+    public List<String> getUsersListByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException {
+        Appointment appointment = getAppointmentByAppointmentId(appointmentId);
+        return appointment.getUserIdList();
+    }
 }

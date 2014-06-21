@@ -1,33 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <context:annotation-config />
-    <context:component-scan base-package="com.softserveinc.ita"/>
-    <context:component-scan base-package="com.softserveinc.ita.dao"/>
-    <context:component-scan base-package="com.softserveinc.ita.service.*" />
-    <mvc:annotation-driven/>
-
-
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/pages/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
-    <!--aux/utils-->
-    <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
-    <!--external services-->
-    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
-
-    <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
 
     <bean id="user1" class="com.softserveinc.ita.entity.User">
         <constructor-arg name="userID"  value= "1"/>
@@ -74,6 +50,8 @@
         <constructor-arg name="name"  value= "Gesha"/>
     </bean>
 
+
+
     <bean id="userQuestion1" class="com.softserveinc.ita.entity.Question">
         <constructor-arg name="questionBody"  value= "Have you ever were connected with quality assurance engineering?"/>
         <constructor-arg name="weight"  value= "2"/>
@@ -103,5 +81,23 @@
         <constructor-arg name="questionBody"  value= "Are you married?"/>
         <constructor-arg name="weight"  value= "3"/>
     </bean>
+
+    <bean id="appointment1" class="com.softserveinc.ita.entity.Appointment">
+
+        <property name="appointmentId" value = "1"/>
+
+    </bean>
+
+    <bean id="appointment2" class="com.softserveinc.ita.entity.Appointment">
+
+        <property name="appointmentId" value = "2"/>
+
+    </bean>
+
+    <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
+    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
+    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
+
+
 
 </beans>

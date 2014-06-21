@@ -84,7 +84,7 @@ public class AppointmentTests extends BaseMVCTest {
         String applicantId = "testApplicantId";
         List<String> users = new ArrayList();
         users.add("testUserId");
-        Appointment app = new Appointment(users, applicantId,Long.valueOf(11), Long.valueOf(2));
+        Appointment app = new Appointment(users, applicantId, Long.valueOf(11), Long.valueOf(2));
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
 
@@ -96,7 +96,7 @@ public class AppointmentTests extends BaseMVCTest {
         String applicantId = "testApplicantId";
         List<String> users = new ArrayList();
         users.add("testUserId");
-        Appointment app = new Appointment(users, applicantId,Long.valueOf(11), Long.valueOf(-2));
+        Appointment app = new Appointment(users, applicantId, Long.valueOf(11), Long.valueOf(-2));
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
 

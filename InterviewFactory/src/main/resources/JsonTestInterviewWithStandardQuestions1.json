@@ -1,0 +1,51 @@
+{
+    "AppointmentId": "1",
+    "AnswerBlocks": [
+        {
+            "Questions": [
+                {
+                    "Question": "What is your name?",
+                    "Answer": "",
+                    "Mark": 0,
+                    "Comment": ""
+                },
+                {
+                    "Question": "How are you?",
+                    "Answer": "",
+                    "Mark": 0,
+                    "Comment": ""
+                }
+            ],
+            "FinalComment": "",
+            "BonusPoints": 0
+        },
+        {
+            "User": {
+                "UserID": "1",
+                "Name": "IT Project Manager"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        },
+        {
+            "User": {
+                "UserID": "2",
+                "Name": "Software Developer"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        },
+        {
+            "User": {
+                "UserID": "3",
+                "Name": "HR Manager"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        }
+    ],
+    "FinalComment": ""
+}

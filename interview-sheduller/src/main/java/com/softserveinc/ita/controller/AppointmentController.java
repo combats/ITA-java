@@ -1,6 +1,8 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
+import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +50,7 @@ public class AppointmentController {
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
+    public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId)  throws ApppoinmentNotFoundException {
 
        return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
