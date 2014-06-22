@@ -1,15 +1,33 @@
 package com.softserveinc.ita.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 
 public class Group implements Serializable {
 
-    public enum Status {
-        STATUS1("Status1"), STATUS2("Status2");
+    public enum Status implements Serializable {
 
+        STATUS1("Status1"), STATUS2("Status2");
+        private String name;
+        Status(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public enum Course implements Serializable {
+
+        JAVA("Java"), SHARP("Sharp"), DEVOPS("DevOps"), JAVASCRIPT("JavaScript");
         private String name;
 
-        Status(String name) {
+        Course(String name) {
             this.name = name;
         }
 
@@ -22,8 +40,8 @@ public class Group implements Serializable {
         }
     }
 
-    public enum Course {JAVA , SHARP, PYTHON}
     private String groupID;
+    private String groupName;
     private Status groupStatus;
     private Course course;
 
