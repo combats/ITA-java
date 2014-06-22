@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc;
 
-import com.google.gson.reflect.TypeToken;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
