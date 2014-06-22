@@ -1,8 +1,27 @@
 package com.softserveinc.ita.entity;
 
-public class Group {
+import java.io.Serializable;
 
-    public enum Status {STATUS1, STATUS2}
+public class Group implements Serializable {
+
+    public enum Status {
+        STATUS1("Status1"), STATUS2("Status2");
+
+        private String name;
+
+        Status(String name) {
+            this.name = name;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+
     public enum Course {JAVA , SHARP, PYTHON}
     private String groupID;
     private Status groupStatus;

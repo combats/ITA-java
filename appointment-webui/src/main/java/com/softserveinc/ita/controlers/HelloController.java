@@ -2,7 +2,6 @@ package com.softserveinc.ita.controlers;
 
 import com.softserveinc.ita.entity.Group;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,10 +37,10 @@ public class HelloController {
         return new Group(Group.Status.STATUS1, "id0", Group.Course.PYTHON);
     }
 
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{status}", method = RequestMethod.GET)
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(Group.Status status) {
+    ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
         ArrayList<Group> groups = new ArrayList() {
             {
                 add(new Group(Group.Status.STATUS1, "id1", Group.Course.PYTHON));
@@ -54,13 +53,13 @@ public class HelloController {
                 add(new Group(Group.Status.STATUS2, "id8", Group.Course.JAVA));
             }
         };
-        ArrayList<Group> groupsByStatus = new ArrayList<Group>();
+        ArrayList<Group> chosenByStatusGroups = new ArrayList<Group>();
         for (Group group : groups) {
-            if (status.equals(group.getGroupStatus())) {
-                groupsByStatus.add(group);
+            if (status.equals(group.getGroupStatus().getName())) {
+                chosenByStatusGroups.add(group);
             }
         }
-        return groupsByStatus;
+        return chosenByStatusGroups;
     }
 
 }
