@@ -31,4 +31,12 @@ public class ApplicantServiceImpl implements ApplicantService {
         }
         return searchedApplicant;
     }
+
+    public Applicant addNewApplicant(Applicant applicant){
+        return applicantDao.addNewApplicant(applicant);
+    }
+
+    public Applicant editApplicant(Applicant applicant){
+        return applicantDao.editApplicant(applicant);
+    }
 }

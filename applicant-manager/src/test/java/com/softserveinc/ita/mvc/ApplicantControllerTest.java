@@ -1,5 +1,6 @@
 package com.softserveinc.ita.mvc;
 
+import com.google.gson.reflect.TypeToken;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -9,9 +10,12 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -57,15 +61,13 @@ public class ApplicantControllerTest extends BaseMVCTest {
         standart.add(new Applicant("124"));
         standart.add(new Applicant("125"));
 
-        String responce = mockMvc.perform(get("/applicants")
+        String response = mockMvc.perform(get("/applicants")
                 .content("get applicants list"))
                 .andExpect(status()
                         .isOk())
                 .andReturn().getResponse().getContentAsString();
-
-        String jsonstandart = jsonUtil.toJson(standart);
-
-        assertEquals(jsonstandart, responce);
+        Applicant[] applicantsFromServer = jsonUtil.fromJson(response, Applicant[].class);
+        assertTrue(Arrays.asList(applicantsFromServer).containsAll(standart));
     }
 
 
@@ -131,5 +133,42 @@ public class ApplicantControllerTest extends BaseMVCTest {
         mockMvc.perform(
                 get("/applicants/id2")
         ).andExpect(content().string(jsonApplicant));
+    }
+
+    @Test
+    public void testPostNewApplicantAndExpectIsOk() throws Exception {
+
+        Applicant applicant = new Applicant();
+        String applicantJson = jsonUtil.toJson(applicant);
+
+        mockMvc.perform(
+                post("/applicants")
+                        .content(applicantJson).contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPostNewApplicantAndGetTheSameApplicant() throws Exception {
+
+        String applicantJson = jsonUtil.toJson(new Applicant());
+
+        String newApplicantJson = mockMvc.perform(
+                post("/applicants")
+                        .content(applicantJson).contentType(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Applicant newApplicant = jsonUtil.fromJson(newApplicantJson, Applicant.class);
+
+        String applicantFromServerJson = mockMvc.perform(
+                get("/applicants/" + newApplicant.getApplicantID())
+        )
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        Applicant applicantFromServer = jsonUtil.fromJson(applicantFromServerJson, Applicant.class);
+        assertEquals(newApplicant, applicantFromServer);
     }
 }

@@ -25,4 +25,18 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
         String applicantId = "id4";
         applicantService.getApplicantById(applicantId);
     }
+
+    @Test
+    public void testAddApplicantAndGetTheSameApplicant() throws Exception {
+        Applicant newApplicant = applicantService.addNewApplicant(new Applicant());
+        Applicant receivedApplicant = applicantService.getApplicantById(newApplicant.getApplicantID());
+        assertEquals(newApplicant, receivedApplicant);
+    }
+
+    @Test
+    public void testAddApplicantAndEditTheSameApplicant() throws Exception {
+        Applicant newApplicant = applicantService.addNewApplicant(new Applicant());
+        Applicant editedApplicant = applicantService.editApplicant(newApplicant);
+        assertEquals(newApplicant.getApplicantID(), editedApplicant.getApplicantID());
+    }
 }

@@ -2,27 +2,31 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
+
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.GroupNotFoundException;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class ApplicantDAOMockImpl implements ApplicantDAO {
-    List<Applicant> applicants;
     private Map<String, Group> db;
     private List<Applicant> applicantsInAGroup;
     private Group group;
+    private AtomicInteger idAutoGeneration = new AtomicInteger();
+    private Hashtable<String, Applicant> applicants = new Hashtable<String, Applicant>();
 
     public ApplicantDAOMockImpl() {
-        applicants = new ArrayList<>();
-        applicants.add(new Applicant("123"));
-        applicants.add(new Applicant("124"));
-        applicants.add(new Applicant("125"));
+        applicants = new Hashtable<>();
+        applicants.put("123", new Applicant("123"));
+        applicants.put("124", new Applicant("124"));
+        applicants.put("125", new Applicant("125"));
+        applicants.put("id1", new Applicant("id1"));
+        applicants.put("id2", new Applicant("id2"));
+        applicants.put("id3", new Applicant("id3"));
 
         db = new HashMap<>();
         applicantsInAGroup = new ArrayList<>();
@@ -39,7 +43,7 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
 
     @Override
     public List<Applicant> getApplicants() {
-        return applicants;
+        return new ArrayList<Applicant>(applicants.values());
     }
 
     @Override
@@ -58,18 +62,25 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
 
     @Override
     public Applicant getApplicantById(String applicantId) {
-        List<Applicant> applicants = new ArrayList() {
-            {
-                add(new Applicant("id1"));
-                add(new Applicant("id2"));
-                add(new Applicant("id3"));
-            }
-        };
-        for (Applicant applicant : applicants) {
-            if (applicantId.equals(applicant.getApplicantID())) {
-                return applicant;
-            }
-        }
-        return null;
+        return applicants.get(applicantId);
+    }
+
+    @Override
+    public Applicant addNewApplicant(Applicant applicant){
+        /**
+         *  because of Applicant pojo doesn't contain any fields except id now, validation
+         *  for not having equal object in DB has not been implemented
+         **/
+        String newApplicantId = String.valueOf(idAutoGeneration.incrementAndGet());
+        applicant.setApplicantID(newApplicantId);
+        applicants.put(newApplicantId, applicant);
+        return applicant;
+    }
+
+    @Override
+    public Applicant editApplicant(Applicant applicant){
+        String applicantForEditId = applicant.getApplicantID();
+        applicants.put(applicantForEditId, applicant);
+        return applicant;
     }
 }

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.*;
 
 public class ApplicantDAOTest extends BaseApplicantDAOTest {
 
@@ -21,7 +21,7 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
         applicants.add(new Applicant("123"));
         applicants.add(new Applicant("124"));
         applicants.add(new Applicant("125"));
-        assertEquals(applicants, applicantDao.getApplicants());
+        assertTrue(applicantDao.getApplicants().containsAll(applicants));
         assertEquals(applicants, applicantDao.getApplicantsInAGroup("1"));
     }
 
@@ -41,5 +41,23 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     public void testGetApplicantByNotExistingIdAndExpectNull()throws Exception{
         String applicantId = "id4";
         assertEquals(null,applicantDao.getApplicantById(applicantId));
+    }
+
+    @Test
+    public void testAddApplicantAndGetTheSameApplicant() throws Exception {
+        Applicant newApplicant = applicantDao.addNewApplicant(new Applicant());
+        assertNotNull(newApplicant);
+        assertFalse(newApplicant.getApplicantID().isEmpty());
+        Applicant receivedApplicant = applicantDao.getApplicantById(newApplicant.getApplicantID());
+        assertEquals(newApplicant, receivedApplicant);
+    }
+
+    @Test
+    public void testAddApplicantAndEditTheSameApplicant() throws Exception {
+        Applicant newApplicant = applicantDao.addNewApplicant(new Applicant());
+        assertNotNull(newApplicant);
+        assertFalse(newApplicant.getApplicantID().isEmpty());
+        Applicant editedApplicant = applicantDao.editApplicant(newApplicant);
+        assertEquals(newApplicant.getApplicantID(), editedApplicant.getApplicantID());
     }
 }
