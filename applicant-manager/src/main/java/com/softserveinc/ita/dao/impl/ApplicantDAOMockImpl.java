@@ -20,7 +20,6 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     private Hashtable<String, Applicant> applicants = new Hashtable<String, Applicant>();
 
     public ApplicantDAOMockImpl() {
-        applicants = new Hashtable<>();
         applicants.put("123", new Applicant("123"));
         applicants.put("124", new Applicant("124"));
         applicants.put("125", new Applicant("125"));
