@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
