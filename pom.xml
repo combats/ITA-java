@@ -90,4 +90,22 @@
             <version>1.7.2</version>
         </dependency>
     </dependencies>
+    
+  
+    
+ <distributionManagement>
+
+  <repository>
+    <id>deployment</id>
+    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-release</url>
+  </repository>
+
+  <snapshotRepository>
+    <id>deployment</id>
+    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-snapshot</url>
+  </snapshotRepository>
+  
+</distributionManagement>
+
+
 </project>
