@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.util.UriComponentsBuilder;
+import java.util.List;
 
 @Controller
 @RequestMapping("/users")
@@ -69,6 +70,15 @@ public class UserController {
         headers.setLocation(
                 builder.path("/users/{userID}").buildAndExpand(createdUser.getUserID().toString()).toUri());
         return new ResponseEntity<>(createdUser, headers, HttpStatus.CREATED);
+    }
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public ResponseEntity<List<User>> getUsers() {
+        List<User> response = userService.getUsers();
+        if (response == null || response.isEmpty()) {
+            return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
 

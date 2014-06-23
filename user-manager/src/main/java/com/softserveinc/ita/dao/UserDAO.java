@@ -5,6 +5,7 @@ import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface UserDAO {
     User getUserByID(String UserID);
@@ -17,4 +18,5 @@ public interface UserDAO {
 
     User postNewUser(User user) throws UserAlreadyExistsException;
 
+    List<User> getUsers();
 }

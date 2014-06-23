@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,6 +53,11 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public List<User> getUsers() {
+        return userDao.getUsers();
+    }
+
     private boolean isEmpty(User changingUser) {
         if (changingUser == null
                 || changingUser.getAge() == User.DEFAULT_USER_AGE
@@ -60,4 +66,5 @@ public class UserServiceImpl implements UserService {
         }
         return false;
     }
+
 }

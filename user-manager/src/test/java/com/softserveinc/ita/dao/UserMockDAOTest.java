@@ -9,10 +9,7 @@ import org.junit.Test;
 import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import java.util.ArrayList;
+import java.util.*;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
@@ -127,6 +124,13 @@ public class UserMockDAOTest extends BaseDAOTest {
     public void testAddNewUserWithOkIDReturnsThatUser() throws Exception {
         User testUser = new User("42");
         Assert.assertEquals(testUser, userDAO.postNewUser(testUser));
+    }
+
+    @Test
+    public void testGetUsersAndExpectDefinedList() {
+        List<User> sampleUserList = new ArrayList<>();
+        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
+        Assert.assertEquals(sampleUserList, userDAO.getUsers());
     }
 
 }

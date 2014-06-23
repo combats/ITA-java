@@ -7,8 +7,9 @@ import com.softserveinc.ita.exception.UserDoesNotExistException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -66,4 +67,12 @@ public class UserServiceTest extends BaseServiceTest {
         User testUser = new User("42");
         assertEquals(testUser, userService.postNewUser(testUser));
     }
+
+    @Test
+    public void testGetUsersAndExpectDefinedList() {
+        List<User> sampleUserList = new ArrayList<>();
+        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
+        assertEquals(sampleUserList, userService.getUsers());
+    }
+
 } 

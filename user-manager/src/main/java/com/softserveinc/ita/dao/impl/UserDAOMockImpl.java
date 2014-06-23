@@ -5,10 +5,8 @@ import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.springframework.stereotype.Repository;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+
+import java.util.*;
 
 @Repository
 public class UserDAOMockImpl implements UserDAO {
@@ -19,6 +17,13 @@ public class UserDAOMockImpl implements UserDAO {
         dbOfUsers.put("121", new User("121"));
         dbOfUsers.put("122", new User("122"));
         dbOfUsers.put("123", new User("123"));
+    }
+
+    @Override
+    public List<User> getUsers() {
+        List<User> users = new ArrayList<>();
+        Collections.addAll(users, new User("id3"), new User("idY"), new User("id09z"));
+        return users;
     }
 
     @Override
