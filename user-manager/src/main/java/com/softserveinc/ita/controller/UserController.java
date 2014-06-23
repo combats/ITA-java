@@ -1,4 +1,4 @@
-package com.softserveinc.ita.controller.impl;
+package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.service.UserService;

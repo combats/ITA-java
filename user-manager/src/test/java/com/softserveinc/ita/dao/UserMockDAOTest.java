@@ -1,6 +1,5 @@
-package com.softserveinc.ita.DAO;
+package com.softserveinc.ita.dao;
 
-import com.softserveinc.ita.Service.BaseServiceTest;
 import com.softserveinc.ita.entity.User;
 import junit.framework.Assert;
 import org.junit.Test;
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class DAOTest extends BaseDAOTest {
+public class UserMockDAOTest extends BaseDAOTest {
     @Autowired
     private UserDAO userDAOImpl;
 

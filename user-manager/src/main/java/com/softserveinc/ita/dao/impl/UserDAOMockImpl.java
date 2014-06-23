@@ -1,6 +1,6 @@
-package com.softserveinc.ita.DAO.impl;
+package com.softserveinc.ita.dao.impl;
 
-import com.softserveinc.ita.DAO.UserDAO;
+import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
 import org.springframework.stereotype.Repository;
 

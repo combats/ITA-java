@@ -2,14 +2,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.springapp</groupId>
-    <artifactId>user-Manager</artifactId>
-    <packaging>war</packaging>
+    <artifactId>user-manager</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>user-Manager</name>
-
-    <properties>
-        <spring.version>3.2.0.RELEASE</spring.version>
-    </properties>
+    <name>user-manager</name>
 
     <parent>
         <groupId>com.softserveinc.ita</groupId>
@@ -77,7 +73,7 @@
     </dependencies>
 
     <build>
-        <finalName>interview-sheduller</finalName>
+        <finalName>user-manager</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

@@ -1,6 +1,5 @@
-package com.softserveinc.ita.MVC;
+package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.Service.BaseServiceTest;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -19,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
-public class MVCTest extends BaseMVCTest {
+public class UserTests extends BaseMVCTest {
     private MockMvc mockMvc;
 
     @Autowired

@@ -1,8 +1,6 @@
-package com.softserveinc.ita.Service;
+package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.MVC.BaseMVCTest;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.service.UserService;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ServiceTest extends BaseServiceTest {
+public class UserServiceTest extends BaseServiceTest {
     @Autowired
     private UserService userServiceImpl;
 
