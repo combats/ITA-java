@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -53,5 +54,16 @@ public class UserServiceTest extends BaseServiceTest {
     public void testEditUserWithExistingUser() throws UserDoesNotExistException, EmptyUserException {
         User user = new User("id2", "name", 2);
         userService.editUser(user);
+    }
+    @Test(expected = UserAlreadyExistsException.class)
+    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception {
+        User testUser = new User("1");
+        userService.postNewUser(testUser);
+    }
+
+    @Test
+    public void testAddNewUserWithOkIDReturnsThatUser() throws Exception {
+        User testUser = new User("42");
+        assertEquals(testUser, userService.postNewUser(testUser));
     }
 } 

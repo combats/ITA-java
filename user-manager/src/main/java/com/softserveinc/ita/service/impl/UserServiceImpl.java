@@ -6,7 +6,7 @@ import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
-import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,5 +53,10 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
+    }
+    @Override
+    public User postNewUser(User user) throws UserAlreadyExistsException {
+        userDao.postNewUser(user);
+        return user;
     }
 }

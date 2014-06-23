@@ -1,6 +1,7 @@
 package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -115,6 +116,17 @@ public class UserMockDAOTest extends BaseDAOTest {
     public void testNullUserParameterAndExpectFalse(){
         User user = null;
         assertNull(userDAO.changeUser(user));
+    }
+    @Test(expected = UserAlreadyExistsException.class)
+    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception {
+        User testUser = new User("1");
+        userDAO.postNewUser(testUser);
+    }
+
+    @Test
+    public void testAddNewUserWithOkIDReturnsThatUser() throws Exception {
+        User testUser = new User("42");
+        Assert.assertEquals(testUser, userDAO.postNewUser(testUser));
     }
 
 }

@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 public class UserTests extends BaseMVCTest {
     private MockMvc mockMvc;
@@ -133,6 +134,27 @@ public class UserTests extends BaseMVCTest {
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(content().string(jsonUser));
+    }
+    @Test
+    public void testPostNewUserAndExpectIsCreated() throws Exception {
+        User testUser = new User("3");
+        String jsonUser = jsonUtil.toJson(testUser);
+        mockMvc.perform(post("/users")
+                .content(jsonUser)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
+    }
+
+    @Test
+    public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
+        User testUser = new User("1");
+        String jsonUser = jsonUtil.toJson(testUser);
+        mockMvc.perform(post("/users")
+                .content(jsonUser)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError());
     }
 
 }

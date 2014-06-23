@@ -4,6 +4,7 @@ import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.springframework.stereotype.Repository;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +46,18 @@ public class UserDAOMockImpl implements UserDAO {
         }};
         return usersID;
     }
-
+    public User postNewUser(User user) throws UserAlreadyExistsException{
+        ArrayList<User> users = new ArrayList<User>() {{
+            add(new User("1"));
+            add(new User("2"));
+        }};
+        for (User u : users) {
+            if (user.equals(u))
+                throw new UserAlreadyExistsException();
+        }
+        return user;
+    }
+    
     @Override
     public void deleteUser(String userID) throws UserIDNotFoundUserDaoMockException {
         if(dbOfUsers.containsKey(userID)){

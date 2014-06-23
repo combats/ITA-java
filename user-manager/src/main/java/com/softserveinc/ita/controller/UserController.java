@@ -18,6 +18,9 @@ import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.util.UriComponentsBuilder;
 
 @Controller
 @RequestMapping("/users")
@@ -58,6 +61,14 @@ public class UserController {
             throws UserDoesNotExistException, EmptyUserException {
         ResponseEntity responseEntity = new ResponseEntity(userService.editUser(editedUser), HttpStatus.OK);
         return responseEntity;
+    }
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<User> postNewUser(@RequestBody User user, UriComponentsBuilder builder) throws UserAlreadyExistsException {
+        User createdUser = userService.postNewUser(user);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setLocation(
+                builder.path("/users/{userID}").buildAndExpand(createdUser.getUserID().toString()).toUri());
+        return new ResponseEntity<>(createdUser, headers, HttpStatus.CREATED);
     }
 }
 
