@@ -7,12 +7,32 @@
     <script src="<c:url value="/resources/js/jqueryFunctions.js"/>"></script>
     <link href="<c:url value="/resources/css/mycss2.css" />" rel="stylesheet">
 
+
+    <script>
+        function redirect() {
+            $.ajax({
+                url: "/appointment-webui/list",
+                dataType: "json",
+                type: "GET",
+                success: function () {
+                    alert("wow");
+                }
+            });
+        }
+    </script>
+
+
     <script>
         var javaImage = "<c:url value="/resources/images/pen-java.png"/>";
-        var javaScriptImage = "<c:url value="/resources/images/pen-jsui.png"/>"
-        var sharpImage = "<c:url value="/resources/images/pen-net.png"/>"
-        var devopsImage = "<c:url value="/resources/images/pen-devops.png"/>"
-
+        var javaScriptImage = "<c:url value="/resources/images/pen-jsui.png"/>";
+        var sharpImage = "<c:url value="/resources/images/pen-net.png"/>";
+        var devopsImage = "<c:url value="/resources/images/pen-devops.png"/>";
+        var plusImage = "<c:url value="/resources/images/green-plus.png"/>";
+        var template = "<div class='img'>" +
+                " <img id = 'image' src={{{imageSrc}}} onclick = 'redirect()'> " +
+                "    <div class='desc'>{{{descr}}}</div>" +
+                "<p id = 'groupId' hidden = 'true' >+ {{groupId}} </p>" +
+                " </div>";
         function doSomething(form) {
             var selectedValue = form.options[form.selectedIndex].value;
             var statusUrl = "/appointment-webui/groups/" + selectedValue
@@ -40,49 +60,31 @@
                         }
                         var view = {
                             imageSrc: image,
-                            descContent: data[index].groupID + " " + data[index].course.name
+                            descr: "Group : " + data[index].groupName + "<br>"
+                                    + "Course : " + data[index].course.name,
+                            groupId: data[index].groupID
                         }
-                        var template = "<div class='img'>" +
-                                "  <a href='#'><img src={{{imageSrc}}}></a> " +
-                                "    <div class='desc'>{{descContent}}</div>" +
-                                " </div>";
                         output += Mustache.render(template, view);
                     }
+                    var view = {
+                        imageSrc: plusImage,
+                        descr: "<br>" + "Add new group"
+                    }
+                    output += Mustache.render(template, view);
                     $("#testdiv").html(output);
                 }
             });
         }
     </script>
-
-    <script>
-        $(document).ready(function () {
-            var userName = "Dron";
-            var center = 'center';
-            var userOccupation = "WebDeveloper"
-            var view = {
-                name: userName,
-                occupation: userOccupation,
-                center: center
-            };
-            var template = "<h1  align={{center}}>{{name}} is a  {{occupation}}</h1>";
-            var output = Mustache.render(template, view);
-            $("#testdiv").html(output);
-        });
-    </script>
-
     <title>
         Groups
     </title>
-
 </head>
-
 <body>
 
-<p id="person" hidden="true">text</p>
-
 <select name="select1" id="drop" onchange="doSomething(this)">
-    <option value="Status1">Status1</option>
-    <option value="Status2">Status2</option>
+    <option value="In progress">In progress</option>
+    <option value="Recruitment">Recruitment</option>
 </select>
 <br>
 

@@ -8,7 +8,7 @@ public class Group implements Serializable {
 
     public enum Status implements Serializable {
 
-        STATUS1("Status1"), STATUS2("Status2");
+        IN_PROGRESS("In progress"), RECRUITMENT("Recruitment");
         private String name;
         Status(String name) {
             this.name = name;
@@ -48,10 +48,19 @@ public class Group implements Serializable {
     public Group() {
     }
 
-    public Group(Status groupStatus, String groupID, Course course){
+    public Group(Status groupStatus, String groupID, Course course, String groupName) {
         this.groupStatus = groupStatus;
         this.groupID = groupID;
         this.course = course;
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getGroupID() {
