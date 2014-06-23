@@ -34,7 +34,7 @@
 </beans>-->
 
         <security:http auto-config='true'>
-            <security:intercept-url pattern="/**" access="ROLE_USER, ROLE_ADMIN"/>
+            <security:intercept-url pattern="/com/softserveinc/ita/entity" access="ROLE_USER, ROLE_ADMIN"/>
             <security:intercept-url pattern="/appointments/**" access="ROLE_ADMIN"/>
             <!--<security:form-login login-page="/login.jsp"/>-->
             <security:http-basic />
