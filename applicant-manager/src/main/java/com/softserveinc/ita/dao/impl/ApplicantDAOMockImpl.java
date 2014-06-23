@@ -2,13 +2,11 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
-
-import java.util.*;
-
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.GroupNotFoundException;
 import org.springframework.stereotype.Repository;
 
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
@@ -48,13 +46,12 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     @Override
     public List<Applicant> getApplicantsInAGroup(String groupID) throws GroupNotFoundException {
 
-        if(db.containsKey(groupID)) {
-            if(!applicantsInAGroup.equals((db.get(groupID)).getApplicantsInGroup())) {
+        if (db.containsKey(groupID)) {
+            if (!applicantsInAGroup.equals((db.get(groupID)).getApplicantsInGroup())) {
                 throw new GroupNotFoundException();
             }
             return (db.get(groupID)).getApplicantsInGroup();
-        }
-        else {
+        } else {
             throw new GroupNotFoundException();
         }
     }
@@ -65,7 +62,7 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     }
 
     @Override
-    public Applicant addNewApplicant(Applicant applicant){
+    public Applicant addNewApplicant(Applicant applicant) {
         /**
          *  because of Applicant pojo doesn't contain any fields except id now, validation
          *  for not having equal object in DB has not been implemented
@@ -77,7 +74,7 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     }
 
     @Override
-    public Applicant editApplicant(Applicant applicant){
+    public Applicant editApplicant(Applicant applicant) {
         String applicantForEditId = applicant.getApplicantID();
         applicants.put(applicantForEditId, applicant);
         return applicant;

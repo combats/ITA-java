@@ -46,9 +46,10 @@ public class ApplicantController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Applicant getAppointmentByApplicantId(@PathVariable String applicantId)
+    public
+    @ResponseBody
+    Applicant getApplicantById(@PathVariable String applicantId)
             throws ApplicantDoesNotExistException {
         Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
         return searchedApplicant;
@@ -64,6 +65,15 @@ public class ApplicantController {
     public ResponseEntity<Applicant> editApplicant(@RequestBody Applicant applicant) {
         Applicant editedApplicant = applicantService.editApplicant(applicant);
         return new ResponseEntity<Applicant>(editedApplicant, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    public ResponseEntity<List<String>> getApplicantIDs() {
+        List<String> response = applicantService.getApplicantIDList();
+        if (response == null || response.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }

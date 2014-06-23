@@ -5,6 +5,10 @@ import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 
 
@@ -38,5 +42,12 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
         Applicant newApplicant = applicantService.addNewApplicant(new Applicant());
         Applicant editedApplicant = applicantService.editApplicant(newApplicant);
         assertEquals(newApplicant.getApplicantID(), editedApplicant.getApplicantID());
+    }
+
+    @Test
+    public void testGetApplicantIDListAndExpectDefinedValues() throws Exception {
+        List<String> expectedApplicantIDList = new ArrayList<>();
+        Collections.addAll(expectedApplicantIDList, "id1", "id2", "idX");
+        assertEquals(expectedApplicantIDList, applicantService.getApplicantIDList());
     }
 }

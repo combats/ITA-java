@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static junit.framework.Assert.*;
@@ -27,20 +28,20 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
 
     @Test(expected = GroupNotFoundException.class)
     public void testGetApplicantsInGroupAndExceptionExpected() throws GroupNotFoundException {
-        List<Applicant>applicantList = applicantDao.getApplicantsInAGroup("2");
-}
+        List<Applicant> applicantList = applicantDao.getApplicantsInAGroup("2");
+    }
 
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
         String applicantId = "id1";
         Applicant expectedApplicant = new Applicant("id1");
-        assertEquals(expectedApplicant,applicantDao.getApplicantById(applicantId));
+        assertEquals(expectedApplicant, applicantDao.getApplicantById(applicantId));
     }
 
     @Test
-    public void testGetApplicantByNotExistingIdAndExpectNull()throws Exception{
+    public void testGetApplicantByNotExistingIdAndExpectNull() throws Exception {
         String applicantId = "id4";
-        assertEquals(null,applicantDao.getApplicantById(applicantId));
+        assertEquals(null, applicantDao.getApplicantById(applicantId));
     }
 
     @Test
@@ -59,5 +60,12 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
         assertFalse(newApplicant.getApplicantID().isEmpty());
         Applicant editedApplicant = applicantDao.editApplicant(newApplicant);
         assertEquals(newApplicant.getApplicantID(), editedApplicant.getApplicantID());
+    }
+
+    @Test
+    public void testGetApplicantListAndExpectDefinedValues() throws Exception {
+        List<Applicant> expectedApplicantList = new ArrayList<>();
+        Collections.addAll(expectedApplicantList, new Applicant("id1"), new Applicant("id2"), new Applicant("idX"));
+        assertEquals(expectedApplicantList, applicantDao.getApplicants());
     }
 }
