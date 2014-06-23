@@ -1,18 +1,39 @@
 package com.softserveinc.ita.entity;
 
-
 import com.softserveinc.ita.entity.exceptions.DateException;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "Appointments")
 public class Appointment {
-	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
+
+    private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
+
+
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "AppointmentId", unique = true)
+    private String appointmentId;
+
+    @ElementCollection
+    @CollectionTable(name = "Users", joinColumns = @JoinColumn(name = "UserId"))
+	@Column(name = "UserIdList")
 	private List <String> userIdList = new ArrayList<>();
-	private String applicantId = "lol";
-    private long startTime = System.currentTimeMillis() + TOMORROW;
+
+    @Column(name = "ApplicantId")
+	private String applicantId;
+
+    @Column(name = "StartTime")
+	private long startTime = System.currentTimeMillis() + TOMORROW;
+
+    @Column(name = "DurationTime")
 	private long durationTime = DEFAULT_DURATION_TIME;
 
 	public Appointment() {}
@@ -42,7 +63,6 @@ public class Appointment {
 		return applicantId;
 	}
 
-    //TODO: Think if we need this method
 	public void setApplicantId(String applicantId) {
 		this.applicantId = applicantId;
 	}
@@ -62,6 +82,14 @@ public class Appointment {
 	public void setDurationTime(long durationTime) {
 		this.durationTime = durationTime;
 	}
+
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
 
 	@Override
 	public String toString() {

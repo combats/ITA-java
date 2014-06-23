@@ -1,19 +1,17 @@
 package com.softserveinc.ita.controller;
 
-import javax.validation.Valid;
-
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.dao.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import com.softserveinc.ita.dao.AppointmentDAO;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/appointments")
@@ -25,8 +23,6 @@ public class AppointmentController {
     private AppointmentService appointmentService;
     @Autowired
     private JsonUtil jsonUtil;
-    @Autowired
-    private AppointmentDAO appointmentDAO;
     
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -39,21 +35,21 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
-    public void removeAppointmentById(@PathVariable String appointmentId) throws AppointmentNotFoundException {
+    public void removeAppointmentById(@PathVariable String appointmentId){
         appointmentService.removeAppointmentById(appointmentId);
     }
  	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public @ResponseBody String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
-          return appointmentDAO.putAppointment(appointment);
+          return appointmentService.addAppointment(appointment);
        }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Appointment getAppointmentByAppointmentID(@PathVariable("id") int id) {
+    public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
 
-       return appointmentDAO.getAppointmentByAppointmentID(id);
+       return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 }

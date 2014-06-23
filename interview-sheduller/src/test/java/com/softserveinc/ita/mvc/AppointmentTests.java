@@ -11,20 +11,19 @@ import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
+
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Collections;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
-import static org.junit.Assert.*;
 
 public class AppointmentTests extends BaseMVCTest {
 	public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -116,14 +115,18 @@ public class AppointmentTests extends BaseMVCTest {
     }
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
-        List<String> userIdList = new ArrayList<>();
-        Collections.addAll(userIdList, "1", "2");
-        String applicantId = "1";
-        Appointment appointment = new Appointment(userIdList, applicantId, 1401951895035L);
+
+        String applicantId = "testApplicantId";
+        String appointmentId = "testAppointmentId";
+
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        Appointment appointment = new Appointment(users, applicantId, 1401866602L + TOMORROW);
+        appointment.setAppointmentId(appointmentId);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
-                get("/appointments/applicants/1")
+                get("/appointments/applicants/testApplicantId")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(appointmentJson));
@@ -160,15 +163,6 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testRemoveAppointmentByNonExistIdAndExpectInternalServerError() throws Exception {
-        String appointmentId = "2";
-        mockMvc.perform(
-                delete("/appointments/{appointmentId}", appointmentId)
-        )
-                .andExpect(status().isInternalServerError());
-    }
-
-    @Test
     public void testPostNewAppointmentAndExpectIsOk() throws Exception {
 
         String applicantId = "testApplicantId";
@@ -189,7 +183,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testPostNewAppointmentAndGetAppointmentID() throws Exception {
+    public void testPostNewAppointmentAndGetAppointmentId() throws Exception {
 
         String applicantId = "testApplicantId";
         List<String> users = new ArrayList<>();
@@ -198,7 +192,7 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment appointment = new Appointment(users, applicantId, 555);
 
         String appointmentJson = jsonUtil.toJson(appointment);
-        String exptectedIdJson = jsonUtil.toJson(4);
+        String exptectedIdJson = "testAppointmentId";
 
         MvcResult ExpectingObject = mockMvc.perform(
                 post("/appointments")
