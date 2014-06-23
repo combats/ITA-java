@@ -46,6 +46,12 @@ public class UserServiceImpl implements UserService {
         return editedUser;
     }
 
+    @Override
+    public User postNewUser(User user) throws UserAlreadyExistsException {
+        userDao.postNewUser(user);
+        return user;
+    }
+
     private boolean isEmpty(User changingUser) {
         if (changingUser == null
                 || changingUser.getAge() == User.DEFAULT_USER_AGE
@@ -53,10 +59,5 @@ public class UserServiceImpl implements UserService {
             return true;
         }
         return false;
-    }
-    @Override
-    public User postNewUser(User user) throws UserAlreadyExistsException {
-        userDao.postNewUser(user);
-        return user;
     }
 }

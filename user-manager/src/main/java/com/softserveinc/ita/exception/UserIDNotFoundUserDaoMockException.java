@@ -1,6 +1,6 @@
 package com.softserveinc.ita.exception;
 
-public class UserIDNotFoundUserDaoMockException extends Exception{
+public class UserIDNotFoundUserDaoMockException extends UserException{
     public UserIDNotFoundUserDaoMockException() {
         super();
     }

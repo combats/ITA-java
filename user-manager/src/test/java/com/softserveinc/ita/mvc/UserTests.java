@@ -41,7 +41,7 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
-    public void testDleteUserByIDAndExpectedDeletedSuccessfully() throws Exception {
+    public void testDeleteUserByIDAndExpectedDeletedSuccessfully() throws Exception {
         String userID = new String("122");
 
         String goodResponse = jsonUtil.toJson("Deleted successfully User with userID: " + userID);
@@ -79,7 +79,7 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetNonExistantUserAndGetInternalServerError() throws Exception {
+    public void testGetNonExistentUserAndGetInternalServerError() throws Exception {
         String userID = "-1";
         mockMvc.perform(
                 get("/users/{userID}", userID))
