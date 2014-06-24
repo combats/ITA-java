@@ -12,7 +12,7 @@ import com.softserveinc.ita.exception.UserAlreadyExistsException;
 public interface UserService {
     User getUserByID (String UserID) throws InvalidUserIDException;
     ArrayList<String> getAllUsersID();
-    String deleteUser(String userID);
+    String deleteUser(String userID) throws UserDoesNotExistException;
     User editUser(User user) throws UserDoesNotExistException, EmptyUserException;
     User postNewUser(User user) throws UserAlreadyExistsException;
     List<User> getUsers();

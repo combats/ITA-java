@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByID(UserID);
     }
     @Override
-    public String deleteUser(String userID) {
+    public String deleteUser(String userID) throws UserDoesNotExistException {
        return userDao.deleteUser(userID);
     }
     

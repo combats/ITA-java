@@ -3,6 +3,7 @@ package com.softserveinc.ita.dao;
 import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.entity.User;
+import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.util.*;
 
+import static com.sun.javaws.JnlpxArgs.verify;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertEquals;
@@ -89,13 +91,11 @@ public class UserMockDAOTest extends BaseDAOTest {
         assertEquals(expected, keySet);
     }
 
-    @Test
-    public void testDeleteUserAndExpectedIsException() {
+    @Test(expected = UserDoesNotExistException.class)
+    public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException {
         String muserID = "124";
 
-        String result = userDAO.deleteUser(muserID);
-        assertNull(result);
-
+        userDAO.deleteUser(muserID);
     }
 
     @Test

@@ -2,6 +2,7 @@ package com.softserveinc.ita.service;
 
 
 import com.softserveinc.ita.dao.UserDAO;
+import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static junit.framework.Assert.assertEquals;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -33,16 +35,15 @@ public class UserServiceMockitoTest extends BaseServiceTest {
         when(userDao.deleteUser(muserID)).thenReturn(muserID);
         String result = userService.deleteUser(muserID);
         verify(userDao).deleteUser(muserID);
-        assertEquals(result, muserID);
+        assertEquals(muserID, result);
     }
 
-    @Test
-    public void testDeleteUserAndExpectedIsException() {
+    @Test(expected = UserDoesNotExistException.class)
+    public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException {
         String muserID = "124";
 
-        when(userDao.deleteUser(muserID)).thenReturn(null);
-        String result = userService.deleteUser(muserID);
+        doThrow(new UserDoesNotExistException()).when(userDao).deleteUser(muserID);
+        userService.deleteUser(muserID);
         verify(userDao).deleteUser(muserID);
-        assertEquals(result, null);
     }
 }

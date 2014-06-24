@@ -32,12 +32,8 @@ public class UserController {
     private UserService userService;
     
     @RequestMapping(method = RequestMethod.DELETE, value = "/{userID}")
-    public ResponseEntity<String> deleteUserByID(@PathVariable String userID) {
+    public ResponseEntity<String> deleteUserByID(@PathVariable String userID) throws UserDoesNotExistException {
         String deleteStatus = userService.deleteUser(userID);
-        if(deleteStatus == null){
-            String badResponce = jsonUtil.toJson(deleteStatus);
-            return new ResponseEntity<>(badResponce, HttpStatus.BAD_REQUEST);
-        }
         return new ResponseEntity<>(deleteStatus, HttpStatus.NO_CONTENT);
     }
 
