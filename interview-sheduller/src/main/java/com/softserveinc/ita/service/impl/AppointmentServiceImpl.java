@@ -1,6 +1,7 @@
 package com.softserveinc.ita.service.impl;
 
-public class AppointmentServiceImpl{}
+public class AppointmentServiceImpl {
+}
 //@Service
 //public class AppointmentServiceImpl implements AppointmentService {
 //
