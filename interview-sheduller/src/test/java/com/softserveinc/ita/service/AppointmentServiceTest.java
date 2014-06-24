@@ -1,48 +1,54 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.BaseMVCTest;
-import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotSame;
 
 public class AppointmentServiceTest extends BaseMVCTest {
 
     @Autowired
-    private AppointmentDAO appointmentDAO;
+    AppointmentService service;
+    private static Appointment expectedOne = null;
+    private static Appointment expectedTwo = null;
 
-    @Autowired
-    private AppointmentService appointmentService;
+    @BeforeClass
+    public static void setUpOnce() {
+        int TOMORROW = 24 * 60 * 60 * 1000;
+        String appointmentId = "testAppointmentId";
+
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+
+        expectedOne = new Appointment(users, "testApplicantId", 1401866602L + TOMORROW);
+        expectedOne.setAppointmentId(appointmentId);
+
+        expectedTwo = new Appointment(users, "testApplicantId", 1401866604L + TOMORROW);
+        expectedTwo.setAppointmentId(appointmentId);
+    }
 
     @Test
-    public void testGetAppointmentsByDateAndExpectValidListObject() throws Exception {
-        long currentTime = System.currentTimeMillis();
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() {
+        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertEquals(expectedOne, actual);
+    }
 
-        List<String> applicantIdList = new ArrayList<>();
-        applicantIdList.add("testApplicantId");
-        List<String> userIdList = new ArrayList<>();
-        userIdList.add("testUserId");
+    @Test
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() {
+        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertNotSame(expectedOne, actual);
+    }
 
-
-        Appointment todayFirstAppointment = new Appointment(userIdList, applicantIdList, currentTime);
-        Appointment todaySecondAppointment = new Appointment(userIdList, applicantIdList, currentTime);
-
-
-        appointmentDAO.putAppointment(todayFirstAppointment);
-        appointmentDAO.putAppointment(todaySecondAppointment);
-
-        LinkedList<Appointment> expectedAppointmentsList = new LinkedList<>();
-
-        expectedAppointmentsList.add(todayFirstAppointment);
-        expectedAppointmentsList.add(todaySecondAppointment);
-
-        List<Appointment> actualAppointmentList = appointmentService.getAppointmentsByDate(currentTime);
-        assertEquals(actualAppointmentList, expectedAppointmentsList);
+    @Test
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() {
+        Appointment actual = service.getAppointmentByApplicantId("testApplicantId2");
+        assertEquals(expectedTwo, actual);
     }
 }

@@ -1,28 +1,53 @@
 package com.softserveinc.ita.entity;
 
+import com.softserveinc.ita.entity.exceptions.DateException;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "Appointments")
 public class Appointment {
-	private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
+
+    private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
+
+
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "AppointmentId", unique = true)
+    private String appointmentId;
+
+    @ElementCollection
+    @CollectionTable(name = "Users", joinColumns = @JoinColumn(name = "UserId"))
+	@Column(name = "UserIdList")
 	private List <String> userIdList = new ArrayList<>();
-	private List <String> applicantIdList = new ArrayList<>();
-    private long startTime = System.currentTimeMillis() + TOMORROW;
+
+    @Column(name = "ApplicantId")
+	private String applicantId;
+
+    @Column(name = "StartTime")
+	private long startTime = System.currentTimeMillis() + TOMORROW;
+
+    @Column(name = "DurationTime")
 	private long durationTime = DEFAULT_DURATION_TIME;
 
 	public Appointment() {}
 
-	public Appointment(List<String> userIdList, List<String> applicantIdList, long startTime, long durationTime) {
+	public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
 		this.userIdList = userIdList;
-		this.applicantIdList = applicantIdList;
+		this.applicantId = applicantId;
 		this.startTime = startTime;
 		this.durationTime = durationTime;
 	}
 
-	public Appointment(List<String> userIdList, List<String> applicantIdList, long startTime) {
+	public Appointment(List<String> userIdList, String applicantId, long startTime) {
 		this.userIdList = userIdList;
-		this.applicantIdList = applicantIdList;
+		this.applicantId = applicantId;
 		this.startTime = startTime;
 	}
 
@@ -34,12 +59,12 @@ public class Appointment {
 		this.userIdList = userIdList;
 	}
 
-	public List<String> getApplicantIdList() {
-		return applicantIdList;
+	public String getApplicantId() {
+		return applicantId;
 	}
 
-	public void setApplicantIdList(List<String> applicantIdList) {
-		this.applicantIdList = applicantIdList;
+	public void setApplicantId(String applicantId) {
+		this.applicantId = applicantId;
 	}
 
 	public long getStartTime() {
@@ -58,11 +83,19 @@ public class Appointment {
 		this.durationTime = durationTime;
 	}
 
+    public String getAppointmentId() {
+        return appointmentId;
+    }
+
+    public void setAppointmentId(String appointmentId) {
+        this.appointmentId = appointmentId;
+    }
+
 	@Override
 	public String toString() {
 		return "Appointment{" +
 				"userIdList=" + userIdList +
-				", applicantIdList=" + applicantIdList +
+				", applicantId=" + applicantId +
 				", startTime=" + startTime +
 				", durationTime=" + durationTime +
 				'}';
@@ -77,7 +110,7 @@ public class Appointment {
 
 		if (durationTime != that.durationTime) return false;
 		if (startTime != that.startTime) return false;
-		if (!applicantIdList.equals(that.applicantIdList)) return false;
+		if (!applicantId.equals(that.applicantId)) return false;
 		if (!userIdList.equals(that.userIdList)) return false;
 
 		return true;
@@ -86,9 +119,20 @@ public class Appointment {
 	@Override
 	public int hashCode() {
 		int result = userIdList.hashCode();
-		result = 31 * result + applicantIdList.hashCode();
+		result = 31 * result + applicantId.hashCode();
 		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
 		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
 		return result;
 	}
+
+    public void dateValidation(long startTime, long durationTime) throws DateException {
+
+        if (durationTime < 0) throw new DateException("Wrong duration time");
+
+        long currentDate=new Date().getTime();
+        if (startTime < currentDate) throw new DateException("Start time has already passed");
+
+        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
+        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
+    }
 }

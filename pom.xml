@@ -16,9 +16,8 @@
     <modules>
         <module>entity</module>
         <module>common</module>
-        <module>http-request-sevice</module>
+        <module>http-request-service</module>
         <module>interview-sheduller</module>
-        <module>DAO</module>
      </modules>
 
     <dependencies>
@@ -91,4 +90,22 @@
             <version>1.7.2</version>
         </dependency>
     </dependencies>
+    
+  
+    
+ <distributionManagement>
+
+  <repository>
+    <id>deployment</id>
+    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-release</url>
+  </repository>
+
+  <snapshotRepository>
+    <id>deployment</id>
+    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-snapshot</url>
+  </snapshotRepository>
+  
+</distributionManagement>
+
+
 </project>
