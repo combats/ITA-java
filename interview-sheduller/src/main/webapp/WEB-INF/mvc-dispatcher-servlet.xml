@@ -1,5 +1,4 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -14,14 +13,14 @@
     <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--For @Annotation-based configuration-->
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <!-- For bean-components (@Component, @Service)  -->
-    <context:component-scan base-package="com.softserveinc.ita.dao" />
-    <context:component-scan base-package="com.softserveinc.ita.service" />
+    <context:component-scan base-package="com.softserveinc.ita.dao"/>
+    <context:component-scan base-package="com.softserveinc.ita.service"/>
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -29,7 +28,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
+    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>
     <!--aux/utils-->
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
     <!--external services-->

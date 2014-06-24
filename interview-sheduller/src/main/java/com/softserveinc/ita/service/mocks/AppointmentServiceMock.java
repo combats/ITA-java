@@ -3,8 +3,12 @@ package com.softserveinc.ita.service.mocks;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
+import org.joda.time.DateTime;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AppointmentServiceMock implements AppointmentService {
 
@@ -12,6 +16,8 @@ public class AppointmentServiceMock implements AppointmentService {
     private LinkedList<Appointment> appointmentsList;
 
     {
+        long currentTime = System.currentTimeMillis();
+
         String applicantId = "testApplicantId";
         String appointmentId = "testAppointmentId";
 
@@ -28,8 +34,15 @@ public class AppointmentServiceMock implements AppointmentService {
         Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
         appointment3.setAppointmentId(appointmentId);
 
+
+        Appointment todayFirstAppointment = new Appointment(users, applicantId, currentTime);
+        todayFirstAppointment.setAppointmentId(appointmentId);
+        Appointment todaySecondAppointment = new Appointment(users, applicantId, currentTime);
+        todaySecondAppointment.setAppointmentId(appointmentId);
+
         appointmentsList = new LinkedList<>();
-        Collections.addAll(appointmentsList, appointment1, appointment2, appointment3);
+        Collections.addAll(appointmentsList, appointment1, appointment2, appointment3, todayFirstAppointment
+                , todaySecondAppointment);
     }
 
 
@@ -61,5 +74,29 @@ public class AppointmentServiceMock implements AppointmentService {
         return "testAppointmentId";
     }
 
+    @Override
+    public List<Appointment> getAppointmentsByDate(long date) {
+        DateTime requirementDate = new DateTime(date);
+        List<Appointment> resultList = new LinkedList<>();
+
+        //if  required date less  than 1970 year then return empty result
+        if (requirementDate.getMillis() < new DateTime(0).getMillis()) {
+            return resultList;
+        }
+
+        for (Appointment appointment : appointmentsList) {
+
+            DateTime appointmentDate = new DateTime(appointment.getStartTime());
+
+            if (requirementDate.getYear() == appointmentDate.getYear() &&
+                    requirementDate.getMonthOfYear() == appointmentDate.getMonthOfYear() &&
+                    requirementDate.getDayOfMonth() == appointmentDate.getDayOfMonth()) {
+                resultList.add(appointment);
+            }
+        }
+
+        return resultList;
+
+    }
 
 }

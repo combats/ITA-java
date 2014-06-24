@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -14,12 +15,12 @@ import java.util.List;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
-public class AppointmentValidatorTest extends BaseMVCTest{
+public class AppointmentValidatorTest extends BaseMVCTest {
     @Autowired
     private Validator validator;
 
     @Test
-         public void testSupportsAppointmentClass(){
+    public void testSupportsAppointmentClass() {
         //Arrange
         Appointment appointment = new Appointment();
         //Act
@@ -27,15 +28,17 @@ public class AppointmentValidatorTest extends BaseMVCTest{
         //Assert
         assertTrue(result);
     }
+
     @Test
-    public void testDoesNotSupportAnyOtherButAppointmentClass(){
+    public void testDoesNotSupportAnyOtherButAppointmentClass() {
         //Act
         boolean result = validator.supports(Object.class);
         //Assert
         assertFalse(result);
     }
+
     @Test
-    public void testValidatesAppointmentAndGivesErrors(){
+    public void testValidatesAppointmentAndGivesErrors() {
         //Arrange
         List<String> userIdList = new ArrayList<>();
         Collections.addAll(userIdList, "some_unexisting_applicant_id1", "some_unexisting_applicant_id2");
