@@ -1,14 +1,17 @@
 package com.softserveinc.ita.entity;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 import java.io.Serializable;
 
 public class Group implements Serializable {
 
-    public enum Status implements Serializable {
+    public static final String IN_PROCESS_STATUS = "In process";
+    public static final String PLANNED_STATUS = "Planned";
+    public static final String OFFERING_STATUS = "Offering";
+    public static final String BOARDING_STATUS = "Boarding";
 
-        IN_PROGRESS("In progress"), RECRUITMENT("Recruitment");
+
+    public enum Status implements Serializable {
+        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS);
         private String name;
         Status(String name) {
             this.name = name;
@@ -16,25 +19,6 @@ public class Group implements Serializable {
         public String getName() {
             return name;
         }
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
-    public enum Course implements Serializable {
-
-        JAVA("Java"), SHARP("Sharp"), DEVOPS("DevOps"), JAVASCRIPT("JavaScript");
-        private String name;
-
-        Course(String name) {
-            this.name = name;
-        }
-
-        public String getName() {
-            return name;
-        }
-
         public void setName(String name) {
             this.name = name;
         }
@@ -91,6 +75,7 @@ public class Group implements Serializable {
     public String toString() {
         return "Group{" +
                 "groupID='" + groupID + '\'' +
+                ", groupName='" + groupName + '\'' +
                 ", groupStatus=" + groupStatus +
                 ", course=" + course +
                 '}';
@@ -100,9 +85,12 @@ public class Group implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Group group = (Group) o;
-        if (course != group.course) return false;
+
+        if (!course.equals(group.course)) return false;
         if (!groupID.equals(group.groupID)) return false;
+        if (!groupName.equals(group.groupName)) return false;
         if (groupStatus != group.groupStatus) return false;
 
         return true;
@@ -111,6 +99,7 @@ public class Group implements Serializable {
     @Override
     public int hashCode() {
         int result = groupID.hashCode();
+        result = 31 * result + groupName.hashCode();
         result = 31 * result + groupStatus.hashCode();
         result = 31 * result + course.hashCode();
         return result;

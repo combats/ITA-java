@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
-  User: Andrey
-  Date: 23.06.2014
-  Time: 14:55
+  User: abrastc
+  Date: 24.06.2014
+  Time: 12:54
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -11,6 +11,6 @@
     <title></title>
 </head>
 <body>
-    <h1>View group's user list with group id = ${groupId}</h1>
+<h1>Create group page</h1>
 </body>
 </html>
