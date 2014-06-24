@@ -2,7 +2,6 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.springframework.stereotype.Repository;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
@@ -64,13 +63,12 @@ public class UserDAOMockImpl implements UserDAO {
     }
     
     @Override
-    public void deleteUser(String userID) throws UserIDNotFoundUserDaoMockException {
-        if(dbOfUsers.containsKey(userID)){
-            dbOfUsers.remove(userID);
-        } else {
-            String errorMessage = "User DAOMock: User with userID not found: ";
-            throw new UserIDNotFoundUserDaoMockException(errorMessage + userID);
+    public String deleteUser(String userID) {
+        if(!dbOfUsers.containsKey(userID)){
+            return null;
         }
+        dbOfUsers.remove(userID);
+        return userID;
     }
 
     @Override

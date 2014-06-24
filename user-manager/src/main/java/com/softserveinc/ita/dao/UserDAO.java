@@ -1,7 +1,6 @@
 package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public interface UserDAO {
 
     ArrayList<String> getAllUsersID();
 
-    void deleteUser(String userID) throws UserIDNotFoundUserDaoMockException;
+    String deleteUser(String userID);
 
     User changeUser(User changingUser);
 

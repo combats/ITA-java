@@ -48,10 +48,10 @@ public class UserTests extends BaseMVCTest {
     public void testDeleteUserByIDAndExpectedDeletedSuccessfully() throws Exception {
         String userID = new String("122");
 
-        String goodResponse = jsonUtil.toJson("Deleted successfully User with userID: " + userID);
+//        String goodResponse = jsonUtil.toJson(userID);
 
         mockMvc.perform(delete("/users" + "/" + userID))
-                .andExpect(content().string(goodResponse));
+                .andExpect(content().string(userID));
     }
 
     @Test
@@ -65,8 +65,7 @@ public class UserTests extends BaseMVCTest {
     public void testDeleteUserByIdDeleteExceptionMassageVerification() throws Exception {
         String userID = new String("124");
 
-        String badResponse = jsonUtil.toJson("Delete exception: there is no user with following userID: " + userID);
-
+        String badResponse = "null";
         mockMvc.perform(delete("/users" + "/" + userID))
                 .andExpect(content().string(badResponse));
     }

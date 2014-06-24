@@ -3,7 +3,6 @@ package com.softserveinc.ita.service.impl;
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.InvalidUserIDException;
-import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
@@ -31,8 +30,8 @@ public class UserServiceImpl implements UserService {
         return userDao.getUserByID(UserID);
     }
     @Override
-    public void deleteUser(String userID) throws UserIDNotFoundUserDaoMockException {
-        userDao.deleteUser(userID);
+    public String deleteUser(String userID) {
+       return userDao.deleteUser(userID);
     }
     
     @Override

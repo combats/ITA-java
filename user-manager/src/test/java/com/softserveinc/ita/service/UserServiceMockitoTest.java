@@ -2,7 +2,6 @@ package com.softserveinc.ita.service;
 
 
 import com.softserveinc.ita.dao.UserDAO;
-import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -10,8 +9,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static org.mockito.Mockito.doThrow;
+import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class UserServiceMockitoTest extends BaseServiceTest {
     @Autowired
@@ -30,16 +30,19 @@ public class UserServiceMockitoTest extends BaseServiceTest {
     public void testDeleteUser() throws Exception {
         String muserID = "123";
 
-        userService.deleteUser(muserID);
+        when(userDao.deleteUser(muserID)).thenReturn(muserID);
+        String result = userService.deleteUser(muserID);
         verify(userDao).deleteUser(muserID);
+        assertEquals(result, muserID);
     }
 
-    @Test(expected = UserIDNotFoundUserDaoMockException.class)
-    public void testDeleteUserAndExpectedIsException() throws UserIDNotFoundUserDaoMockException {
+    @Test
+    public void testDeleteUserAndExpectedIsException() {
         String muserID = "124";
 
-        doThrow(new UserIDNotFoundUserDaoMockException()).when(userDao).deleteUser(muserID);
-        userService.deleteUser(muserID);
+        when(userDao.deleteUser(muserID)).thenReturn(null);
+        String result = userService.deleteUser(muserID);
         verify(userDao).deleteUser(muserID);
+        assertEquals(result, null);
     }
 }

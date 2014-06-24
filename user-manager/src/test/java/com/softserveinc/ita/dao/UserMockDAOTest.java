@@ -6,7 +6,6 @@ import com.softserveinc.ita.entity.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import com.softserveinc.ita.exception.UserIDNotFoundUserDaoMockException;
 import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.util.*;
@@ -90,11 +89,13 @@ public class UserMockDAOTest extends BaseDAOTest {
         assertEquals(expected, keySet);
     }
 
-    @Test(expected = UserIDNotFoundUserDaoMockException.class)
-    public void testDeleteUserAndExpectedIsException() throws UserIDNotFoundUserDaoMockException {
+    @Test
+    public void testDeleteUserAndExpectedIsException() {
         String muserID = "124";
 
-        userDAO.deleteUser(muserID);
+        String result = userDAO.deleteUser(muserID);
+        assertNull(result);
+
     }
 
     @Test

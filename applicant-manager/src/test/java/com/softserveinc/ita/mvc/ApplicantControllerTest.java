@@ -10,11 +10,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -73,7 +71,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         String dbJson = jsonUtil.toJson(dbStandart);
         String groupID = "1";
         mockMvc.perform(get("/applicants/groups/" + groupID))
-                .andExpect(content().string(dbJson));
+               .andExpect(content().string(dbJson));
     }
 
     @Test
@@ -81,7 +79,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         String groupID = "2";
         String response = jsonUtil.toJson(new ArrayList<Applicant>());
         mockMvc.perform(get("/applicants/groups/" + groupID))
-                .andExpect(content().string(response));
+               .andExpect(content().string(response));
     }
 
     @Test
