@@ -23,7 +23,7 @@ private List<Applicant> applicantsInGroup = new ArrayList<>();
 #SERVICES:
 ###UserManager:
 
-resource path: ```“/users”```
+resource path: ```ï¿½/usersï¿½```
 
 method: GET   -	
 	
@@ -34,13 +34,13 @@ method: POST -
     public ResponseEntity<User> postNewUser  
     - adds a new User in a list
 
-resource path: ```“/users/userId”```	
+resource path: ```ï¿½/users/userIdï¿½```	
 	method:  GET - 
 	
 	public @ResponseBody ArrayList<String> getAllUsersID() 
     - returns list of all userID
 
-resource path: ```“/users/{user_id}”```   
+resource path: ```ï¿½/users/{user_id}ï¿½```   
 	method:  GET  - 
 	
 	public @ResponseBody User getUserByID(@PathVariable String userID) 
@@ -58,7 +58,7 @@ method:  DELETE -
 
 ###ApplicantManager:
 
-resource path: ```“/applicants”```
+resource path: ```ï¿½/applicantsï¿½```
 
 method: GET   -
 
@@ -70,14 +70,14 @@ method: POST -
     public ResponseEntity<Applicant> addNewApplicant Applicant applicant) 
     - add new applicant 
 
-resource path: ```“/applicants/applicantId”```
+resource path: ```ï¿½/applicants/applicantIdï¿½```
 
 method: GET -
 
 	public ResponseEntity<List<String>> getApplicantIDs() 
 	- get all applicants ID
 
-resource path: ```“/applicants/{applicant_id}”```
+resource path: ```ï¿½/applicants/{applicant_id}ï¿½```
 
 method: GET   - 
 
@@ -88,9 +88,10 @@ method: PUT   -
     public ResponseEntity<Applicant> editApplicant(Applicant applicant) 
     - edit applicant
 
-resource path: ```“applicants/groups/{group_id}”```
+resource path: ```ï¿½applicants/groups/{group_id}ï¿½```
 
 method: GET    -
+
     public ResponseEntity<String> getApplicantsByGroupID(String groupID) 
     - get all applicants with specefied ID. 
 
