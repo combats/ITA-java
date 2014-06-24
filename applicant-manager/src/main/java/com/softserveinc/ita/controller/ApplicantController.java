@@ -16,34 +16,27 @@ import java.util.List;
 @Controller
 @RequestMapping("/applicants")
 public class ApplicantController {
-    private List<Applicant> resultList;
-    private List<Applicant> resultBYGroupID;
-
-    @Autowired
-    private JsonUtil jsonUtil;
 
     @Autowired
     private ApplicantService applicantService;
 
     @RequestMapping(method = RequestMethod.GET)
-    @ResponseBody
-    public ResponseEntity<String> getApplicants() {
-        resultList = applicantService.getApplicants();
-        String result = jsonUtil.toJson(resultList);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+    public ResponseEntity<List<Applicant>> getApplicants() {
+        List<Applicant> resultList = applicantService.getApplicants();
+        if(resultList.isEmpty() || resultList == null){
+            return new ResponseEntity<>(resultList, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(resultList, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
-    @ResponseBody
-    public ResponseEntity<String> getApplicantsByGroupID(@PathVariable String groupID) {
-        try {
-            resultBYGroupID = applicantService.getApplicantsInAGroup(groupID);
-        } catch (GroupNotFoundException e) {
-            String badRequest = jsonUtil.toJson("group not found");
-            return new ResponseEntity<>(badRequest, HttpStatus.BAD_REQUEST);
+    public ResponseEntity<List<Applicant>>
+    getApplicantsByGroupID(@PathVariable String groupID) {
+        List<Applicant> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
+        if(resultBYGroupID.isEmpty() || resultBYGroupID == null){
+            return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
         }
-        String response = jsonUtil.toJson(resultBYGroupID);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(resultBYGroupID, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
@@ -67,7 +60,7 @@ public class ApplicantController {
         return new ResponseEntity<Applicant>(editedApplicant, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/applicantID", method = RequestMethod.GET, produces = "application/json")
     public ResponseEntity<List<String>> getApplicantIDs() {
         List<String> response = applicantService.getApplicantIDList();
         if (response == null || response.isEmpty()) {

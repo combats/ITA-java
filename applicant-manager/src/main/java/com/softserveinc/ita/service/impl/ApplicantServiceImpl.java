@@ -21,8 +21,8 @@ public class ApplicantServiceImpl implements ApplicantService {
         return applicantDao.getApplicants();
     }
 
-    public List<Applicant> getApplicantsInAGroup(String groupID) throws GroupNotFoundException {
-        return applicantDao.getApplicantsInAGroup(groupID);
+    public List<Applicant> getApplicantsByGroupID(String groupID) {
+        return applicantDao.getApplicantsByGroupID(groupID);
     }
 
     public Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException {

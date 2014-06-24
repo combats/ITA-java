@@ -22,13 +22,15 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
         applicants.add(new Applicant("123"));
         applicants.add(new Applicant("124"));
         applicants.add(new Applicant("125"));
-        assertTrue(applicantDao.getApplicants().containsAll(applicants));
-        assertEquals(applicants, applicantDao.getApplicantsInAGroup("1"));
+//        assertTrue(applicantDao.getApplicants().containsAll(applicants));
+        assertEquals(applicants, applicantDao.getApplicantsByGroupID("1"));
     }
 
-    @Test(expected = GroupNotFoundException.class)
-    public void testGetApplicantsInGroupAndExceptionExpected() throws GroupNotFoundException {
-        List<Applicant> applicantList = applicantDao.getApplicantsInAGroup("2");
+    @Test()
+    public void testGetApplicantsInGroupAndExceptionExpected() {
+        List<Applicant> emptyList = new ArrayList<>();
+        List<Applicant> applicantList = applicantDao.getApplicantsByGroupID("2");
+        assertEquals(emptyList, applicantList);
     }
 
     @Test
@@ -65,7 +67,7 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantListAndExpectDefinedValues() throws Exception {
         List<Applicant> expectedApplicantList = new ArrayList<>();
-        Collections.addAll(expectedApplicantList, new Applicant("id1"), new Applicant("id2"), new Applicant("idX"));
+        Collections.addAll(expectedApplicantList, new Applicant("123"), new Applicant("124"), new Applicant("125"));
         assertEquals(expectedApplicantList, applicantDao.getApplicants());
     }
 }

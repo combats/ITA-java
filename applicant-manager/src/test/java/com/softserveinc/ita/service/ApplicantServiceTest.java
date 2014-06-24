@@ -47,7 +47,7 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
     @Test
     public void testGetApplicantIDListAndExpectDefinedValues() throws Exception {
         List<String> expectedApplicantIDList = new ArrayList<>();
-        Collections.addAll(expectedApplicantIDList, "id1", "id2", "idX");
+        Collections.addAll(expectedApplicantIDList, "123", "124", "125");
         assertEquals(expectedApplicantIDList, applicantService.getApplicantIDList());
     }
 }

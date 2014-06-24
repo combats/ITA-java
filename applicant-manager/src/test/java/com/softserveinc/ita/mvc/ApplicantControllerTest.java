@@ -22,15 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public class ApplicantControllerTest extends BaseMVCTest {
-    List<Applicant> standart;
     private MockMvc mockMvc;
-    private String groupID;
-    private String dbJson;
-    private List<Applicant> dbStandart;
-
-    public ApplicantControllerTest() {
-        dbStandart = new ArrayList<>();
-    }
 
     @Autowired
     private JsonUtil jsonUtil;
@@ -46,52 +38,48 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantsListAngExpectedIsOk() throws Exception {
-        mockMvc.perform(get("/applicants")
-                .content("get applicants list"))
-                .andExpect(status()
-                        .isOk());
+        mockMvc.perform(get("/applicants"))
+                .andExpect(status().isOk());
     }
 
     @Test
     public void testGetApplicantsListAngExpectedValid() throws Exception {
-        standart = new ArrayList<>();
+        List<Applicant> standart = new ArrayList<>();
         standart.add(new Applicant("123"));
         standart.add(new Applicant("124"));
         standart.add(new Applicant("125"));
 
-        String response = mockMvc.perform(get("/applicants")
-                .content("get applicants list"))
-                .andExpect(status()
-                        .isOk())
-                .andReturn().getResponse().getContentAsString();
-        Applicant[] applicantsFromServer = jsonUtil.fromJson(response, Applicant[].class);
-        assertTrue(Arrays.asList(applicantsFromServer).containsAll(standart));
+        String standardJson = jsonUtil.toJson(standart);
+
+        mockMvc.perform(get("/applicants"))
+                .andExpect(content().string(standardJson));
     }
 
 
     @Test
     public void testGetAllApplicantsByGroupId() throws Exception {
-        groupID = "1";
+        String groupID = "1";
         mockMvc.perform(get("/applicants/groups/" + groupID))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testGetAllApplicantsByGroupIdAndExpectedValidList() throws Exception {
+        List<Applicant> dbStandart = new ArrayList<>();
         dbStandart.add(new Applicant("123"));
         dbStandart.add(new Applicant("124"));
         dbStandart.add(new Applicant("125"));
 
-        dbJson = jsonUtil.toJson(dbStandart);
-        groupID = "1";
+        String dbJson = jsonUtil.toJson(dbStandart);
+        String groupID = "1";
         mockMvc.perform(get("/applicants/groups/" + groupID))
                 .andExpect(content().string(dbJson));
     }
 
     @Test
     public void testGetAllApplicantsByGroupIdAndExceptionExpected() throws Exception {
-        groupID = "2";
-        String response = jsonUtil.toJson("group not found");
+        String groupID = "2";
+        String response = jsonUtil.toJson(new ArrayList<Applicant>());
         mockMvc.perform(get("/applicants/groups/" + groupID))
                 .andExpect(content().string(response));
     }

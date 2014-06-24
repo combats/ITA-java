@@ -21,7 +21,7 @@ import static junit.framework.Assert.assertEquals;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     private List<Applicant> standartList;
-    List<Applicant> applicants;
+    private List<Applicant> applicants;
 
     @Autowired
     @InjectMocks
@@ -51,22 +51,24 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     }
 
     @Test
-    public void testGetApplicantsInGroupAndExpectediIsOk() throws GroupNotFoundException {
+    public void testGetApplicantsInGroupAndExpectediIsOk() {
         List<Applicant> mockApplicants = new ArrayList<>();
         mockApplicants.add(new Applicant("123"));
         mockApplicants.add(new Applicant("124"));
         mockApplicants.add(new Applicant("125"));
 
-        when(applicantDao.getApplicantsInAGroup("1")).thenReturn(mockApplicants);
-        applicants = applicantService.getApplicantsInAGroup("1");
-        verify(applicantDao).getApplicantsInAGroup("1");
+        when(applicantDao.getApplicantsByGroupID("1")).thenReturn(mockApplicants);
+        applicants = applicantService.getApplicantsByGroupID("1");
+        verify(applicantDao).getApplicantsByGroupID("1");
         assertEquals(applicants, mockApplicants);
     }
 
-    @Test(expected = GroupNotFoundException.class)
-    public void testGetApplicantsInGroupAndExceptionExpected() throws GroupNotFoundException {
-
-        when(applicantDao.getApplicantsInAGroup("2")).thenThrow(new GroupNotFoundException());
-        applicants = applicantService.getApplicantsInAGroup("2");
+    @Test
+    public void testGetApplicantsInGroupAndExceptionExpected() {
+        List<Applicant> mockApplicants = new ArrayList<>();
+        when(applicantDao.getApplicantsByGroupID("2")).thenReturn(mockApplicants);
+        applicants = applicantService.getApplicantsByGroupID("2");
+        verify(applicantDao).getApplicantsByGroupID("2");
+        assertEquals(applicants, mockApplicants);
     }
 }

@@ -9,7 +9,7 @@ import com.softserveinc.ita.exception.GroupNotFoundException;
 public interface ApplicantService {
     List<Applicant> getApplicants();
 
-    List<Applicant> getApplicantsInAGroup(String groupID) throws GroupNotFoundException;
+    List<Applicant> getApplicantsByGroupID(String groupID);
 
     Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException;
 
