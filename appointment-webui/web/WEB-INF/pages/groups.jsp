@@ -12,19 +12,23 @@
             viewGroups();
         });
     </script>
-    <script>
 
+    <script>
         function viewGroups() {
-            var template = "<li data-id={{groupId}}>" +
-                    "<div class='easyBox'>" +
-                    " <a href='{{ref}}'>" +
-                    "<img src='${pageContext.servletContext.contextPath}/resources/images/{{image}}' alt=''></a>" +
-                    " <div class='inner'>" +
-                    " <h3 class='light'><a href='{{ref}}'>{{groupName}}</a></h3> " +
-                    "<p>{{courseName}}</p> " +
-                    "</div>" +
-                    " </div> " +
-                    "</li>"
+            <%--var template="<li data-id={{groupId}}>" +--%>
+            <%--"<div class='easyBox'>" +--%>
+            <%--" <a href='{{ref}}'>" +--%>
+            <%--"<img src='${pageContext.servletContext.contextPath}/resources/images/{{image}}' alt=''></a>" +--%>
+            <%--" <div class='inner'>" +--%>
+            <%--" <h3 class='light'><a href='{{ref}}'>{{groupName}}</a></h3> " +--%>
+            <%--"<p>{{courseName}}</p> " +--%>
+            <%--"</div>" +--%>
+            <%--"</div> " +--%>
+            <%--"</li>";--%>
+            var template;
+            jQuery.get('<c:url value="/resources/template/iconTemplate" />', function (data) {
+                template = data;
+            });
             var selectedValue = $("#drop").val();
             var statusUrl = "/appointment-webui/groups/" + selectedValue
             $.ajax({

@@ -2769,6 +2769,7 @@ input[type="submit"].btn::-moz-focus-inner {
     body {
         padding-left: 20px;
         padding-right: 20px;
+        margin-bottom:50px;
     }
 
     .dl-horizontal dt {
@@ -4473,10 +4474,11 @@ ul.commentList .oneComment .metaIcon i:before {
 
 #footer {
     background: #363636;
-    min-height: 120px;
-    padding: 18px 0 0 0;
     margin-top: 50px;
     color: #d7d7d7;
+    bottom:0px;
+    margin-bottom:0px;
+    width:100%;
 }
 
 #footer h1,

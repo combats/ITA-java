@@ -1,6 +1,5 @@
 package com.softserveinc.ita.controller;
 
-import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,8 +34,7 @@ public class GroupController {
 
 
     @RequestMapping(value = "/groups/list/{groupId}", method = RequestMethod.GET)
-    public String redirect(@PathVariable String groupId, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("groupId",groupId);
+    public String redirect(@PathVariable String groupId) {
         return "userList";
     }
 
