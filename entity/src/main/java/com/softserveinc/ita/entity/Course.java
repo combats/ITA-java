@@ -4,9 +4,11 @@ import java.io.Serializable;
 
 public class Course implements Serializable {
 
-    private String name;
-    private String courseId;
-    private String imageRef;
+    private static final String DEFAULT_ID_VALUE = "0000000";
+
+    private String name = "";
+    private String courseId = DEFAULT_ID_VALUE;
+    private String imageRef = "";
 
     public Course(String courseId) {
         this.courseId = courseId;

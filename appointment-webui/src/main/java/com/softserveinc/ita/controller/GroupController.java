@@ -17,7 +17,6 @@ import java.util.ArrayList;
 @RequestMapping("/")
 public class GroupController {
 
-
     @RequestMapping(method = RequestMethod.GET)
     public String printWelcome() {
         return "groups";
@@ -27,12 +26,13 @@ public class GroupController {
     private GroupService groupService;
 
 
-    @RequestMapping(value = "/groups/{status}", method = RequestMethod.GET)
+    @RequestMapping(value = "/groups/{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
         return groupService.getGroupsByStatus(status);
     }
+
 
     @RequestMapping(value = "/groups/list/{groupId}", method = RequestMethod.GET)
     public String redirect(@PathVariable String groupId, RedirectAttributes redirectAttributes) {

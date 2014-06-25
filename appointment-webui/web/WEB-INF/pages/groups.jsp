@@ -77,7 +77,7 @@
 
             <div class="nav-collapse">
                 <ul class="nav pull-left">
-                    <li class="active dropdown">
+                    <li class="dropdown">
                         <a href="index-2.html" class="dropdown-toggle">Menu1</a>
                     </li>
                     <li class="dropdown">
@@ -86,11 +86,8 @@
                     <li class="dropdown">
                         <a href="invia-site-elements.html" class="dropdown-toggle">Menu3</a>
                     </li>
-                    <li>
                     <li class="dropdown">
                         <a href="invia-portfolio.html" class="dropdown-toggle">Menu4</a>
-                        <ul class="dropdown-menu">
-                        </ul>
                     </li>
                 </ul>
             </div>
@@ -98,12 +95,7 @@
     </div>
 </div>
 
-<select name="select1" id="drop" onchange="viewGroups()">
-    <option value="Boarding">Boarding</option>
-    <option value="In process">In progress</option>
-    <option value="Planned">Planned</option>
-    <option value="Offering">Offering</option>
-</select>
+
 <br>
 
 <!-- main container -->
@@ -114,7 +106,12 @@
             <div class="titleBox">
                 <h1 class="huge">Groups
             <span>
-                Some kind of message, that describes page will place here
+                <select name="select1" id="drop" onchange="viewGroups()">
+                    <option value="Boarding">Boarding</option>
+                    <option value="In process">In progress</option>
+                    <option value="Planned">Planned</option>
+                    <option value="Offering">Offering</option>
+                </select>
             </span>
                 </h1>
             </div>
@@ -135,13 +132,13 @@
         <div class="container">
             <div class="row-fluid">
                 <div class="span4">
-                    <p><a href="#">legal</a></p>
+                    <p><a href="#">Text</a></p>
                 </div>
                 <div class="span4">
-                    <p>328 Hardesty Street Latham, NY 12110</p>
+                    <p>Text</p>
                 </div>
                 <div class="span4 doRight">
-                    <p>© 2013 INVIA Inc All Rights Reserved</p>
+                    <p>Text</p>
                 </div>
             </div>
         </div>
