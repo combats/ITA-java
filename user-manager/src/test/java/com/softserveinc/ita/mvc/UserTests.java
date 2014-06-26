@@ -1,11 +1,20 @@
 package com.softserveinc.ita.mvc;
 
+import com.softserveinc.ita.controller.UserController;
 import com.softserveinc.ita.entity.User;
+
+import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
+import com.softserveinc.ita.exception.InvalidUserIDException;
+import com.softserveinc.ita.exception.UserDoesNotExistException;
+import com.softserveinc.ita.exception.UserException;
 import com.softserveinc.ita.utils.JsonUtil;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
@@ -38,10 +47,10 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
-    public void testDeleteUserByIDAndExpectedIsNoContent() throws Exception {
+    public void testDeleteUserByIDAndExpectedIsOK() throws Exception {
         String userID = new String("121");
         mockMvc.perform(delete("/users" + "/" + userID))
-                .andExpect(status().isNoContent());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -174,5 +183,11 @@ public class UserTests extends BaseMVCTest {
         mockMvc.perform(
                 get("/users"))
                 .andExpect(content().string(expectedResult));
+    }
+    @Test
+    public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception{
+        mockMvc.perform(
+                get("/users/-1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Invalid user ID"))));
     }
 }

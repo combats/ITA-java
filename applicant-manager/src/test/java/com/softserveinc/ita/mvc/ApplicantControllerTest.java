@@ -1,6 +1,7 @@
 package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -157,5 +158,12 @@ public class ApplicantControllerTest extends BaseMVCTest {
     public void testGetApplicantIDListAndExpectJson() throws Exception {
         mockMvc.perform(get("/applicants/applicantID"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception{
+        mockMvc.perform(
+                get("/applicants/-1").accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Applicant does not exist"))));
     }
 }

@@ -1,7 +1,9 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
+import com.softserveinc.ita.exception.ApplicantException;
 import com.softserveinc.ita.exception.GroupNotFoundException;
 import com.softserveinc.ita.service.ApplicantService;
 import com.softserveinc.ita.utils.JsonUtil;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -30,8 +33,7 @@ public class ApplicantController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
-    public ResponseEntity<List<Applicant>>
-    getApplicantsByGroupID(@PathVariable String groupID) {
+    public ResponseEntity<List<Applicant>> getApplicantsByGroupID(@PathVariable String groupID) {
         List<Applicant> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
         if(resultBYGroupID.isEmpty() || resultBYGroupID == null){
             return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
@@ -40,9 +42,7 @@ public class ApplicantController {
     }
 
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
-    public
-    @ResponseBody
-    Applicant getApplicantById(@PathVariable String applicantId)
+    public @ResponseBody Applicant getApplicantById(@PathVariable String applicantId)
             throws ApplicantDoesNotExistException {
         Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
         return searchedApplicant;
@@ -67,6 +67,21 @@ public class ApplicantController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @ExceptionHandler(ApplicantException.class)
+    public @ResponseBody ExceptionJSONInfo handleApplicantException(ApplicantException exception, HttpServletResponse response){
+        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
+        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
+        ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
+        exceptionInfo.setReason(exceptionReason);
+        try {
+            response.sendError(responseStatus);   //send http status code
+        }
+        catch (Exception e){
+
+        }
+        return exceptionInfo;
     }
 
 }

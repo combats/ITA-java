@@ -5,5 +5,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR, reason="Invalid user ID")
 public class InvalidUserIDException extends UserException{
+    public InvalidUserIDException(String message){
+        super(message);
+    }
+
+    public InvalidUserIDException(){
+    }
 
 }
