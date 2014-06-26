@@ -75,7 +75,7 @@ public class Interview {
 
 
 
-    public List<QuestionsBlock> getAnswerBlocks() {
+    public List<QuestionsBlock> getQuestionsBlocks() {
         return answerBlocks;
     }
 
@@ -91,7 +91,7 @@ public class Interview {
         this.appointmentId = appointmentId;
     }
 
-    public void setAnswerBlocks(List<QuestionsBlock> answerBlocks) {
+    public void setQuestionsBlocks(List<QuestionsBlock> answerBlocks) {
         this.answerBlocks = answerBlocks;
     }
 

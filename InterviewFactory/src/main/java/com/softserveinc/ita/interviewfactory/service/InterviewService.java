@@ -19,7 +19,7 @@ import java.util.List;
 public interface InterviewService {
 
     List<Interview> getInterviewByApplicantID(String ID) throws ApppoinmentNotFoundException, InterviewNotFoundException;
-    Interview putInterview(String appointmentID, InterviewType type) throws ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException;
+    Interview putInterview(String appointmentID, String type) throws ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException;
 
     List<Interview> getInterviewByAppointmentID(String appointmentId) throws InterviewNotFoundException, ApppoinmentNotFoundException;
 

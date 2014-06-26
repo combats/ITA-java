@@ -1,5 +1,33 @@
 {
     "AppointmentId": "1",
-    "AnswerBlocks": [],
+    "AnswerBlocks": [
+        {
+            "User": {
+                "UserID": "1",
+                "Name": "IT Project Manager"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        },
+        {
+            "User": {
+                "UserID": "2",
+                "Name": "Software Developer"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        },
+        {
+            "User": {
+                "UserID": "3",
+                "Name": "HR Manager"
+            },
+            "Questions": [],
+            "FinalComment": "",
+            "BonusPoints": 0
+        }
+    ],
     "FinalComment": ""
 }

@@ -3,7 +3,7 @@ package com.softserveinc.ita.interviewfactory.service;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
-import com.softserveinc.ita.interviewfactory.InterviewFactory;
+import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.*;
 
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
@@ -54,6 +54,9 @@ public class InterviewServiceMock implements InterviewService {
     Appointment appointment1;
     Appointment appointment2;
 
+    @Autowired
+    InterviewFactory interviewFactory;
+
     AppointmentService appointmentService = new AppointmentServiceMock();
 
     Interview interview1;
@@ -98,8 +101,8 @@ public class InterviewServiceMock implements InterviewService {
     List<Interview> interviewsList = new ArrayList<Interview>(); {
 
         try{
-            interview1 = InterviewFactory.getInterview(appointment1.getAppointmentId(), InterviewType.InterviewWithUserAndStandardQuestions);
-            interview2 = InterviewFactory.getInterview(appointment2.getAppointmentId(), InterviewType.InterviewWithUserAndStandardQuestions);
+            interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
+            interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
         }
         catch (Exception e){}
 
@@ -110,24 +113,24 @@ public class InterviewServiceMock implements InterviewService {
     //-------------VadimNaumenko mock from tests
 
     @Override
-    public Interview putInterview(String appointmentID, InterviewType type) throws WrongCriteriaException, InvalidUserIDException, ApppoinmentNotFoundException {
+    public Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, InvalidUserIDException, ApppoinmentNotFoundException {
 
-        if (type.equals(InterviewType.InterviewWithoutQuestions)) {
-            Interview InterviewWithoutQuestions =
-                    InterviewFactory.getInterview(appointmentID, InterviewType.InterviewWithoutQuestions);
-            interviewsList.add(InterviewWithoutQuestions);
+        if (type.equals("InterviewWithoutQuestions")) {
+            Interview interview =
+                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentID);
+            interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
-        if (type.equals(InterviewType.InterviewWithStandardQuestions)) {
-            Interview InterviewWithStandardQuestions =
-                    InterviewFactory.getInterview(appointmentID, InterviewType.InterviewWithStandardQuestions);
-            interviewsList.add(InterviewWithStandardQuestions);
+        if (type.equals("InterviewWithStandardQuestions")) {
+            Interview interview =
+                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentID);
+            interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
-        if (type.equals(InterviewType.InterviewWithUserAndStandardQuestions)) {
-            Interview InterviewWithUserAndStandardQuestions =
-                    InterviewFactory.getInterview(appointmentID, InterviewType.InterviewWithUserAndStandardQuestions);
-            interviewsList.add(InterviewWithUserAndStandardQuestions);
+        if (type.equals("InterviewWithUserAndStandardQuestions")) {
+            Interview interview =
+                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentID);
+            interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
         throw new WrongCriteriaException("Type is wrong");
