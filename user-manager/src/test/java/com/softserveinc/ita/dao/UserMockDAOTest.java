@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.lang.reflect.Field;
 import java.util.*;
 
-import static com.sun.javaws.JnlpxArgs.verify;
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNull;
 import static junit.framework.Assert.assertEquals;
