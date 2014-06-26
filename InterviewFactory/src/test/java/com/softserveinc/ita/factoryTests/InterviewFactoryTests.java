@@ -1,14 +1,11 @@
-package com.softserveinc.ita;
+package com.softserveinc.ita.factoryTests;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.InterviewFactory;
 import com.softserveinc.ita.utils.JsonUtil;
 
-import exceptions.WrongCriteriaException;
 import org.json.simple.parser.JSONParser;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 

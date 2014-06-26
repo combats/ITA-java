@@ -9,9 +9,9 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
     <context:annotation-config />
-    <context:component-scan base-package="com.softserveinc.ita"/>
+    <context:component-scan base-package="com.softserveinc.ita.interviewfactory"/>
 
-    <context:component-scan base-package="com.softserveinc.ita.service.*" />
+    <context:component-scan base-package="com.softserveinc.ita.interviewfactory.service.*" />
     <mvc:annotation-driven/>
 
 
@@ -22,7 +22,7 @@
 
     <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
     <!--aux/utils-->
-    <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
+
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <!--external services-->
     <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>

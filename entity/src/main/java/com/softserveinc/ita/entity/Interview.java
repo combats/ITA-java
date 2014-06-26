@@ -16,6 +16,8 @@ import java.util.List;
 public class Interview {
 
     @Expose
+    private String interviewId;
+    @Expose
     private String appointmentId;
     @Expose
     private List<QuestionsBlock> answerBlocks = new ArrayList<>();
@@ -77,6 +79,10 @@ public class Interview {
         return answerBlocks;
     }
 
+    public String getInterviewId() {
+        return interviewId;
+    }
+
     public String getAppointmentId() {
         return appointmentId;
     }
@@ -95,5 +101,9 @@ public class Interview {
 
     public void setFinalComment(String finalComment) {
         this.finalComment = finalComment;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
     }
 }

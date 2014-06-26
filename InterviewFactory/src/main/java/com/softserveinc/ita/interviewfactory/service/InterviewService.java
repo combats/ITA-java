@@ -2,6 +2,9 @@ package com.softserveinc.ita.interviewfactory.service;
 
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
+import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
+import com.softserveinc.ita.exceptions.InvalidUserIDException;
+import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;
@@ -15,6 +18,12 @@ import java.util.List;
  */
 public interface InterviewService {
 
-    List<Interview> getInterviewByApplicantID(String ID) throws Exception;
-    Interview putInterview(String appointmentID, InterviewType type)  throws Exception;
+    List<Interview> getInterviewByApplicantID(String ID) throws ApppoinmentNotFoundException, InterviewNotFoundException;
+    Interview putInterview(String appointmentID, InterviewType type) throws ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException;
+
+    List<Interview> getInterviewByAppointmentID(String appointmentId) throws InterviewNotFoundException, ApppoinmentNotFoundException;
+
+    Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException;
+
+    void removeInterviewById(String interviewId) throws InterviewNotFoundException;
 }

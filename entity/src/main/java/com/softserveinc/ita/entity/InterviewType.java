@@ -8,5 +8,7 @@ package com.softserveinc.ita.entity;
  * To change this template use File | Settings | File Templates.
  */
 public enum InterviewType {
-    InterviewWithoutQuestions, InterviewWithStandardQuestions, InterviewWithUserAndStandardQuestions
+    InterviewWithoutQuestions,
+    InterviewWithStandardQuestions,
+    InterviewWithUserAndStandardQuestions
 }
