@@ -2,7 +2,9 @@ package com.softserveinc.ita.service;
 
 
 import com.softserveinc.ita.dao.UserDAO;
+import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
+import com.softserveinc.ita.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -16,13 +18,13 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class UserServiceMockitoTest extends BaseServiceTest {
-    @Autowired
+   // @Autowired
     @InjectMocks
-    private UserService userService;
+    private UserService userService = new UserServiceImpl(); //TODO:Find out why there are problems with Autowired.
 
-    @Autowired
+    //@Autowired
     @Mock
-    private UserDAO userDao;
+    private UserDAO userDao = new UserDAOMockImpl(); //TODO:Find out why there are problems with Autowired.
 
     @Before
     public void init() {

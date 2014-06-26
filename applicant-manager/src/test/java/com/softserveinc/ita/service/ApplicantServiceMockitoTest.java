@@ -1,8 +1,10 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.dao.ApplicantDAO;
+import com.softserveinc.ita.dao.impl.ApplicantDAOMockImpl;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
+import com.softserveinc.ita.service.impl.ApplicantServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,13 +25,13 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     private List<Applicant> standartList;
     private List<Applicant> applicants;
 
-    @Autowired
+  //  @Autowired
     @InjectMocks
-    private ApplicantService applicantService;
+    private ApplicantService applicantService = new ApplicantServiceImpl();//TODO:Find out why there are problems with Autowired.
 
-    @Autowired
+    //@Autowired
     @Mock
-    private ApplicantDAO applicantDao;
+    private ApplicantDAO applicantDao = new ApplicantDAOMockImpl(); //TODO:Find out why there are problems with Autowired.
 
     public ApplicantServiceMockitoTest() {
         standartList = new ArrayList<>();
