@@ -7921,7 +7921,7 @@ ul.menuIcon .search a:before {
   filter: none;
 }
 .navbar .nav > li > a {
-  padding: 18px 32px 18px;
+  padding: 18px 19px 18px;
   text-shadow: none;
   font-size: 12px;
   font-weight: 600;
@@ -10503,9 +10503,9 @@ ul.commentList .oneComment:hover .metaIcon {
 }
 #footer {
   background: #363636;
-  min-height: 60px;
+  height: 60px;
   padding: 0;
-  margin-top: 50px;
+  margin-top: -80px;
   color: #d7d7d7;
 }
 #footer h1,

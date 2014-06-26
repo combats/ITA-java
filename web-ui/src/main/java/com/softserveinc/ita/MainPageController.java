@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @RequestMapping("/")
 public class MainPageController {
 	@RequestMapping(method = RequestMethod.GET)
-	public String printWelcome() {
+	public String showMainPage() {
 		return "main";
 	}
 }
