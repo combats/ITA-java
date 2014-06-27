@@ -1,0 +1,18 @@
+<html>
+<body>
+<img src='cid:logo'>
+
+
+<h1>Dear ${name} ${surname} ! </h1>
+
+We are pleased to invite You for an Interview with expert.
+We will be waiting for You at Dehtyarivska Str. 33V
+at ${time} , ${date}.
+On the reception please ask for recruiter assistant ${assistentName} ${assistentSurname}. I will meet you.
+To review map and extended address please visit our website. <a href ="https://softserve.ua/ru/university/it-academy/">It Academy</a>
+Should you have any questions, please feel free to contact me at any time. My phone number is ${assistentPhone}.
+
+SoftServe Team
+
+</body>
+</html>
