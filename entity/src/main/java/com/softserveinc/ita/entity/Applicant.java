@@ -8,19 +8,25 @@ public class Applicant implements Serializable {
     private static final String NOT_SCHEDULED_TEMPLATE_REF ="";
     private static final String PASSED_TEMPLATE_REF ="";
     private static final String NOT_PASSED_TEMPLATE_REF ="";
+    private static final String NOT_SCHEDULED_SUBJECT = "";
+    private static final String PASSED_SUBJECT = "";
+    private static final String NOT_PASSED_SUBJECT = "";
     private String applicantID;
     private String name;
     private String surname;
     private String email;
     private Status status;
 
-    enum Status {
-        NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF), PASSED(PASSED_TEMPLATE_REF), NOT_PASSED(NOT_PASSED_TEMPLATE_REF);
+    public enum Status {
+        NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF, NOT_SCHEDULED_SUBJECT), PASSED(PASSED_TEMPLATE_REF, PASSED_SUBJECT),
+        NOT_PASSED(NOT_PASSED_TEMPLATE_REF, NOT_PASSED_SUBJECT);
 
         private String templateRef;
+        private String subject;
 
-        Status(String templateRef){
+        Status(String templateRef, String subject) {
             this.templateRef=templateRef;
+            this.subject=subject;
         }
 
         public String getTemplateRef() {
@@ -29,6 +35,14 @@ public class Applicant implements Serializable {
 
         public void setTemplateRef(String templateRef) {
             this.templateRef = templateRef;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public void setSubject(String subject) {
+            this.subject = subject;
         }
     };
 

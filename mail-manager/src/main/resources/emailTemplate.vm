@@ -1,0 +1,7 @@
+<html>
+<body>
+<img src='cid:logo'>
+<h4>${name} says...</h4>
+<i>${text}</i>
+</body>
+</html>
