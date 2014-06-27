@@ -13,8 +13,6 @@
     <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
 
-    <tx:annotation-driven transaction-manager="transactionManager"/>
-
     <!--For @Annotation-based configuration-->
     <context:annotation-config/>
 

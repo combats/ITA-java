@@ -1,6 +1,6 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.BaseMVCTest;
+import com.softserveinc.ita.mvc.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
