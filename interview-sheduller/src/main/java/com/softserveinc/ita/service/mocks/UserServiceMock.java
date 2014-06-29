@@ -6,7 +6,6 @@ import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -47,6 +46,7 @@ public class UserServiceMock implements UserService {
 
 
     public boolean userExists(String userId){
+   
         return userId.equals("testUserId");
     }
 

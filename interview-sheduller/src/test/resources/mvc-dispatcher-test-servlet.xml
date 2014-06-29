@@ -8,10 +8,10 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:annotation-config />
+    <context:annotation-config/>
     <context:component-scan base-package="com.softserveinc.ita"/>
-
-    <context:component-scan base-package="com.softserveinc.ita.service.*" />
+    <context:component-scan base-package="com.softserveinc.ita.dao"/>
+    <context:component-scan base-package="com.softserveinc.ita.service.*"/>
     <mvc:annotation-driven/>
 
 
@@ -20,88 +20,11 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
+    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>
     <!--aux/utils-->
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <!--external services-->
     <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
-
     <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
-
-    <bean id="user1" class="com.softserveinc.ita.entity.User">
-        <constructor-arg name="userID"  value= "1"/>
-        <constructor-arg name="name"  value= "IT Project Manager"/>
-        <property name="question">
-            <list>
-                <ref bean="userQuestion1" />
-                <ref bean="userQuestion2" />
-            </list>
-        </property>
-    </bean>
-
-    <bean id="user2" class="com.softserveinc.ita.entity.User">
-        <constructor-arg name="userID"  value= "2"/>
-        <constructor-arg name="name"  value= "Software Developer"/>
-        <property name="question">
-            <list>
-                <ref bean="userQuestion3" />
-                <ref bean="userQuestion4" />
-            </list>
-        </property>
-    </bean>
-
-    <bean id="user3" class="com.softserveinc.ita.entity.User">
-        <constructor-arg name="userID"  value= "3"/>
-        <constructor-arg name="name"  value= "HR Manager"/>
-        <property name="question">
-            <list>
-                <ref bean="userQuestion5" />
-                <ref bean="userQuestion6" />
-            </list>
-        </property>
-    </bean>
-
-
-    <bean id="applicant1" class="com.softserveinc.ita.entity.Applicant">
-        <constructor-arg name="id"  value= "1"/>
-        <constructor-arg name="name"  value= "Gena"/>
-
-    </bean>
-
-    <bean id="applicant2" class="com.softserveinc.ita.entity.Applicant">
-        <constructor-arg name="id"  value= "2"/>
-        <constructor-arg name="name"  value= "Gesha"/>
-    </bean>
-
-    <bean id="userQuestion1" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Have you ever were connected with quality assurance engineering?"/>
-        <constructor-arg name="weight"  value= "2"/>
-    </bean>
-
-    <bean id="userQuestion2" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Have you ever were connected with database developing?"/>
-        <constructor-arg name="weight"  value= "3"/>
-    </bean>
-
-    <bean id="userQuestion3" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Tell me something about JUnit testing."/>
-        <constructor-arg name="weight"  value= "2"/>
-    </bean>
-
-    <bean id="userQuestion4" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Your last book you read?"/>
-        <constructor-arg name="weight"  value= "3"/>
-    </bean>
-
-    <bean id="userQuestion5" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Where did you study?"/>
-        <constructor-arg name="weight"  value= "2"/>
-    </bean>
-
-    <bean id="userQuestion6" class="com.softserveinc.ita.entity.Question">
-        <constructor-arg name="questionBody"  value= "Are you married?"/>
-        <constructor-arg name="weight"  value= "3"/>
-    </bean>
-
 </beans>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/appointments")
@@ -30,6 +31,7 @@ public class AppointmentController {
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(appointmentValidator);
     }
+
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public Appointment getAppointmentByApplicantId(@PathVariable String applicantId) {
@@ -37,15 +39,17 @@ public class AppointmentController {
     }
 
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
-    public void removeAppointmentById(@PathVariable String appointmentId){
+    public void removeAppointmentById(@PathVariable String appointmentId) {
         appointmentService.removeAppointmentById(appointmentId);
     }
  	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public @ResponseBody String addNewAppointment(@RequestBody @Valid Appointment appointment) {
+    public
+    @ResponseBody
+    String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
-          return appointmentService.addAppointment(appointment);
-       }
+        return appointmentService.addAppointment(appointment);
+    }
 
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
@@ -63,5 +67,13 @@ public class AppointmentController {
 
         appointmentService.editAppointmentById(appointmentId, appointment);
         return appointment;
+        return appointmentService.getAppointmentByAppointmentId(appointmentId);
+    }
+
+    @RequestMapping(value = "/date/{date}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseBody
+    public List<Appointment> getAppointmentsByDate(@PathVariable long date) {
+
+        return appointmentService.getAppointmentsByDate(date);
     }
 }

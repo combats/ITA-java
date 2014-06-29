@@ -4,15 +4,20 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 
 public class AppointmentServiceMock implements AppointmentService {
 
 
     private long startTime = 1403308782454L;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private LinkedList<Appointment> appointmentsList;
 
     //-------------VadimNaumenko mock for tests------------------------------------
 
@@ -111,6 +116,30 @@ public class AppointmentServiceMock implements AppointmentService {
     public List<String> getUsersListByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException {
         Appointment appointment = getAppointmentByAppointmentId(appointmentId);
         return appointment.getUserIdList();
+    }
+    @Override
+    public List<Appointment> getAppointmentsByDate(long date) {
+        DateTime requirementDate = new DateTime(date);
+        List<Appointment> resultList = new LinkedList<>();
+
+        //if  required date less  than 1970 year then return empty result
+        if (requirementDate.getMillis() < new DateTime(0).getMillis()) {
+            return resultList;
+        }
+
+        for (Appointment appointment : appointmentsList) {
+
+            DateTime appointmentDate = new DateTime(appointment.getStartTime());
+
+            if (requirementDate.getYear() == appointmentDate.getYear() &&
+                    requirementDate.getMonthOfYear() == appointmentDate.getMonthOfYear() &&
+                    requirementDate.getDayOfMonth() == appointmentDate.getDayOfMonth()) {
+                resultList.add(appointment);
+            }
+        }
+
+        return resultList;
+
     }
 
     @Override
