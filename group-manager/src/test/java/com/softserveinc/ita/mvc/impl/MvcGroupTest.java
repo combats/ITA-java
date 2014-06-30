@@ -1,5 +1,7 @@
 package com.softserveinc.ita.mvc.impl;
 
+import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -8,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -33,7 +38,7 @@ public class MvcGroupTest extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/status")
+                get("/groups/Boarding")
         )
                 .andExpect(status().isOk());
     }
@@ -44,5 +49,12 @@ public class MvcGroupTest extends MvcGroupBaseTest {
                 get("/groups/status")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetGroupsByStatusAndExpectReasonWasConvertedToJson() throws Exception{
+        mockMvc.perform(
+                get("/groups/wrong").accept(MediaType.APPLICATION_JSON))
+                .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Group status does not exist"))));
     }
 }
