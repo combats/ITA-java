@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
@@ -38,9 +39,7 @@ public class GroupController {
         exceptionInfo.setReason(exceptionReason);
         try {
             response.sendError(responseStatus);
-        }
-        catch (Exception e){
-
+        } catch (IOException e) {
         }
         return exceptionInfo;
     }
