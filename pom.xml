@@ -20,7 +20,7 @@
         <module>user-manager</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
-        <module>appointment-webui</module>
+        <module>interview-scheduler-ui</module>
         <module>group-manager</module>
     </modules>
 

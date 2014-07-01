@@ -20,7 +20,7 @@ public class GroupController {
 
     @RequestMapping(method = RequestMethod.GET)
     public String getGroups() {
-        return "groups";
+        return "groups2";
     }
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET, produces = "application/json")
