@@ -2,23 +2,34 @@
 
 ###Applicant: 
 ```java
-private String applicantID;
+private String id;
+private String name; 
+private String surname; 
+private int age; 
+private String email;
+
+
 ```
 ###User:
 ```java
 public static final int DEFAULT_USER_AGE = 0;
 public static final String DEFAULT_USER_NAME = "";
 public static final String DEFAULT_USER_ID = "";
-private String userID = DEFAULT_USER_ID;
+private String id = DEFAULT_USER_ID;
 private String name = DEFAULT_USER_NAME;
+private String surname; 
 private int age = DEFAULT_USER_AGE;
+private String phone; 
+pricate String email; 
+
+
 ```
 ###Group: 
 ```java
 private String groupID;
 private List<Applicant> applicantsInGroup = new ArrayList<>();
 ``` 
-?
+
 
 #SERVICES:
 ###UserManager:
