@@ -5,29 +5,32 @@ public class User {
     public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
     public static final String DEFAULT_USER_ID = "";
-    private String userID = DEFAULT_USER_ID;
+    private String id = DEFAULT_USER_ID;
     private String name = DEFAULT_USER_NAME;
+    private String surname;
+    private String phone;
+    private String email;
     private int age = DEFAULT_USER_AGE;
 
     public User() {
     }
 
     public User(String userID) {
-        this.userID = userID;
+        this.id = userID;
     }
 
     public User(String userID, String name, int age) {
-        this.userID = userID;
+        this.id = userID;
         this.name = name;
         this.age = age;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setId(String userID) {
+        this.id = userID;
     }
 
     public String getName() {
@@ -49,8 +52,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID='" + userID + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", age=" + age +
                 '}';
     }
@@ -63,16 +69,22 @@ public class User {
         User user = (User) o;
 
         if (age != user.age) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (userID != null ? !userID.equals(user.userID) : user.userID != null) return false;
+        if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
+        if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userID != null ? userID.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
         return result;
     }

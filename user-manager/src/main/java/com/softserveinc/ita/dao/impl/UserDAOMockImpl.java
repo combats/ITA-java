@@ -35,7 +35,7 @@ public class UserDAOMockImpl implements UserDAO {
         }};
 
         for (User u : users) {
-            if (u.getUserID().equals(UserID)) {
+            if (u.getId().equals(UserID)) {
                 user = u;
             }
         }
@@ -85,7 +85,7 @@ public class UserDAOMockImpl implements UserDAO {
             }
         };
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserID().equals(changingUser.getUserID())) {
+            if (users.get(i).getId().equals(changingUser.getId())) {
                 users.set(i, changingUser);
                 return users.get(i);
             }

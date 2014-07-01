@@ -25,7 +25,7 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     private List<Applicant> standartList;
     private List<Applicant> applicants;
 
-  //  @Autowired
+   // @Autowired
     @InjectMocks
     private ApplicantService applicantService = new ApplicantServiceImpl();//TODO:Find out why there are problems with Autowired.
 

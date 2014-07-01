@@ -63,14 +63,14 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
          *  for not having equal object in DB has not been implemented
          **/
         String newApplicantId = String.valueOf(idAutoGeneration.incrementAndGet());
-        applicant.setApplicantID(newApplicantId);
+        applicant.setId(newApplicantId);
         applicants.put(newApplicantId, applicant);
         return applicant;
     }
 
     @Override
     public Applicant editApplicant(Applicant applicant) {
-        String applicantForEditId = applicant.getApplicantID();
+        String applicantForEditId = applicant.getId();
         applicants.put(applicantForEditId, applicant);
         return applicant;
     }

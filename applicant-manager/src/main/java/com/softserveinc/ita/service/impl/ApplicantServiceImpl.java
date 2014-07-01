@@ -49,7 +49,7 @@ public class ApplicantServiceImpl implements ApplicantService {
         }
         List<String> applicantIDs = new ArrayList<>();
         for (Applicant applicant : applicants) {
-            applicantIDs.add(applicant.getApplicantID());
+            applicantIDs.add(applicant.getId());
         }
         return applicantIDs;
     }

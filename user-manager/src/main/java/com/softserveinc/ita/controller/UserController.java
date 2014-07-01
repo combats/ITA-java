@@ -22,8 +22,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private JsonUtil jsonUtil;
 
     @Autowired
     private UserService userService;
@@ -56,7 +54,7 @@ public class UserController {
         User createdUser = userService.postNewUser(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
-                builder.path("/users/{userID}").buildAndExpand(createdUser.getUserID().toString()).toUri());
+                builder.path("/users/{userID}").buildAndExpand(createdUser.getId().toString()).toUri());
         return new ResponseEntity<>(createdUser, headers, HttpStatus.CREATED);
     }
 

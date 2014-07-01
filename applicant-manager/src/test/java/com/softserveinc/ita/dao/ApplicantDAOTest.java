@@ -50,8 +50,8 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     public void testAddApplicantAndGetTheSameApplicant() throws Exception {
         Applicant newApplicant = applicantDao.addNewApplicant(new Applicant());
         assertNotNull(newApplicant);
-        assertFalse(newApplicant.getApplicantID().isEmpty());
-        Applicant receivedApplicant = applicantDao.getApplicantById(newApplicant.getApplicantID());
+        assertFalse(newApplicant.getId().isEmpty());
+        Applicant receivedApplicant = applicantDao.getApplicantById(newApplicant.getId());
         assertEquals(newApplicant, receivedApplicant);
     }
 
@@ -59,9 +59,9 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     public void testAddApplicantAndEditTheSameApplicant() throws Exception {
         Applicant newApplicant = applicantDao.addNewApplicant(new Applicant());
         assertNotNull(newApplicant);
-        assertFalse(newApplicant.getApplicantID().isEmpty());
+        assertFalse(newApplicant.getId().isEmpty());
         Applicant editedApplicant = applicantDao.editApplicant(newApplicant);
-        assertEquals(newApplicant.getApplicantID(), editedApplicant.getApplicantID());
+        assertEquals(newApplicant.getId(), editedApplicant.getId());
     }
 
     @Test

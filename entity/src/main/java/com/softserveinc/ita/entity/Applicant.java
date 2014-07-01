@@ -4,20 +4,24 @@ import java.io.Serializable;
 
 
 public class Applicant implements Serializable {
-    private String applicantID;
+    private String id;
+    private String name;
+    private String surname;
+  //  private int age;
+    private String email;
 
     public Applicant() {}
 
     public Applicant(String applicantID) {
-        this.applicantID = applicantID;
+        this.id = applicantID;
     }
 
-    public String getApplicantID() {
-        return applicantID;
+    public String getId() {
+        return id;
     }
 
-    public void setApplicantID(String applicantID) {
-        this.applicantID = applicantID;
+    public void setId(String applicantID) {
+        this.id = applicantID;
     }
 
     @Override
@@ -27,21 +31,33 @@ public class Applicant implements Serializable {
 
         Applicant applicant = (Applicant) o;
 
-        if (applicantID != null ? !applicantID.equals(applicant.applicantID) : applicant.applicantID != null)
-            return false;
+       // if (age != applicant.age) return false;
+        if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
+        if (id != null ? !id.equals(applicant.id) : applicant.id != null) return false;
+        if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
+        if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
         return true;
     }
 
     @Override
-    public int hashCode() {
-        return applicantID != null ? applicantID.hashCode() : 0;
+    public String toString() {
+        return "Applicant{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+               // ", age=" + age +
+                ", email='" + email + '\'' +
+                '}';
     }
 
     @Override
-    public String toString() {
-        return "Applicant{" +
-                "applicantID='" + applicantID + '\'' +
-                '}';
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+      //  result = 31 * result + age;
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        return result;
     }
 }
