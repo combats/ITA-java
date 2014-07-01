@@ -14,5 +14,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <mvc:annotation-driven />
+    <mvc:resources mapping="/resources/**" location="/resources/" />
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
 </beans>

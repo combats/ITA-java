@@ -14,6 +14,7 @@ public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupDao groupDao;
+
     @Override
     public ArrayList<Group> getGroupsByStatus(String groupStatus) {
         if(isWrongStatus(groupStatus)){

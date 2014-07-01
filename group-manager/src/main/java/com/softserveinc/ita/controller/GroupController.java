@@ -17,6 +17,10 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String getGroups() {
+        return "groups";
+    }
 
     @RequestMapping(value = "/{status}", method = RequestMethod.GET, produces = "application/json")
     public
@@ -28,8 +32,8 @@ public class GroupController {
     @ExceptionHandler(GroupException.class)
     public @ResponseBody
     ExceptionJSONInfo handleApplicantException(GroupException exception, HttpServletResponse response){
-        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
-        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
+        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value();
+        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();
         ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
         exceptionInfo.setReason(exceptionReason);
         try {
