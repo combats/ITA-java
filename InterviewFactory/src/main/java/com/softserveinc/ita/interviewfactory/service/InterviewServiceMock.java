@@ -7,8 +7,10 @@ import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.*;
 
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
+import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
+import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -25,42 +27,22 @@ import java.util.List;
 public class InterviewServiceMock implements InterviewService {
 
 
-    private long startTime = 1403308782454L;
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
-
     //-------------VadimNaumenko mock for tests------------------------------------
-
-//
-//    @Autowired
-//    private User user1;
-//
-//    @Autowired
-//    private User user2;
-//
-//    @Autowired
-//    private User user3;
-//
-//    @Autowired
-//    private Applicant applicant1;
-//
-//    @Autowired
-//    private Applicant applicant2;
-    //  @Autowired
-    //  private User user2;
-
-    //  @Autowired
-    //  private User user3;
-
-    Appointment appointment1;
-    Appointment appointment2;
-
     @Autowired
     InterviewFactory interviewFactory;
 
-    AppointmentService appointmentService = new AppointmentServiceMock();
+    @Autowired
+    private JsonUtil interviewUtilJson;
 
-    Interview interview1;
-    Interview interview2;
+    @Autowired
+    AppointmentService appointmentService;
+
+    private long startTime = 1403308782454L;
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
+
+    Appointment appointment1;
+    Appointment appointment2;
+    Appointment appointment3;
 
     private User user1 = new User("1", "IT Project Manager");
     private User user2 = new User("2", "Software Developer");
@@ -90,24 +72,15 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
-        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
+        appointment1 = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
         appointment1.setAppointmentId("1");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment2 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
+        appointment3 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+        appointment3.setAppointmentId("3");
         appointmentIdList.add(appointment1.getAppointmentId());
         appointmentIdList.add(appointment2.getAppointmentId());
-    }
-
-    List<Interview> interviewsList = new ArrayList<Interview>(); {
-
-        try{
-            interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
-            interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
-        }
-        catch (Exception e){}
-
-        interviewsList.add(interview1);
-        interviewsList.add(interview2);
+        appointmentIdList.add(appointment3.getAppointmentId());
     }
 
     //-------------VadimNaumenko mock from tests
@@ -115,21 +88,34 @@ public class InterviewServiceMock implements InterviewService {
     @Override
     public Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, InvalidUserIDException, ApppoinmentNotFoundException {
 
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+
         if (type.equals("InterviewWithoutQuestions")) {
             Interview interview =
                     interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentID);
+            interview.setType(InterviewType.InterviewWithoutQuestions);
             interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
         if (type.equals("InterviewWithStandardQuestions")) {
             Interview interview =
                     interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentID);
+            interview.setType(InterviewType.InterviewWithStandardQuestions);
             interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
         if (type.equals("InterviewWithUserAndStandardQuestions")) {
             Interview interview =
                     interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentID);
+            interview.setType(InterviewType.InterviewWithUserAndStandardQuestions);
             interviewsList.add(interview);
             return interviewsList.get(interviewsList.size() - 1);
         }
@@ -137,11 +123,24 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public List<Interview> getInterviewByApplicantID(String ID) throws ApppoinmentNotFoundException, InterviewNotFoundException {
+    public List<Interview> getInterviewByApplicantID(String ID) throws ApppoinmentNotFoundException, InterviewNotFoundException, InvalidUserIDException {
+
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+
         List<Interview> interviewsListWithMyApplicant = new ArrayList<Interview>();
-        for (Interview interview : interviewsList){
-            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getApplicantId().equals(ID))
+        for (Interview interview : interviewsList)
+            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getApplicantId().equals(ID)) {
                 interviewsListWithMyApplicant.add(interview);
+
+
         }
         if (interviewsListWithMyApplicant.isEmpty())
             throw new InterviewNotFoundException("Wrong ID, interview not found");
@@ -150,34 +149,72 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public List<Interview> getInterviewByAppointmentID(String appointmentId) throws InterviewNotFoundException, ApppoinmentNotFoundException {
+    public List<Interview> getInterviewByAppointmentID(String appointmentId)
+            throws InterviewNotFoundException, ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException {
+
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+
         List<Interview> interviewsListWithMyAppointments = new ArrayList<Interview>();
         for (Interview interview : interviewsList){
-            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).equals(appointmentId))
+            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getAppointmentId().equals(appointmentId)){
                 interviewsListWithMyAppointments.add(interview);
+
+            }
+
         }
-        if (interviewsListWithMyAppointments.isEmpty())
-            throw new InterviewNotFoundException("Wrong ID, interview not found");
+        if (interviewsListWithMyAppointments.isEmpty())  {
+            interviewsListWithMyAppointments.add(putInterview(appointmentId, "InterviewWithUserAndStandardQuestions"));
+        }
 
         return interviewsListWithMyAppointments;
     }
 
     @Override
-    public void removeInterviewById(String interviewId) throws InterviewNotFoundException {
+    public void removeInterviewById(String interviewId) throws InterviewNotFoundException, InvalidUserIDException, ApppoinmentNotFoundException {
+
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+
         while(true){
          for (int i = 0; i < interviewsList.size(); i++){
+
          if (interviewsList.get(i).getInterviewId().equals(interviewId)){
              interviewsList.remove(i);
-             break;
-
+             return;
              }
          }
-            throw new InterviewNotFoundException("Wrong ID, interview not found");
+         throw new InterviewNotFoundException("Wrong ID, interview not found");
         }
     }
 
     @Override
-    public Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException {
+    public Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException, InvalidUserIDException, ApppoinmentNotFoundException {
+
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+
         for (Interview interview : interviewsList){
             if (interview.getInterviewId().equals(interviewId))
                 return interview;

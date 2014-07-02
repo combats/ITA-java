@@ -14,7 +14,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:mvc-dispatcher-test-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:mvc-tests.xml"})
 public abstract class BaseMVCTest {
 
 }

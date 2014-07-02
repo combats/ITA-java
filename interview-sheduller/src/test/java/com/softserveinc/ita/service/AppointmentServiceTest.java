@@ -1,7 +1,11 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.BaseMVCTest;
+import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.Question;
+import com.softserveinc.ita.entity.User;
+import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import org.junit.BeforeClass;
@@ -9,11 +13,15 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
 
 public class AppointmentServiceTest extends BaseMVCTest {
+
+    private static long startTime = 1403308782454L;
+    public static final int TOMORROW = 24 * 60 * 60 * 1000;
 
     @Autowired
     AppointmentService service;
@@ -22,43 +30,49 @@ public class AppointmentServiceTest extends BaseMVCTest {
 
     @BeforeClass
     public static void setUpOnce() {
-        int TOMORROW = 24 * 60 * 60 * 1000;
-        String appointmentId = "testAppointmentId";
 
-        List<String> users = new ArrayList<>();
-        users.add("testUserId");
+        User user1 = new User("1", "IT Project Manager");
+        User user2 = new User("2", "Software Developer");
+        User user3 = new User("3", "HR Manager");
 
-        expectedOne = new Appointment(users, "testApplicantId", 1401866602L + TOMORROW);
-        expectedOne.setAppointmentId(appointmentId);
+        Applicant applicant1 = new Applicant("1", "Gena");
+        Applicant applicant2 = new Applicant("2", "Gesha");
 
-        expectedTwo = new Appointment(users, "testApplicantId", 1401866604L + TOMORROW);
-        expectedTwo.setAppointmentId(appointmentId);
+        List<String> usersIdList = new ArrayList<String>(); {
+            Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+        }
+
+        expectedOne = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
+        expectedOne.setAppointmentId("1");
+
+        expectedTwo = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+        expectedTwo.setAppointmentId("2");
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() throws ApppoinmentNotFoundException {
+        Appointment actual = service.getAppointmentByApplicantId("1");
         assertEquals(expectedOne, actual);
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() throws ApppoinmentNotFoundException {
+        Appointment actual = service.getAppointmentByApplicantId("1");
         assertNotSame(expectedOne, actual);
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId2");
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() throws ApppoinmentNotFoundException {
+        Appointment actual = service.getAppointmentByApplicantId("2");
         assertEquals(expectedTwo, actual);
     }
 
 
     @Test
     public void testGetAppointmentByDateAndExpectAppointmentWithValidDate() {
-        final int SAME_VALUE_BY_COMPARE = 0;
+        final int SAME_VALUE_BY_COMPARE = 1;
 
-        List<Appointment> actualList = service.getAppointmentsByDate(System.currentTimeMillis());
+        List<Appointment> actualList = service.getAppointmentsByDate(1403308782454L);
         if (actualList.isEmpty()) {
             fail();
         }

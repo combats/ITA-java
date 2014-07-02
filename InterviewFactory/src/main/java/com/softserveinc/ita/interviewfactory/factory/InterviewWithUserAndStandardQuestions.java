@@ -7,6 +7,7 @@ import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.service.UserService;
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
 import com.softserveinc.ita.service.mocks.UserServiceMock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ import java.util.List;
 @Component("InterviewWithUserAndStandardQuestions")
 public class InterviewWithUserAndStandardQuestions implements CreateInterviewStrategy {
 
-    //   @Autowired
-    UserService userService = new UserServiceMock();
+    @Autowired
+    UserService userService;
 
-    //   @Autowired
-    AppointmentService appointmentService = new AppointmentServiceMock();
+    @Autowired
+    AppointmentService appointmentService;
 
     @Override
     public Interview create(String appointmentId) throws ApppoinmentNotFoundException, InvalidUserIDException {
@@ -66,6 +67,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
+        interview.setType(InterviewType.InterviewWithUserAndStandardQuestions);
         return interview;
     }
 }

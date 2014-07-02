@@ -2,6 +2,7 @@ package com.softserveinc.ita.interviewfactory.factory;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.InterviewType;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
@@ -9,6 +10,7 @@ import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.service.UserService;
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
 import com.softserveinc.ita.service.mocks.UserServiceMock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -24,11 +26,11 @@ import java.util.List;
 @Component("InterviewWithoutQuestions")
 public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
-    //   @Autowired
-    UserService userService = new UserServiceMock();
+    @Autowired
+    UserService userService;
 
-    //   @Autowired
-    AppointmentService appointmentService = new AppointmentServiceMock();
+    @Autowired
+    AppointmentService appointmentService;
 
     @Override
     public Interview create(String appointmentId) throws ApppoinmentNotFoundException, InvalidUserIDException {
@@ -42,6 +44,7 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
+        interview.setType(InterviewType.InterviewWithoutQuestions);
         return interview;
     }
 }

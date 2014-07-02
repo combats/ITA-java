@@ -1,8 +1,8 @@
 package com.softserveinc.ita.factoryInterviewTests;
 
 import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
@@ -73,18 +73,21 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
-        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
+        appointment1 = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
         appointment1.setAppointmentId("1");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment2 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
         appointmentIdList.add(appointment1.getAppointmentId());
         appointmentIdList.add(appointment2.getAppointmentId());
     }
 
     @Test
-    public void testCreateInterviewWithoutQuestions() throws InvalidUserIDException, ApppoinmentNotFoundException, IOException, ParseException, JSONException {
+    public void testCreateInterviewWithoutQuestions() throws ApppoinmentNotFoundException, IOException, ParseException, JSONException, com.softserveinc.ita.exceptions.InvalidUserIDException {
     Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(0));
+
     Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(1));
+        interview1.setInterviewId("1");
+        interview2.setInterviewId("2");
         System.out.println(interviewUtilJson.toJson(interview2));
 
 //        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
@@ -106,9 +109,11 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithStandardQuestions() throws InvalidUserIDException, ApppoinmentNotFoundException, JSONException, IOException, ParseException {
+    public void testCreateInterviewWithStandardQuestions() throws ApppoinmentNotFoundException, JSONException, IOException, ParseException, com.softserveinc.ita.exceptions.InvalidUserIDException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(1));
+        interview1.setInterviewId("1");
+        interview2.setInterviewId("2");
         System.out.println(interviewUtilJson.toJson(interview2));
 
 //        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
@@ -129,9 +134,11 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithUserAndStandardQuestions() throws InvalidUserIDException, ApppoinmentNotFoundException, JSONException, IOException, ParseException {
+    public void testCreateInterviewWithUserAndStandardQuestions() throws ApppoinmentNotFoundException, JSONException, IOException, ParseException, com.softserveinc.ita.exceptions.InvalidUserIDException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
+        interview1.setInterviewId("1");
+        interview2.setInterviewId("2");
         System.out.println(interviewUtilJson.toJson(interview2));
 
 //        BufferedReader reader1 = new BufferedReader(new InputStreamReader(

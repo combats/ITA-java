@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AppointmentService {
     String addAppointment(Appointment appointment);
-    Appointment getAppointmentByApplicantId(String applicantId);
+    Appointment getAppointmentByApplicantId(String applicantId) throws ApppoinmentNotFoundException;
     void removeAppointmentById(String appointmentId);
 
 

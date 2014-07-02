@@ -15,7 +15,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
-@ContextConfiguration(locations = {"classpath:/spring-config.xml"})
+@ContextConfiguration(locations = {"classpath:/mvc-tests.xml"})
 
 abstract class BaseFactoryInterviewTests {
 }

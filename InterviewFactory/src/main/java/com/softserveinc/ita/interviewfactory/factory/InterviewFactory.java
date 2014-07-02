@@ -1,5 +1,6 @@
 package com.softserveinc.ita.interviewfactory.factory;
 
+
 import com.softserveinc.ita.entity.InterviewType;
 
 /**

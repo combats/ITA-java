@@ -4,6 +4,7 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
+
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -44,6 +45,7 @@ public class AppointmentServiceMock implements AppointmentService {
 
     Appointment appointment1;
     Appointment appointment2;
+    Appointment appointment3;
 
     private User user1 = new User("1", "IT Project Manager");
     private User user2 = new User("2", "Software Developer");
@@ -73,23 +75,26 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     List<Appointment> appointmentList = new ArrayList<>();{
-    appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
+    appointment1 = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
         appointment1.setAppointmentId("1");
-    appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+    appointment2 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
+        appointment3 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+        appointment3.setAppointmentId("3");
         appointmentList.add(appointment1);
         appointmentList.add(appointment2);
+        appointmentList.add(appointment3);
     }
     //-------------VadimNaumenko mock from tests
 
     @Override
-    public Appointment getAppointmentByApplicantId(String applicantId) {
-        if (applicantId.equals("1")) {
-            return appointmentList.get(0);
-        } else if (applicantId.equals("2")){
-            return appointmentList.get(1);
+    public Appointment getAppointmentByApplicantId(String applicantId) throws ApppoinmentNotFoundException{
+
+        for (Appointment appointment : appointmentList){
+            if (appointment.getApplicantId().equals(applicantId)) return appointment;
+
         }
-        else return null;
+        throw new ApppoinmentNotFoundException("Wrong Id");
     }
 
     @Override
@@ -127,7 +132,7 @@ public class AppointmentServiceMock implements AppointmentService {
             return resultList;
         }
 
-        for (Appointment appointment : appointmentsList) {
+        for (Appointment appointment : appointmentList) {
 
             DateTime appointmentDate = new DateTime(appointment.getStartTime());
 

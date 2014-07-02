@@ -2,6 +2,7 @@ package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.entity.exceptions.DateException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.joda.time.DateTime;
@@ -23,6 +24,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -118,17 +120,19 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
 
-        String applicantId = "testApplicantId";
-        String appointmentId = "testAppointmentId";
+        String applicantId = "1";
+        String appointmentId = "1";
 
         List<String> users = new ArrayList<>();
-        users.add("testUserId");
-        Appointment appointment = new Appointment(users, applicantId, 1401866602L + TOMORROW);
+        users.add("1");
+        users.add("2");
+        users.add("3");
+        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
         appointment.setAppointmentId(appointmentId);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
-                get("/appointments/applicants/testApplicantId")
+                get("/appointments/applicants/1")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(appointmentJson));
@@ -213,7 +217,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentsByDateAndExpectNotNullListObjects() throws Exception {
 
-        long currentTime = System.currentTimeMillis();
+        long currentTime = 1403308782454L;
 
         mockMvc.perform(get("/appointments/date/" + currentTime))
                 .andExpect(status().isOk())
@@ -243,5 +247,55 @@ public class AppointmentTests extends BaseMVCTest {
         mockMvc.perform(get("/appointments/date/" + "nonexistent_URL"))
                 .andExpect(status().isBadRequest());
 
+    }
+
+    @Test
+    public void testEditAppointment() throws Exception {
+
+        String applicantId = "1";
+        String appointmentId = "1";
+
+        List<String> users = new ArrayList<>();
+        users.add("1");
+        users.add("2");
+        users.add("3");
+        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
+        appointment.setAppointmentId(appointmentId);
+        String appointmentJson = jsonUtil.toJson(appointment);
+
+        mockMvc.perform(
+                put("/appointments/edit/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(content().string(appointmentJson))
+                .andExpect(status().isAccepted());
+    }
+
+    @Test
+    public void testEditAppointmentAndGetSameAppointmentAsAnswer() throws Exception {
+        String applicantId = "1";
+        String appointmentId = "1";
+
+        List<String> users = new ArrayList<>();
+        users.add("1");
+        users.add("2");
+        users.add("3");
+        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
+        appointment.setAppointmentId(appointmentId);
+
+        String AppointmentBeforeEdit = jsonUtil.toJson(appointment);
+
+        MvcResult AppointmentAfterEdit = mockMvc.perform(
+                put("/appointments/edit/1")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(AppointmentBeforeEdit)
+        )
+                .andExpect(content().contentType("application/json"))
+                .andExpect(status().isAccepted())
+                .andReturn();
+
+        assertTrue("Appointments are not equal", AppointmentAfterEdit.getResponse().getContentAsString().equals(AppointmentBeforeEdit));
     }
 }

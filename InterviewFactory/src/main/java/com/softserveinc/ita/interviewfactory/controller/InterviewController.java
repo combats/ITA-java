@@ -29,42 +29,35 @@ import java.util.List;
 @RequestMapping("/interviews")
 public class InterviewController {
 
-    private InterviewService interviewService = new InterviewServiceMock();
-
     @Autowired
-    private JsonUtil jsonUtil;
+    private InterviewService interviewService;
 
-    @RequestMapping(method = RequestMethod.POST, consumes = "interview/json", produces = "interview/json")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-
-    public @ResponseBody
-    Interview addNewInterview(@RequestBody String appointmentID, InterviewType type) throws WrongCriteriaException, InvalidUserIDException, ApppoinmentNotFoundException {
-        return interviewService.putInterview(appointmentID, type);
-    }
-
-    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "interview/json")
+    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
-    public List<Interview> getInterviewByApplicantId(@PathVariable("applicantId") String applicantId) throws InterviewNotFoundException, ApppoinmentNotFoundException {
+    public List<Interview> getInterviewByApplicantId(@PathVariable("applicantId") String applicantId) throws InterviewNotFoundException, ApppoinmentNotFoundException, InvalidUserIDException {
         return interviewService.getInterviewByApplicantID(applicantId);
     }
 
-    @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.GET, produces = "interview/json")
+    @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
-    public List<Interview> getInterviewByAppointmentId(@PathVariable("appointmentId") String appointmentId) throws InterviewNotFoundException, ApppoinmentNotFoundException {
+    public List<Interview> getInterviewByAppointmentId(@PathVariable("appointmentId") String appointmentId)
+            throws InterviewNotFoundException, ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException {
         return interviewService.getInterviewByAppointmentID(appointmentId);
     }
 
     @RequestMapping(value = "/{interviewId}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-
     @ResponseBody
-    public void removeInterviewById(@PathVariable("interviewId") String interviewId) throws InterviewNotFoundException{
+    public void removeInterviewById(@PathVariable("interviewId") String interviewId) throws InterviewNotFoundException, ApppoinmentNotFoundException, InvalidUserIDException {
         interviewService.removeInterviewById(interviewId);
     }
 
-    @RequestMapping(value = "/{interviewId}", method = RequestMethod.GET, produces = "interview/json")
+    @RequestMapping(value = "/{interviewId}", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
-    public Interview getInterviewByInterviewId(@PathVariable("interviewId") String interviewId) throws InterviewNotFoundException {
+    public Interview getInterviewByInterviewId(@PathVariable("interviewId") String interviewId) throws InterviewNotFoundException, ApppoinmentNotFoundException, InvalidUserIDException {
         return interviewService.getInterviewByInterviewID(interviewId);
     }
 

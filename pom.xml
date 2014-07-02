@@ -18,7 +18,7 @@
         <module>http-request-service</module>
         <module>interview-sheduller</module>
         <module>InterviewFactory</module>
-        <module>dao</module>
+
     
         <module>user-manager</module>
         <module>applicant-manager</module>
