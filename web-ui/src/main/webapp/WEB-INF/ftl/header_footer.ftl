@@ -6,7 +6,7 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>interviewer-home</title>
 		<link rel="stylesheet" href="css/icons/entypo/css/entypo.css" />
-		<link rel="stylesheet" href="css/flexslider.css" />
+        <link rel="stylesheet" href="css/flexslider.css" />
 		<link rel="stylesheet" type="text/css" href="css/style.css" />
 	</head>
 
@@ -67,11 +67,6 @@
 					</div>
 				</div>
 			</div>
-
-		<script src="js/jquery.min.js"></script>
-		<script src="js/jquery.flexslider-min.js"></script>
-		<script src="js/jquery.contenthover.min.js"></script>
-		<script src="js/main.js"></script>
 	</body>
 </html>
 </#macro>
