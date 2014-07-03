@@ -1,19 +1,43 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
-
+@Entity
+@Table(name = "Applicants")
 public class Applicant implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    @Version
+    private Long version = 1L;
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
     private String id;
+    @Column(name = "Name")
     private String name;
+    @Column(name = "Surname")
     private String surname;
   //  private int age;
+    @Column(name = "Email")
     private String email;
+    @Column(name = "Group")
+    private String group;
 
     public Applicant() {}
 
     public Applicant(String applicantID) {
         this.id = applicantID;
+    }
+
+    public Applicant(String name, String group) {
+        this.id = id;
+        this.group = group;
     }
 
     public String getId() {
@@ -22,6 +46,38 @@ public class Applicant implements Serializable {
 
     public void setId(String applicantID) {
         this.id = applicantID;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
