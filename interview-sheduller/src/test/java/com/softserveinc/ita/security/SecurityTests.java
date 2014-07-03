@@ -80,6 +80,8 @@ public class SecurityTests extends BaseSecurityTest {
     public void userAuthenticates() throws Exception {
         final String username = "admin";
         mockMvc.perform(post("/j_spring_security_check").param("j_username", username).param("j_password", "admin"))
+
+                
                 .andExpect(redirectedUrl("/"))
                 .andExpect(new ResultMatcher() {
                     public void match(MvcResult mvcResult) throws Exception {
