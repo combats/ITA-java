@@ -1,5 +1,7 @@
 package com.softserveinc.ita.entity;
 
+import java.util.Set;
+
 public class User {
 
     public static final int DEFAULT_USER_AGE = 0;
@@ -11,6 +13,10 @@ public class User {
     private String phone;
     private String email;
     private int age = DEFAULT_USER_AGE;
+    private String password;
+    private Set securityRoleCollection;
+    private boolean active;
+    private Role role;
 
     public User() {
     }
@@ -47,6 +53,24 @@ public class User {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public boolean getActive() {return active;}
+
+    public void setActive(boolean active) {this.active = active;}
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
+
+    public String getLogin() { return email;}
+
+    public void setLogin(String login) {this.email = login;}
+
+    public Set<Role> getSecurityRoleCollection() {return securityRoleCollection;}
+
+    public void setSecurityRoleCollection(Set securityRoleCollection) {
+        this.securityRoleCollection = securityRoleCollection;
     }
 
     @Override
