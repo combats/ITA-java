@@ -4,7 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.springapp</groupId>
     <artifactId>mail-manager</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -66,6 +65,16 @@
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
             <artifactId>applicant-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita</groupId>
+            <artifactId>user-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita</groupId>
+            <artifactId>interview-sheduller</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>

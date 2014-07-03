@@ -4,12 +4,12 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
 public class AppointmentServiceMock implements AppointmentService {
 
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
