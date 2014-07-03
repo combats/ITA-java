@@ -139,7 +139,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         Applicant newApplicant = jsonUtil.fromJson(newApplicantJson, Applicant.class);
 
         String applicantFromServerJson = mockMvc.perform(
-                get("/applicants/" + newApplicant.getApplicantID())
+                get("/applicants/" + newApplicant.getId())
         )
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();

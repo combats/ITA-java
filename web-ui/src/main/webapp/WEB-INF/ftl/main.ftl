@@ -2,6 +2,11 @@
 
 <@header_footer.main_page>
 
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.flexslider-min.js"></script>
+    <script src="js/jquery.contenthover.min.js"></script>
+    <script src="js/main.js"></script>
+
 	<div class="flexslider mainslider">
 		<ul class="slides">
 			<li>

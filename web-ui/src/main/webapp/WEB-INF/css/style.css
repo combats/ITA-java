@@ -7,6 +7,10 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
+html,body {height:100%}
+ #boxedWrapper {min-height:100%;}
+ .push80 {height:80px;}
+ 
 .clearfix {
   *zoom: 1;
 }
@@ -7921,7 +7925,7 @@ ul.menuIcon .search a:before {
   filter: none;
 }
 .navbar .nav > li > a {
-  padding: 18px 19px 18px;
+  padding: 18px 32px 18px;
   text-shadow: none;
   font-size: 12px;
   font-weight: 600;

@@ -1,18 +1,9 @@
-
 package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 17.06.14
- * Time: 19:05
- * To change this template use File | Settings | File Templates.
- */
 
 public class User {
 
@@ -22,35 +13,38 @@ public class User {
     public static final String DEFAULT_USER_NAME = "";
     public static final String DEFAULT_USER_ID = "";
     @Expose
-    private String userID = DEFAULT_USER_ID;
+    private String id = DEFAULT_USER_ID;
     @Expose
     private String name = DEFAULT_USER_NAME;
+    private String surname;
+    private String phone;
+    private String email;
     private int age = DEFAULT_USER_AGE;
 
     public User() {
     }
 
     public User(String userID) {
-        this.userID = userID;
+        this.id = userID;
     }
 
     public User(String userID, String name) {
-        this.userID = userID;
+        this.id = userID;
         this.name = name;
     }
 
     public User(String userID, String name, int age) {
-        this.userID = userID;
+        this.id = userID;
         this.name = name;
         this.age = age;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getId() {
+        return id;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setId(String userID) {
+        this.id = userID;
     }
 
     public String getName() {
@@ -80,10 +74,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID='" + userID + '\'' +
-                ", Questions=" + Questions +
-                ", userID='" + userID + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
                 ", age=" + age +
                 '}';
     }
@@ -91,14 +86,12 @@ public class User {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof User)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
 
         User user = (User) o;
 
         if (age != user.age) return false;
-        if (Questions != null ? !Questions.equals(user.Questions) : user.Questions != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (userID != null ? !userID.equals(user.userID) : user.userID != null) return false;
         if (userID != null ? !userID.equals(user.userID) : user.userID != null) return false;
 
         return true;
@@ -107,10 +100,9 @@ public class User {
     @Override
     public int hashCode() {
         int result = userID != null ? userID.hashCode() : 0;
-        result = 31 * result + (Questions != null ? Questions.hashCode() : 0);
-        result = 31 * result + (userID != null ? userID.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + age;
         return result;
     }
 }
+
