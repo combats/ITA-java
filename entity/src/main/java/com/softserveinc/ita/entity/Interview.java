@@ -60,34 +60,6 @@ public class Interview {
         return totalPoint;
     }
 
-    //    public void editAnswersByUser(User user,List<String> Answers, List<Integer> Mark, List<String> Comment,
-//                                  String FinalComment, int BonusPoints){
-//
-//        QuestionsBlock answerBlock = getApplicantAnswersByUser(user);
-//        answerBlock.setAnswers(Answers);
-//        answerBlock.setMark(Mark);
-//        answerBlock.setComment(Comment);
-//        answerBlock.setFinalComment(FinalComment);
-//        answerBlock.setBonusPoints(BonusPoints);
-//        setApplicantAnswersByUser(user, answerBlock);
-//
-//    }
-//
-//    public QuestionsBlock getApplicantAnswersByUser(User user){
-//        for (QuestionsBlock answer : answerBlocks) if (answer.getUser().equals(user)) return answer;
-//        return null;
-//    }
-//
-//    public void setApplicantAnswersByUser(User user, QuestionsBlock CorrectedAnswer){
-//        for (int i = 0; i < answerBlocks.size(); i++)
-//            if (answerBlocks.get(i).getUser().equals(user))
-//                answerBlocks.set(i, CorrectedAnswer);
-//
-//    }
-
-
-
-
     public List<QuestionsBlock> getQuestionsBlocks() {
         return answerBlocks;
     }

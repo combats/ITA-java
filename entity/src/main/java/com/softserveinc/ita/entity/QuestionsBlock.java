@@ -17,6 +17,7 @@ public class QuestionsBlock {
 
     @Expose
     User user;
+    private String QuestionsBlockID;
     @Expose
     private List<QuestionInformation> questions = new ArrayList<>();
     @Expose
@@ -55,6 +56,18 @@ public class QuestionsBlock {
         this.bonusPoints = bonusPoints;
     }
 
+    public String getQuestionsBlockID() {
+        return QuestionsBlockID;
+    }
+
+    public void setQuestionsBlockID(String questionsBlockID) {
+        QuestionsBlockID = questionsBlockID;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,15 +76,20 @@ public class QuestionsBlock {
         QuestionsBlock that = (QuestionsBlock) o;
 
         if (bonusPoints != that.bonusPoints) return false;
+        if (QuestionsBlockID != null ? !QuestionsBlockID.equals(that.QuestionsBlockID) : that.QuestionsBlockID != null)
+            return false;
         if (finalComment != null ? !finalComment.equals(that.finalComment) : that.finalComment != null) return false;
         if (questions != null ? !questions.equals(that.questions) : that.questions != null) return false;
+        if (user != null ? !user.equals(that.user) : that.user != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = questions != null ? questions.hashCode() : 0;
+        int result = user != null ? user.hashCode() : 0;
+        result = 31 * result + (QuestionsBlockID != null ? QuestionsBlockID.hashCode() : 0);
+        result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (finalComment != null ? finalComment.hashCode() : 0);
         result = 31 * result + bonusPoints;
         return result;
@@ -80,7 +98,9 @@ public class QuestionsBlock {
     @Override
     public String toString() {
         return "QuestionsBlock{" +
-                "questions=" + questions +
+                "user=" + user +
+                ", QuestionsBlockID='" + QuestionsBlockID + '\'' +
+                ", questions=" + questions +
                 ", finalComment='" + finalComment + '\'' +
                 ", bonusPoints=" + bonusPoints +
                 '}';

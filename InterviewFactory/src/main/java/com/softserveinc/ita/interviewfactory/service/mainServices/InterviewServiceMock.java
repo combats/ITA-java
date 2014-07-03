@@ -1,4 +1,4 @@
-package com.softserveinc.ita.interviewfactory.service;
+package com.softserveinc.ita.interviewfactory.service.mainServices;
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
@@ -6,11 +6,9 @@ import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.*;
 
-import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
-import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -149,7 +147,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public List<Interview> getInterviewByAppointmentID(String appointmentId)
+    public Interview getInterviewByAppointmentID(String appointmentId)
             throws InterviewNotFoundException, ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
@@ -162,19 +160,18 @@ public class InterviewServiceMock implements InterviewService {
             interviewsList.add(interview2);
         }
 
-        List<Interview> interviewsListWithMyAppointments = new ArrayList<Interview>();
+        Interview interviewForReturn = null;
         for (Interview interview : interviewsList){
             if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getAppointmentId().equals(appointmentId)){
-                interviewsListWithMyAppointments.add(interview);
-
+                interviewForReturn = interview;
             }
-
-        }
-        if (interviewsListWithMyAppointments.isEmpty())  {
-            interviewsListWithMyAppointments.add(putInterview(appointmentId, "InterviewWithUserAndStandardQuestions"));
         }
 
-        return interviewsListWithMyAppointments;
+        if (interviewForReturn == null)  {
+            interviewForReturn = putInterview(appointmentId, "InterviewWithUserAndStandardQuestions");
+        }
+
+        return interviewForReturn;
     }
 
     @Override
@@ -221,5 +218,27 @@ public class InterviewServiceMock implements InterviewService {
         }
 
         throw new InterviewNotFoundException("Wrong ID, interview not found");
+    }
+
+    @Override
+    public Interview setInterview(Interview interview) throws InvalidUserIDException, ApppoinmentNotFoundException, InterviewNotFoundException {
+        List<Interview> interviewsList = new ArrayList<Interview>(); {
+
+            Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());
+            Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment2.getAppointmentId());
+            interview1.setInterviewId("1");
+            interview2.setInterviewId("2");
+            interviewsList.add(interview1);
+            interviewsList.add(interview2);
+        }
+        for (int i = 0; i < interviewsList.size(); i++){
+            if (interviewsList.get(i).getInterviewId().equals(interview.getInterviewId()))   {
+                interviewsList.add(i, interview);
+                return interviewsList.get(i);
+            }
+
+        }
+        throw new InterviewNotFoundException("Wrong interviewID");
+
     }
 }

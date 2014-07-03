@@ -1,4 +1,5 @@
 {
+    "InterviewId": "2",
     "AppointmentId": "2",
     "AnswerBlocks": [
         {
@@ -29,5 +30,6 @@
             "BonusPoints": 0
         }
     ],
-    "FinalComment": ""
+    "FinalComment": "",
+    "TotalPoint": 0
 }

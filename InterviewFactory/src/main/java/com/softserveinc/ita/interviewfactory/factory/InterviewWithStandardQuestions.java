@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
+import com.softserveinc.ita.interviewfactory.service.interviewingServices.InterviewingService;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.service.UserService;
 import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
@@ -30,26 +31,15 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
     @Autowired
     AppointmentService appointmentService;
 
+    @Autowired
+    InterviewingService interviewingService;
+
     @Override
     public Interview create(String appointmentId) throws ApppoinmentNotFoundException, InvalidUserIDException {
         Interview interview = new Interview(appointmentId);
         List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
 
-        QuestionInformation questionInformation1 = new QuestionInformation();
-        questionInformation1.setQuestion("What is your name?");
-        questionInformation1.setWeight(2);
-        QuestionInformation questionInformation2 = new QuestionInformation();
-        questionInformation2.setQuestion("How are you?");
-        questionInformation2.setWeight(3);
-
-        List<QuestionInformation> QuestionInformationList = new ArrayList<QuestionInformation>();
-        QuestionInformationList.add(questionInformation1);
-        QuestionInformationList.add(questionInformation2);
-
-        QuestionsBlock standardQuestionsBlock = new QuestionsBlock();
-        standardQuestionsBlock.setQuestions(QuestionInformationList);
-
-        allQuestionsBlocks.add(standardQuestionsBlock);
+        allQuestionsBlocks.add(interviewingService.getStandardQuestionsBlock());
 
         List<String> Users = appointmentService.getUsersListByAppointmentId(appointmentId);
 

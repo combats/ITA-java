@@ -11,6 +11,7 @@ import com.google.gson.annotations.Expose;
  */
 public class QuestionInformation {
 
+    private String QuestionInformationID;
     @Expose
     private String question = "";
     @Expose
@@ -77,6 +78,14 @@ public class QuestionInformation {
         this.weight = weight;
     }
 
+    public String getQuestionInformationID() {
+        return QuestionInformationID;
+    }
+
+    public void setQuestionInformationID(String questionInformationID) {
+        QuestionInformationID = questionInformationID;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -86,6 +95,8 @@ public class QuestionInformation {
 
         if (mark != that.mark) return false;
         if (weight != that.weight) return false;
+        if (QuestionInformationID != null ? !QuestionInformationID.equals(that.QuestionInformationID) : that.QuestionInformationID != null)
+            return false;
         if (answer != null ? !answer.equals(that.answer) : that.answer != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
@@ -95,7 +106,8 @@ public class QuestionInformation {
 
     @Override
     public int hashCode() {
-        int result = question != null ? question.hashCode() : 0;
+        int result = QuestionInformationID != null ? QuestionInformationID.hashCode() : 0;
+        result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (answer != null ? answer.hashCode() : 0);
         result = 31 * result + mark;
         result = 31 * result + (comment != null ? comment.hashCode() : 0);
@@ -106,7 +118,8 @@ public class QuestionInformation {
     @Override
     public String toString() {
         return "QuestionInformation{" +
-                "question='" + question + '\'' +
+                "QuestionInformationID='" + QuestionInformationID + '\'' +
+                ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", mark=" + mark +
                 ", comment='" + comment + '\'' +

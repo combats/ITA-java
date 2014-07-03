@@ -88,23 +88,22 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(1));
         interview1.setInterviewId("1");
         interview2.setInterviewId("2");
-        System.out.println(interviewUtilJson.toJson(interview2));
 
-//        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithoutQuestions1.json")));
-//        Object object1 = parser.parse(reader1);
-//        String json1 = object1.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
-//
-//        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithoutQuestions2.json")));
-//        Object object2 = parser.parse(reader2);
-//        String json2 = object2.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithoutQuestions1.json")));
+        Object object1 = parser.parse(reader1);
+        String json1 = object1.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
+
+        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithoutQuestions2.json")));
+        Object object2 = parser.parse(reader2);
+        String json2 = object2.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
 
     }
 
@@ -114,23 +113,22 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(1));
         interview1.setInterviewId("1");
         interview2.setInterviewId("2");
-        System.out.println(interviewUtilJson.toJson(interview2));
 
-//        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithStandardQuestions1.json")));
-//        Object object1 = parser.parse(reader1);
-//        String json1 = object1.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
-//
-//        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithStandardQuestions2.json")));
-//        Object object2 = parser.parse(reader2);
-//        String json2 = object2.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithStandardQuestions1.json")));
+        Object object1 = parser.parse(reader1);
+        String json1 = object1.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
+
+        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithStandardQuestions2.json")));
+        Object object2 = parser.parse(reader2);
+        String json2 = object2.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
     }
 
     @Test
@@ -139,22 +137,21 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
         interview1.setInterviewId("1");
         interview2.setInterviewId("2");
-        System.out.println(interviewUtilJson.toJson(interview2));
 
-//        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
-//        Object object1 = parser.parse(reader1);
-//        String json1 = object1.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
-//
-//        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithUserAndStandardQuestions2.json")));
-//        Object object2 = parser.parse(reader2);
-//        String json2 = object2.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
+        Object object1 = parser.parse(reader1);
+        String json1 = object1.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
+
+        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithUserAndStandardQuestions2.json")));
+        Object object2 = parser.parse(reader2);
+        String json2 = object2.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
     }
 }

@@ -1,10 +1,11 @@
 package com.softserveinc.ita.mvc;
 
+import com.google.gson.reflect.TypeToken;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.interviewfactory.service.InterviewService;
+import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -24,7 +26,6 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,6 +58,9 @@ public class InterviewTests extends BaseMVCTest {
 
     @Autowired
     private JsonUtil interviewUtilJson;
+
+    @Autowired
+    private JsonUtil jsonUtilJaxson;
 
     @Autowired
     private JsonUtil jsonUtil;
@@ -136,7 +140,14 @@ public class InterviewTests extends BaseMVCTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
 
-        System.out.println(ExpectingObject.getResponse().getContentAsString());
+//        System.out.println(ExpectingObject.getResponse().getContentAsString());
+//        Interview interview = jsonUtil.fromJson(ExpectingObject.getResponse().getContentAsString(), Interview.class);
+//        interview.setInterviewId("1");
+//
+//        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
+//        assertEquals(interview, expected);
+
+      System.out.println(ExpectingObject.getResponse().getContentAsString());
     }
 
     @Test
@@ -205,10 +216,10 @@ public class InterviewTests extends BaseMVCTest {
 
     @Test
     public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws ApppoinmentNotFoundException, InvalidUserIDException, InterviewNotFoundException, WrongCriteriaException {
-        List<Interview> actual = interviewService.getInterviewByAppointmentID("1");
+        Interview actual = interviewService.getInterviewByAppointmentID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
         expected.setInterviewId("1");
-        assertEquals(expected, actual.get(0));
+        assertEquals(expected, actual);
     }
 
 }

@@ -2,13 +2,10 @@ package com.softserveinc.ita.interviewfactory.controller;
 
 
 import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.InterviewType;
 import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.exceptions.InvalidUserIDException;
 
-import com.softserveinc.ita.interviewfactory.service.InterviewService;
-import com.softserveinc.ita.interviewfactory.service.InterviewServiceMock;
-import com.softserveinc.ita.utils.JsonUtil;
+import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +39,7 @@ public class InterviewController {
     @RequestMapping(value = "/appointments/{appointmentId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
-    public List<Interview> getInterviewByAppointmentId(@PathVariable("appointmentId") String appointmentId)
+    public Interview getInterviewByAppointmentId(@PathVariable("appointmentId") String appointmentId)
             throws InterviewNotFoundException, ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException {
         return interviewService.getInterviewByAppointmentID(appointmentId);
     }
