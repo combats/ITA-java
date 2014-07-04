@@ -3,9 +3,8 @@ package com.softserveinc.ita.service;
 import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
+import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeComparator;
 import org.junit.BeforeClass;
@@ -39,7 +38,7 @@ public class AppointmentServiceTest extends BaseMVCTest {
         Applicant applicant2 = new Applicant("2", "Gesha");
 
         List<String> usersIdList = new ArrayList<String>(); {
-            Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+            Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
 
         expectedOne = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
@@ -50,19 +49,19 @@ public class AppointmentServiceTest extends BaseMVCTest {
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() throws ApppoinmentNotFoundException {
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("1");
         assertEquals(expectedOne, actual);
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() throws ApppoinmentNotFoundException {
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("1");
         assertNotSame(expectedOne, actual);
     }
 
     @Test
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() throws ApppoinmentNotFoundException {
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("2");
         assertEquals(expectedTwo, actual);
     }

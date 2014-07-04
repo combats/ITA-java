@@ -1,11 +1,9 @@
 package com.softserveinc.ita.interviewfactory.service.interviewingServices;
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
-import com.softserveinc.ita.service.AppointmentService;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.QuestionsBlockNotFound;
@@ -31,8 +29,6 @@ public class InterviewingServicesMock implements InterviewingService {
     @Autowired
     private JsonUtil interviewUtilJson;
 
-    @Autowired
-    AppointmentService appointmentService;
 
     @Autowired
     InterviewService interviewService;
@@ -68,7 +64,7 @@ public class InterviewingServicesMock implements InterviewingService {
         List<Question> questionsList3 = new ArrayList<Question>();
         Collections.addAll(questionsList3, question5, question6);
         user3.setQuestion(questionsList1);
-        Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+        Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
@@ -106,7 +102,7 @@ public class InterviewingServicesMock implements InterviewingService {
 
 
     @Override
-         public QuestionsBlock getQuestionsBlockByUserId(String userID, String interviewID) throws InvalidUserIDException, ApppoinmentNotFoundException, QuestionsBlockNotFound, InterviewNotFoundException {
+         public QuestionsBlock getQuestionsBlockByUserId(String userID, String interviewID) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -121,7 +117,7 @@ public class InterviewingServicesMock implements InterviewingService {
         List<QuestionsBlock> questionsBlocks = interviewService.getInterviewByInterviewID(interviewID).getQuestionsBlocks();
 
         for (QuestionsBlock questionsBlock : questionsBlocks){
-            if (questionsBlock.getUser().getUserID().equals(userID))
+            if (questionsBlock.getUser().getId().equals(userID))
                 return questionsBlock;
         }
 
@@ -129,7 +125,7 @@ public class InterviewingServicesMock implements InterviewingService {
     }
 
     @Override
-    public QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId, String interviewID) throws InvalidUserIDException, ApppoinmentNotFoundException, QuestionsBlockNotFound, InterviewNotFoundException {
+    public QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId, String interviewID) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -152,7 +148,7 @@ public class InterviewingServicesMock implements InterviewingService {
     }
 
     @Override
-    public QuestionsBlock updateQuestionsBlock(String interviewID, QuestionsBlock newQuestionsBlock) throws InvalidUserIDException, ApppoinmentNotFoundException, QuestionsBlockNotFound, InterviewNotFoundException {
+    public QuestionsBlock updateQuestionsBlock(String interviewID, QuestionsBlock newQuestionsBlock) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -178,7 +174,7 @@ public class InterviewingServicesMock implements InterviewingService {
     }
 
     @Override
-    public QuestionInformation answerForUserQuestion(String interviewID, String questionsBlockID, QuestionInformation questionInformation) throws InvalidUserIDException, ApppoinmentNotFoundException, QuestionsBlockNotFound, InterviewNotFoundException {
+    public QuestionInformation answerForUserQuestion(String interviewID, String questionsBlockID, QuestionInformation questionInformation) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -230,4 +226,5 @@ public class InterviewingServicesMock implements InterviewingService {
     public int getTotalPointsByInterviewID(String interviewID) {
         return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
 }

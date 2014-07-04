@@ -22,7 +22,7 @@
         },
         {
             "User": {
-                "UserID": "1",
+                "Id": "1",
                 "Name": "IT Project Manager"
             },
             "Questions": [],
@@ -31,7 +31,7 @@
         },
         {
             "User": {
-                "UserID": "2",
+                "Id": "2",
                 "Name": "Software Developer"
             },
             "Questions": [],
@@ -40,7 +40,7 @@
         },
         {
             "User": {
-                "UserID": "3",
+                "Id": "3",
                 "Name": "HR Manager"
             },
             "Questions": [],

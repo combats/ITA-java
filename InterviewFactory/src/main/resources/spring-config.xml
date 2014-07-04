@@ -20,15 +20,16 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock" />
+    <bean id="HttpRequestExecutor" class="com.softserveinc.ita.interviewfactory.HttpRequestExecutorFactoryMock" >
+        <constructor-arg name="baseUrl" value="http://localhost:8080"/>
+    </bean>
+
     <!--aux/utils-->
 
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="jsonUtilJaxson" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
-    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
-    <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServiceMock"/>
     <bean id="interviewingService" class="com.softserveinc.ita.interviewfactory.service.interviewingServices.InterviewingServicesMock"/>
 

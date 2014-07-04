@@ -2,11 +2,10 @@ package com.softserveinc.ita.service.mocks;
 
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
+import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
 
 import org.joda.time.DateTime;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,27 +20,6 @@ public class AppointmentServiceMock implements AppointmentService {
     private LinkedList<Appointment> appointmentsList;
 
     //-------------VadimNaumenko mock for tests------------------------------------
-
-//
-//    @Autowired
-//    private User user1;
-//
-//    @Autowired
-//    private User user2;
-//
-//    @Autowired
-//    private User user3;
-//
-//    @Autowired
-//    private Applicant applicant1;
-//
-//    @Autowired
-//    private Applicant applicant2;
-    //  @Autowired
-    //  private User user2;
-
-    //  @Autowired
-    //  private User user3;
 
     Appointment appointment1;
     Appointment appointment2;
@@ -71,7 +49,7 @@ public class AppointmentServiceMock implements AppointmentService {
         List<Question> questionsList3 = new ArrayList<>();
         Collections.addAll(questionsList3, question5, question6);
         user3.setQuestion(questionsList1);
-        Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+        Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
     List<Appointment> appointmentList = new ArrayList<>();{
@@ -88,13 +66,12 @@ public class AppointmentServiceMock implements AppointmentService {
     //-------------VadimNaumenko mock from tests
 
     @Override
-    public Appointment getAppointmentByApplicantId(String applicantId) throws ApppoinmentNotFoundException{
+    public Appointment getAppointmentByApplicantId(String applicantId) throws AppointmentNotFoundException {
 
         for (Appointment appointment : appointmentList){
             if (appointment.getApplicantId().equals(applicantId)) return appointment;
-
         }
-        throw new ApppoinmentNotFoundException("Wrong Id");
+        throw new AppointmentNotFoundException("Wrong Id");
     }
 
     @Override
@@ -103,13 +80,13 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public Appointment getAppointmentByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException{
+    public Appointment getAppointmentByAppointmentId(String appointmentId) throws AppointmentNotFoundException {
         for (Appointment appointment : appointmentList){
             if (appointment.getAppointmentId().equals(appointmentId)) return appointment;
 
         }
 
-        throw new ApppoinmentNotFoundException("Wrong Id");
+        throw new AppointmentNotFoundException("Wrong Id");
     }
 
     @Override
@@ -117,11 +94,6 @@ public class AppointmentServiceMock implements AppointmentService {
         return "testAppointmentId";
     }
 
-    @Override
-    public List<String> getUsersListByAppointmentId(String appointmentId) throws ApppoinmentNotFoundException {
-        Appointment appointment = getAppointmentByAppointmentId(appointmentId);
-        return appointment.getUserIdList();
-    }
     @Override
     public List<Appointment> getAppointmentsByDate(long date) {
         DateTime requirementDate = new DateTime(date);
@@ -148,7 +120,7 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public Appointment editAppointmentById(String appointmentId, Appointment appointment) throws ApppoinmentNotFoundException{
+    public Appointment editAppointmentById(String appointmentId, Appointment appointment) throws AppointmentNotFoundException {
         for (int i=0; i < appointmentList.size(); i++){
             if (appointmentList.get(i).getAppointmentId().equals(appointmentId)){
                 appointmentList.add(i, appointment);
@@ -156,6 +128,6 @@ public class AppointmentServiceMock implements AppointmentService {
             }
 
         }
-        throw new ApppoinmentNotFoundException("Wrong Id");
+        throw new AppointmentNotFoundException("Wrong Id");
     }
 }

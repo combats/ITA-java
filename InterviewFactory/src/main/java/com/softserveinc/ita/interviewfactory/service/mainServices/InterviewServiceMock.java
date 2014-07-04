@@ -1,11 +1,9 @@
 package com.softserveinc.ita.interviewfactory.service.mainServices;
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.service.*;
-
+import com.softserveinc.ita.service.HttpRequestExecutor;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
@@ -33,7 +31,7 @@ public class InterviewServiceMock implements InterviewService {
     private JsonUtil interviewUtilJson;
 
     @Autowired
-    AppointmentService appointmentService;
+    HttpRequestExecutor httpRequestExecutor;
 
     private long startTime = 1403308782454L;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -66,7 +64,7 @@ public class InterviewServiceMock implements InterviewService {
         List<Question> questionsList3 = new ArrayList<Question>();
         Collections.addAll(questionsList3, question5, question6);
         user3.setQuestion(questionsList1);
-        Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+        Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
@@ -84,7 +82,7 @@ public class InterviewServiceMock implements InterviewService {
     //-------------VadimNaumenko mock from tests
 
     @Override
-    public Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, InvalidUserIDException, ApppoinmentNotFoundException {
+    public Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -121,7 +119,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public List<Interview> getInterviewByApplicantID(String ID) throws ApppoinmentNotFoundException, InterviewNotFoundException, InvalidUserIDException {
+    public List<Interview> getInterviewByApplicantID(String ID) throws InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -135,10 +133,10 @@ public class InterviewServiceMock implements InterviewService {
 
         List<Interview> interviewsListWithMyApplicant = new ArrayList<Interview>();
         for (Interview interview : interviewsList)
-            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getApplicantId().equals(ID)) {
+        {
+            if (httpRequestExecutor.getObjectByID(interview.getAppointmentId(), Appointment.class).getApplicantId().equals(ID)) {
                 interviewsListWithMyApplicant.add(interview);
-
-
+            }
         }
         if (interviewsListWithMyApplicant.isEmpty())
             throw new InterviewNotFoundException("Wrong ID, interview not found");
@@ -148,7 +146,7 @@ public class InterviewServiceMock implements InterviewService {
 
     @Override
     public Interview getInterviewByAppointmentID(String appointmentId)
-            throws InterviewNotFoundException, ApppoinmentNotFoundException, WrongCriteriaException, InvalidUserIDException {
+            throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -162,7 +160,7 @@ public class InterviewServiceMock implements InterviewService {
 
         Interview interviewForReturn = null;
         for (Interview interview : interviewsList){
-            if (appointmentService.getAppointmentByAppointmentId(interview.getAppointmentId()).getAppointmentId().equals(appointmentId)){
+            if (httpRequestExecutor.getObjectByID(interview.getAppointmentId(), Appointment.class).getAppointmentId().equals(appointmentId)){
                 interviewForReturn = interview;
             }
         }
@@ -175,7 +173,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public void removeInterviewById(String interviewId) throws InterviewNotFoundException, InvalidUserIDException, ApppoinmentNotFoundException {
+    public void removeInterviewById(String interviewId) throws InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -200,7 +198,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException, InvalidUserIDException, ApppoinmentNotFoundException {
+    public Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException, HttpRequestException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -221,7 +219,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public Interview setInterview(Interview interview) throws InvalidUserIDException, ApppoinmentNotFoundException, InterviewNotFoundException {
+    public Interview setInterview(Interview interview) throws InterviewNotFoundException, HttpRequestException {
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
             Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());

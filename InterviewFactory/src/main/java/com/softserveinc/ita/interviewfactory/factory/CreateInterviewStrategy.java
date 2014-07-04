@@ -1,9 +1,8 @@
 package com.softserveinc.ita.interviewfactory.factory;
 
-import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
+import com.softserveinc.ita.service.exception.HttpRequestException;
+
 
 /**
  * Created with IntelliJ IDEA.
@@ -14,5 +13,5 @@ import com.softserveinc.ita.exceptions.InvalidUserIDException;
  */
 public interface CreateInterviewStrategy {
 
-    public Interview create(String appointmentId)  throws ApppoinmentNotFoundException, InvalidUserIDException;
+    public Interview create(String appointmentId) throws HttpRequestException;
 }

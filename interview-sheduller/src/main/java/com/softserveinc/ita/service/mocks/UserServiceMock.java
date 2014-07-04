@@ -4,7 +4,7 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
+
 import com.softserveinc.ita.service.UserService;
 
 import java.util.ArrayList;
@@ -13,16 +13,9 @@ import java.util.List;
 
 public class UserServiceMock implements UserService {
 
-  //  @Autowired
     private User user1 = new User("1", "IT Project Manager");
     private User user2 = new User("2", "Software Developer");
     private User user3 = new User("3", "HR Manager");
-
-  //  @Autowired
-  //  private User user2;
-
-  //  @Autowired
-  //  private User user3;
 
     List<User> usersList = new ArrayList<User>(); {
 
@@ -50,16 +43,4 @@ public class UserServiceMock implements UserService {
         return userId.equals("testUserId");
     }
 
-    @Override
-    public User getUserByID(String UserID) throws InvalidUserIDException
-    {
-        User user = null;
-
-        for (User u : usersList) {
-            if (u.getUserID().equals(UserID)) {
-                user = u;
-            }
-        }
-        return user;
-    }
 }

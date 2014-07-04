@@ -1,15 +1,8 @@
 package com.softserveinc.ita.interviewfactory.factory;
 
-import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.InterviewType;
-import com.softserveinc.ita.entity.QuestionsBlock;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
-import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.service.UserService;
-import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
-import com.softserveinc.ita.service.mocks.UserServiceMock;
+import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.service.HttpRequestExecutor;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,20 +20,19 @@ import java.util.List;
 public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
     @Autowired
-    UserService userService;
-
-    @Autowired
-    AppointmentService appointmentService;
+    HttpRequestExecutor httpRequestExecutor;
 
     @Override
-    public Interview create(String appointmentId) throws ApppoinmentNotFoundException, InvalidUserIDException {
+    public Interview create(String appointmentId) throws HttpRequestException {
+
         Interview interview = new Interview(appointmentId);
         List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
+        Appointment appointment = httpRequestExecutor.getObjectByID(appointmentId, Appointment.class);
 
-        List<String> Users = appointmentService.getUsersListByAppointmentId(appointmentId);
+        List<String> Users = appointment.getUserIdList();
 
         for (int i = 0; i < Users.size(); i++){
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(userService.getUserByID(Users.get(i)));
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(httpRequestExecutor.getObjectByID(Users.get(i), User.class));
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

@@ -1,11 +1,9 @@
 package com.softserveinc.ita.mvc;
 
-import com.google.gson.reflect.TypeToken;
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
-import com.softserveinc.ita.exceptions.InvalidUserIDException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
@@ -18,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +24,6 @@ import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -99,7 +95,7 @@ public class InterviewTests extends BaseMVCTest {
             List<Question> questionsList3 = new ArrayList<Question>();
             Collections.addAll(questionsList3, question5, question6);
             user3.setQuestion(questionsList1);
-            Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+            Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
 
         List<String> appointmentIdList = new ArrayList<String>();{
@@ -199,7 +195,7 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetInterviewByInterviewIdAndExpectInterviewEqualExpectedOne() throws ApppoinmentNotFoundException, InvalidUserIDException, InterviewNotFoundException {
+    public void testGetInterviewByInterviewIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException {
         Interview actual = interviewService.getInterviewByInterviewID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
         expected.setInterviewId("1");
@@ -207,7 +203,7 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws ApppoinmentNotFoundException, InvalidUserIDException, InterviewNotFoundException {
+    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException {
         List<Interview> actual = interviewService.getInterviewByApplicantID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
         expected.setInterviewId("1");
@@ -215,7 +211,7 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws ApppoinmentNotFoundException, InvalidUserIDException, InterviewNotFoundException, WrongCriteriaException {
+    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException {
         Interview actual = interviewService.getInterviewByAppointmentID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
         expected.setInterviewId("1");

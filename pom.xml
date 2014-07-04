@@ -17,10 +17,8 @@
         <module>common</module>
         <module>http-request-service</module>
         <module>interview-sheduller</module>
-        <module>InterviewFactory</module>
-
-    
         <module>user-manager</module>
+        <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
     </modules>

@@ -1,23 +1,19 @@
 package com.softserveinc.ita.factoryInterviewTests;
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exception.InvalidUserIDException;
-import com.softserveinc.ita.exceptions.ApppoinmentNotFoundException;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -69,7 +65,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
         List<Question> questionsList3 = new ArrayList<Question>();
         Collections.addAll(questionsList3, question5, question6);
         user3.setQuestion(questionsList1);
-        Collections.addAll(usersIdList, user1.getUserID(), user2.getUserID(), user3.getUserID());
+        Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
@@ -82,7 +78,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithoutQuestions() throws ApppoinmentNotFoundException, IOException, ParseException, JSONException, com.softserveinc.ita.exceptions.InvalidUserIDException {
+    public void testCreateInterviewWithoutQuestions() throws IOException, ParseException, JSONException, HttpRequestException, org.json.simple.parser.ParseException {
     Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(0));
 
     Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(1));
@@ -108,7 +104,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithStandardQuestions() throws ApppoinmentNotFoundException, JSONException, IOException, ParseException, com.softserveinc.ita.exceptions.InvalidUserIDException {
+    public void testCreateInterviewWithStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(1));
         interview1.setInterviewId("1");
@@ -132,7 +128,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithUserAndStandardQuestions() throws ApppoinmentNotFoundException, JSONException, IOException, ParseException, com.softserveinc.ita.exceptions.InvalidUserIDException {
+    public void testCreateInterviewWithUserAndStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
         interview1.setInterviewId("1");

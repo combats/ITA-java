@@ -7,12 +7,12 @@ package com.softserveinc.ita.exceptions;
  * Time: 18:59
  * To change this template use File | Settings | File Templates.
  */
-public class ApppoinmentNotFoundException extends Exception {
+public class AppointmentNotFoundException extends Exception {
 
-    public ApppoinmentNotFoundException() {
+    public AppointmentNotFoundException() {
     }
 
-    public ApppoinmentNotFoundException(String message) {
+    public AppointmentNotFoundException(String message) {
         super(message);
     }
 }
