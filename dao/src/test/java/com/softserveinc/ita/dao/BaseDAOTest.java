@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({UserDAOTests.class, ApplicantDAOTests.class, AppointmentDAOTests.class})
-@TransactionConfiguration(defaultRollback = false)
+@TransactionConfiguration(defaultRollback = true)
 @Transactional
 public abstract class BaseDAOTest {
 }

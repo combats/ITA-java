@@ -25,7 +25,7 @@ public class Appointment implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "AppointmentId", unique = true)
+    @Column(name = "Id", unique = true)
     private String appointmentId;
 
     @ElementCollection

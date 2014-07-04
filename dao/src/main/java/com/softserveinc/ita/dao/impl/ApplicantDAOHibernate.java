@@ -21,7 +21,8 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Applicant> getApplicants() {
-        return (List<Applicant>) sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
+        List<Applicant> allApplicants = (List<Applicant>)sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
+        return allApplicants;
     }
 
     @SuppressWarnings("unchecked")
@@ -46,7 +47,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
 
     @Override
     public Applicant editApplicant(Applicant applicant) {
-        String applicantId = applicant.getId();
+        String applicantId = applicant.getApplicantId();
         Session session = sessionFactory.getCurrentSession();
         session.update(applicant);
         return (Applicant) session.load(Applicant.class, applicantId);

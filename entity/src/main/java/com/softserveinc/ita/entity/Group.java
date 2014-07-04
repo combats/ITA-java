@@ -18,9 +18,11 @@ public class Group implements Serializable{
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "AppointmentId", unique = true)
+    @Column(name = "Id", unique = true)
     private String groupID;
 
+    @ElementCollection
+    @CollectionTable(name = "Applicant", joinColumns = @JoinColumn(name = "Id"))
     private List<Applicant> applicantsInGroup = new ArrayList<>();
 
     public Group() {}

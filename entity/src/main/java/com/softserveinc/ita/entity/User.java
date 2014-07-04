@@ -36,8 +36,8 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String userID) {
-        this.id = userID;
+    public User(String userName) {
+        this.name = userName;
     }
 
     public User(String userID, String name, int age) {

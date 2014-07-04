@@ -18,34 +18,25 @@ public class Applicant implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    private String id;
+    private String applicantId;
+
     @Column(name = "Name")
     private String name;
     @Column(name = "Surname")
     private String surname;
-  //  private int age;
     @Column(name = "Email")
     private String email;
-    @Column(name = "Group")
-    private String group;
+    @Column(name = "GroupId")
+    private String groupId;
 
     public Applicant() {}
 
-    public Applicant(String applicantID) {
-        this.id = applicantID;
+    public Applicant(String name) {
+        this.name = name;
     }
-
-    public Applicant(String name, String group) {
-        this.id = id;
-        this.group = group;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String applicantID) {
-        this.id = applicantID;
+    public Applicant(String name, String groupId) {
+        this.name = name;
+        this.groupId = groupId;
     }
 
     public Long getVersion() {
@@ -54,6 +45,14 @@ public class Applicant implements Serializable {
 
     public void setVersion(Long version) {
         this.version = version;
+    }
+
+    public String getApplicantId() {
+        return applicantId;
+    }
+
+    public void setApplicantId(String applicantId) {
+        this.applicantId = applicantId;
     }
 
     public String getName() {
@@ -80,16 +79,25 @@ public class Applicant implements Serializable {
         this.email = email;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Applicant)) return false;
 
         Applicant applicant = (Applicant) o;
 
-       // if (age != applicant.age) return false;
+        if (applicantId != null ? !applicantId.equals(applicant.applicantId) : applicant.applicantId != null)
+            return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
-        if (id != null ? !id.equals(applicant.id) : applicant.id != null) return false;
+        if (groupId != null ? !groupId.equals(applicant.groupId) : applicant.groupId != null) return false;
         if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
         if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
@@ -97,23 +105,24 @@ public class Applicant implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Applicant{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-               // ", age=" + age +
-                ", email='" + email + '\'' +
-                '}';
+    public int hashCode() {
+        int result = applicantId != null ? applicantId.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
+        return result;
     }
 
     @Override
-    public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (surname != null ? surname.hashCode() : 0);
-      //  result = 31 * result + age;
-        result = 31 * result + (email != null ? email.hashCode() : 0);
-        return result;
+    public String toString() {
+        return "Applicant{" +
+                "version=" + version +
+                ", applicantId='" + applicantId + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", groupId='" + groupId + '\'' +
+                '}';
     }
 }
