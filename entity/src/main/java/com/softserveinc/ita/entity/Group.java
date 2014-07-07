@@ -11,6 +11,10 @@ import java.util.List;
 @Table(name = "Groups")
 public class Group implements Serializable{
 
+    public static final String IN_PROCESS_STATUS = "In process";
+    public static final String PLANNED_STATUS = "Planned";
+    public static final String OFFERING_STATUS = "Offering";
+    public static final String BOARDING_STATUS = "Boarding";
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -22,11 +26,43 @@ public class Group implements Serializable{
     @ElementCollection
     @CollectionTable(name = "Applicant", joinColumns = @JoinColumn(name = "Id"))
     private List<Applicant> applicantsInGroup = new ArrayList<>();
+    private String groupName;
+    private Status groupStatus;
+    private Course course;
 
+    public enum Status implements Serializable {
+        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS);
+        private String name;
+        Status(String name) {
+            this.name = name;
+        }
+        public String getName() {
+            return name;
+        }
+        public void setName(String name) {
+            this.name = name;
+        }
+    }
+    
     public Group() {}
 
     public Group(String groupID) {
         this.groupID = groupID;
+    }
+
+    public Group(Status groupStatus, String groupID, Course course, String groupName) {
+        this.groupStatus = groupStatus;
+        this.groupID = groupID;
+        this.course = course;
+        this.groupName = groupName;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
     public String getGroupID() {
@@ -43,7 +79,10 @@ public class Group implements Serializable{
 
     public void setApplicantsInGroup(List<Applicant> applicantsInGroup) {
         this.applicantsInGroup = applicantsInGroup;
+    public Status getGroupStatus() {
+        return groupStatus;
     }
+
 
     @Override
     public boolean equals(Object o) {
