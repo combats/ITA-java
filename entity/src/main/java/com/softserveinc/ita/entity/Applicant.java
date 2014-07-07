@@ -11,9 +11,6 @@ public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    @Version
-//    private Long version = 1L;
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -39,13 +36,6 @@ public class Applicant implements Serializable {
         this.groupId = groupId;
     }
 
-//    public Long getVersion() {
-//        return version;
-//    }
-//
-//    public void setVersion(Long version) {
-//        this.version = version;
-//    }
 
     public String getId() {
         return id;

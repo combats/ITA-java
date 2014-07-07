@@ -13,9 +13,6 @@ public class User implements Serializable {
     public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
 
-//    @Version
-//    private Long version = 1L;
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

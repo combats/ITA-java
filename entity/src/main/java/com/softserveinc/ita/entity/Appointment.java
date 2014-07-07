@@ -18,10 +18,6 @@ public class Appointment implements Serializable {
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 
-    @Version
-    private Long version = 1L;
-
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -54,14 +50,6 @@ public class Appointment implements Serializable {
         this.userIdList = userIdList;
         this.applicantId = applicantId;
         this.startTime = startTime;
-    }
-
-    public Long getVersion() {
-        return version;
-    }
-
-    public void setVersion(Long version) {
-        this.version = version;
     }
 
     public List<String> getUserIdList() {
