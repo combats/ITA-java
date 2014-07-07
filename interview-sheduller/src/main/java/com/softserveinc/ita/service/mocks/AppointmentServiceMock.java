@@ -1,8 +1,9 @@
 package com.softserveinc.ita.service.mocks;
 
 
-import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
+import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.service.AppointmentService;
 
 import org.joda.time.DateTime;

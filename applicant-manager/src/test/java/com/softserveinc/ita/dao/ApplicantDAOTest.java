@@ -19,9 +19,9 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantsListAndExpectedIsOk() throws GroupNotFoundException {
         List<Applicant> applicants = new ArrayList<>();
-        applicants.add(new Applicant("123"));
-        applicants.add(new Applicant("124"));
-        applicants.add(new Applicant("125"));
+        applicants.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
+        applicants.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
+        applicants.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
 //        assertTrue(applicantDao.getApplicants().containsAll(applicants));
         assertEquals(applicants, applicantDao.getApplicantsByGroupID("1"));
     }
@@ -67,7 +67,10 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantListAndExpectDefinedValues() throws Exception {
         List<Applicant> expectedApplicantList = new ArrayList<>();
-        Collections.addAll(expectedApplicantList, new Applicant("123"), new Applicant("124"), new Applicant("125"));
+        Collections.addAll(expectedApplicantList,
+                new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"),
+                new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"),
+                new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
         assertEquals(expectedApplicantList, applicantDao.getApplicants());
     }
 }

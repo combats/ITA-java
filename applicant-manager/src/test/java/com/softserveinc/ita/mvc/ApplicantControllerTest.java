@@ -26,6 +26,9 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Autowired
     private JsonUtil jsonUtil;
 
+    @Autowired
+    private JsonUtil interviewJsonUtil;
+
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     protected WebApplicationContext wac;
@@ -44,9 +47,9 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetApplicantsListAngExpectedValid() throws Exception {
         List<Applicant> standart = new ArrayList<>();
-        standart.add(new Applicant("123"));
-        standart.add(new Applicant("124"));
-        standart.add(new Applicant("125"));
+        standart.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
+        standart.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
+        standart.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
 
         String standardJson = jsonUtil.toJson(standart);
 
@@ -65,9 +68,9 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetAllApplicantsByGroupIdAndExpectedValidList() throws Exception {
         List<Applicant> dbStandart = new ArrayList<>();
-        dbStandart.add(new Applicant("123"));
-        dbStandart.add(new Applicant("124"));
-        dbStandart.add(new Applicant("125"));
+        dbStandart.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
+        dbStandart.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
+        dbStandart.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
 
         String dbJson = jsonUtil.toJson(dbStandart);
         String groupID = "1";
@@ -106,7 +109,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantWithExistingIdAndExpectCorrectApplicant() throws Exception {
-        Applicant applicant = new Applicant("id2");
+        Applicant applicant = new Applicant("id2", "Kolya", "Kolya", "kolya@mail.ru");
         String jsonApplicant = jsonUtil.toJson(applicant);
         mockMvc.perform(
                 get("/applicants/id2")).andExpect(content().string(jsonApplicant));
