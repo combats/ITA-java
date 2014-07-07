@@ -1,11 +1,26 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "Groups")
 public class Group implements Serializable{
+
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
     private String groupID;
+
+    @ElementCollection
+    @CollectionTable(name = "Applicant", joinColumns = @JoinColumn(name = "Id"))
     private List<Applicant> applicantsInGroup = new ArrayList<>();
 
     public Group() {}

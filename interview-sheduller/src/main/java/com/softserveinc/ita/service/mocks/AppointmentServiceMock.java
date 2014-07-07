@@ -5,7 +5,6 @@ import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.service.AppointmentService;
-
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -66,13 +65,21 @@ public class AppointmentServiceMock implements AppointmentService {
     }
     //-------------VadimNaumenko mock from tests
 
+
     @Override
     public Appointment getAppointmentByApplicantId(String applicantId) throws AppointmentNotFoundException {
 
         for (Appointment appointment : appointmentList){
             if (appointment.getApplicantId().equals(applicantId)) return appointment;
+    public List<Appointment> getAppointmentByApplicantId(String applicantId) {
+        List<Appointment> result = new ArrayList<>();
+        if (applicantId.equals("testApplicantId")) {
+            result.add(appointmentsList.get(0));
+        } else {
+            result.add(appointmentsList.get(2));
         }
         throw new AppointmentNotFoundException("Wrong Id");
+        return result;
     }
 
     @Override

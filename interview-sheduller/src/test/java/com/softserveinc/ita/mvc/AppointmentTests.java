@@ -129,7 +129,9 @@ public class AppointmentTests extends BaseMVCTest {
         users.add("3");
         Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
         appointment.setAppointmentId(appointmentId);
-        String appointmentJson = jsonUtil.toJson(appointment);
+        List<Appointment> result = new ArrayList<>();
+        result.add(appointment);
+        String appointmentJson = jsonUtil.toJson(result);
 
         mockMvc.perform(
                 get("/appointments/applicants/1")

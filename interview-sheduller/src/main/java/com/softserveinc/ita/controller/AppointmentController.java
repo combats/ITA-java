@@ -25,7 +25,7 @@ public class AppointmentController {
     private AppointmentService appointmentService;
     @Autowired
     private JsonUtil jsonUtil;
-    
+
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(appointmentValidator);
@@ -33,7 +33,7 @@ public class AppointmentController {
 
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public Appointment getAppointmentByApplicantId(@PathVariable String applicantId)throws AppointmentNotFoundException {
+    public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 
@@ -73,5 +73,4 @@ public class AppointmentController {
 
         return appointmentService.getAppointmentsByDate(date);
     }
-
 }

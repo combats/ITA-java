@@ -5,40 +5,37 @@ import com.softserveinc.ita.entity.exceptions.DateException;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Appointments")
-public class Appointment {
+public class Appointment implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 
-
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "AppointmentId", unique = true)
-    @Expose
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
     private String appointmentId;
 
     @ElementCollection
-    @CollectionTable(name = "Users", joinColumns = @JoinColumn(name = "UserId"))
     @Column(name = "UserIdList")
     private List <String> userIdList = new ArrayList<>();
-
 
     @Column(name = "ApplicantId")
     @Expose
     private String applicantId;
 
-
     @Column(name = "StartTime")
     @Expose
     private long startTime = System.currentTimeMillis() + TOMORROW;
-
 
     @Column(name = "DurationTime")
     @Expose
@@ -99,40 +96,39 @@ public class Appointment {
         this.appointmentId = appointmentId;
     }
 
+	@Override
+	public String toString() {
+		return "Appointment{" +
+				"userIdList=" + userIdList +
+				", applicantId=" + applicantId +
+				", startTime=" + startTime +
+				", durationTime=" + durationTime +
+				'}';
+	}
 
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "userIdList=" + userIdList +
-                ", applicantId=" + applicantId +
-                ", startTime=" + startTime +
-                ", durationTime=" + durationTime +
-                '}';
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+		Appointment that = (Appointment) o;
 
-        Appointment that = (Appointment) o;
+		if (durationTime != that.durationTime) return false;
+		if (startTime != that.startTime) return false;
+		if (!applicantId.equals(that.applicantId)) return false;
+		if (!userIdList.equals(that.userIdList)) return false;
 
-        if (durationTime != that.durationTime) return false;
-        if (startTime != that.startTime) return false;
-        if (!applicantId.equals(that.applicantId)) return false;
-        if (!userIdList.equals(that.userIdList)) return false;
+		return true;
+	}
 
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userIdList.hashCode();
-        result = 31 * result + applicantId.hashCode();
-        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-        result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
-        return result;
-    }
+	@Override
+	public int hashCode() {
+		int result = userIdList.hashCode();
+		result = 31 * result + applicantId.hashCode();
+		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
+		return result;
+	}
 
     public void dateValidation(long startTime, long durationTime) throws DateException {
 

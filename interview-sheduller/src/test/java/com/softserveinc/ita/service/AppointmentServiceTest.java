@@ -29,6 +29,7 @@ public class AppointmentServiceTest extends BaseMVCTest {
 
     @BeforeClass
     public static void setUpOnce() {
+       
 
         User user1 = new User("1", "IT Project Manager");
         User user2 = new User("2", "Software Developer");
@@ -52,18 +53,27 @@ public class AppointmentServiceTest extends BaseMVCTest {
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("1");
         assertEquals(expectedOne, actual);
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() {
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertEquals(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("1");
         assertNotSame(expectedOne, actual);
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() {
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertNotSame(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() throws AppointmentNotFoundException {
         Appointment actual = service.getAppointmentByApplicantId("2");
         assertEquals(expectedTwo, actual);
+    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() {
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId2");
+        assertEquals(expectedTwo, actual.get(0));
     }
 
 
