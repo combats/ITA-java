@@ -1,22 +1,47 @@
 package com.softserveinc.ita.entity;
 
-public class User {
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import java.io.Serializable;
+
+@Entity
+@Table(name = "Users")
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
-    public static final String DEFAULT_USER_ID = "";
-    private String id = DEFAULT_USER_ID;
+
+//    @Version
+//    private Long version = 1L;
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
+    private String id;
+
+    @Column(name = "Name")
     private String name = DEFAULT_USER_NAME;
+    @Column(name = "Surname")
     private String surname;
+    @Column(name = "Phone")
     private String phone;
+    @Column(name = "Email")
     private String email;
+    @Column(name = "Age")
     private int age = DEFAULT_USER_AGE;
 
     public User() {
     }
 
-    public User(String userID) {
-        this.id = userID;
+    public User(String userId) {
+        this.id = userId;
+    }
+    public User(String userName, String userSurname) {
+        this.name = userName;
+        this.surname = userSurname;
     }
 
     public User(String userID, String name, int age) {

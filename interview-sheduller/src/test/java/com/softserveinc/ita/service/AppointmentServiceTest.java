@@ -37,20 +37,20 @@ public class AppointmentServiceTest extends BaseMVCTest {
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
-        assertEquals(expectedOne, actual);
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertEquals(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId");
-        assertNotSame(expectedOne, actual);
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        assertNotSame(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() {
-        Appointment actual = service.getAppointmentByApplicantId("testApplicantId2");
-        assertEquals(expectedTwo, actual);
+        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId2");
+        assertEquals(expectedTwo, actual.get(0));
     }
 
 

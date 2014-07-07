@@ -1,19 +1,17 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.dao.ApplicantDAO;
+import com.softserveinc.ita.dao.impl.ApplicantDAO;
 import com.softserveinc.ita.dao.impl.ApplicantDAOMockImpl;
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import com.softserveinc.ita.service.impl.ApplicantServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.mockito.Mock;
-import com.softserveinc.ita.exception.GroupNotFoundException;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.Mockito.verify;
