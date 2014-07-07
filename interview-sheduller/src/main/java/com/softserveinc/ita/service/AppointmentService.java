@@ -8,7 +8,7 @@ import java.util.List;
 public interface AppointmentService {
     String addAppointment(Appointment appointment);
 
-    List<Appointment> getAppointmentByApplicantId(String applicantId);
+    List<Appointment> getAppointmentByApplicantId(String applicantId) throws AppointmentNotFoundException;
 
     void removeAppointmentById(String appointmentId);
 

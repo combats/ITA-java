@@ -41,38 +41,29 @@ public class AppointmentServiceTest extends BaseMVCTest {
         List<String> usersIdList = new ArrayList<String>(); {
             Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
-
-        expectedOne = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
+        applicant1.setId("1");
+        expectedOne = new Appointment(usersIdList, applicant1.getId(), startTime);
         expectedOne.setAppointmentId("1");
-
-        expectedTwo = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+        applicant2.setId("2");
+        expectedTwo = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         expectedTwo.setAppointmentId("2");
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() throws AppointmentNotFoundException {
-        Appointment actual = service.getAppointmentByApplicantId("1");
-        assertEquals(expectedOne, actual);
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedOne() {
-        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        List<Appointment> actual = service.getAppointmentByApplicantId("1");
         assertEquals(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() throws AppointmentNotFoundException {
-        Appointment actual = service.getAppointmentByApplicantId("1");
-        assertNotSame(expectedOne, actual);
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentNonEqualExpectedOne() {
-        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId");
+        List<Appointment> actual = service.getAppointmentByApplicantId("2");
         assertNotSame(expectedOne, actual.get(0));
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() throws AppointmentNotFoundException {
-        Appointment actual = service.getAppointmentByApplicantId("2");
-        assertEquals(expectedTwo, actual);
-    public void testGetAppointmentByApplicantIdAndExpectAppointmentEqualExpectedTwo() {
-        List<Appointment> actual = service.getAppointmentByApplicantId("testApplicantId2");
+        List<Appointment> actual = service.getAppointmentByApplicantId("2");
         assertEquals(expectedTwo, actual.get(0));
     }
 

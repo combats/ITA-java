@@ -58,9 +58,6 @@ public class InterviewTests extends BaseMVCTest {
     @Autowired
     private JsonUtil jsonUtilJaxson;
 
-    @Autowired
-    private JsonUtil jsonUtil;
-
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.wac).build();
@@ -88,29 +85,30 @@ public class InterviewTests extends BaseMVCTest {
             Question question6 = new Question("Are you married?", 3);
             List<Question> questionsList1 = new ArrayList<Question>();
             Collections.addAll(questionsList1, question1, question2);
-            user1.setQuestion(questionsList1);
+            user1.setQuestions(questionsList1);
             List<Question> questionsList2 = new ArrayList<Question>();
             Collections.addAll(questionsList2, question3, question4);
-            user2.setQuestion(questionsList1);
+            user2.setQuestions(questionsList1);
             List<Question> questionsList3 = new ArrayList<Question>();
             Collections.addAll(questionsList3, question5, question6);
-            user3.setQuestion(questionsList1);
+            user3.setQuestions(questionsList1);
             Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
 
         List<String> appointmentIdList = new ArrayList<String>();{
-            appointment1 = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
+            appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
             appointment1.setAppointmentId("1");
-            appointment2 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+            appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
             appointment2.setAppointmentId("2");
             appointmentIdList.add(appointment1.getAppointmentId());
             appointmentIdList.add(appointment2.getAppointmentId());
         }
 
-        appointment1 = new Appointment(usersIdList, applicant1.getApplicantID(), startTime);
+        applicant1.setId("1");
+        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
-
-        appointment2 = new Appointment(usersIdList, applicant2.getApplicantID(), startTime + TOMORROW);
+        applicant2.setId("2");
+        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
     }
 

@@ -155,7 +155,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
         mockMvc.perform(
-                get("/appointments/applicants/2")
+                get("/appointments/applicants/1")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));

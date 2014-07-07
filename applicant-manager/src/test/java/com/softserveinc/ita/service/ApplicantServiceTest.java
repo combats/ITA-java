@@ -19,9 +19,9 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
 
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
-        String applicantId = "id1";
-        Applicant expectedApplicant = new Applicant("id1");
-        assertEquals(expectedApplicant,applicantService.getApplicantById(applicantId));
+        Applicant expectedApplicant = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        expectedApplicant.setId("1");
+        assertEquals(expectedApplicant,applicantService.getApplicantById("id1"));
     }
 
     @Test(expected = ApplicantDoesNotExistException.class)
@@ -47,7 +47,7 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
     @Test
     public void testGetApplicantIDListAndExpectDefinedValues() throws Exception {
         List<String> expectedApplicantIDList = new ArrayList<>();
-        Collections.addAll(expectedApplicantIDList, "123", "124", "125");
+        Collections.addAll(expectedApplicantIDList, "1", "2", "3");
         assertEquals(expectedApplicantIDList, applicantService.getApplicantIDList());
     }
 }

@@ -27,13 +27,13 @@ public class UserServiceMock implements UserService {
         Question question6 = new Question("Are you married?", 3);
         List<Question> questionsList1 = new ArrayList<>();
         Collections.addAll(questionsList1, question1, question2);
-        user1.setQuestion(questionsList1);
+        user1.setQuestions(questionsList1);
         List<Question> questionsList2 = new ArrayList<>();
         Collections.addAll(questionsList2, question3, question4);
-        user2.setQuestion(questionsList1);
+        user2.setQuestions(questionsList1);
         List<Question> questionsList3 = new ArrayList<>();
         Collections.addAll(questionsList3, question5, question6);
-        user3.setQuestion(questionsList1);
+        user3.setQuestions(questionsList1);
         Collections.addAll(usersList, user1, user2, user3);
     }
 

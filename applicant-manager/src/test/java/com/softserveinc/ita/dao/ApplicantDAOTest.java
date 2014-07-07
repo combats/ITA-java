@@ -20,9 +20,15 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantsListAndExpectedIsOk() throws GroupNotFoundException {
         List<Applicant> applicants = new ArrayList<>();
-        applicants.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
-        applicants.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
-        applicants.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        Applicant applicant1 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant2 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant3 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        applicant1.setId("1");
+        applicant2.setId("2");
+        applicant3.setId("3");
+        applicants.add(applicant1);
+        applicants.add(applicant2);
+        applicants.add(applicant3);
 //        assertTrue(applicantDao.getApplicants().containsAll(applicants));
         assertEquals(applicants, applicantDao.getApplicantsByGroupID("1"));
     }
@@ -36,9 +42,9 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
 
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
-        String applicantId = "id1";
-        Applicant expectedApplicant = new Applicant("id1");
-        assertEquals(expectedApplicant, applicantDao.getApplicantById(applicantId));
+        Applicant expectedApplicant = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        expectedApplicant.setId("1");
+        assertEquals(expectedApplicant, applicantDao.getApplicantById("id1"));
     }
 
     @Test
@@ -68,10 +74,13 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantListAndExpectDefinedValues() throws Exception {
         List<Applicant> expectedApplicantList = new ArrayList<>();
-        Collections.addAll(expectedApplicantList,
-                new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"),
-                new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"),
-                new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        Applicant applicant1 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant2 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant3 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        applicant1.setId("1");
+        applicant2.setId("2");
+        applicant3.setId("3");
+        Collections.addAll(expectedApplicantList, applicant1, applicant2, applicant3);
         assertEquals(expectedApplicantList, applicantDao.getApplicants());
     }
 }

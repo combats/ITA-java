@@ -43,6 +43,7 @@
         </property>
         <property name="annotatedClasses">
             <list>
+                <value>com.softserveinc.ita.entity.Role</value>
                 <value>com.softserveinc.ita.entity.User</value>
                 <value>com.softserveinc.ita.entity.Applicant</value>
                 <value>com.softserveinc.ita.entity.Appointment</value>

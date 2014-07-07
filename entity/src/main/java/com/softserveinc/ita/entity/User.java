@@ -88,6 +88,14 @@ public class User implements Serializable {
         this.age = age;
     }
 
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
     @Override
     public String toString() {
         return "User{" +

@@ -17,20 +17,26 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     private List<Applicant> allApplicants = new ArrayList<>();
 
     public ApplicantDAOMockImpl() {
-        allApplicants.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
-        allApplicants.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
-        allApplicants.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        Applicant applicant1 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant2 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant3 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        applicant1.setId("1");
+        applicant2.setId("2");
+        applicant3.setId("3");
+        allApplicants.add(applicant1);
+        allApplicants.add(applicant2);
+        allApplicants.add(applicant3);
 
-        applicants.put("id1", new Applicant("id1"));
-        applicants.put("id2", new Applicant("id2", "Kolya", "Kolya", "kolya@mail.ru"));
-        applicants.put("id3", new Applicant("id3"));
+        applicants.put("id1", applicant1);
+        applicants.put("id2", applicant2);
+        applicants.put("id3", applicant3);
 
         db = new HashMap<>();
         applicantsInAGroup = new ArrayList<>();
         group = new Group("1");
-        applicantsInAGroup.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
-        applicantsInAGroup.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
-        applicantsInAGroup.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        applicantsInAGroup.add(applicant1);
+        applicantsInAGroup.add(applicant2);
+        applicantsInAGroup.add(applicant3);
         group.setApplicantsInGroup(applicantsInAGroup);
         db.put(group.getGroupID(), group);
     }

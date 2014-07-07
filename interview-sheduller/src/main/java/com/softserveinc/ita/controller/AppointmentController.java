@@ -33,7 +33,7 @@ public class AppointmentController {
 
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
+    public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) throws AppointmentNotFoundException {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 

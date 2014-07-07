@@ -47,9 +47,15 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetApplicantsListAngExpectedValid() throws Exception {
         List<Applicant> standart = new ArrayList<>();
-        standart.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
-        standart.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
-        standart.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        Applicant applicant1 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant2 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant3 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        applicant1.setId("1");
+        applicant2.setId("2");
+        applicant3.setId("3");
+        standart.add(applicant1);
+        standart.add(applicant2);
+        standart.add(applicant3);
 
         String standardJson = jsonUtil.toJson(standart);
 
@@ -68,9 +74,15 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetAllApplicantsByGroupIdAndExpectedValidList() throws Exception {
         List<Applicant> dbStandart = new ArrayList<>();
-        dbStandart.add(new Applicant("123", "Vasya", "Vasya", "Vasya@mail.ru"));
-        dbStandart.add(new Applicant("124", "Vasya", "Vasya", "Vasya@mail.ru"));
-        dbStandart.add(new Applicant("125", "Vasya", "Vasya", "Vasya@mail.ru"));
+        Applicant applicant1 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant2 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        Applicant applicant3 = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        applicant1.setId("1");
+        applicant2.setId("2");
+        applicant3.setId("3");
+        dbStandart.add(applicant1);
+        dbStandart.add(applicant2);
+        dbStandart.add(applicant3);
 
         String dbJson = jsonUtil.toJson(dbStandart);
         String groupID = "1";
@@ -109,10 +121,11 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantWithExistingIdAndExpectCorrectApplicant() throws Exception {
-        Applicant applicant = new Applicant("id2", "Kolya", "Kolya", "kolya@mail.ru");
-        String jsonApplicant = jsonUtil.toJson(applicant);
+        Applicant expectedApplicant = new Applicant("Vasya", "Vasya", "Vasya@mail.ru", "1");
+        expectedApplicant.setId("1");
+        String jsonApplicant = jsonUtil.toJson(expectedApplicant);
         mockMvc.perform(
-                get("/applicants/id2")).andExpect(content().string(jsonApplicant));
+                get("/applicants/id1")).andExpect(content().string(jsonApplicant));
     }
 
     @Test
