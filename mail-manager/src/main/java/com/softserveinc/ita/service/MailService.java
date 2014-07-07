@@ -1,8 +1,9 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.dao.ApplicantDAO;
+import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.text.DateFormat;
@@ -23,27 +23,29 @@ import java.util.Map;
 @Service("mailService")
 public class MailService {
 
+    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
     public static final String FROM = "javasendertest@gmail.com";
     public static final String LOGO = "ItAcademyLogo";
     public static final String LOGO_IMAGE_REF = "images/softServe.jpg";
     public static final String TIME = "time";
-    public static final String DATE = "date";
-    public static final String DATE_FORMAT = "HH:mm:ss:SSS";
-
-    @Autowired
-    private JavaMailSender mailSender;
+    public static final String COURSE = "course";
+    public static final String GROUP_START_TIME = "groupStartTime";
+    public static final String HR_NAME = "HRName";
+    public static final String HR_SURNAME = "HRSurname";
+    public static final String HR_PHONE = "HRPhone";
+    public static final String HR_EMAIL = "HRemail";
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private VelocityEngine velocityEngine;
 
     @Autowired
-    private ApplicantService applicantService;
+    private JavaMailSender mailSender;
 
     @Autowired
-    private UserService userService;
+    private ApplicantService applicantService;
 
     @Autowired
     private AppointmentService appointmentService;
@@ -51,7 +53,7 @@ public class MailService {
     private MimeMessageHelper helper;
     private MimeMessage mimeMessage;
 
-    public void sendMailtoApplicant() throws ApplicantDoesNotExistException {
+    public void notifyApplicant() throws ApplicantDoesNotExistException {
         mimeMessage = mailSender.createMimeMessage();
         try {
             helper = new MimeMessageHelper(mimeMessage, true);
@@ -59,21 +61,36 @@ public class MailService {
             e.printStackTrace();
         }
         // TODO get applicant id from queue
-        String appointmentId = "id1";
+        String appointmentId = "testAppointmentId";
         Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
         String applicantId = appointment.getApplicantId();
         Applicant applicant = applicantService.getApplicantById(applicantId);
         switch (applicant.getStatus()) {
             case NOT_SCHEDULED:
-                sendSchedulingLetter(applicant, appointment);
+                createSchedulingLetterModel(applicant, appointment);
                 break;
             case NOT_PASSED:
-                sendNotPassedInterviewLetter(applicant);
+                createFailedLetterModel(applicant);
                 break;
             case PASSED:
-                sendPassedInterviewLetter(applicant, appointment);
+                createPassedLetterModel(applicant, appointment);
                 break;
         }
+    }
+
+    private void createPassedLetterModel(Applicant applicant, Appointment appointment) {
+        Map<String, String> model = new HashMap<>();
+        model.put(NAME, applicant.getName());
+        model.put(SURNAME, applicant.getSurname());
+        Group applicantGroup = appointment.getGroup();
+        model.put(COURSE,applicantGroup.getCourse().getName());
+        model.put(GROUP_START_TIME,convertTimeToDate(applicantGroup.getStartTime()));
+        User responsibleHR = appointment.getOwner();
+        model.put(HR_NAME, responsibleHR.getName());
+        model.put(HR_SURNAME, responsibleHR.getSurname());
+        model.put(HR_PHONE,responsibleHR.getPhone());
+        model.put(HR_EMAIL, responsibleHR.getEmail());
+        sendLetter(applicant,model);
     }
 
     public void sendMail() throws MessagingException {
@@ -97,24 +114,32 @@ public class MailService {
         mailSender.send(mimeMessage);
     }
 
-    private void sendSchedulingLetter(Applicant applicant, Appointment appointment) {
-        //name,surname, interview startTime, interview date, hr name,surname and phone
+    private void createFailedLetterModel(Applicant applicant) {
         Map<String, String> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
-        DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(appointment.getStartTime());
-        model.put(TIME, formatter.format(calendar.getTime()));
-        // TODO implement HR logic
+        sendLetter(applicant,model);
     }
 
-    private void sendNotPassedInterviewLetter(Applicant applicant) {
+
+
+    private void createSchedulingLetterModel(Applicant applicant, Appointment appointment) {
         Map<String, String> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
+        model.put(TIME, convertTimeToDate(appointment.getStartTime()));
+        User responsibleHR = appointment.getOwner();
+        model.put(HR_NAME, responsibleHR.getName());
+        model.put(HR_SURNAME, responsibleHR.getSurname());
+        model.put(HR_PHONE,responsibleHR.getPhone());
+        model.put(HR_EMAIL, responsibleHR.getEmail());
+        sendLetter(applicant,model);
+    }
+
+
+    private void sendLetter(Applicant applicant, Map<String,String> letterModel){
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, applicant.getStatus().getTemplateRef(), model);
+                velocityEngine, applicant.getStatus().getTemplateRef(), letterModel);
         try {
             helper.setFrom(FROM);
             helper.setTo(applicant.getEmail());
@@ -127,16 +152,11 @@ public class MailService {
         }
     }
 
-    private void sendPassedInterviewLetter(Applicant applicant, Appointment appointment) {
-        //applicant name and surname,  Group course, group startTime , group StartDate, hr name and surname , hr phone
-        Map<String, String> model = new HashMap<>();
-        model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
-        //TODO implement group and HR logic
-    }
-
     private String convertTimeToDate(long milliseconds) {
-
-        return null;
+        DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
+        long now = System.currentTimeMillis();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(now);
+        return formatter.format(calendar.getTime());
     }
 }

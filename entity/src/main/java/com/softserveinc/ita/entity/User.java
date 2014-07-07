@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -33,7 +34,7 @@ public class User implements Serializable {
     @JoinTable(name = "UserRoles",
     joinColumns = {@JoinColumn(name = "UserId", referencedColumnName = "Id")},
     inverseJoinColumns = {@JoinColumn(name = "RoleId", referencedColumnName = "Id")})
-    private Role role;
+    private Set securityRoleCollection;
 
     public User() {
     }
@@ -41,6 +42,7 @@ public class User implements Serializable {
     public User(String userId) {
         this.id = userId;
     }
+
     public User(String userName, String userSurname) {
         this.name = userName;
         this.surname = userSurname;
@@ -50,6 +52,15 @@ public class User implements Serializable {
         this.id = userID;
         this.name = name;
         this.age = age;
+    }
+
+    public User (String userID, String name, String surname , int age , String email, String phone){
+        this.id = userID;
+        this.name = name;
+        this.surname = surname;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
     }
 
     public String getId() {
@@ -76,12 +87,36 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public Role getRole() {
-        return role;
+    public Set getSecurityRoleCollection() {
+        return securityRoleCollection;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setSecurityRoleCollection(Set securityRoleCollection) {
+        this.securityRoleCollection = securityRoleCollection;
     }
 
     @Override
@@ -93,7 +128,6 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
-                ", role=" + role +
                 '}';
     }
 
@@ -109,7 +143,6 @@ public class User implements Serializable {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-        if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
@@ -123,7 +156,6 @@ public class User implements Serializable {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
-        result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
 }

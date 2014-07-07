@@ -36,6 +36,8 @@ public class Appointment implements Serializable {
 
     @Column(name = "DurationTime")
     private long durationTime = DEFAULT_DURATION_TIME;
+    private Group group;
+    private User owner;
 
     public Appointment() {}
 
@@ -50,6 +52,14 @@ public class Appointment implements Serializable {
         this.userIdList = userIdList;
         this.applicantId = applicantId;
         this.startTime = startTime;
+    }
+
+    public Appointment(List<String> userIdList, String applicantId, long startTime, User owner, Group group) {
+        this.userIdList = userIdList;
+        this.applicantId = applicantId;
+        this.startTime = startTime;
+        this.owner = owner;
+        this.group = group;
     }
 
     public List<String> getUserIdList() {
@@ -90,6 +100,22 @@ public class Appointment implements Serializable {
 
     public void setAppointmentId(String appointmentId) {
         this.appointmentId = appointmentId;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     @Override

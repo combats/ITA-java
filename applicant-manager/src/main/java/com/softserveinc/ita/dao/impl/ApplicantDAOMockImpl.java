@@ -20,7 +20,7 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
         allApplicants.add(new Applicant("123"));
         allApplicants.add(new Applicant("124"));
         allApplicants.add(new Applicant("125"));
-
+        allApplicants.add(new Applicant("testApplicantId","Andrey", "Braslavskiy",Applicant.Status.NOT_PASSED));
         applicants.put("id1", new Applicant("id1"));
         applicants.put("id2", new Applicant("id2"));
         applicants.put("id3", new Applicant("id3"));

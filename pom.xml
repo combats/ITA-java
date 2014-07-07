@@ -23,6 +23,7 @@
         <module>applicant-manager</module>
         <module>web-ui</module>
         <module>group-manager</module>
+        <module>mail-manager</module>
     </modules>
 
     <dependencies>
