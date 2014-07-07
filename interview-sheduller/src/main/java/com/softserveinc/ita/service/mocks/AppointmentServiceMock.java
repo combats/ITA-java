@@ -1,11 +1,7 @@
 package com.softserveinc.ita.service.mocks;
 
 
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.Question;
-import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
 import org.joda.time.DateTime;
 
@@ -16,67 +12,48 @@ import java.util.List;
 
 public class AppointmentServiceMock implements AppointmentService {
 
-
-    private long startTime = 1403308782454L;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
     private LinkedList<Appointment> appointmentsList;
 
-    //-------------VadimNaumenko mock for tests------------------------------------
+    {
+        long currentTime = System.currentTimeMillis();
 
-    Appointment appointment1;
-    Appointment appointment2;
-    Appointment appointment3;
+        String applicantId = "testApplicantId";
+        String appointmentId = "testAppointmentId";
 
-    private User user1 = new User("1", "IT Project Manager");
-    private User user2 = new User("2", "Software Developer");
-    private User user3 = new User("3", "HR Manager");
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
+        appointment1.setAppointmentId(appointmentId);
 
-    private Applicant applicant1 = new Applicant("Gena", "1");
+        List<String> users2 = new ArrayList<>();
+        Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
+        appointment2.setAppointmentId(appointmentId);
 
-    private Applicant applicant2 = new Applicant("Gesha", "2");
+        List<String> users3 = new ArrayList<>();
+        Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
+        appointment3.setAppointmentId(appointmentId);
 
-    List<String> usersIdList = new ArrayList<String>(); {
 
-        Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
-        Question question2 = new Question("Have you ever were connected with database developing?", 3);
-        Question question3 = new Question("Tell me something about JUnit testing.", 2);
-        Question question4 = new Question("Your last book you read?", 3);
-        Question question5 = new Question("Where did you study?", 2);
-        Question question6 = new Question("Are you married?", 3);
-        List<Question> questionsList1 = new ArrayList<>();
-        Collections.addAll(questionsList1, question1, question2);
-        user1.setQuestions(questionsList1);
-        List<Question> questionsList2 = new ArrayList<>();
-        Collections.addAll(questionsList2, question3, question4);
-        user2.setQuestions(questionsList1);
-        List<Question> questionsList3 = new ArrayList<>();
-        Collections.addAll(questionsList3, question5, question6);
-        user3.setQuestions(questionsList1);
-        Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
+        Appointment todayFirstAppointment = new Appointment(users, applicantId, currentTime);
+        todayFirstAppointment.setAppointmentId(appointmentId);
+        Appointment todaySecondAppointment = new Appointment(users, applicantId, currentTime);
+        todaySecondAppointment.setAppointmentId(appointmentId);
+
+        appointmentsList = new LinkedList<>();
+        Collections.addAll(appointmentsList, appointment1, appointment2, appointment3, todayFirstAppointment
+                , todaySecondAppointment);
     }
 
-    List<Appointment> appointmentList = new ArrayList<>();{
-        applicant1.setId("1");
-        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
-        appointment1.setAppointmentId("1");
-        applicant2.setId("2");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
-        appointment2.setAppointmentId("2");
-        appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
-        appointment3.setAppointmentId("3");
-        appointmentList.add(appointment1);
-        appointmentList.add(appointment2);
-        appointmentList.add(appointment3);
-    }
-    //-------------VadimNaumenko mock from tests
 
     @Override
-    public List<Appointment> getAppointmentByApplicantId(String applicantId) throws AppointmentNotFoundException {
+    public List<Appointment> getAppointmentByApplicantId(String applicantId) {
         List<Appointment> result = new ArrayList<>();
-        for (Appointment appointment : appointmentList){
-            if (appointment.getApplicantId().equals(applicantId)) result.add(appointment);
+        if (applicantId.equals("testApplicantId")) {
+            result.add(appointmentsList.get(0));
+        } else {
+            result.add(appointmentsList.get(2));
         }
-        if (result.isEmpty())throw new AppointmentNotFoundException("Wrong Id");
         return result;
     }
 
@@ -86,13 +63,12 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public Appointment getAppointmentByAppointmentId(String appointmentId) throws AppointmentNotFoundException {
-        for (Appointment appointment : appointmentList){
-            if (appointment.getAppointmentId().equals(appointmentId)) return appointment;
-
+    public Appointment getAppointmentByAppointmentId(String appointmentId) {
+        if (appointmentId.equals("testAppointmentId")) {
+            return appointmentsList.get(0);
+        } else {
+            return appointmentsList.get(2);
         }
-
-        throw new AppointmentNotFoundException("Wrong Id");
     }
 
     @Override
@@ -110,7 +86,7 @@ public class AppointmentServiceMock implements AppointmentService {
             return resultList;
         }
 
-        for (Appointment appointment : appointmentList) {
+        for (Appointment appointment : appointmentsList) {
 
             DateTime appointmentDate = new DateTime(appointment.getStartTime());
 
@@ -125,15 +101,4 @@ public class AppointmentServiceMock implements AppointmentService {
 
     }
 
-    @Override
-    public Appointment editAppointmentById(String appointmentId, Appointment appointment) throws AppointmentNotFoundException {
-        for (int i=0; i < appointmentList.size(); i++){
-            if (appointmentList.get(i).getAppointmentId().equals(appointmentId)){
-                appointmentList.add(i, appointment);
-                return appointmentList.get(i);
-            }
-
-        }
-        throw new AppointmentNotFoundException("Wrong Id");
-    }
 }
