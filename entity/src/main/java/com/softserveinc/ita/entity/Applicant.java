@@ -11,9 +11,6 @@ public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-//    @Version
-//    private Long version = 1L;
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

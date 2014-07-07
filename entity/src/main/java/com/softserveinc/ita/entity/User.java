@@ -13,9 +13,6 @@ public class User implements Serializable {
     public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
 
-//    @Version
-//    private Long version = 1L;
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -32,6 +29,11 @@ public class User implements Serializable {
     private String email;
     @Column(name = "Age")
     private int age = DEFAULT_USER_AGE;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinTable(name = "UserRoles",
+    joinColumns = {@JoinColumn(name = "UserId", referencedColumnName = "Id")},
+    inverseJoinColumns = {@JoinColumn(name = "RoleId", referencedColumnName = "Id")})
+    private Role role;
 
     public User() {
     }
@@ -74,6 +76,14 @@ public class User implements Serializable {
         this.age = age;
     }
 
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -83,13 +93,14 @@ public class User implements Serializable {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", age=" + age +
+                ", role=" + role +
                 '}';
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof User)) return false;
 
         User user = (User) o;
 
@@ -98,6 +109,7 @@ public class User implements Serializable {
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
+        if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
@@ -111,6 +123,7 @@ public class User implements Serializable {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         return result;
     }
 }
