@@ -11,14 +11,14 @@ public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Version
-    private Long version = 1L;
+//    @Version
+//    private Long version = 1L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    private String applicantId;
+    private String id;
 
     @Column(name = "Name")
     private String name;
@@ -31,28 +31,28 @@ public class Applicant implements Serializable {
 
     public Applicant() {}
 
-    public Applicant(String name) {
-        this.name = name;
+    public Applicant(String applicantId) {
+        this.name = applicantId;
     }
     public Applicant(String name, String groupId) {
         this.name = name;
         this.groupId = groupId;
     }
 
-    public Long getVersion() {
-        return version;
+//    public Long getVersion() {
+//        return version;
+//    }
+//
+//    public void setVersion(Long version) {
+//        this.version = version;
+//    }
+
+    public String getId() {
+        return id;
     }
 
-    public void setVersion(Long version) {
-        this.version = version;
-    }
-
-    public String getApplicantId() {
-        return applicantId;
-    }
-
-    public void setApplicantId(String applicantId) {
-        this.applicantId = applicantId;
+    public void setId(String applicantId) {
+        this.id = id;
     }
 
     public String getName() {
@@ -94,7 +94,7 @@ public class Applicant implements Serializable {
 
         Applicant applicant = (Applicant) o;
 
-        if (applicantId != null ? !applicantId.equals(applicant.applicantId) : applicant.applicantId != null)
+        if (id != null ? !id.equals(applicant.id) : applicant.id != null)
             return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
         if (groupId != null ? !groupId.equals(applicant.groupId) : applicant.groupId != null) return false;
@@ -106,7 +106,7 @@ public class Applicant implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = applicantId != null ? applicantId.hashCode() : 0;
+        int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
@@ -117,8 +117,8 @@ public class Applicant implements Serializable {
     @Override
     public String toString() {
         return "Applicant{" +
-                "version=" + version +
-                ", applicantId='" + applicantId + '\'' +
+//                "version=" + version +
+                ", applicantId='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +

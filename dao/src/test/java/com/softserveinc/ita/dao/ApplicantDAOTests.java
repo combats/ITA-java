@@ -12,8 +12,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:dao-test-context.xml"})
@@ -27,9 +27,9 @@ public class ApplicantDAOTests extends BaseDAOTest {
     @Test
     public void testGetApplicants() {
         Session session = sessionFactory.getCurrentSession();
-        session.save(new Applicant("TestApplicantOne"));
-        session.save(new Applicant("TestApplicantTwo"));
-        session.save(new Applicant("TestApplicantThree"));
+        session.save(new Applicant("TestApplicantOne", "Group"));
+        session.save(new Applicant("TestApplicantTwo", "Group"));
+        session.save(new Applicant("TestApplicantThree", "Group"));
         List<Applicant> applicants = applicantDAO.getApplicants();
         int actualSize = applicants.size();
         assertEquals(3, actualSize);
@@ -49,7 +49,7 @@ public class ApplicantDAOTests extends BaseDAOTest {
     @Test
     public void testGetApplicantById() {
         Session session = sessionFactory.getCurrentSession();
-        Applicant expected = new Applicant("TestApplicant");
+        Applicant expected = new Applicant("TestApplicant", "Group");
         String applicantId = (String) session.save(expected);
         Applicant actual = applicantDAO.getApplicantById(applicantId);
         assertThat(expected, equalTo(actual));
@@ -57,16 +57,16 @@ public class ApplicantDAOTests extends BaseDAOTest {
 
     @Test
     public void testAddNewApplicant() {
-        Applicant expected = new Applicant("TestApplicant");
+        Applicant expected = new Applicant("TestApplicant", "Group");
         Applicant actual = applicantDAO.addNewApplicant(expected);
         assertThat(expected, equalTo(actual));
     }
 
     @Test
     public void testEditApplicant() {
-        Applicant expected = new Applicant("ExpectedApplicant");
+        Applicant expected = new Applicant("ExpectedApplicant", "Group");
         sessionFactory.getCurrentSession().save(expected);
-        expected.setName("ActualApplicant");
+        expected.setName("Actual");
         Applicant actual = applicantDAO.editApplicant(expected);
         assertThat(expected, equalTo(actual));
     }

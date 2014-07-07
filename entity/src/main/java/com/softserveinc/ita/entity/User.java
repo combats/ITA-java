@@ -13,8 +13,8 @@ public class User implements Serializable {
     public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
 
-    @Version
-    private Long version = 1L;
+//    @Version
+//    private Long version = 1L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -36,8 +36,12 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String userName) {
+    public User(String userId) {
+        this.id = userId;
+    }
+    public User(String userName, String userSurname) {
         this.name = userName;
+        this.surname = userSurname;
     }
 
     public User(String userID, String name, int age) {

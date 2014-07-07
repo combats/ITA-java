@@ -7,6 +7,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 
 @Repository
 public class AppointmentDAOHibernate implements AppointmentDAO {
@@ -16,7 +18,7 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
 
     @Override
     public Appointment getAppointmentByAppointmentID(String appointmentId) {
-        return (Appointment)sessionFactory.getCurrentSession().load(Appointment.class, appointmentId);
+        return (Appointment) sessionFactory.getCurrentSession().load(Appointment.class, appointmentId);
     }
 
     @Override
@@ -25,14 +27,14 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
     }
 
     @Override
-    public Appointment getAppointmentByApplicantId(String applicantId) {
-        return (Appointment)sessionFactory.getCurrentSession().createCriteria(Appointment.class)
-                .add(Restrictions.like("applicantId", applicantId)).uniqueResult();
+    public List<Appointment> getAppointmentByApplicantId(String applicantId) {
+        return (List<Appointment>) sessionFactory.getCurrentSession().createCriteria(Appointment.class)
+                .add(Restrictions.like("applicantId", applicantId)).list();
     }
 
     @Override
     public void removeAppointmentById(String appointmentId) {
-        Appointment appointment = (Appointment)sessionFactory.getCurrentSession().load(Appointment.class, appointmentId);
+        Appointment appointment = (Appointment) sessionFactory.getCurrentSession().load(Appointment.class, appointmentId);
         if (appointment != null) {
             sessionFactory.getCurrentSession().delete(appointment);
         }

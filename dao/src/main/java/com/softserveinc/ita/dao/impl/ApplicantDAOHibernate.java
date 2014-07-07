@@ -9,7 +9,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-
 import java.util.List;
 
 @Repository
@@ -21,7 +20,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Applicant> getApplicants() {
-        List<Applicant> allApplicants = (List<Applicant>)sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
+        List<Applicant> allApplicants = (List<Applicant>) sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
         return allApplicants;
     }
 
@@ -35,7 +34,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
 
     @Override
     public Applicant getApplicantById(String applicantId) {
-        return (Applicant)sessionFactory.getCurrentSession().load(Applicant.class, applicantId);
+        return (Applicant) sessionFactory.getCurrentSession().load(Applicant.class, applicantId);
     }
 
     @Override
@@ -47,7 +46,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
 
     @Override
     public Applicant editApplicant(Applicant applicant) {
-        String applicantId = applicant.getApplicantId();
+        String applicantId = applicant.getId();
         Session session = sessionFactory.getCurrentSession();
         session.update(applicant);
         return (Applicant) session.load(Applicant.class, applicantId);

@@ -14,8 +14,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:dao-test-context.xml"})
@@ -52,8 +52,8 @@ public class AppointmentDAOTests extends BaseDAOTest {
         Collections.addAll(userIdList, "1", "2", "3");
         Appointment expected = new Appointment(userIdList, "1", 100L);
         sessionFactory.getCurrentSession().save(expected);
-        Appointment actual = appointmentDAO.getAppointmentByApplicantId("1");
-        assertThat(expected, equalTo(actual));
+        List<Appointment> actual = appointmentDAO.getAppointmentByApplicantId("1");
+        assertThat(1, equalTo(actual.size()));
     }
 
     @Test(expected = ObjectNotFoundException.class)

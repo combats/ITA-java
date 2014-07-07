@@ -47,12 +47,14 @@ public class AppointmentServiceMock implements AppointmentService {
 
 
     @Override
-    public Appointment getAppointmentByApplicantId(String applicantId) {
+    public List<Appointment> getAppointmentByApplicantId(String applicantId) {
+        List<Appointment> result = new ArrayList<>();
         if (applicantId.equals("testApplicantId")) {
-            return appointmentsList.get(0);
+            result.add(appointmentsList.get(0));
         } else {
-            return appointmentsList.get(2);
+            result.add(appointmentsList.get(2));
         }
+        return result;
     }
 
     @Override

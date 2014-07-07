@@ -10,18 +10,19 @@
     <!-- Scans within the base package of the application for @Components to
         configure as beans -->
 
-    <context:annotation-config />
-    <context:component-scan base-package="com.softserveinc.ita.dao" />
+    <context:annotation-config/>
+    <context:component-scan base-package="com.softserveinc.ita.dao"/>
 
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
-    <context:property-placeholder location="classpath:test.properties" />
+    <context:property-placeholder location="classpath:test.properties"/>
 
     <bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+    <bean id="persistenceExceptionTranslationPostProcessor"
+          class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
         <property name="driverClass" value="${jdbc.driverClassName}"/>
@@ -31,8 +32,8 @@
     </bean>
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="com.softserveinc.ita.dao" />
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.softserveinc.ita.dao"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
@@ -49,8 +50,8 @@
         </property>
     </bean>
 
-    <bean id="userDAO" class="com.softserveinc.ita.dao.impl.UserDAOHibernate" />
-    <bean id="applicantDAO" class="com.softserveinc.ita.dao.impl.ApplicantDAOHibernate" />
+    <bean id="userDAO" class="com.softserveinc.ita.dao.impl.UserDAOHibernate"/>
+    <bean id="applicantDAO" class="com.softserveinc.ita.dao.impl.ApplicantDAOHibernate"/>
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
 
 </beans>
