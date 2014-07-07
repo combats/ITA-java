@@ -14,4 +14,6 @@ public interface AppointmentService {
     Appointment getAppointmentByAppointmentId(String appointmentId);
 
     List<Appointment> getAppointmentsByDate(long date);
+
+    void updateAppointment(Appointment appointment);
 }

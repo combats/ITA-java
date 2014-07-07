@@ -10,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -65,5 +67,18 @@ public class AppointmentDAOTests extends BaseDAOTest {
         String appointmentId = (String) session.save(expected);
         appointmentDAO.removeAppointmentById(appointmentId);
         session.load(Appointment.class, appointmentId);
+    }
+
+    @Test
+    public void testUpdateAppointment() {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2", "3");
+        Appointment expected = new Appointment(userIdList, "1", 100L);
+        Session session = sessionFactory.getCurrentSession();
+        String appointmentId = (String) session.save(expected);
+        expected.setActualStartTime(1000L);
+        appointmentDAO.updateAppointment(expected);
+        Appointment actual = (Appointment)session.load(Appointment.class, appointmentId);
+        assertEquals(expected, actual);
     }
 }

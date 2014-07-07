@@ -100,4 +100,21 @@ public class AppointmentServiceMock implements AppointmentService {
         return resultList;
 
     }
+
+    @Override
+    public void updateAppointment(Appointment appointment) {
+        List<Appointment> appointments = new ArrayList<>();
+        int TOMORROW = 24 * 60 * 60 * 1000;
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        appointments.add(new Appointment(users, "testApplicantId", 1401866602L + TOMORROW));
+        Appointment appointment1 = appointments.get(0);
+        appointment1 = appointment;
+        appointments.remove(0);
+        appointments.add(appointment1);
+        if (!appointment1.equals(appointments.get(0))) {
+            throw new RuntimeException();
+        }
+    }
+
 }

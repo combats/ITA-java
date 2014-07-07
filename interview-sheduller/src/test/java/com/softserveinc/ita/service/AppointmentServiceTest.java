@@ -53,7 +53,6 @@ public class AppointmentServiceTest extends BaseMVCTest {
         assertEquals(expectedTwo, actual.get(0));
     }
 
-
     @Test
     public void testGetAppointmentByDateAndExpectAppointmentWithValidDate() {
         final int SAME_VALUE_BY_COMPARE = 0;
@@ -69,5 +68,10 @@ public class AppointmentServiceTest extends BaseMVCTest {
 
         assertEquals(dateTimeComparator.compare(toDay, actualDate), SAME_VALUE_BY_COMPARE);
 
+    }
+
+    @Test
+    public void testUpdateAppointment() {
+        service.updateAppointment(expectedTwo);
     }
 }
