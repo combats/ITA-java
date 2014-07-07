@@ -248,4 +248,21 @@ public class AppointmentTests extends BaseMVCTest {
                 .andExpect(status().isBadRequest());
 
     }
+
+    @Test
+    public void testUpdateAppointmentAndExpectStatusNoContent() throws Exception {
+        List<Appointment> appointments = new ArrayList<>();
+        int TOMORROW = 24 * 60 * 60 * 1000;
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        Appointment appointment = new Appointment(users, "testApplicantId", 1401866602L + TOMORROW);
+
+        String appointmentJson = jsonUtil.toJson(appointment);
+        mockMvc.perform(
+                put("/appointments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(appointmentJson)
+        )
+                .andExpect(status().is(204));
+    }
 }
