@@ -1,6 +1,6 @@
 #ENTITY: 
 
-###Applicant: 
+###Appointment:
 ```java
 //Id, uid
 private String appointmentId;
@@ -8,6 +8,7 @@ private List <String> userIdList;
 private String applicantId;
 private long startTime;
 private long durationTime;
+private long actualStartTime;
 
 
 ```
@@ -52,3 +53,12 @@ resource path: ```/appointments/date/{date}```
     - gets appointment by date
     
 #Jul.3.2014
+
+resource path: ```/appointments/```
+
+    method:  PUT -
+
+   public void updateAppointment(@RequestBody @Valid Appointment appointment)
+    - updates exists appointment
+
+#Jul.7.2014
