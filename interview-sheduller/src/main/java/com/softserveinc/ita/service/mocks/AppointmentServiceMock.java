@@ -100,5 +100,4 @@ public class AppointmentServiceMock implements AppointmentService {
         return resultList;
 
     }
-
 }
