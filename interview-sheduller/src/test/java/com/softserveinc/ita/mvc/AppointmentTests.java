@@ -117,6 +117,7 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment app = new Appointment(users, applicantId, currentDate, bigDurationTime);
         app.dateValidation(app.getStartTime(), app.getDurationTime());
     }
+
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
 
@@ -152,6 +153,7 @@ public class AppointmentTests extends BaseMVCTest {
         mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
                 .andExpect(status().isBadRequest());
     }
+
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
         mockMvc.perform(
@@ -299,5 +301,22 @@ public class AppointmentTests extends BaseMVCTest {
                 .andReturn();
 
         assertTrue("Appointments are not equal", AppointmentAfterEdit.getResponse().getContentAsString().equals(AppointmentBeforeEdit));
+    }
+
+    @Test
+    public void testUpdateAppointmentAndExpectStatusNoContent() throws Exception {
+        List<Appointment> appointments = new ArrayList<>();
+        int TOMORROW = 24 * 60 * 60 * 1000;
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        Appointment appointment = new Appointment(users, "testApplicantId", 1401866602L + TOMORROW);
+
+        String appointmentJson = jsonUtil.toJson(appointment);
+        mockMvc.perform(
+                put("/appointments")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(appointmentJson)
+        )
+                .andExpect(status().is(204));
     }
 }

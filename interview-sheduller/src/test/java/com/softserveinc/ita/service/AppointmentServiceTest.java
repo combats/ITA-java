@@ -84,4 +84,9 @@ public class AppointmentServiceTest extends BaseMVCTest {
         assertEquals(dateTimeComparator.compare(toDay, actualDate), SAME_VALUE_BY_COMPARE);
 
     }
+
+    @Test
+    public void testUpdateAppointment() {
+        service.updateAppointment(expectedTwo);
+    }
 }

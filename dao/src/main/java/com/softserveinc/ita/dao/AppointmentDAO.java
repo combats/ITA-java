@@ -13,4 +13,6 @@ public interface AppointmentDAO {
     List<Appointment> getAppointmentByApplicantId(String applicantId);
 
     void removeAppointmentById(String appointmentId);
+
+    void updateAppointment(Appointment appointment);
 }

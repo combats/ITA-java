@@ -18,6 +18,7 @@ public class Appointment implements Serializable {
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    public static final long DEFAULT_ACTUAL_START_TIME = 0L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -40,6 +41,9 @@ public class Appointment implements Serializable {
     @Column(name = "DurationTime")
     @Expose
     private long durationTime = DEFAULT_DURATION_TIME;
+
+    @Column(name = "ActualStartTime")
+    private long actualStartTime = DEFAULT_ACTUAL_START_TIME;
 
     public Appointment() {}
 
@@ -96,39 +100,37 @@ public class Appointment implements Serializable {
         this.appointmentId = appointmentId;
     }
 
-	@Override
-	public String toString() {
-		return "Appointment{" +
-				"userIdList=" + userIdList +
-				", applicantId=" + applicantId +
-				", startTime=" + startTime +
-				", durationTime=" + durationTime +
-				'}';
-	}
+    public long getActualStartTime() {
+        return actualStartTime;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public void setActualStartTime(long actualStartTime) {
+        this.actualStartTime = actualStartTime;
+    }
 
-		Appointment that = (Appointment) o;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Appointment)) return false;
 
-		if (durationTime != that.durationTime) return false;
-		if (startTime != that.startTime) return false;
-		if (!applicantId.equals(that.applicantId)) return false;
-		if (!userIdList.equals(that.userIdList)) return false;
+        Appointment that = (Appointment) o;
 
-		return true;
-	}
+        if (durationTime != that.durationTime) return false;
+        if (startTime != that.startTime) return false;
+        if (!applicantId.equals(that.applicantId)) return false;
+        if (!userIdList.equals(that.userIdList)) return false;
 
-	@Override
-	public int hashCode() {
-		int result = userIdList.hashCode();
-		result = 31 * result + applicantId.hashCode();
-		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
-		return result;
-	}
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = userIdList.hashCode();
+        result = 31 * result + applicantId.hashCode();
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
+        return result;
+    }
 
     public void dateValidation(long startTime, long durationTime) throws DateException {
 

@@ -39,4 +39,9 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
             sessionFactory.getCurrentSession().delete(appointment);
         }
     }
+
+    @Override
+    public void updateAppointment(Appointment appointment) {
+        sessionFactory.getCurrentSession().update(appointment);
+    }
 }

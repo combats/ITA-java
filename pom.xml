@@ -23,6 +23,7 @@
         <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
+        <module>group-manager</module>
     </modules>
 
     <dependencies>
@@ -31,7 +32,6 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -49,7 +49,6 @@
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
         </dependency>
-
         <dependency>
             <groupId>javax.servlet.jsp</groupId>
             <artifactId>jsp-api</artifactId>
@@ -95,8 +94,6 @@
             <version>1.7.2</version>
         </dependency>
     </dependencies>
-    
-  
     
  <distributionManagement>
 

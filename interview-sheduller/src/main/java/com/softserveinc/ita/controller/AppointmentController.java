@@ -73,4 +73,9 @@ public class AppointmentController {
 
         return appointmentService.getAppointmentsByDate(date);
     }
+    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateAppointment(@RequestBody @Valid Appointment appointment) {
+        appointmentService.updateAppointment(appointment);
+    }
 }
