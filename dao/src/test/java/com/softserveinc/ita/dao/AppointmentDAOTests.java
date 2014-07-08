@@ -91,7 +91,6 @@ public class AppointmentDAOTests extends BaseDAOTest {
         Session session = sessionFactory.getCurrentSession();
         String expectedId = (String) session.save(appointment);
         String actualId = appointmentDAO.getAppointmentIdByGroupIdAndApplicantId("TestGroupId", "TestApplicantId");
-        System.out.println(expectedId + "  " + actualId);
         assertThat(expectedId, equalTo(actualId));
     }
 }
