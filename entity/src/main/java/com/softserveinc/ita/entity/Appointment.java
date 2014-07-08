@@ -143,6 +143,7 @@ public class Appointment implements Serializable {
         if (applicantId != null ? !applicantId.equals(that.applicantId) : that.applicantId != null) return false;
         if (appointmentId != null ? !appointmentId.equals(that.appointmentId) : that.appointmentId != null)
             return false;
+        if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
         if (userIdList != null ? !userIdList.equals(that.userIdList) : that.userIdList != null) return false;
 
         return true;
@@ -156,6 +157,7 @@ public class Appointment implements Serializable {
         result = 31 * result + (int) (startTime ^ (startTime >>> 32));
         result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
         result = 31 * result + (int) (actualStartTime ^ (actualStartTime >>> 32));
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         return result;
     }
 
@@ -168,8 +170,7 @@ public class Appointment implements Serializable {
                 ", startTime=" + startTime +
                 ", durationTime=" + durationTime +
                 ", actualStartTime=" + actualStartTime +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
-
-    
 }
