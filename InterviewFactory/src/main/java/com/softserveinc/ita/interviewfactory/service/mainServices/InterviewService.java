@@ -3,6 +3,7 @@ package com.softserveinc.ita.interviewfactory.service.mainServices;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
+import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;
@@ -16,13 +17,11 @@ import java.util.List;
  */
 public interface InterviewService {
 
-    List<Interview> getInterviewByApplicantID(String ID) throws InterviewNotFoundException, HttpRequestException;
-    Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, HttpRequestException;
+    List<Interview> getInterviewByApplicantID(String ID) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
+    Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, HttpRequestException, QuestionsBlockNotFound, InterviewNotFoundException;
 
-    Interview getInterviewByAppointmentID(String appointmentId) throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException;
+    Interview getInterviewByAppointmentID(String interviewId) throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException, QuestionsBlockNotFound;
 
-    Interview getInterviewByInterviewID(String interviewId) throws InterviewNotFoundException, HttpRequestException;
-
-    void removeInterviewById(String interviewId) throws InterviewNotFoundException, HttpRequestException;
-    Interview setInterview(Interview interview) throws InterviewNotFoundException, HttpRequestException;
+    void removeInterviewByAppointmentId(String interviewId) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
+    Interview setInterview(Interview interview) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
 }

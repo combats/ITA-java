@@ -11,7 +11,12 @@ import com.google.gson.annotations.Expose;
  */
 public class QuestionInformation {
 
-    private String QuestionInformationID;
+    @Expose
+    private String questionInformationID;
+    @Expose
+    private String questionsBlockId;
+    @Expose
+    private String interviewId;
     @Expose
     private String question = "";
     @Expose
@@ -20,6 +25,7 @@ public class QuestionInformation {
     private int mark;
     @Expose
     private String comment = "";
+
     private int weight; //weight for each question
 
     public QuestionInformation() {
@@ -79,11 +85,28 @@ public class QuestionInformation {
     }
 
     public String getQuestionInformationID() {
-        return QuestionInformationID;
+        return questionInformationID;
     }
 
     public void setQuestionInformationID(String questionInformationID) {
-        QuestionInformationID = questionInformationID;
+        this.questionInformationID = questionInformationID;
+    }
+
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
+
+    public String getQuestionsBlockId() {
+        return questionsBlockId;
+    }
+
+    public void setQuestionsBlockId(String questionsBlockId) {
+        this.questionsBlockId = questionsBlockId;
     }
 
     @Override
@@ -95,7 +118,7 @@ public class QuestionInformation {
 
         if (mark != that.mark) return false;
         if (weight != that.weight) return false;
-        if (QuestionInformationID != null ? !QuestionInformationID.equals(that.QuestionInformationID) : that.QuestionInformationID != null)
+        if (questionInformationID != null ? !questionInformationID.equals(that.questionInformationID) : that.questionInformationID != null)
             return false;
         if (answer != null ? !answer.equals(that.answer) : that.answer != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
@@ -106,7 +129,7 @@ public class QuestionInformation {
 
     @Override
     public int hashCode() {
-        int result = QuestionInformationID != null ? QuestionInformationID.hashCode() : 0;
+        int result = questionInformationID != null ? questionInformationID.hashCode() : 0;
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (answer != null ? answer.hashCode() : 0);
         result = 31 * result + mark;
@@ -118,7 +141,7 @@ public class QuestionInformation {
     @Override
     public String toString() {
         return "QuestionInformation{" +
-                "QuestionInformationID='" + QuestionInformationID + '\'' +
+                "QuestionInformationID='" + questionInformationID + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", mark=" + mark +

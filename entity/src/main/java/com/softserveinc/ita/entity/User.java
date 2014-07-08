@@ -1,9 +1,12 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,11 +21,13 @@ public class User implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
+    @Expose
     private String id;
 
     @Column(name = "Name")
     private String name = DEFAULT_USER_NAME;
     @Column(name = "Surname")
+    @Expose
     private String surname;
     @Column(name = "Phone")
     private String phone;
@@ -39,6 +44,8 @@ public class User implements Serializable {
     private Set<Role> securityRoleCollection;
     @Column(name = "Active")
     private boolean active;
+
+    private List<Question> questions = new ArrayList<>();
 
     public User() {
     }
@@ -129,16 +136,12 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                '}';
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override
@@ -148,11 +151,16 @@ public class User implements Serializable {
 
         User user = (User) o;
 
+        if (active != user.active) return false;
         if (age != user.age) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
+        if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
+        if (securityRoleCollection != null ? !securityRoleCollection.equals(user.securityRoleCollection) : user.securityRoleCollection != null)
+            return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
@@ -166,7 +174,26 @@ public class User implements Serializable {
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (securityRoleCollection != null ? securityRoleCollection.hashCode() : 0);
+        result = 31 * result + (active ? 1 : 0);
+        result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
     }
-}
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", age=" + age +
+                ", password='" + password + '\'' +
+                ", securityRoleCollection=" + securityRoleCollection +
+                ", active=" + active +
+                ", questions=" + questions +
+                '}';
+    }
+}

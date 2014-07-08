@@ -1,9 +1,13 @@
 package com.softserveinc.ita.interviewfactory.factory;
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.interviewfactory.service.interviewingServices.InterviewingService;
+import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
+import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
+import exceptions.InterviewNotFoundException;
+import exceptions.QuestionsBlockNotFound;
+import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,16 +28,19 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
     HttpRequestExecutor httpRequestExecutor;
 
     @Autowired
-    InterviewingService interviewingService;
+    QuestionsBlockServices questionsBlockServices;
+
+    @Autowired
+    QuestionsInformationServices questionsInformationServices;
 
     @Override
-    public Interview create(String appointmentId) throws HttpRequestException {
-        Interview interview = new Interview(appointmentId);
+    public Interview create(String interviewId) throws HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, InterviewNotFoundException {
+        Interview interview = new Interview(interviewId);
         List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
 
-        allQuestionsBlocks.add(interviewingService.getStandardQuestionsBlock());
+        allQuestionsBlocks.add(questionsBlockServices.getStandardQuestionsBlock());
 
-        Appointment appointment = httpRequestExecutor.getObjectByID(appointmentId, Appointment.class);
+        Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
         List<String> Users = appointment.getUserIdList();
 
         for (int i = 0; i < Users.size(); i++){
@@ -42,13 +49,18 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
             List<QuestionInformation> userQuestionInformationList = new ArrayList<QuestionInformation>();
             List<Question> Questions = user.getQuestions();
 
-            for (Question question : Questions){
+            for (int i1 = 0; i1 < Questions.size(); i1++){
                 QuestionInformation questionInformation = new QuestionInformation();
-                questionInformation.setQuestion(question.getQuestionBody());
-                questionInformation.setWeight(question.getWeight());
+                questionInformation.setQuestion(Questions.get(i1).getQuestionBody());
+                questionInformation.setWeight(Questions.get(i1).getWeight());
+                questionInformation.setQuestionInformationID(String.valueOf(i1));//присваиваем айдишку вопросу, убрать когда будет база
+                questionInformation.setQuestionsBlockId(Users.get(i));//привсваиваем вопросу айдишку блока, убрать когда будет база
+ //               questionsInformationServices.postQuestionInformation(questionInformation);//постим вопрос в мок, убрать когда будет база
                 userQuestionInformationList.add(questionInformation);
             }
             userQuestionsBlock.setQuestions(userQuestionInformationList);
+            userQuestionsBlock.setQuestionsBlockID(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
+   //         questionsBlockServices.postQuestionsBlock(userQuestionsBlock); //постим блок вопросов в мок, убрать когда будет база
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

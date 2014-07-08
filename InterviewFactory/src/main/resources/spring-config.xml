@@ -26,12 +26,13 @@
 
     <!--aux/utils-->
 
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="jsonUtilJaxson" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServiceMock"/>
-    <bean id="interviewingService" class="com.softserveinc.ita.interviewfactory.service.interviewingServices.InterviewingServicesMock"/>
+
+    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesMock"/>
+    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServicesMock"/>
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />

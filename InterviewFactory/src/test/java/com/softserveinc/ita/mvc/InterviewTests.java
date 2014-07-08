@@ -6,6 +6,7 @@ import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServi
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
+import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -118,7 +119,7 @@ public class InterviewTests extends BaseMVCTest {
     public void testGetInterviewByAppointmentIDAndExpectIsAccepted() throws Exception {
 
         mockMvc.perform(
-                get("/interviews/appointments/" + appointment1.getAppointmentId())
+                get("/interviews/" + appointment1.getAppointmentId())
         )
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -128,7 +129,7 @@ public class InterviewTests extends BaseMVCTest {
     public void testGetInterviewByExistingAppointmentIdAndExpectOk() throws Exception {
 
         MvcResult ExpectingObject = mockMvc.perform(
-                get("/interviews/appointments/1")
+                get("/interviews/1")
         )
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -148,7 +149,7 @@ public class InterviewTests extends BaseMVCTest {
     public void testGetInterviewByNotExistingAppointmentIdAndExpectOk() throws Exception {
 
         MvcResult ExpectingObject = mockMvc.perform(
-                get("/interviews/appointments/3")
+                get("/interviews/3")
         )
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -171,7 +172,7 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testRemoveInterviewByIdAndExpectOk() throws Exception {
+    public void testRemoveInterviewByAppointmentIdAndExpectOk() throws Exception {
 
         mockMvc.perform(
                 delete("/interviews/1")
@@ -180,40 +181,19 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetInterviewByInterviewIdAndExpectOk() throws Exception {
-
-        MvcResult ExpectingObject = mockMvc.perform(
-                get("/interviews/1")
-        )
-                .andExpect(status().isFound())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
-
-        System.out.println(ExpectingObject.getResponse().getContentAsString());
-    }
-
-    @Test
-    public void testGetInterviewByInterviewIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException {
-        Interview actual = interviewService.getInterviewByInterviewID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setInterviewId("1");
-        assertEquals(expected, actual);
-    }
-
-    @Test
-    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException {
-        List<Interview> actual = interviewService.getInterviewByApplicantID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setInterviewId("1");
-        assertEquals(expected, actual.get(0));
-    }
-
-    @Test
-    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException {
+    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, WrongCriteriaException, QuestionsBlockNotFound {
         Interview actual = interviewService.getInterviewByAppointmentID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setInterviewId("1");
+        expected.setAppointmentId("1");
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+        List<Interview> actual = interviewService.getInterviewByApplicantID("1");
+        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
+        expected.setAppointmentId("1");
+        assertEquals(expected, actual.get(0));
     }
 
 }

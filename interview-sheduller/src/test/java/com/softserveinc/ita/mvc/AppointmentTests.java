@@ -254,56 +254,6 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testEditAppointment() throws Exception {
-
-        String applicantId = "1";
-        String appointmentId = "1";
-
-        List<String> users = new ArrayList<>();
-        users.add("1");
-        users.add("2");
-        users.add("3");
-        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
-        appointment.setAppointmentId(appointmentId);
-        String appointmentJson = jsonUtil.toJson(appointment);
-
-        mockMvc.perform(
-                put("/appointments/edit/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(appointmentJson)
-        )
-                .andExpect(content().contentType("application/json"))
-                .andExpect(content().string(appointmentJson))
-                .andExpect(status().isAccepted());
-    }
-
-    @Test
-    public void testEditAppointmentAndGetSameAppointmentAsAnswer() throws Exception {
-        String applicantId = "1";
-        String appointmentId = "1";
-
-        List<String> users = new ArrayList<>();
-        users.add("1");
-        users.add("2");
-        users.add("3");
-        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
-        appointment.setAppointmentId(appointmentId);
-
-        String AppointmentBeforeEdit = jsonUtil.toJson(appointment);
-
-        MvcResult AppointmentAfterEdit = mockMvc.perform(
-                put("/appointments/edit/1")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(AppointmentBeforeEdit)
-        )
-                .andExpect(content().contentType("application/json"))
-                .andExpect(status().isAccepted())
-                .andReturn();
-
-        assertTrue("Appointments are not equal", AppointmentAfterEdit.getResponse().getContentAsString().equals(AppointmentBeforeEdit));
-    }
-
-    @Test
     public void testUpdateAppointmentAndExpectStatusNoContent() throws Exception {
         List<Appointment> appointments = new ArrayList<>();
         int TOMORROW = 24 * 60 * 60 * 1000;

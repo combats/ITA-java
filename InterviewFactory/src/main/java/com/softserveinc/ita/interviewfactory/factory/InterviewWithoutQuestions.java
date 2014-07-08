@@ -23,16 +23,17 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
     HttpRequestExecutor httpRequestExecutor;
 
     @Override
-    public Interview create(String appointmentId) throws HttpRequestException {
+    public Interview create(String interviewId) throws HttpRequestException {
 
-        Interview interview = new Interview(appointmentId);
+        Interview interview = new Interview(interviewId);
         List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
-        Appointment appointment = httpRequestExecutor.getObjectByID(appointmentId, Appointment.class);
+        Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
 
         List<String> Users = appointment.getUserIdList();
 
         for (int i = 0; i < Users.size(); i++){
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(httpRequestExecutor.getObjectByID(Users.get(i), User.class));
+            userQuestionsBlock.setQuestionsBlockID(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

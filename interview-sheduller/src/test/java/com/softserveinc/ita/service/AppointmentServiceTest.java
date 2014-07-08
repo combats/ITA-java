@@ -37,8 +37,12 @@ public class AppointmentServiceTest extends BaseMVCTest {
 
         Applicant applicant1 = new Applicant("1", "Gena");
         Applicant applicant2 = new Applicant("2", "Gesha");
+        user1.setId("1");
+        user2.setId("2");
+        user3.setId("3");
 
         List<String> usersIdList = new ArrayList<String>(); {
+
             Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
         applicant1.setId("1");

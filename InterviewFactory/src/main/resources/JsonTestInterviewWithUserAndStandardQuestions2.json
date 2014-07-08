@@ -1,16 +1,20 @@
 {
     "InterviewId": "2",
-    "AppointmentId": "2",
     "AnswerBlocks": [
         {
+            "QuestionsBlockID": "Hz, standart vopros",
             "Questions": [
                 {
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "Hz, standart vopros",
                     "Question": "What is your name?",
                     "Answer": "",
                     "Mark": 0,
                     "Comment": ""
                 },
                 {
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "Hz, standart vopros",
                     "Question": "How are you?",
                     "Answer": "",
                     "Mark": 0,
@@ -23,16 +27,21 @@
         {
             "User": {
                 "Id": "1",
-                "Name": "IT Project Manager"
+                "Surname": "IT Project Manager"
             },
+            "QuestionsBlockID": "1",
             "Questions": [
                 {
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "1",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
                     "Comment": ""
                 },
                 {
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "1",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
@@ -45,16 +54,21 @@
         {
             "User": {
                 "Id": "2",
-                "Name": "Software Developer"
+                "Surname": "Software Developer"
             },
+            "QuestionsBlockID": "2",
             "Questions": [
                 {
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "2",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
                     "Comment": ""
                 },
                 {
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "2",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
@@ -67,16 +81,21 @@
         {
             "User": {
                 "Id": "3",
-                "Name": "HR Manager"
+                "Surname": "HR Manager"
             },
+            "QuestionsBlockID": "3",
             "Questions": [
                 {
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "3",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
                     "Comment": ""
                 },
                 {
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "3",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
@@ -86,7 +105,5 @@
             "FinalComment": "",
             "BonusPoints": 0
         }
-    ],
-    "FinalComment": "",
-    "TotalPoint": 0
+    ]
 }

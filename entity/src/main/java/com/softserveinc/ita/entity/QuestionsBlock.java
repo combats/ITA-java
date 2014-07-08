@@ -17,7 +17,10 @@ public class QuestionsBlock {
 
     @Expose
     User user;
-    private String QuestionsBlockID;
+    @Expose
+    private String questionsBlockID;
+    @Expose
+    private String interviewId;
     @Expose
     private List<QuestionInformation> questions = new ArrayList<>();
     @Expose
@@ -44,6 +47,14 @@ public class QuestionsBlock {
         return bonusPoints;
     }
 
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
+
     public void setQuestions(List<QuestionInformation> questions) {
         this.questions = questions;
     }
@@ -57,11 +68,11 @@ public class QuestionsBlock {
     }
 
     public String getQuestionsBlockID() {
-        return QuestionsBlockID;
+        return questionsBlockID;
     }
 
     public void setQuestionsBlockID(String questionsBlockID) {
-        QuestionsBlockID = questionsBlockID;
+        this.questionsBlockID = questionsBlockID;
     }
 
     public User getUser() {
@@ -76,7 +87,7 @@ public class QuestionsBlock {
         QuestionsBlock that = (QuestionsBlock) o;
 
         if (bonusPoints != that.bonusPoints) return false;
-        if (QuestionsBlockID != null ? !QuestionsBlockID.equals(that.QuestionsBlockID) : that.QuestionsBlockID != null)
+        if (questionsBlockID != null ? !questionsBlockID.equals(that.questionsBlockID) : that.questionsBlockID != null)
             return false;
         if (finalComment != null ? !finalComment.equals(that.finalComment) : that.finalComment != null) return false;
         if (questions != null ? !questions.equals(that.questions) : that.questions != null) return false;
@@ -88,7 +99,7 @@ public class QuestionsBlock {
     @Override
     public int hashCode() {
         int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + (QuestionsBlockID != null ? QuestionsBlockID.hashCode() : 0);
+        result = 31 * result + (questionsBlockID != null ? questionsBlockID.hashCode() : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (finalComment != null ? finalComment.hashCode() : 0);
         result = 31 * result + bonusPoints;
@@ -99,7 +110,7 @@ public class QuestionsBlock {
     public String toString() {
         return "QuestionsBlock{" +
                 "user=" + user +
-                ", QuestionsBlockID='" + QuestionsBlockID + '\'' +
+                ", QuestionsBlockID='" + questionsBlockID + '\'' +
                 ", questions=" + questions +
                 ", finalComment='" + finalComment + '\'' +
                 ", bonusPoints=" + bonusPoints +

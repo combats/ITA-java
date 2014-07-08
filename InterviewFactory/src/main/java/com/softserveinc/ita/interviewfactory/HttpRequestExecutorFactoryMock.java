@@ -48,6 +48,9 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
         Question question6 = new Question("Are you married?", 3);
         List<Question> questionsList1 = new ArrayList<>();
         Collections.addAll(questionsList1, question1, question2);
+        user1.setId("1");
+        user2.setId("2");
+        user3.setId("3");
         user1.setQuestions(questionsList1);
         List<Question> questionsList2 = new ArrayList<>();
         Collections.addAll(questionsList2, question3, question4);
@@ -68,6 +71,9 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
         Question question6 = new Question("Are you married?", 3);
         List<Question> questionsList1 = new ArrayList<>();
         Collections.addAll(questionsList1, question1, question2);
+        user1.setId("1");
+        user2.setId("2");
+        user3.setId("3");
         user1.setQuestions(questionsList1);
         List<Question> questionsList2 = new ArrayList<>();
         Collections.addAll(questionsList2, question3, question4);

@@ -4,6 +4,9 @@ import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
+import exceptions.InterviewNotFoundException;
+import exceptions.QuestionsBlockNotFound;
+import exceptions.WrongCriteriaException;
 import org.json.JSONException;
 import org.json.simple.parser.JSONParser;
 import org.junit.Test;
@@ -58,6 +61,9 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
         Question question6 = new Question("Are you married?", 3);
         List<Question> questionsList1 = new ArrayList<Question>();
         Collections.addAll(questionsList1, question1, question2);
+        user1.setId("1");
+        user2.setId("2");
+        user3.setId("3");
         user1.setQuestions(questionsList1);
         List<Question> questionsList2 = new ArrayList<Question>();
         Collections.addAll(questionsList2, question3, question4);
@@ -69,6 +75,8 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     List<String> appointmentIdList = new ArrayList<String>();{
+        applicant1.setId("1");
+        applicant2.setId("2");
         appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
         appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
@@ -78,13 +86,11 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithoutQuestions() throws IOException, ParseException, JSONException, HttpRequestException, org.json.simple.parser.ParseException {
+    public void testCreateInterviewWithoutQuestions() throws IOException, ParseException, JSONException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException, QuestionsBlockNotFound, InterviewNotFoundException {
     Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(0));
 
     Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(1));
-        interview1.setInterviewId("1");
-        interview2.setInterviewId("2");
-
+   //     System.out.println(interviewUtilJson.toJson(interview2));
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithoutQuestions1.json")));
@@ -104,12 +110,10 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException {
+    public void testCreateInterviewWithStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException, QuestionsBlockNotFound, InterviewNotFoundException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(1));
-        interview1.setInterviewId("1");
-        interview2.setInterviewId("2");
-
+//        System.out.println(interviewUtilJson.toJson(interview1));
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithStandardQuestions1.json")));
@@ -128,12 +132,11 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     }
 
     @Test
-    public void testCreateInterviewWithUserAndStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException {
+    public void testCreateInterviewWithUserAndStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException, QuestionsBlockNotFound, InterviewNotFoundException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
-        interview1.setInterviewId("1");
-        interview2.setInterviewId("2");
 
+ //       System.out.println(interviewUtilJson.toJson(interview1));
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
