@@ -20,7 +20,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="HttpRequestExecutor" class="com.softserveinc.ita.interviewfactory.HttpRequestExecutorFactoryMock" >
+    <bean id="httpRequestExecutor" class="com.softserveinc.ita.interviewfactory.HttpRequestExecutorFactoryMock" >
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
 
