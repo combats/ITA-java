@@ -90,7 +90,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(0));
 
     Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentIdList.get(1));
-   //     System.out.println(interviewUtilJson.toJson(interview2));
+
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithoutQuestions1.json")));
@@ -113,7 +113,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     public void testCreateInterviewWithStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException, QuestionsBlockNotFound, InterviewNotFoundException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentIdList.get(1));
-//        System.out.println(interviewUtilJson.toJson(interview1));
+
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithStandardQuestions1.json")));
@@ -136,7 +136,6 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(0));
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentIdList.get(1));
 
- //       System.out.println(interviewUtilJson.toJson(interview1));
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithUserAndStandardQuestions1.json")));

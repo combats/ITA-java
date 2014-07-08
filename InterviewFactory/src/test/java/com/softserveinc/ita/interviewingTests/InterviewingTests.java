@@ -101,14 +101,12 @@ public class InterviewingTests extends BaseInterviewingTests {
     public void testGetQuestionsBlockByUserIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
         String userId = "1";
         QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockByUserId(userId, appointmentIdList.get(1));
-      //  System.out.println(interviewUtilJson.toJson(questionsBlock));
         assertEquals(questionsBlock.getUser().getId(), userId);
     }
 
     @Test
     public void testGetStandardQuestionsBlockByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
         QuestionsBlock questionsBlock = questionsBlockServices.getStandardQuestionsBlockFromInterview(appointmentIdList.get(1));
-      //  System.out.println(interviewUtilJson.toJson(questionsBlock));
         assertEquals(questionsBlock.getUser(), null);
     }
 

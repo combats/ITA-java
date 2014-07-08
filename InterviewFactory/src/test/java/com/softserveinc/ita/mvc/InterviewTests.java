@@ -134,14 +134,6 @@ public class InterviewTests extends BaseMVCTest {
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-
-//        System.out.println(ExpectingObject.getResponse().getContentAsString());
-//        Interview interview = jsonUtil.fromJson(ExpectingObject.getResponse().getContentAsString(), Interview.class);
-//        interview.setInterviewId("1");
-//
-//        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-//        assertEquals(interview, expected);
-
       System.out.println(ExpectingObject.getResponse().getContentAsString());
     }
 
@@ -154,7 +146,6 @@ public class InterviewTests extends BaseMVCTest {
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andReturn();
-
         System.out.println(ExpectingObject.getResponse().getContentAsString());
     }
 

@@ -55,12 +55,10 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
                 questionInformation.setWeight(Questions.get(j).getWeight());
                 questionInformation.setQuestionInformationID(String.valueOf(j));//присваиваем айдишку вопросу, убрать когда будет база
                 questionInformation.setQuestionsBlockId(Users.get(i));//привсваиваем вопросу айдишку блока, убрать когда будет база
- //               questionsInformationServices.postQuestionInformation(questionInformation);//постим вопрос в мок, убрать когда будет база
                 userQuestionInformationList.add(questionInformation);
             }
             userQuestionsBlock.setQuestions(userQuestionInformationList);
             userQuestionsBlock.setQuestionsBlockID(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
-   //         questionsBlockServices.postQuestionsBlock(userQuestionsBlock); //постим блок вопросов в мок, убрать когда будет база
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

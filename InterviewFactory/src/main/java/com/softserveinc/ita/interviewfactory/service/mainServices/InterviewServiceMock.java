@@ -183,7 +183,7 @@ public class InterviewServiceMock implements InterviewService {
             interviewsList.add(interview2);
         }
 
-        while(true){
+
          for (int i = 0; i < interviewsList.size(); i++){
 
          if (interviewsList.get(i).getAppointmentId().equals(interviewId)){
@@ -192,7 +192,7 @@ public class InterviewServiceMock implements InterviewService {
              }
          }
          throw new InterviewNotFoundException("Wrong ID, interview not found");
-        }
+
     }
 
     @Override

@@ -108,30 +108,6 @@ public class Appointment implements Serializable {
         this.actualStartTime = actualStartTime;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Appointment)) return false;
-
-        Appointment that = (Appointment) o;
-
-        if (durationTime != that.durationTime) return false;
-        if (startTime != that.startTime) return false;
-        if (!applicantId.equals(that.applicantId)) return false;
-        if (!userIdList.equals(that.userIdList)) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = userIdList.hashCode();
-        result = 31 * result + applicantId.hashCode();
-        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-        result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
-        return result;
-    }
-
     public void dateValidation(long startTime, long durationTime) throws DateException {
 
         if (durationTime < 0) throw new DateException("Wrong duration time");
@@ -141,5 +117,46 @@ public class Appointment implements Serializable {
 
         long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
         if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Appointment)) return false;
+
+        Appointment that = (Appointment) o;
+
+        if (actualStartTime != that.actualStartTime) return false;
+        if (durationTime != that.durationTime) return false;
+        if (startTime != that.startTime) return false;
+        if (applicantId != null ? !applicantId.equals(that.applicantId) : that.applicantId != null) return false;
+        if (appointmentId != null ? !appointmentId.equals(that.appointmentId) : that.appointmentId != null)
+            return false;
+        if (userIdList != null ? !userIdList.equals(that.userIdList) : that.userIdList != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = appointmentId != null ? appointmentId.hashCode() : 0;
+        result = 31 * result + (userIdList != null ? userIdList.hashCode() : 0);
+        result = 31 * result + (applicantId != null ? applicantId.hashCode() : 0);
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
+        result = 31 * result + (int) (actualStartTime ^ (actualStartTime >>> 32));
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "appointmentId='" + appointmentId + '\'' +
+                ", userIdList=" + userIdList +
+                ", applicantId='" + applicantId + '\'' +
+                ", startTime=" + startTime +
+                ", durationTime=" + durationTime +
+                ", actualStartTime=" + actualStartTime +
+                '}';
     }
 }

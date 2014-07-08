@@ -60,7 +60,7 @@ public class UserTests extends BaseMVCTest {
     public void testDeleteUserByIDAndExpectedDeletedSuccessfully() throws Exception {
         String userID = new String("122");
 
-//        String goodResponse = jsonUtil.toJson(userID);
+        String goodResponse = jsonUtil.toJson(userID);
         mockMvc.perform(delete("/users" + "/" + userID))
                .andExpect(content().string(userID));
     }
@@ -139,7 +139,7 @@ public class UserTests extends BaseMVCTest {
                 put("/users").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
-        ).andExpect(content().string(jsonUser));
+       ).andExpect(content().string(jsonUser));
     }
     @Test
     public void testPostNewUserAndExpectIsCreated() throws Exception {
@@ -181,13 +181,11 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectPreDefinedList() throws Exception {
         List<User> sampleUserList = new ArrayList<>();
-        Set<Role> securityRoleCollection = null;
-        List<Question> questions = null;
-        User user1 = new User("", null, null, null, 0, null, null, false, null);
+        User user1 = new User();
         user1.setId("id3");
-        User user2 = new User("", null, null, null, 0, null, null, false, null);
+        User user2 = new User();
         user2.setId("idY");
-        User user3 = new User("", null, null, null, 0, null, null, false, null);
+        User user3 = new User();
         user3.setId("id09z");
         Collections.addAll(sampleUserList, user1, user2, user3);
         String expectedResult = jsonUtil.toJson(sampleUserList);

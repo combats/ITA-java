@@ -32,7 +32,7 @@ public class QuestionsBlockServicesMock implements QuestionsBlockServices {
 
     //Standard questions mock
 
-    QuestionsBlock standardQuestionsBlock = new QuestionsBlock();{
+    private QuestionsBlock standardQuestionsBlock = new QuestionsBlock();{
         QuestionInformation questionInformation1 = new QuestionInformation();
         questionInformation1.setQuestion("What is your name?");
         questionInformation1.setWeight(2);
@@ -53,21 +53,7 @@ public class QuestionsBlockServicesMock implements QuestionsBlockServices {
         standardQuestionsBlock.setQuestionsBlockID("Hz, standart vopros");
     }
 
-    List<QuestionsBlock> questionsBlocks = new ArrayList<>();
-
-//    @Override
-//    public QuestionsBlock postQuestionsBlock(QuestionsBlock questionsBlock) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
-//        questionsBlocks.add(questionsBlock);
-//        return getQuestionsBlockByQuestionsBlockId(questionsBlock.getQuestionsBlockID());
-//    }
-//
-//    @Override
-//    public void deleteQuestionsBlockById(String questionsBlockId) {
-//        for (int i = 0; i < questionsBlocks.size(); i++){
-//            if (questionsBlocks.get(i).getQuestionsBlockID().equals(questionsBlockId))
-//                questionsBlocks.remove(i);
-//        }
-//    }
+    private List<QuestionsBlock> questionsBlocks = new ArrayList<>();
 
     @Override
     public QuestionsBlock getQuestionsBlockByUserId(String userID, String appointmentId) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException {
