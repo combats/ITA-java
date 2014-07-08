@@ -9,6 +9,7 @@ private String applicantId;
 private long startTime;
 private long durationTime;
 private long actualStartTime;
+private String groupId;
 
 
 ```
@@ -62,3 +63,10 @@ resource path: ```/appointments/```
     - updates exists appointment
 
 #Jul.7.2014
+
+resource path: ```/appointments/date/{date}```
+
+    method:  GET -
+
+     public String getAppointmentIdByGroupIdAndApplicantId(@PathVariable String groupId, @PathVariable String applicantId)
+     - returns id of appointment that include particular group and applicant

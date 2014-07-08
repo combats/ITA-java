@@ -45,6 +45,9 @@ public class Appointment implements Serializable {
     @Column(name = "ActualStartTime")
     private long actualStartTime = DEFAULT_ACTUAL_START_TIME;
 
+    @Column(name = "GroupId")
+    private String groupId;
+
     public Appointment() {}
 
     public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
@@ -108,6 +111,14 @@ public class Appointment implements Serializable {
         this.actualStartTime = actualStartTime;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
     public void dateValidation(long startTime, long durationTime) throws DateException {
 
         if (durationTime < 0) throw new DateException("Wrong duration time");
@@ -159,4 +170,6 @@ public class Appointment implements Serializable {
                 ", actualStartTime=" + actualStartTime +
                 '}';
     }
+
+    
 }

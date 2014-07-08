@@ -2,7 +2,9 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -26,6 +28,7 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
         return (String) sessionFactory.getCurrentSession().save(appointment);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public List<Appointment> getAppointmentByApplicantId(String applicantId) {
         return (List<Appointment>) sessionFactory.getCurrentSession().createCriteria(Appointment.class)
@@ -43,5 +46,12 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
     @Override
     public void updateAppointment(Appointment appointment) {
         sessionFactory.getCurrentSession().update(appointment);
+    }
+
+    @Override
+    public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Appointment.class)
+                .setProjection(Projections.projectionList().add(Projections.property("GroupId"), groupId).add(Projections.property("ApplicantId"), applicantId));
+        return (String) criteria.setProjection(Projections.property("id")).uniqueResult();
     }
 }

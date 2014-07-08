@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 public class AppointmentServiceTest extends BaseMVCTest {
@@ -71,7 +72,6 @@ public class AppointmentServiceTest extends BaseMVCTest {
         assertEquals(expectedTwo, actual.get(0));
     }
 
-
     @Test
     public void testGetAppointmentByDateAndExpectAppointmentWithValidDate() {
         final int SAME_VALUE_BY_COMPARE = 1;
@@ -92,5 +92,12 @@ public class AppointmentServiceTest extends BaseMVCTest {
     @Test
     public void testUpdateAppointment() {
         service.updateAppointment(expectedTwo);
+    }
+
+    @Test
+    public void testGetAppointmentIdByGroupIdAndApplicantId() {
+        String expectedId = "TestAppointmentId";
+        String actualId = service.getAppointmentIdByGroupIdAndApplicantId("TestGroupId", "TestApplicantId");
+        assertThat(expectedId, equalTo(actualId));
     }
 }

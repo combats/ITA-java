@@ -269,4 +269,12 @@ public class AppointmentTests extends BaseMVCTest {
         )
                 .andExpect(status().is(204));
     }
+
+    @Test
+    public void testGetAppointmentIdByGroupIdAndApplicantIdAndExpectOkWithActualResponse() throws Exception {
+        String expectedId = "TestAppointmentId";
+        mockMvc.perform(get("/appointments/groups/TestGroupId/applicants/TestApplicantId"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(expectedId));
+    }
 }

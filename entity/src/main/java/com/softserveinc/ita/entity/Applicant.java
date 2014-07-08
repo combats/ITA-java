@@ -50,36 +50,36 @@ public class Applicant implements Serializable {
         return id;
     }
 
+    public void setId(String applicantId) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getSurname() {
+        return surname;
+    }
+
     public void setSurname(String surname) {
         this.surname = surname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getGroupId() {
+        return groupId;
     }
 
     public void setGroupId(String groupId) {
@@ -93,9 +93,10 @@ public class Applicant implements Serializable {
 
         Applicant applicant = (Applicant) o;
 
+        if (id != null ? !id.equals(applicant.id) : applicant.id != null)
+            return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
         if (groupId != null ? !groupId.equals(applicant.groupId) : applicant.groupId != null) return false;
-        if (id != null ? !id.equals(applicant.id) : applicant.id != null) return false;
         if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
         if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
@@ -115,7 +116,8 @@ public class Applicant implements Serializable {
     @Override
     public String toString() {
         return "Applicant{" +
-                "id='" + id + '\'' +
+//                "version=" + version +
+                ", applicantId='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +

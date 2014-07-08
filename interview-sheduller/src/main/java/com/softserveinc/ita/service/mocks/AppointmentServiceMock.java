@@ -145,5 +145,18 @@ public class AppointmentServiceMock implements AppointmentService {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentId("TestAppointmentId");
+        appointment.setGroupId("TestGroupId");
+        appointment.setApplicantId("TestApplicantId");
+        if (appointment.getGroupId().equals(groupId) && appointment.getApplicantId().equals(applicantId)) {
+            return appointment.getAppointmentId();
+        } else {
+            return "NotSuchAppointment";
+        }
+    }
 }
 

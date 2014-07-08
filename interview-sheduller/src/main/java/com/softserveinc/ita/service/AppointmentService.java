@@ -16,4 +16,6 @@ public interface AppointmentService {
     Appointment getAppointmentByAppointmentId(String appointmentId) throws AppointmentNotFoundException;
 
     void updateAppointment(Appointment appointment);
+
+    String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId);
 }
