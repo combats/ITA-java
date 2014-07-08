@@ -16,8 +16,6 @@ import static junit.framework.Assert.assertEquals;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:dao-test-context.xml"})
 public class UserDAOTests extends BaseDAOTest {
 
     @Autowired
