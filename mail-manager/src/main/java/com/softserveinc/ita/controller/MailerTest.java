@@ -11,7 +11,7 @@ import javax.mail.MessagingException;
 public class MailerTest {
 
     public static void main(String[] args) throws MessagingException {
-        ApplicationContext context = new FileSystemXmlApplicationContext("classpath:spring-config.xml");
+        ApplicationContext context = new FileSystemXmlApplicationContext("classpath:manager-spring-config.xml");
         MailService mailer = (MailService) context.getBean("mailService");
         mailer.sendMail();
     }

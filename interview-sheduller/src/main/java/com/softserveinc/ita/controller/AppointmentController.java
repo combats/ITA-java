@@ -17,13 +17,12 @@ import java.util.List;
 @Controller
 @RequestMapping("/appointments")
 public class AppointmentController {
+
     @Autowired
-    @Qualifier("validator")
     private Validator appointmentValidator;
+
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private JsonUtil jsonUtil;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
