@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.*;
 
 public class AppointmentServiceTest extends BaseMVCTest {
@@ -67,11 +68,17 @@ public class AppointmentServiceTest extends BaseMVCTest {
         DateTimeComparator dateTimeComparator = DateTimeComparator.getDateOnlyInstance();
 
         assertEquals(dateTimeComparator.compare(toDay, actualDate), SAME_VALUE_BY_COMPARE);
-
     }
 
     @Test
     public void testUpdateAppointment() {
         service.updateAppointment(expectedTwo);
+    }
+
+    @Test
+    public void testGetAppointmentIdByGroupIdAndApplicantId() {
+        String expectedId = "TestAppointmentId";
+        String actualId = service.getAppointmentIdByGroupIdAndApplicantId("TestGroupId", "TestApplicantId");
+        assertThat(expectedId, equalTo(actualId));
     }
 }

@@ -78,6 +78,9 @@ public class UserDAOTests extends BaseDAOTest {
         session.save(expectedTwo);
         session.save(expectedThree);
         List<String> allUsersId = userDAO.getAllUsersId();
+        for (String s : allUsersId) {
+            System.err.println(s);
+        }
         int actual = allUsersId.size();
         assertEquals(3, actual);
     }
