@@ -1,6 +1,8 @@
 package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.controller.UserController;
+import com.softserveinc.ita.entity.Question;
+import com.softserveinc.ita.entity.Role;
 import com.softserveinc.ita.entity.User;
 
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
@@ -22,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -178,7 +181,15 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectPreDefinedList() throws Exception {
         List<User> sampleUserList = new ArrayList<>();
-        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
+        Set<Role> securityRoleCollection = null;
+        List<Question> questions = null;
+        User user1 = new User("", null, null, null, 0, null, null, false, null);
+        user1.setId("id3");
+        User user2 = new User("", null, null, null, 0, null, null, false, null);
+        user2.setId("idY");
+        User user3 = new User("", null, null, null, 0, null, null, false, null);
+        user3.setId("id09z");
+        Collections.addAll(sampleUserList, user1, user2, user3);
         String expectedResult = jsonUtil.toJson(sampleUserList);
         mockMvc.perform(
                 get("/users"))

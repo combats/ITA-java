@@ -49,11 +49,11 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
             List<QuestionInformation> userQuestionInformationList = new ArrayList<QuestionInformation>();
             List<Question> Questions = user.getQuestions();
 
-            for (int i1 = 0; i1 < Questions.size(); i1++){
+            for (int j = 0; j < Questions.size(); j++){
                 QuestionInformation questionInformation = new QuestionInformation();
-                questionInformation.setQuestion(Questions.get(i1).getQuestionBody());
-                questionInformation.setWeight(Questions.get(i1).getWeight());
-                questionInformation.setQuestionInformationID(String.valueOf(i1));//присваиваем айдишку вопросу, убрать когда будет база
+                questionInformation.setQuestion(Questions.get(j).getQuestionBody());
+                questionInformation.setWeight(Questions.get(j).getWeight());
+                questionInformation.setQuestionInformationID(String.valueOf(j));//присваиваем айдишку вопросу, убрать когда будет база
                 questionInformation.setQuestionsBlockId(Users.get(i));//привсваиваем вопросу айдишку блока, убрать когда будет база
  //               questionsInformationServices.postQuestionInformation(questionInformation);//постим вопрос в мок, убрать когда будет база
                 userQuestionInformationList.add(questionInformation);

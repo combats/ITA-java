@@ -45,7 +45,12 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    private List<Question> questions = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UserQuestions", joinColumns = {
+            @JoinColumn(name = "UserId", referencedColumnName = "Id") }, inverseJoinColumns = {
+            @JoinColumn(name = "QuestionId", referencedColumnName = "Id") })
+
+    private List<Question> questions;
 
     public User() {
     }
@@ -62,6 +67,18 @@ public class User implements Serializable {
         this.id = userID;
         this.name = name;
         this.age = age;
+    }
+
+    public User(String name, String surname, String phone, String email, int age, String password, Set<Role> securityRoleCollection, boolean active, List<Question> questions) {
+        this.name = name;
+        this.surname = surname;
+        this.phone = phone;
+        this.email = email;
+        this.age = age;
+        this.password = password;
+        this.securityRoleCollection = securityRoleCollection;
+        this.active = active;
+        this.questions = questions;
     }
 
     public String getId() {
