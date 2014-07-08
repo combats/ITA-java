@@ -4,7 +4,6 @@ import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -44,42 +43,40 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-    @Autowired
-    private ApplicantService applicantService;
-
-    @Autowired
-    private AppointmentService appointmentService;
+//    @Autowired
+//    private ApplicantService applicantService;
 
     private MimeMessageHelper helper;
     private MimeMessage mimeMessage;
 
-    public void notifyApplicant() throws ApplicantDoesNotExistException {
-        mimeMessage = mailSender.createMimeMessage();
-        try {
-            helper = new MimeMessageHelper(mimeMessage, true);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        // TODO get applicant id from queue
-        String appointmentId = "testAppointmentId";
-        Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
-        String applicantId = appointment.getApplicantId();
-        Applicant applicant = applicantService.getApplicantById(applicantId);
-        switch (applicant.getStatus()) {
-            case NOT_SCHEDULED:
-                createSchedulingLetterModel(applicant, appointment);
-                break;
-            case NOT_PASSED:
-                createFailedLetterModel(applicant);
-                break;
-            case PASSED:
-                createPassedLetterModel(applicant, appointment);
-                break;
-        }
-    }
+//    public void notifyApplicant() throws ApplicantDoesNotExistException {
+//        mimeMessage = mailSender.createMimeMessage();
+//        try {
+//            helper = new MimeMessageHelper(mimeMessage, true);
+//        } catch (MessagingException e) {
+//            e.printStackTrace();
+//        }
+//        // TODO get applicant id from queue
+//        String appointmentId = "testAppointmentId";
+//        Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
+//        String applicantId = appointment.getApplicantId();
+//        Applicant applicant = applicantService.getApplicantById(applicantId);
+//        switch (applicant.getStatus()) {
+//            case NOT_SCHEDULED:
+//                createSchedulingLetterModel(applicant, appointment);
+//                break;
+//            case NOT_PASSED:
+//                createFailedLetterModel(applicant);
+//                break;
+//            case PASSED:
+//                createPassedLetterModel(applicant, appointment);
+//                break;
+//        }
+//    }
 
     private void createPassedLetterModel(Applicant applicant, Appointment appointment) {
-        Map<String, String> model = new HashMap<>();
+
+        Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         Group applicantGroup = appointment.getGroup();
@@ -96,7 +93,7 @@ public class MailService {
     public void sendMail() throws MessagingException {
         mimeMessage = mailSender.createMimeMessage();
         helper = new MimeMessageHelper(mimeMessage, true);
-        Map<String, String> model = new HashMap<String, String>();
+        Map<String, Object> model = new HashMap<String, Object>();
         model.put("name", "andrey");
         model.put("surname", "Braslavskiy");
         model.put("time", "11:00");
@@ -104,8 +101,10 @@ public class MailService {
         model.put("assistantName", "Lena");
         model.put("assistantSurname", "Golovach");
         model.put("assistantPhone", "0663459412");
-        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, "mailTemplaits/interviewInvitation.vm", model);
+//        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
+//                velocityEngine, "mailTemplaits/interviewInvitation.vm", model);
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "mailTemplaits/interviewInvitation.vm","UTF-8",model);
         helper.setFrom("javasendertest@gmail.com");
         helper.setTo("braslavskiyandrey@gmail.com");
         helper.setText(emailText,true);
@@ -115,7 +114,7 @@ public class MailService {
     }
 
     private void createFailedLetterModel(Applicant applicant) {
-        Map<String, String> model = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         sendLetter(applicant,model);
@@ -124,7 +123,7 @@ public class MailService {
 
 
     private void createSchedulingLetterModel(Applicant applicant, Appointment appointment) {
-        Map<String, String> model = new HashMap<>();
+        Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         model.put(TIME, convertTimeToDate(appointment.getStartTime()));
@@ -137,9 +136,11 @@ public class MailService {
     }
 
 
-    private void sendLetter(Applicant applicant, Map<String,String> letterModel){
-        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
-                velocityEngine, applicant.getStatus().getTemplateRef(), letterModel);
+    private void sendLetter(Applicant applicant, Map<String,Object> letterModel){
+//        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
+//                velocityEngine, applicant.getStatus().getTemplateRef(), letterModel);
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "applicant.getStatus().getTemplateRef()","UTF-8",letterModel);
         try {
             helper.setFrom(FROM);
             helper.setTo(applicant.getEmail());

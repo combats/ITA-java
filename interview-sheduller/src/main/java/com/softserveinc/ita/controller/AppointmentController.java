@@ -19,6 +19,7 @@ import java.util.List;
 public class AppointmentController {
 
     @Autowired
+    @Qualifier("validator")
     private Validator appointmentValidator;
 
     @Autowired

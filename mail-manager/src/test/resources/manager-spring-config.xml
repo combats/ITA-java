@@ -39,6 +39,6 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
         </property>
     </bean>
 
-    <bean id="appointmentServiceMock" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>
-    <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
+    <!--<bean id="appointmentServiceMock" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>-->
+    <!--<bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>-->
 </beans>

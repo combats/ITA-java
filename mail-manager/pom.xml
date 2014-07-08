@@ -51,6 +51,11 @@
             <artifactId>velocity</artifactId>
             <version>1.6.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>3.2.4.RELEASE</version>
+        </dependency>
         <!--Common-->
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
@@ -64,19 +69,19 @@
         </dependency>
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
-            <artifactId>applicant-manager</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.softserveinc.ita</groupId>
-            <artifactId>interview-sheduller</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.softserveinc.ita</groupId>
             <artifactId>group-manager</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.softserveinc.ita</groupId>
+            <artifactId>applicant-manager</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.softserveinc.ita</groupId>-->
+            <!--<artifactId>user-manager</artifactId>-->
+            <!--<version>1.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
     </dependencies>
 
     <build>
