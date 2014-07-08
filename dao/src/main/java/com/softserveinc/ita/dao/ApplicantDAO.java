@@ -11,8 +11,6 @@ public interface ApplicantDAO {
 
     List<Applicant> getApplicants();
 
-    List<Applicant> getApplicantsInAGroup(String groupID);
-
     Applicant getApplicantById(String applicantId);
 
     Applicant addNewApplicant(Applicant applicant);

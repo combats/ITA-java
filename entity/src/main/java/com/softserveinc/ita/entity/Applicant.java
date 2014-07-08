@@ -23,17 +23,15 @@ public class Applicant implements Serializable {
     private String surname;
     @Column(name = "Email")
     private String email;
-    @Column(name = "GroupId")
-    private String groupId;
 
     public Applicant() {}
 
     public Applicant(String applicantId) {
         this.name = applicantId;
     }
-    public Applicant(String name, String groupId) {
+    public Applicant(String name, String surname) {
         this.name = name;
-        this.groupId = groupId;
+        this.surname = surname;
     }
 
 
@@ -69,14 +67,6 @@ public class Applicant implements Serializable {
         this.email = email;
     }
 
-    public String getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(String groupId) {
-        this.groupId = groupId;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,7 +77,6 @@ public class Applicant implements Serializable {
         if (id != null ? !id.equals(applicant.id) : applicant.id != null)
             return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
-        if (groupId != null ? !groupId.equals(applicant.groupId) : applicant.groupId != null) return false;
         if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
         if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
@@ -100,7 +89,6 @@ public class Applicant implements Serializable {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         return result;
     }
 
@@ -112,7 +100,6 @@ public class Applicant implements Serializable {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
-                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }

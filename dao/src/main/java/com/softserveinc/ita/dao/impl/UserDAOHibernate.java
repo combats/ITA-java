@@ -4,10 +4,10 @@ import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,12 +25,8 @@ public class UserDAOHibernate implements UserDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<String> getAllUsersId() {
-        List<String> allUsersId = new ArrayList<>();
-        List<User> users = (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class).list();
-        for (User u : users) {
-            allUsersId.add(u.getId());
-        }
-        return allUsersId;
+        return (List<String>) sessionFactory.getCurrentSession().createCriteria(User.class)
+                .setProjection(Projections.projectionList().add(Projections.property("id"))).list();
     }
 
     @Override

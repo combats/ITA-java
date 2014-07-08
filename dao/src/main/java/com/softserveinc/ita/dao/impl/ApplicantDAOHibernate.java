@@ -5,7 +5,6 @@ import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -22,14 +21,6 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
     public List<Applicant> getApplicants() {
         List<Applicant> allApplicants = (List<Applicant>) sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
         return allApplicants;
-    }
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Applicant> getApplicantsInAGroup(String groupId) {
-        Session session = sessionFactory.getCurrentSession();
-        return (List<Applicant>) session.createCriteria(Applicant.class)
-                .add(Restrictions.eq("groupId", groupId)).list();
     }
 
     @Override

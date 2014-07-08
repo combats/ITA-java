@@ -22,29 +22,18 @@ public class ApplicantDAOTests extends BaseDAOTest {
     @Test
     public void testGetApplicants() {
         Session session = sessionFactory.getCurrentSession();
-        session.save(new Applicant("TestApplicantOne", "Group"));
-        session.save(new Applicant("TestApplicantTwo", "Group"));
-        session.save(new Applicant("TestApplicantThree", "Group"));
+        session.save(new Applicant("TestApplicantOne", "Surname"));
+        session.save(new Applicant("TestApplicantTwo", "Surname"));
+        session.save(new Applicant("TestApplicantThree", "Surname"));
         List<Applicant> applicants = applicantDAO.getApplicants();
         int actualSize = applicants.size();
         assertEquals(3, actualSize);
     }
 
     @Test
-    public void testGetApplicantsInAGroup() {
-        Session session = sessionFactory.getCurrentSession();
-        session.save(new Applicant("TestApplicant", "Group1"));
-        session.save(new Applicant("TestApplicant", "Group1"));
-        session.save(new Applicant("TestApplicant", "Group2"));
-        session.flush();
-        List<Applicant> inAGroup = applicantDAO.getApplicantsInAGroup("Group1");
-        assertThat(2, equalTo(inAGroup.size()));
-    }
-
-    @Test
     public void testGetApplicantById() {
         Session session = sessionFactory.getCurrentSession();
-        Applicant expected = new Applicant("TestApplicant", "Group");
+        Applicant expected = new Applicant("TestApplicant", "Surname");
         String applicantId = (String) session.save(expected);
         Applicant actual = applicantDAO.getApplicantById(applicantId);
         assertThat(expected, equalTo(actual));
@@ -52,14 +41,14 @@ public class ApplicantDAOTests extends BaseDAOTest {
 
     @Test
     public void testAddNewApplicant() {
-        Applicant expected = new Applicant("TestApplicant", "Group");
+        Applicant expected = new Applicant("TestApplicant", "Surname");
         Applicant actual = applicantDAO.addNewApplicant(expected);
         assertThat(expected, equalTo(actual));
     }
 
     @Test
     public void testEditApplicant() {
-        Applicant expected = new Applicant("ExpectedApplicant", "Group");
+        Applicant expected = new Applicant("ExpectedApplicant", "Surname");
         sessionFactory.getCurrentSession().save(expected);
         expected.setName("Actual");
         Applicant actual = applicantDAO.editApplicant(expected);

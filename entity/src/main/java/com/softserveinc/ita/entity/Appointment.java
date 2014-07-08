@@ -41,6 +41,9 @@ public class Appointment implements Serializable {
     @Column(name = "ActualStartTime")
     private long actualStartTime = DEFAULT_ACTUAL_START_TIME;
 
+    @Column(name = "GroupId")
+    private String groupId;
+
     public Appointment() {}
 
     public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
@@ -102,6 +105,14 @@ public class Appointment implements Serializable {
 
     public void setActualStartTime(long actualStartTime) {
         this.actualStartTime = actualStartTime;
+    }
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     @Override
