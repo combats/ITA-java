@@ -38,7 +38,7 @@ public class Group implements Serializable{
     private String groupID;
 
     @ElementCollection
-    @CollectionTable(name = "Applicant", joinColumns = @JoinColumn(name = "Id"))
+    @CollectionTable(name = "ApplicantsInGroup", joinColumns = @JoinColumn(name = "Id"))
     private List<Applicant> applicantsInGroup = new ArrayList<>();
     private String groupName;
     private Status groupStatus;

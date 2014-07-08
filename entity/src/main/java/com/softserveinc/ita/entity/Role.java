@@ -3,11 +3,14 @@ package com.softserveinc.ita.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Table(name = "Roles")
-public class Role {
+public class Role implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -15,13 +18,23 @@ public class Role {
     @Column(name = "Id", unique = true)
     private String id;
 
+    @Column(name = "Role")
     private String role;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "UserRoles",
-    joinColumns = {@JoinColumn(name = "RoleId", referencedColumnName = "Id")},
-    inverseJoinColumns = {@JoinColumn(name = "UserId", referencedColumnName = "Id")})
-    private Set<User> userRoles;
+    @ManyToMany(mappedBy = "securityRoleCollection")
+    private Collection<User> userCollection;
+
+    public Role() {}
+
+    public Role(String role) {this.role = role;}
+
+    public Collection<User> getUserCollection() {
+        return userCollection;
+    }
+
+    public void setUserCollection(Collection<User> userCollection) {
+        this.userCollection = userCollection;
+    }
 
     public String getId() {
         return id;
@@ -39,13 +52,6 @@ public class Role {
         this.role = role;
     }
 
-    public Set<User> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(Set<User> userRoles) {
-        this.userRoles = userRoles;
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -56,7 +62,6 @@ public class Role {
 
         if (id != null ? !id.equals(role1.id) : role1.id != null) return false;
         if (role != null ? !role.equals(role1.role) : role1.role != null) return false;
-        if (userRoles != null ? !userRoles.equals(role1.userRoles) : role1.userRoles != null) return false;
 
         return true;
     }
@@ -65,7 +70,6 @@ public class Role {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (userRoles != null ? userRoles.hashCode() : 0);
         return result;
     }
 
@@ -74,7 +78,6 @@ public class Role {
         return "Role{" +
                 "id='" + id + '\'' +
                 ", role='" + role + '\'' +
-                ", userRoles=" + userRoles +
                 '}';
     }
 }
