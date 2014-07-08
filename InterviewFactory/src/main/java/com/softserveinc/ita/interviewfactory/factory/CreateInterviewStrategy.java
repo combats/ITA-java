@@ -16,5 +16,5 @@ import exceptions.WrongCriteriaException;
  */
 public interface CreateInterviewStrategy {
 
-    public Interview create(String interviewId) throws HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, InterviewNotFoundException;
+    public Interview create(String interviewId) throws HttpRequestException;
 }

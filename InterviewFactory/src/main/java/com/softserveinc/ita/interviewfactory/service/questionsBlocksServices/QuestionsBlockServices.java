@@ -15,11 +15,9 @@ import exceptions.WrongCriteriaException;
  */
 public interface QuestionsBlockServices {
 
-//    QuestionsBlock postQuestionsBlock(QuestionsBlock questionsBlock) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
-//    void deleteQuestionsBlockById(String questionsBlockId);
     QuestionsBlock getQuestionsBlockByUserId(String userID, String appointmentId) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException;
-    QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException;
-    QuestionsBlock updateQuestionsBlock(QuestionsBlock newQuestionsBlock) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException;
+    QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId) throws QuestionsBlockNotFound ;
+    QuestionsBlock updateQuestionsBlock(QuestionsBlock newQuestionsBlock) throws QuestionsBlockNotFound;
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
 
     QuestionsBlock getStandardQuestionsBlock();

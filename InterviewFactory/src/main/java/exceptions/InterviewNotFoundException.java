@@ -8,8 +8,6 @@ package exceptions;
  * To change this template use File | Settings | File Templates.
  */
 public class InterviewNotFoundException extends InterviewException {
-    public InterviewNotFoundException() {
-    }
 
     public InterviewNotFoundException(String message) {
         super(message);

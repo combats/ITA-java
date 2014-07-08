@@ -61,33 +61,29 @@ public class QuestionsBlockServicesMock implements QuestionsBlockServices {
         questionsBlocks = interviewService.getInterviewByAppointmentID(appointmentId).getQuestionsBlocks();
 
         for (QuestionsBlock questionsBlock1 : questionsBlocks){
-            try{
-            if (questionsBlock1.getUser().getId().equals(userID)) return questionsBlock1;
-            }
-            catch(NullPointerException e){}
-
+            if (questionsBlock1.getUser() != null && questionsBlock1.getUser().getId().equals(userID))
+            return questionsBlock1;
         }
         throw new QuestionsBlockNotFound("Wrong userID or appointmentId");
     }
 
     @Override
-    public QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException {
+    public QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId) throws QuestionsBlockNotFound {
 
         for (QuestionsBlock questionsBlock1 : questionsBlocks){
             if (questionsBlock1.getQuestionsBlockID().equals(questionsBlockId))
                 return questionsBlock1;
         }
-
         throw new QuestionsBlockNotFound("Wrong userID");
     }
 
     @Override
-    public QuestionsBlock updateQuestionsBlock(QuestionsBlock newQuestionsBlock) throws QuestionsBlockNotFound, InterviewNotFoundException, HttpRequestException, WrongCriteriaException {
+    public QuestionsBlock updateQuestionsBlock(QuestionsBlock newQuestionsBlock) throws QuestionsBlockNotFound {
 
         for (int i = 0; i < questionsBlocks.size(); i++){
             if (questionsBlocks.get(i).getQuestionsBlockID().equals(newQuestionsBlock.getQuestionsBlockID()))
                 questionsBlocks.add(i, newQuestionsBlock);
-            return questionsBlocks.get(i);
+                return questionsBlocks.get(i);
         }
         throw new QuestionsBlockNotFound("Wrong Id");
     }
@@ -108,12 +104,8 @@ public class QuestionsBlockServicesMock implements QuestionsBlockServices {
         questionsBlocks = interviewService.getInterviewByAppointmentID(appointmentId).getQuestionsBlocks();
 
         for (QuestionsBlock questionsBlock1 : questionsBlocks){
-            try{
-                questionsBlock1.getUser().getId();
-            }
-            catch(NullPointerException e){
+            if(questionsBlock1.getUser() == null)
                 return questionsBlock1;
-            }
         }
         throw new QuestionsBlockNotFound("Wrong userID or appointmentId");
     }

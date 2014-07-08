@@ -108,7 +108,7 @@ public class QuestionsInformationServicesMock implements QuestionsInformationSer
     }
 
     @Override
-    public QuestionInformation getQuestionInformationById(String questionsInformationId) throws QuestionNotFoundException, InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public QuestionInformation getQuestionInformationById(String questionsInformationId) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
         //-----------mock--------------
         questionInformationList =
                 interviewService.getInterviewByAppointmentID("1").getQuestionsBlocks().get(1).getQuestions();

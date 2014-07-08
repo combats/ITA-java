@@ -36,9 +36,6 @@ public class InterviewingTests extends BaseInterviewingTests {
     private JsonUtil interviewUtilJson;
 
     @Autowired
-    private JsonUtil  jsonUtilJaxson;
-
-    @Autowired
     private QuestionsBlockServices questionsBlockServices;
 
     @Autowired
@@ -48,8 +45,6 @@ public class InterviewingTests extends BaseInterviewingTests {
 
     private long startTime = 1403308782454L;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
-
-    JSONParser parser = new JSONParser();
 
     Appointment appointment1;
     Appointment appointment2;

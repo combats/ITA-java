@@ -20,7 +20,7 @@ public interface QuestionsInformationServices {
 
     QuestionInformation postQuestionInformation(QuestionInformation questionInformation);
     void deleteQuestionInformationById(String questionsInformationId);
-    QuestionInformation editQuestionInformation(QuestionInformation questionInformation) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException;
+    QuestionInformation editQuestionInformation(QuestionInformation questionInformation) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException ;
     QuestionInformation getQuestionInformationById(String questionsInformationId) throws QuestionNotFoundException, InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
 
 }

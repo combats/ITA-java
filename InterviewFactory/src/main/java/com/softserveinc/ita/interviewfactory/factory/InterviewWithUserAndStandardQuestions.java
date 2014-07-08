@@ -34,7 +34,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
     QuestionsInformationServices questionsInformationServices;
 
     @Override
-    public Interview create(String interviewId) throws HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, InterviewNotFoundException {
+    public Interview create(String interviewId) throws HttpRequestException {
         Interview interview = new Interview(interviewId);
         List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
 

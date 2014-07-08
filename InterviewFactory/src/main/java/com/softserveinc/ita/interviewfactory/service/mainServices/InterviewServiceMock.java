@@ -88,7 +88,7 @@ public class InterviewServiceMock implements InterviewService {
     //-------------VadimNaumenko mock from tests
 
     @Override
-    public Interview putInterview(String appointmentID, String type) throws WrongCriteriaException, HttpRequestException, QuestionsBlockNotFound, InterviewNotFoundException {
+    public Interview putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -123,7 +123,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public List<Interview> getInterviewByApplicantID(String ID) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException, InterviewNotFoundException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -147,8 +147,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public Interview getInterviewByAppointmentID(String interviewId)
-            throws InterviewNotFoundException, WrongCriteriaException, HttpRequestException, QuestionsBlockNotFound {
+    public Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -173,7 +172,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public void removeInterviewByAppointmentId(String interviewId) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException, InterviewNotFoundException {
 
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
@@ -196,7 +195,7 @@ public class InterviewServiceMock implements InterviewService {
     }
 
     @Override
-    public Interview setInterview(Interview interview) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public Interview updateInterview(Interview interview) throws HttpRequestException, InterviewNotFoundException {
         List<Interview> interviewsList = new ArrayList<Interview>(); {
 
             Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointment1.getAppointmentId());

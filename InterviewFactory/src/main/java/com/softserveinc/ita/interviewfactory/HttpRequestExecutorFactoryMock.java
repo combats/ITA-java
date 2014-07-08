@@ -99,7 +99,6 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     }
     //-------------VadimNaumenko mock from tests
 
-    private final int STATUS_CODE_OK = 200;
     private final RestTemplate restTemplate;
     private final String baseUrl;
 
@@ -143,12 +142,5 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     public String getBaseUrl() {
         return baseUrl;
     }
-
-    private String printException(HttpStatusCodeException ex){
-        return   "\nStatus text : " + ex.getStatusText()+
-                "\nStatus code : "  +ex.getStatusCode() +
-                "\nResponse body : " +  ex.getResponseBodyAsString();
-    }
-
 
 }
