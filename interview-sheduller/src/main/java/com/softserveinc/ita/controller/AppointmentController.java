@@ -1,7 +1,6 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.exceptions.AppointmentNotFoundException;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +32,7 @@ public class AppointmentController {
 
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) throws AppointmentNotFoundException {
+    public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 
@@ -41,7 +40,8 @@ public class AppointmentController {
     public void removeAppointmentById(@PathVariable String appointmentId) {
         appointmentService.removeAppointmentById(appointmentId);
     }
- 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+
+    @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public
     @ResponseBody
@@ -53,9 +53,9 @@ public class AppointmentController {
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId)  throws AppointmentNotFoundException {
+    public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
 
-       return appointmentService.getAppointmentByAppointmentId(appointmentId);
+        return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 
     @RequestMapping(value = "/date/{date}", method = RequestMethod.GET, produces = "application/json")

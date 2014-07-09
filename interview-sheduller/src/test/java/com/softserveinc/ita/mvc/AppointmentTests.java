@@ -2,7 +2,6 @@ package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.entity.exceptions.DateException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.joda.time.DateTime;
@@ -24,7 +23,6 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
@@ -121,21 +119,19 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithFirstAppointmentFromList() throws Exception {
 
-        String applicantId = "1";
-        String appointmentId = "1";
+        String applicantId = "testApplicantId";
+        String appointmentId = "testAppointmentId";
 
         List<String> users = new ArrayList<>();
-        users.add("1");
-        users.add("2");
-        users.add("3");
-        Appointment appointment = new Appointment(users, applicantId, 1403308782454L);
+        users.add("testUserId");
+        Appointment appointment = new Appointment(users, applicantId, 1401866602L + TOMORROW);
         appointment.setAppointmentId(appointmentId);
         List<Appointment> result = new ArrayList<>();
         result.add(appointment);
         String appointmentJson = jsonUtil.toJson(result);
 
         mockMvc.perform(
-                get("/appointments/applicants/1")
+                get("/appointments/applicants/testApplicantId")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(appointmentJson));
@@ -157,7 +153,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
         mockMvc.perform(
-                get("/appointments/applicants/1")
+                get("/appointments/applicants/2")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -221,7 +217,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentsByDateAndExpectNotNullListObjects() throws Exception {
 
-        long currentTime = 1403308782454L;
+        long currentTime = System.currentTimeMillis();
 
         mockMvc.perform(get("/appointments/date/" + currentTime))
                 .andExpect(status().isOk())
