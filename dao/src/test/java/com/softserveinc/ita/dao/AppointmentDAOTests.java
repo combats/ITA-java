@@ -28,7 +28,7 @@ public class AppointmentDAOTests extends BaseDAOTest {
         Collections.addAll(userIdList, "1", "2", "3");
         Appointment expected = new Appointment(userIdList, "1", 100L);
         String appointmentId = (String) sessionFactory.getCurrentSession().save(expected);
-        Appointment actual = appointmentDAO.getAppointmentByAppointmentID(appointmentId);
+        Appointment actual = appointmentDAO.getAppointmentByAppointmentId(appointmentId);
         assertThat(expected, equalTo(actual));
     }
 

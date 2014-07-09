@@ -13,7 +13,6 @@
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="service" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
-
     </bean>
 
 
