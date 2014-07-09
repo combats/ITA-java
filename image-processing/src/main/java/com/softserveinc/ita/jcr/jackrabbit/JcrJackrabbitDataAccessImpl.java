@@ -1,0 +1,158 @@
+package com.softserveinc.ita.jcr.jackrabbit;
+
+import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.exception.JcrException;
+import com.softserveinc.ita.jcr.JcrDataAccess;
+import org.apache.commons.io.IOUtils;
+import org.apache.jackrabbit.JcrConstants;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.jcr.*;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Calendar;
+
+public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
+    Session session;
+
+    @Autowired
+    private JcrSessionCreator jcrSession;
+
+    /**
+     * Creates or updates the named node (we will use applicantID`s as Node names)
+     * this method handles POST & PUT operations because JCR doesn`t support PUT operation
+     * for more details see: org.apache.jackrabbit.commons.JcrUtils
+     * @param imageFile - instance that will be saved in repository
+     * @return String with status info
+     * @throws JcrException
+     */
+    @Override
+    public String post(ImageFile imageFile) throws JcrException {
+        String response = null;
+
+        Binary binary = null;
+        Calendar lastModified = Calendar.getInstance();
+        lastModified.setTimeInMillis(System.currentTimeMillis());
+
+        try {
+            session = jcrSession.getSession();
+            Node root = session.getRootNode();
+
+            ByteArrayInputStream bis = new ByteArrayInputStream(imageFile.getContent());
+            binary = session.getValueFactory().createBinary(bis);
+
+            Node file = getOrAddNode(root, imageFile.getNodeName(), JcrConstants.NT_FILE);
+            Node content = getOrAddNode(file, Node.JCR_CONTENT, JcrConstants.NT_RESOURCE);
+
+            content.setProperty(JcrConstants.JCR_DATA, binary);
+            content.setProperty(JcrConstants.JCR_MIMETYPE, imageFile.getMimeType());
+            content.setProperty(JcrConstants.JCR_LASTMODIFIED, lastModified);
+            session.save();
+
+            response = "File added successfully ";
+
+        } catch (RepositoryException e) {
+            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method post ["
+                    + e.getMessage() + "]");
+        } finally {
+            binary.dispose();
+            session.logout();
+        }
+        return response;
+    }
+
+    /**
+     * Necessary because JCR doesn`t support PUT operation only POST,
+     * that`s why we must check does this node exist or not
+     * @param parent - parent Node - root
+     * @param name - name of checked Node
+     * @param type - type of checked Node in our case JcrConstants.NT_FILE or JcrConstants.NT_RESOURCE
+     * @return - returns needed Node or creates new if It doesn`t exist
+     * @throws RepositoryException
+     */
+    public Node getOrAddNode(Node parent, String name, String type) throws RepositoryException {
+        if (parent.hasNode(name)) {
+            return parent.getNode(name);
+        } else if (type != null) {
+            return parent.addNode(name, type);
+        } else {
+            return parent.addNode(name);
+        }
+    }
+
+    /**
+     * Allows to get data from node
+     * @param nodeName - name of required Node
+     * @return - new ImageFile with necessary data
+     * @throws JcrException
+     */
+    @Override
+    public ImageFile get(String nodeName) throws JcrException {
+        ImageFile responseImageFile = null;
+
+        try {
+            session = jcrSession.getSession();
+            Node root = session.getRootNode();
+
+            Node file = null;
+            InputStream stream = null;
+            String originalFileName = null;
+            String mimeType = null;
+
+            if (root.hasNode(nodeName)) {
+                file=root.getNode(nodeName);
+                Node content=file.getNode(JcrConstants.JCR_CONTENT);
+                String path = content.getPath();
+                Binary bin = session.getNode(path).getProperty(JcrConstants.JCR_DATA).getBinary();
+                mimeType = session.getNode(path).getProperty(JcrConstants.JCR_MIMETYPE).getString();
+                originalFileName = nodeName;
+                stream = bin.getStream();
+
+                responseImageFile = new ImageFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
+            } else {
+                throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get" +
+                                                                         " - such node doesn`t exist");
+            }
+
+        } catch (RepositoryException | IOException e) {
+            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get ["
+                                                                            + e.getMessage() + "]");
+        } finally {
+            session.logout();
+        }
+        return responseImageFile;
+    }
+
+    /**
+     * Deletes Node if we do not need It anymore
+     * @param nodeName - name of Node
+     * @return - String with status info
+     * @throws JcrException
+     */
+    @Override
+    public String delete(String nodeName) throws JcrException {
+        String delStatus = null;
+        try {
+            session = jcrSession.getSession();
+            Node root = session.getRootNode();
+            Node file = null;
+            if (root.hasNode(nodeName)) {
+                file = root.getNode(nodeName);
+                file.remove();
+                session.save();
+
+                delStatus = "File successfully deleted";
+            } else {
+                throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete" +
+                                                                            " - such node doesn`t exist");
+            }
+        } catch (RepositoryException e) {
+            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImp: method delete ["
+                                                                              + e.getMessage() + "]");
+        } finally {
+            session.logout();
+        }
+        return delStatus;
+    }
+}

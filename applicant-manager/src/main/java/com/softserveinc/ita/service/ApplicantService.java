@@ -4,7 +4,6 @@ import com.softserveinc.ita.entity.Applicant;
 import java.util.List;
 
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
-import com.softserveinc.ita.exception.GroupNotFoundException;
 
 public interface ApplicantService {
     List<Applicant> getApplicants();

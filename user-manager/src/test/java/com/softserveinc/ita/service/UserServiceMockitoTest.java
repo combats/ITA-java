@@ -11,20 +11,22 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserServiceMockitoTest extends BaseServiceTest {
-   // @Autowired
+    @Autowired
     @InjectMocks
-    private UserService userService = new UserServiceImpl(); //TODO:Find out why there are problems with Autowired.
+    private UserService userService;
 
-    //@Autowired
+    @Autowired
     @Mock
-    private UserDAO userDao = new UserDAOMockImpl(); //TODO:Find out why there are problems with Autowired.
+    private UserDAO userDao;
 
     @Before
     public void init() {

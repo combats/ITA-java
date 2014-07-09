@@ -20,6 +20,7 @@
         <module>user-manager</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
+        <module>image-processing</module>
     </modules>
 
     <dependencies>
