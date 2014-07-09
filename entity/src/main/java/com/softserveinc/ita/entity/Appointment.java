@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import com.softserveinc.ita.entity.exceptions.DateException;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -30,12 +31,15 @@ public class Appointment implements Serializable {
     private List <String> userIdList = new ArrayList<>();
 
     @Column(name = "ApplicantId")
+    @Expose
     private String applicantId;
 
     @Column(name = "StartTime")
+    @Expose
     private long startTime = System.currentTimeMillis() + TOMORROW;
 
     @Column(name = "DurationTime")
+    @Expose
     private long durationTime = DEFAULT_DURATION_TIME;
 
     @Column(name = "ActualStartTime")
@@ -115,6 +119,17 @@ public class Appointment implements Serializable {
         this.groupId = groupId;
     }
 
+    public void dateValidation(long startTime, long durationTime) throws DateException {
+
+        if (durationTime < 0) throw new DateException("Wrong duration time");
+
+        long currentDate=new Date().getTime();
+        if (startTime < currentDate) throw new DateException("Start time has already passed");
+
+        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
+        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,6 +143,7 @@ public class Appointment implements Serializable {
         if (applicantId != null ? !applicantId.equals(that.applicantId) : that.applicantId != null) return false;
         if (appointmentId != null ? !appointmentId.equals(that.appointmentId) : that.appointmentId != null)
             return false;
+        if (groupId != null ? !groupId.equals(that.groupId) : that.groupId != null) return false;
         if (userIdList != null ? !userIdList.equals(that.userIdList) : that.userIdList != null) return false;
 
         return true;
@@ -141,6 +157,7 @@ public class Appointment implements Serializable {
         result = 31 * result + (int) (startTime ^ (startTime >>> 32));
         result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
         result = 31 * result + (int) (actualStartTime ^ (actualStartTime >>> 32));
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         return result;
     }
 
@@ -153,17 +170,7 @@ public class Appointment implements Serializable {
                 ", startTime=" + startTime +
                 ", durationTime=" + durationTime +
                 ", actualStartTime=" + actualStartTime +
+                ", groupId='" + groupId + '\'' +
                 '}';
-    }
-
-    public void dateValidation(long startTime, long durationTime) throws DateException {
-
-        if (durationTime < 0) throw new DateException("Wrong duration time");
-
-        long currentDate=new Date().getTime();
-        if (startTime < currentDate) throw new DateException("Start time has already passed");
-
-        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
-        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
     }
 }

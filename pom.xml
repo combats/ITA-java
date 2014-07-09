@@ -20,6 +20,7 @@
         <module>http-request-service</module>
         <module>interview-sheduller</module>
         <module>user-manager</module>
+        <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
         <module>group-manager</module>
