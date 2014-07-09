@@ -47,7 +47,7 @@ public class AppointmentController {
     @ResponseBody
     String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
-        return appointmentService.addAppointment(appointment);
+        return appointmentService.putAppointment(appointment);
     }
 
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
@@ -69,6 +69,7 @@ public class AppointmentController {
     public void updateAppointment(@RequestBody @Valid Appointment appointment) {
         appointmentService.updateAppointment(appointment);
     }
+
 
     @RequestMapping(value = "/groups/{groupId}/applicants/{applicantId}", method = RequestMethod.GET)
     @ResponseBody
