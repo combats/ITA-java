@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -15,6 +16,7 @@ public class Applicant implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
+    @Expose
     private String id;
 
     @Column(name = "Name")
@@ -39,7 +41,7 @@ public class Applicant implements Serializable {
         return id;
     }
 
-    public void setId(String applicantId) {
+    public void setId(String id) {
         this.id = id;
     }
 
