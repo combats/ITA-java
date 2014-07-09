@@ -1,6 +1,7 @@
 package com.softserveinc.ita.service.mocks;
 
 
+import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
 import org.joda.time.DateTime;
@@ -45,7 +46,6 @@ public class AppointmentServiceMock implements AppointmentService {
                 , todaySecondAppointment);
     }
 
-
     @Override
     public List<Appointment> getAppointmentByApplicantId(String applicantId) {
         List<Appointment> result = new ArrayList<>();
@@ -72,7 +72,7 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public String addAppointment(Appointment appointment) {
+    public String putAppointment(Appointment appointment) {
         return "testAppointmentId";
     }
 

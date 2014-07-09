@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface AppointmentDAO {
 
-    Appointment getAppointmentByAppointmentID(String appointmentId);
+    Appointment getAppointmentByAppointmentId(String appointmentId);
 
     String putAppointment(Appointment appointment);
 

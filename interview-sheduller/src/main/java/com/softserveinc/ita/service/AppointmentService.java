@@ -5,7 +5,7 @@ import com.softserveinc.ita.entity.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
-    String addAppointment(Appointment appointment);
+    String putAppointment(Appointment appointment);
 
     List<Appointment> getAppointmentByApplicantId(String applicantId);
 
