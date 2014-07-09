@@ -59,7 +59,8 @@ public class Group implements Serializable{
         this.groupName = groupName;
     }
 
-    public Group(Course course, String address, long startTime) {
+    public Group(String groupId, Course course, String address, long startTime) {
+        this.groupID = groupId;
         this.course = course;
         this.address = address;
         this.startTime = startTime;

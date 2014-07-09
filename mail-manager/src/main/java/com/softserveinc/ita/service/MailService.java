@@ -1,9 +1,8 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.entity.Group;
-import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.User;
+import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.service.exception.HttpRequestException;
+import com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -11,13 +10,13 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
+
+import javax.jws.soap.SOAPBinding;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Service("mailService")
 public class MailService {
@@ -43,46 +42,62 @@ public class MailService {
     @Autowired
     private JavaMailSender mailSender;
 
-//    @Autowired
-//    private ApplicantService applicantService;
+    @Autowired
+    private HttpRequestExecutorRestImpl httpRequestExecutor;
 
     private MimeMessageHelper helper;
     private MimeMessage mimeMessage;
 
-//    public void notifyApplicant() throws ApplicantDoesNotExistException {
-//        mimeMessage = mailSender.createMimeMessage();
-//        try {
-//            helper = new MimeMessageHelper(mimeMessage, true);
-//        } catch (MessagingException e) {
-//            e.printStackTrace();
-//        }
-//        // TODO get applicant id from queue
-//        String appointmentId = "testAppointmentId";
-//        Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
-//        String applicantId = appointment.getApplicantId();
-//        Applicant applicant = applicantService.getApplicantById(applicantId);
-//        switch (applicant.getStatus()) {
-//            case NOT_SCHEDULED:
-//                createSchedulingLetterModel(applicant, appointment);
-//                break;
-//            case NOT_PASSED:
-//                createFailedLetterModel(applicant);
-//                break;
-//            case PASSED:
-//                createPassedLetterModel(applicant, appointment);
-//                break;
-//        }
-//    }
+    private User getHR() {
+
+        return null;
+    }
+
+    public void notifyApplicant(String appointmentId) {
+        mimeMessage = mailSender.createMimeMessage();
+        try {
+            helper = new MimeMessageHelper(mimeMessage, true);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+        // TODO get applicant id from queue
+        Appointment appointment = null;
+        Applicant applicant = null;
+
+        try {
+            appointment = httpRequestExecutor.getObjectByID(appointmentId, Appointment.class);
+            String applicantId = appointment.getApplicantId();
+            applicant = httpRequestExecutor.getObjectByID(applicantId, Applicant.class);
+        } catch (HttpRequestException e) {
+            e.printStackTrace();
+        }
+        switch (applicant.getStatus()) {
+            case NOT_SCHEDULED:
+                createSchedulingLetterModel(applicant, appointment);
+                break;
+            case NOT_PASSED:
+                createFailedLetterModel(applicant);
+                break;
+            case PASSED:
+                createPassedLetterModel(applicant, appointment);
+                break;
+        }
+    }
 
     private void createPassedLetterModel(Applicant applicant, Appointment appointment) {
-
+        Group applicantGroup = null;
+        User responsibleHR = null;
+        try {
+            responsibleHR = httpRequestExecutor.getObjectByID(appointment.getOwnerId(), User.class);
+            applicantGroup = httpRequestExecutor.getObjectByID(appointment.getGroupId(), Group.class);
+        } catch (HttpRequestException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
-        Group applicantGroup = appointment.getGroup();
         model.put(COURSE,applicantGroup.getCourse().getName());
         model.put(GROUP_START_TIME,convertTimeToDate(applicantGroup.getStartTime()));
-        User responsibleHR = appointment.getOwner();
         model.put(HR_NAME, responsibleHR.getName());
         model.put(HR_SURNAME, responsibleHR.getSurname());
         model.put(HR_PHONE,responsibleHR.getPhone());
@@ -101,8 +116,7 @@ public class MailService {
         model.put("assistantName", "Lena");
         model.put("assistantSurname", "Golovach");
         model.put("assistantPhone", "0663459412");
-//        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
-//                velocityEngine, "mailTemplaits/interviewInvitation.vm", model);
+
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 "mailTemplaits/interviewInvitation.vm","UTF-8",model);
         helper.setFrom("javasendertest@gmail.com");
@@ -123,11 +137,16 @@ public class MailService {
 
 
     private void createSchedulingLetterModel(Applicant applicant, Appointment appointment) {
+        User responsibleHR = null;
+        try {
+            responsibleHR = httpRequestExecutor.getObjectByID(appointment.getOwnerId(), User.class);
+        } catch (HttpRequestException e) {
+            e.printStackTrace();
+        }
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         model.put(TIME, convertTimeToDate(appointment.getStartTime()));
-        User responsibleHR = appointment.getOwner();
         model.put(HR_NAME, responsibleHR.getName());
         model.put(HR_SURNAME, responsibleHR.getSurname());
         model.put(HR_PHONE,responsibleHR.getPhone());
@@ -137,10 +156,8 @@ public class MailService {
 
 
     private void sendLetter(Applicant applicant, Map<String,Object> letterModel){
-//        String emailText = VelocityEngineUtils.mergeTemplateIntoString(
-//                velocityEngine, applicant.getStatus().getTemplateRef(), letterModel);
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "applicant.getStatus().getTemplateRef()","UTF-8",letterModel);
+                applicant.getStatus().getTemplateRef(),"UTF-8",letterModel);
         try {
             helper.setFrom(FROM);
             helper.setTo(applicant.getEmail());

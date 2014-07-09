@@ -19,7 +19,6 @@ public class User implements Serializable {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
     private String id;
-
     @Column(name = "Name")
     private String name = DEFAULT_USER_NAME;
     @Column(name = "Surname")

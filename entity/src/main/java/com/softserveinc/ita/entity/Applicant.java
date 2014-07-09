@@ -74,10 +74,11 @@ public class Applicant implements Serializable {
         this.groupId = groupId;
     }
 
-    public Applicant (String id, String name, String surname, Status status){
+    public Applicant (String id, String name, String surname,String email ,Status status){
         this.id = id;
         this.name = name;
         this.surname = surname;
+        this.email=email;
         this.status = status;
     }
 

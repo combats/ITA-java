@@ -27,22 +27,16 @@ public class AppointmentServiceMock implements AppointmentService {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
 
-        Group appointmentGroup1 = new Group(new Course("Java Script", "pen-net.png"), "street1", 111111111);
-        User responsibleUser1 = new User("id1", "Svetlana", "Ivanova", 24, "sveta@gmail.com", "555-11-22");
-        Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW, responsibleUser1,
-                appointmentGroup1);
+
+        Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
         appointment1.setAppointmentId(appointmentId);
 
-        Group appointmentGroup23 = new Group(new Course("C#", "pen-net.png"), "street23", 232322323);
-        User responsibleUser2 = new User("id2", "Bogdan", "Bogdanov", 25, "bogdanov@gmail.com", "555-11-33");
         List<String> users2 = new ArrayList<>();
-        Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW, responsibleUser2,
-                appointmentGroup23);
+        Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
         appointment2.setAppointmentId(appointmentId);
 
         List<String> users3 = new ArrayList<>();
-        Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW, responsibleUser2,
-                appointmentGroup23);
+        Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
         appointment3.setAppointmentId(appointmentId);
 
 
