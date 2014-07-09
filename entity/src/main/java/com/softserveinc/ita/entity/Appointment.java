@@ -119,17 +119,6 @@ public class Appointment implements Serializable {
         this.groupId = groupId;
     }
 
-    public void dateValidation(long startTime, long durationTime) throws DateException {
-
-        if (durationTime < 0) throw new DateException("Wrong duration time");
-
-        long currentDate=new Date().getTime();
-        if (startTime < currentDate) throw new DateException("Start time has already passed");
-
-        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
-        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -172,5 +161,16 @@ public class Appointment implements Serializable {
                 ", actualStartTime=" + actualStartTime +
                 ", groupId='" + groupId + '\'' +
                 '}';
+    }
+
+    public void dateValidation(long startTime, long durationTime) throws DateException {
+
+        if (durationTime < 0) throw new DateException("Wrong duration time");
+
+        long currentDate=new Date().getTime();
+        if (startTime < currentDate) throw new DateException("Start time has already passed");
+
+        long bigDurationTime = 1000 * 60 * 60 * 12; //interview for the whole day, bad idea
+        if (durationTime > bigDurationTime) throw new DateException("Too long duration time");
     }
 }
