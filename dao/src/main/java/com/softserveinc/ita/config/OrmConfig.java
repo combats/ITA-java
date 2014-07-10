@@ -41,7 +41,7 @@ public class OrmConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(restDataSource());
-        sessionFactory.setPackagesToScan(new String[]{"com.softserveinc.ita.dao"});
+        sessionFactory.setPackagesToScan("com.softserveinc.ita.dao");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;

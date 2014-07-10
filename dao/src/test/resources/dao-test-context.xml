@@ -8,9 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <!-- Scans within the base package of the application for @Components to
-        configure as beans -->
-
-    <context:annotation-config/>
+        configure as beans -->    <context:annotation-config/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
 
 
@@ -57,5 +55,4 @@
     <bean id="applicantDAO" class="com.softserveinc.ita.dao.impl.ApplicantDAOHibernate"/>
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
     <bean id="roleDAO" class="com.softserveinc.ita.dao.impl.RoleDAOHibernate" />
-
 </beans>
