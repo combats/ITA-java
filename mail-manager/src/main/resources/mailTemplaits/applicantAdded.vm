@@ -1,0 +1,15 @@
+<html>
+<body>
+<img src='cid:ItAcademyLogo'>
+
+
+<h1>Dear ${name} ${surname} ! </h1>
+
+Your application was reviewed, please wait until we contact you.
+<br>
+<br>
+With best regards,
+SoftServe ItAcademy
+
+</body>
+</html>

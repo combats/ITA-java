@@ -10,15 +10,18 @@ import java.io.Serializable;
 public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    private static final String NOT_SCHEDULED_TEMPLATE_REF ="mailTemplaits/interviewInvitation.vm";
+    private static final String NOT_SCHEDULED_TEMPLATE_REF = "mailTemplaits/applicantAdded.vm";
+    private static final String SCHEDULED_TEMPLATE_REF ="mailTemplaits/interviewInvitation.vm";
     private static final String PASSED_TEMPLATE_REF ="mailTemplaits/interviewPassed.vm";
-    private static final String NOT_PASSED_TEMPLATE_REF ="mailTemplaits/interviewFailed";
-    private static final String NOT_SCHEDULED_SUBJECT = "Interview invitation";
+    private static final String NOT_PASSED_TEMPLATE_REF ="mailTemplaits/interviewFailed.vm";
+    private static final String NOT_SCHEDULED_SUBJECT = "Application accepted";
+    private static final String SCHEDULED_SUBJECT = "Interview invitation";
     private static final String PASSED_SUBJECT = "Interview passed";
     private static final String NOT_PASSED_SUBJECT = "Interview failed";
 
     public enum Status {
-        NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF, NOT_SCHEDULED_SUBJECT),
+        NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF,NOT_SCHEDULED_SUBJECT),
+        SCHEDULED(SCHEDULED_TEMPLATE_REF, SCHEDULED_SUBJECT),
         PASSED(PASSED_TEMPLATE_REF, PASSED_SUBJECT),
         NOT_PASSED(NOT_PASSED_TEMPLATE_REF, NOT_PASSED_SUBJECT);
 

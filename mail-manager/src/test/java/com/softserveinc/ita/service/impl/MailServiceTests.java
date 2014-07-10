@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
-
 import javax.mail.BodyPart;
-import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,7 +50,7 @@ public class MailServiceTests extends MailServiceBaseTests {
     {
         applicant1 = new Applicant("id1", "Andrey", "Pupkin", "pupkinandrey@gmail.com", Applicant.Status.PASSED);
         applicant2 = new Applicant("id2", "Bogdan", "Ruchkin", "ruchkinbogdan@gmail.com", Applicant.Status.NOT_PASSED);
-        applicant3 = new Applicant("id3", "Vadim", "Nowkin", "nowkinvadim@gmail.com", Applicant.Status.NOT_SCHEDULED);
+        applicant3 = new Applicant("id3", "Vadim", "Nowkin", "nowkinvadim@gmail.com", Applicant.Status.SCHEDULED);
 
         List<String> users = new ArrayList<>();
         users.add("testUserId");
@@ -99,16 +97,13 @@ public class MailServiceTests extends MailServiceBaseTests {
     }
 
     @Test
-    public void mailTest() throws Exception {
+    public void notifyPassedApplicant() throws Exception {
         wiser.start();
         when(httpRequestExecutor.getObjectByID("appointmentId1", Appointment.class)).thenReturn(appointment1);
         when(httpRequestExecutor.getObjectByID(appointment1.getApplicantId(), Applicant.class)).thenReturn(applicant1);
         when(httpRequestExecutor.getObjectByID(appointment1.getGroupId(), Group.class)).thenReturn(appointmentGroup1);
         when(httpRequestExecutor.getObjectByID(appointment1.getOwnerId(), User.class)).thenReturn(responsibleUser1);
         mailService.notifyApplicant("appointmentId1");
-
-        //create letter body
-
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailService.NAME, applicant1.getName());
         letterModel.put(MailService.SURNAME, applicant1.getSurname());
@@ -119,24 +114,78 @@ public class MailServiceTests extends MailServiceBaseTests {
         letterModel.put(MailService.HR_SURNAME, responsibleUser1.getSurname());
         letterModel.put(MailService.HR_PHONE, responsibleUser1.getPhone());
         letterModel.put(MailService.HR_EMAIL, responsibleUser1.getEmail());
-
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 applicant1.getStatus().getTemplateRef(), "UTF-8", letterModel);
-
-
         assertTrue(wiser.getMessages().size() == 1);
-
         WiserMessage wiserMessage = wiser.getMessages().get(0);
-
         assertEquals(wiserMessage.getEnvelopeReceiver(),applicant1.getEmail());
         assertEquals(wiserMessage.getEnvelopeSender(),"javasendertest@gmail.com");
         assertEquals(wiserMessage.getMimeMessage().getSubject(), applicant1.getStatus().getSubject());
-        MimeMessage mm = wiserMessage.getMimeMessage();
         Object obj = wiserMessage.getMimeMessage().getContent();
         assertTrue(obj instanceof MimeMultipart);
         MimeMultipart multi = (MimeMultipart) obj;
         BodyPart bp = multi.getBodyPart(0);
-        String disposition = bp.getDisposition();
+        Object innerContent = bp.getContent();
+        MimeMultipart innerMulti = (MimeMultipart) innerContent;
+        assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
+        wiser.stop();
+    }
+
+    @Test
+    public void notifyNotPassedApplicant() throws Exception {
+        wiser.start();
+        when(httpRequestExecutor.getObjectByID("appointmentId2", Appointment.class)).thenReturn(appointment2);
+        when(httpRequestExecutor.getObjectByID(appointment2.getApplicantId(), Applicant.class)).thenReturn(applicant2);
+        when(httpRequestExecutor.getObjectByID(appointment2.getGroupId(), Group.class)).thenReturn(appointmentGroup23);
+        when(httpRequestExecutor.getObjectByID(appointment2.getOwnerId(), User.class)).thenReturn(responsibleUser23);
+        mailService.notifyApplicant("appointmentId2");
+        Map<String, Object> letterModel = new HashMap<>();
+        letterModel.put(MailService.NAME, applicant2.getName());
+        letterModel.put(MailService.SURNAME, applicant2.getSurname());
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                applicant2.getStatus().getTemplateRef(), "UTF-8", letterModel);
+        assertTrue(wiser.getMessages().size() == 1);
+        WiserMessage wiserMessage = wiser.getMessages().get(0);
+        assertEquals(wiserMessage.getEnvelopeReceiver(),applicant2.getEmail());
+        assertEquals(wiserMessage.getEnvelopeSender(),"javasendertest@gmail.com");
+        assertEquals(wiserMessage.getMimeMessage().getSubject(), applicant2.getStatus().getSubject());
+        Object obj = wiserMessage.getMimeMessage().getContent();
+        assertTrue(obj instanceof MimeMultipart);
+        MimeMultipart multi = (MimeMultipart) obj;
+        BodyPart bp = multi.getBodyPart(0);
+        Object innerContent = bp.getContent();
+        MimeMultipart innerMulti = (MimeMultipart) innerContent;
+        assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
+        wiser.stop();
+    }
+
+    @Test
+    public void notifySchedulingApplicant() throws Exception {
+        wiser.start();
+        when(httpRequestExecutor.getObjectByID("appointmentId3", Appointment.class)).thenReturn(appointment3);
+        when(httpRequestExecutor.getObjectByID(appointment3.getApplicantId(), Applicant.class)).thenReturn(applicant3);
+        when(httpRequestExecutor.getObjectByID(appointment3.getGroupId(), Group.class)).thenReturn(appointmentGroup23);
+        when(httpRequestExecutor.getObjectByID(appointment3.getOwnerId(), User.class)).thenReturn(responsibleUser23);
+        mailService.notifyApplicant("appointmentId3");
+        Map<String, Object> letterModel = new HashMap<>();
+        letterModel.put(MailService.NAME, applicant3.getName());
+        letterModel.put(MailService.SURNAME, applicant3.getSurname());
+        letterModel.put(MailService.TIME, MailService.convertTimeToDate(appointment3.getStartTime()));
+        letterModel.put(MailService.HR_NAME, responsibleUser23.getName());
+        letterModel.put(MailService.HR_SURNAME, responsibleUser23.getSurname());
+        letterModel.put(MailService.HR_PHONE, responsibleUser23.getPhone());
+        letterModel.put(MailService.HR_EMAIL, responsibleUser23.getEmail());
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                applicant3.getStatus().getTemplateRef(), "UTF-8", letterModel);
+        assertTrue(wiser.getMessages().size() == 1);
+        WiserMessage wiserMessage = wiser.getMessages().get(0);
+        assertEquals(wiserMessage.getEnvelopeReceiver(),applicant3.getEmail());
+        assertEquals(wiserMessage.getEnvelopeSender(),"javasendertest@gmail.com");
+        assertEquals(wiserMessage.getMimeMessage().getSubject(), applicant3.getStatus().getSubject());
+        Object obj = wiserMessage.getMimeMessage().getContent();
+        assertTrue(obj instanceof MimeMultipart);
+        MimeMultipart multi = (MimeMultipart) obj;
+        BodyPart bp = multi.getBodyPart(0);
         Object innerContent = bp.getContent();
         MimeMultipart innerMulti = (MimeMultipart) innerContent;
         assertEquals(emailText, innerMulti.getBodyPart(0).getContent());

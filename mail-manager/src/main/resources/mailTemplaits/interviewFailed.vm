@@ -5,9 +5,12 @@
 
 <h1>Dear ${name} ${surname} ! </h1>
 
-The applicants for this post were of a very high standard and on this occasion, I regret to inform you, you didnt passed the interview.
+The applicants for this post were of a very high standard and on this occasion, we regret to inform you, you didnt passed the interview.
+Thank you for your interest in the SofteServe It Academy. <br>Please accept our best wishes as you pursue your career goals.
+<br>
+<br>
+With best regards,<br>
+SoftServe ItAcademy
 
-
-Thank you for your interest in the SofteServe It Academy. Please accept our best wishes as you pursue your career goals.
-
-SoftServe Team
+</body>
+</html>

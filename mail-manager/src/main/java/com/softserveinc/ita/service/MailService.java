@@ -10,8 +10,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
-
-import javax.jws.soap.SOAPBinding;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.text.DateFormat;
@@ -26,7 +24,7 @@ public class MailService {
     public static final String SURNAME = "surname";
     public static final String FROM = "javasendertest@gmail.com";
     public static final String LOGO = "ItAcademyLogo";
-    public static final String LOGO_IMAGE_REF = "images/softServe.jpg";
+    public static final String LOGO_IMAGE_REF = "images/joinProfessionals.png";
     public static final String TIME = "time";
     public static final String COURSE = "course";
     public static final String GROUP_START_TIME = "groupStartTime";
@@ -35,6 +33,7 @@ public class MailService {
     public static final String HR_PHONE = "HRPhone";
     public static final String HR_EMAIL = "HRemail";
     public static final String COURSE_ADDRESS = "courseAddress";
+
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -69,18 +68,55 @@ public class MailService {
         }
         switch (applicant.getStatus()) {
             case NOT_SCHEDULED:
-                createSchedulingLetterModel(applicant, appointment);
+                sendNotScheduledLetterModel(applicant);
+                break;
+            case SCHEDULED:
+                sendSchedulingLetterModel(applicant, appointment);
                 break;
             case NOT_PASSED:
-                createFailedLetterModel(applicant);
+                sendFailedLetterModel(applicant);
                 break;
             case PASSED:
-                createPassedLetterModel(applicant, appointment);
+                sendPassedLetterModel(applicant, appointment);
                 break;
         }
     }
 
-    private void createPassedLetterModel(Applicant applicant, Appointment appointment) {
+
+
+    public void sendMail() throws MessagingException {
+        mimeMessage = mailSender.createMimeMessage();
+        helper = new MimeMessageHelper(mimeMessage, true);
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put(NAME, "andrey");
+        model.put(COURSE_ADDRESS,"Deht street 42");
+        model.put(SURNAME, "Braslavskiy");
+        model.put(TIME,"11/06");
+        model.put(HR_NAME, "Lena");
+        model.put(HR_SURNAME, "Golovach");
+        model.put(HR_PHONE, "0663459412");
+        model.put(HR_EMAIL, "dfdf@dsf");
+        model.put(COURSE,"Java");
+        model.put(GROUP_START_TIME,"11/07");
+
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                "mailTemplaits/interviewPassed.vm","UTF-8",model);
+        helper.setFrom("javasendertest@gmail.com");
+        helper.setTo("braslavskiyandrey@gmail.com");
+        helper.setText(emailText,true);
+        helper.setSubject("Hey hey hey internet");
+        ClassPathResource image = new ClassPathResource("images/joinProfessionals.png");
+        helper.addInline("ItAcademyLogo", image);
+        mailSender.send(mimeMessage);
+    }
+
+    private void sendNotScheduledLetterModel(Applicant applicant){
+        Map<String, Object> model = new HashMap<>();
+        model.put(NAME, applicant.getName());
+        model.put(SURNAME, applicant.getSurname());
+        sendLetter(applicant, model);
+    }
+    private void sendPassedLetterModel(Applicant applicant, Appointment appointment) {
         Group applicantGroup = null;
         User responsibleHR = null;
         try {
@@ -103,29 +139,7 @@ public class MailService {
         sendLetter(applicant, model);
     }
 
-    public void sendMail() throws MessagingException {
-        mimeMessage = mailSender.createMimeMessage();
-        helper = new MimeMessageHelper(mimeMessage, true);
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put("name", "andrey");
-        model.put("surname", "Braslavskiy");
-        model.put("time", "11:00");
-        model.put("date", "14.08.2014");
-        model.put("assistantName", "Lena");
-        model.put("assistantSurname", "Golovach");
-        model.put("assistantPhone", "0663459412");
-
-        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                "mailTemplaits/interviewInvitation.vm","UTF-8",model);
-        helper.setFrom("javasendertest@gmail.com");
-        helper.setTo("braslavskiyandrey@gmail.com");
-        helper.setText(emailText,true);
-        ClassPathResource image = new ClassPathResource("images/softServe.jpg");
-        helper.addInline("ItAcademyLogo", image);
-        mailSender.send(mimeMessage);
-    }
-
-    private void createFailedLetterModel(Applicant applicant) {
+    private void sendFailedLetterModel(Applicant applicant) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
@@ -134,7 +148,7 @@ public class MailService {
 
 
 
-    private void createSchedulingLetterModel(Applicant applicant, Appointment appointment) {
+    private void sendSchedulingLetterModel(Applicant applicant, Appointment appointment) {
         User responsibleHR = null;
         try {
             responsibleHR = httpRequestExecutor.getObjectByID(appointment.getOwnerId(), User.class);
@@ -156,7 +170,6 @@ public class MailService {
     private void sendLetter(Applicant applicant, Map<String,Object> letterModel){
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 applicant.getStatus().getTemplateRef(),"UTF-8",letterModel);
-        System.out.println(emailText);
         try {
             helper.setFrom(FROM);
             helper.setTo(applicant.getEmail());
