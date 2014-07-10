@@ -29,7 +29,7 @@ public class Applicant implements Serializable {
     public Applicant() {}
 
     public Applicant(String applicantId) {
-        this.name = applicantId;
+        this.id = applicantId;
     }
     public Applicant(String name, String surname) {
         this.name = name;
