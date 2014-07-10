@@ -34,6 +34,7 @@ public class MailService {
     public static final String HR_SURNAME = "HRSurname";
     public static final String HR_PHONE = "HRPhone";
     public static final String HR_EMAIL = "HRemail";
+    public static final String COURSE_ADDRESS = "courseAddress";
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -47,11 +48,6 @@ public class MailService {
 
     private MimeMessageHelper helper;
     private MimeMessage mimeMessage;
-
-    private User getHR() {
-
-        return null;
-    }
 
     public void notifyApplicant(String appointmentId) {
         mimeMessage = mailSender.createMimeMessage();
@@ -97,12 +93,14 @@ public class MailService {
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         model.put(COURSE,applicantGroup.getCourse().getName());
+        model.put(COURSE_ADDRESS, applicantGroup.getAddress());
         model.put(GROUP_START_TIME,convertTimeToDate(applicantGroup.getStartTime()));
         model.put(HR_NAME, responsibleHR.getName());
         model.put(HR_SURNAME, responsibleHR.getSurname());
         model.put(HR_PHONE,responsibleHR.getPhone());
         model.put(HR_EMAIL, responsibleHR.getEmail());
-        sendLetter(applicant,model);
+
+        sendLetter(applicant, model);
     }
 
     public void sendMail() throws MessagingException {
@@ -158,10 +156,12 @@ public class MailService {
     private void sendLetter(Applicant applicant, Map<String,Object> letterModel){
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 applicant.getStatus().getTemplateRef(),"UTF-8",letterModel);
+        System.out.println(emailText);
         try {
             helper.setFrom(FROM);
             helper.setTo(applicant.getEmail());
             helper.setText(emailText, true);
+            helper.setSubject(applicant.getStatus().getSubject());
             ClassPathResource image = new ClassPathResource(LOGO_IMAGE_REF);
             helper.addInline(LOGO, image);
             mailSender.send(mimeMessage);
@@ -170,7 +170,7 @@ public class MailService {
         }
     }
 
-    private String convertTimeToDate(long milliseconds) {
+    public static String convertTimeToDate(long milliseconds) {
         DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
         long now = System.currentTimeMillis();
         Calendar calendar = Calendar.getInstance();

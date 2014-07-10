@@ -1,10 +1,9 @@
 package com.softserveinc.ita.service.impl;
 
-import com.dumbster.smtp.SimpleSmtpServer;
-import com.icegreen.greenmail.util.GreenMail;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.service.MailService;
 import com.softserveinc.ita.service.MailServiceBaseTests;
+import org.apache.velocity.app.VelocityEngine;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,14 +11,25 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.subethamail.wiser.Wiser;
+import org.subethamail.wiser.WiserMessage;
+
+import javax.mail.BodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 public class MailServiceTests extends MailServiceBaseTests {
 
+    public final String attachmentName = "";
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 
     private Applicant applicant1;
@@ -36,8 +46,7 @@ public class MailServiceTests extends MailServiceBaseTests {
     private User responsibleUser1;
     private User responsibleUser23;
 
-
-    private SimpleSmtpServer server;
+    private Wiser wiser;
 
 
     {
@@ -77,34 +86,66 @@ public class MailServiceTests extends MailServiceBaseTests {
     @Mock
     private HttpRequestExecutorRestImpl httpRequestExecutor;
 
+    @SuppressWarnings("SpringJavaAutowiringInspection")
+    @Autowired
+    private VelocityEngine velocityEngine;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        server = SimpleSmtpServer.start();
+        wiser = new Wiser(500);
+        wiser.setHostname("localhost");
+
     }
 
     @Test
     public void mailTest() throws Exception {
-        GreenMail greenMail = new GreenMail(); //uses test ports by default
-        greenMail.start();
+        wiser.start();
         when(httpRequestExecutor.getObjectByID("appointmentId1", Appointment.class)).thenReturn(appointment1);
         when(httpRequestExecutor.getObjectByID(appointment1.getApplicantId(), Applicant.class)).thenReturn(applicant1);
         when(httpRequestExecutor.getObjectByID(appointment1.getGroupId(), Group.class)).thenReturn(appointmentGroup1);
         when(httpRequestExecutor.getObjectByID(appointment1.getOwnerId(), User.class)).thenReturn(responsibleUser1);
         mailService.notifyApplicant("appointmentId1");
 
-        System.out.println("Received");
-        System.out.println(greenMail.getReceivedMessages().length);
-        assertTrue(greenMail.getReceivedMessages().length == 1);
-        assertEquals(httpRequestExecutor.getObjectByID("appointmentId1", Appointment.class), appointment1);
-        assertEquals(httpRequestExecutor.getObjectByID(appointment1.getApplicantId(), Applicant.class), applicant1);
-        assertEquals(httpRequestExecutor.getObjectByID(appointment1.getGroupId(), Group.class), appointmentGroup1);
-        assertEquals(httpRequestExecutor.getObjectByID(appointment1.getOwnerId(), User.class), responsibleUser1);
+        //create letter body
+
+        Map<String, Object> letterModel = new HashMap<>();
+        letterModel.put(MailService.NAME, applicant1.getName());
+        letterModel.put(MailService.SURNAME, applicant1.getSurname());
+        letterModel.put(MailService.COURSE, appointmentGroup1.getCourse().getName());
+        letterModel.put(MailService.COURSE_ADDRESS, appointmentGroup1.getAddress());
+        letterModel.put(MailService.GROUP_START_TIME, MailService.convertTimeToDate(appointmentGroup1.getStartTime()));
+        letterModel.put(MailService.HR_NAME, responsibleUser1.getName());
+        letterModel.put(MailService.HR_SURNAME, responsibleUser1.getSurname());
+        letterModel.put(MailService.HR_PHONE, responsibleUser1.getPhone());
+        letterModel.put(MailService.HR_EMAIL, responsibleUser1.getEmail());
+
+        String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
+                applicant1.getStatus().getTemplateRef(), "UTF-8", letterModel);
+
+
+        assertTrue(wiser.getMessages().size() == 1);
+
+        WiserMessage wiserMessage = wiser.getMessages().get(0);
+
+        assertEquals(wiserMessage.getEnvelopeReceiver(),applicant1.getEmail());
+        assertEquals(wiserMessage.getEnvelopeSender(),"javasendertest@gmail.com");
+        assertEquals(wiserMessage.getMimeMessage().getSubject(), applicant1.getStatus().getSubject());
+        MimeMessage mm = wiserMessage.getMimeMessage();
+        Object obj = wiserMessage.getMimeMessage().getContent();
+        assertTrue(obj instanceof MimeMultipart);
+        MimeMultipart multi = (MimeMultipart) obj;
+        BodyPart bp = multi.getBodyPart(0);
+        String disposition = bp.getDisposition();
+        Object innerContent = bp.getContent();
+        MimeMultipart innerMulti = (MimeMultipart) innerContent;
+        assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
+        wiser.stop();
     }
 
     @After
     public void doAfter(){
-        server.stop();
+
     }
 
 
