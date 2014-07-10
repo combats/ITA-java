@@ -33,17 +33,6 @@
     -->
     <!--TODO: homeDir must be changed to a %CATALINA_HOME%... or in WEB-INF-->
 
-    <!--
-        Another attempt to create repository without hardcode
-    -->
-    <!--<bean id="repository" class="org.apache.jackrabbit.core.RepositoryImpl">-->
-        <!--<constructor-arg index="0" ref="config" />-->
-    <!--</bean>-->
-    <!--<bean id="config" class="org.apache.jackrabbit.core.config.RepositoryConfig" factory-method="create">-->
-        <!--<constructor-arg index="0" value="./repository.xml"/>-->
-        <!--<constructor-arg index="1" value="." />-->
-    <!--</bean>-->
-
     <!--Snippet for GET /imageupload-->
     <mvc:annotation-driven>
         <mvc:message-converters>

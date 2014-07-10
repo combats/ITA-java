@@ -35,7 +35,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testPOSTImageAndExpectedIsOk() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -52,7 +52,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testPOSTImageAndExpectedIsNotOk() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input.txt", "text/plain", "Hello World".getBytes());
         String name = "123";
@@ -67,7 +67,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageAndExpectedIsOk() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -103,7 +103,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageAndExpectedIsError() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
         String name2 = "125";
         mockMvc.perform(get(endpoint)
                 .param("name", name2)
@@ -116,7 +116,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testDELETENodeAndExpectedIsOk() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -139,7 +139,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testDELETENodeAndExpectedIsError() throws Exception {
-        String endpoint = "/imageupload";
+        String endpoint = "/upload/image";
         String name5 = "127";
         mockMvc.perform(delete(endpoint)
                 .param("name", name5))

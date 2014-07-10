@@ -15,7 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Controller
-@RequestMapping(value="/imageupload")
+@RequestMapping(value="/upload")
 public class ImageController {
     private String responce;
     private ImageFile imageFile;
@@ -25,43 +25,13 @@ public class ImageController {
     @Autowired
     private ImageService imageService;
 
-//    /**
-//     * Needed only for the tests with Tomcat
-//     * @return jsp page with multipart file upload form
-//     */
-//    @RequestMapping(method=RequestMethod.GET)
-//    public  String provideUploadInfo() {
-//        return "imageprocessing";
-//    }
-
     /**
-     * Receives an image and saves it in JCR repository
-     * @param ID - ID of applicant
-     * @param file - photo of applicant
-     * @return - (JSON) String with operation status
-     * @throws IOException
-     * @throws JcrException
+     * Needed only for the tests with Tomcat
+     * @return jsp page with multipart file upload form
      */
-
-    @RequestMapping(method= RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity<String> postImageUpload(@RequestParam("name") String ID,
-                                                  @RequestParam("file") MultipartFile file) throws IOException, JcrException {
-        if (file.isEmpty()) {
-            return new ResponseEntity<>("You failed to upload " +
-                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
-        } else {
-            if(!(file.getContentType().matches("(?i)(image/gif)") ||   // I am using regexp because usual .equals() doesn`t works
-               file.getContentType().matches("(?i)(image/jpeg)") ||
-               file.getContentType().matches("(?i)(image/png)"))) {
-                return new ResponseEntity<>("You failed to upload " +
-                        ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
-            } else {
-                applicantID = ID + "-image";
-                imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
-                responce = imageService.postImage(imageFile);
-                return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
-            }
-        }
+    @RequestMapping(method=RequestMethod.GET)
+    public  String provideUploadInfo() {
+        return "imageprocessing";
     }
 
     /**
@@ -72,25 +42,59 @@ public class ImageController {
      * @throws IOException
      * @throws JcrException
      */
-    @RequestMapping(method = RequestMethod.PUT, consumes = "multipart/form-data")
-    public ResponseEntity<String> putImageUpload(@RequestParam("name") String ID,
-                                                 @RequestParam("file") MultipartFile file) throws IOException, JcrException { //@RequestBody if JQuery
+
+    @RequestMapping(value = "/image", method= RequestMethod.POST, consumes = "multipart/form-data")
+    public ResponseEntity<String> postImageUpload(@RequestParam("name") String ID,
+                                                  @RequestParam("file") MultipartFile file) throws IOException, JcrException {
         if (file.isEmpty()) {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
-        } else {
-            if(!(file.getContentType().matches("(?i)(image/gif)") ||
-                    file.getContentType().matches("(?i)(image/jpeg)") ||
-                    file.getContentType().matches("(?i)(image/png)"))) {
-                return new ResponseEntity<>("You failed to upload " +
-                        ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
-            } else {
-                applicantID = ID + "-image";
-                imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
-                responce = imageService.putImage(imageFile);
-                return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
-            }
         }
+
+        String contentType = file.getContentType();
+        if(!isSupportedFormat(contentType)) {
+            return new ResponseEntity<>("You failed to upload " +
+            ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
+        }
+
+        applicantID = ID + "-image";
+        imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+        responce = imageService.postImage(imageFile);
+        return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
+    }
+
+    /**
+     * Receives an image and saves it in JCR repository
+     * @param ID - ID of applicant
+     * @param file - photo of applicant
+     * @return - (JSON) String with operation status
+     * @throws IOException
+     * @throws JcrException
+     */
+    @RequestMapping(value = "/image", method = RequestMethod.PUT, consumes = "multipart/form-data")
+    public ResponseEntity<String> putImageUpload(@RequestParam("name") String ID,
+                                                 @RequestParam("file") MultipartFile file) throws IOException, JcrException {
+        if (file.isEmpty()) {
+            return new ResponseEntity<>("You failed to upload " +
+                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
+        }
+
+        String contentType = file.getContentType();
+        if(!isSupportedFormat(contentType)) {
+            return new ResponseEntity<>("You failed to upload " +
+            ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
+        }
+
+        applicantID = ID + "-image";
+        imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+        responce = imageService.putImage(imageFile);
+        return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
+    }
+
+    private boolean isSupportedFormat(String format){
+        return  format.equals("image/gif") ||
+                format.equals("image/jpeg") ||
+                format.equals("image/png");
     }
 
     /**
@@ -102,21 +106,15 @@ public class ImageController {
      * @throws JcrException
      * @throws IOException
      */
-    @RequestMapping(method = RequestMethod.GET)
+    @RequestMapping(value = "/image", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImageUpload(@RequestParam("name") String ID, @RequestParam("height") int height,
                                                  @RequestParam("width") int width) throws JcrException, IOException {
 
         imageResponce = imageService.getImage(ID + "-image", height, width);
         final HttpHeaders headers = new HttpHeaders();
-        String responceMediaType = imageResponce.getMimeType();
-        if(responceMediaType.matches("(?i)(image/gif)")){            // and here to(
-            headers.setContentType(MediaType.IMAGE_GIF);
-        }
-        if(responceMediaType.matches("(?i)(image/jpeg)")){
-            headers.setContentType(MediaType.IMAGE_JPEG);
-        }
-        if(responceMediaType.matches("(?i)(image/png)")){
-            headers.setContentType(MediaType.IMAGE_PNG);
+        String responseMediaType = imageResponce.getMimeType();
+        if(isSupportedFormat(responseMediaType)){
+            headers.setContentType(MediaType.parseMediaType(responseMediaType));
         }
         headers.setContentLength(imageResponce.getContent().length);
         return new ResponseEntity<>(imageResponce.getContent(), headers, HttpStatus.OK) ;
@@ -128,7 +126,7 @@ public class ImageController {
      * @return - (JSON) String with operation status
      * @throws JcrException
      */
-    @RequestMapping(method = RequestMethod.DELETE)
+    @RequestMapping(value = "/image", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteImageUpload(@RequestParam("name") String ID) throws JcrException {
         responce = imageService.deleteImage(ID + "-image");
         return new ResponseEntity<>("You successfully deleted " + ID + "-image", HttpStatus.OK);
