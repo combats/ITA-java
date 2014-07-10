@@ -1,140 +1,20 @@
 ----------------------------------------------------------------
-2014-07-10 10:52:58.907 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-0147-1fe7-9dce-0000069cf5d8
+2014-07-10 17:41:49.931 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance a816c00e-0147-215d-ee81-0000067a5bb8
 on database directory D:\pkruttc_property\repo\version\db  
 
 Database Class Loader started - derby.database.classpath=''
 ----------------------------------------------------------------
-2014-07-10 10:53:00.308 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 888c4022-0147-1fe7-9dce-0000069cf5d8
+2014-07-10 17:41:50.954 GMT:
+ Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 888c4022-0147-215d-ee81-0000067a5bb8
 on database directory D:\pkruttc_property\repo\workspaces\default\db  
 
 Database Class Loader started - derby.database.classpath=''
 
-2014-07-10 10:53:02.282 GMT:
-Shutting down instance 888c4022-0147-1fe7-9dce-0000069cf5d8
+2014-07-10 17:41:52.189 GMT:
+Shutting down instance 888c4022-0147-215d-ee81-0000067a5bb8
 ----------------------------------------------------------------
 
-2014-07-10 10:53:02.415 GMT:
-Shutting down instance a816c00e-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:02.570 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance b9810038-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:02.738 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 9ac8804c-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:03.173 GMT:
-Shutting down instance 9ac8804c-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:03.274 GMT:
-Shutting down instance b9810038-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:03.448 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 7c740060-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:03.714 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 5e838074-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:04.156 GMT:
-Shutting down instance 5e838074-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:04.239 GMT:
-Shutting down instance 7c740060-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:04.385 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 40f70088-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:04.522 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 23ce809c-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:05.173 GMT:
-Shutting down instance 23ce809c-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:05.272 GMT:
-Shutting down instance 40f70088-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:05.335 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 67bb80b4-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:05.463 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance 4b6f00c8-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:06.006 GMT:
-Shutting down instance 4b6f00c8-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:06.089 GMT:
-Shutting down instance 67bb80b4-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:06.884 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance f14580e4-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:07.050 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance d5e900f8-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:07.588 GMT:
-Shutting down instance d5e900f8-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:07.680 GMT:
-Shutting down instance f14580e4-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-----------------------------------------------------------------
-2014-07-10 10:53:07.890 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance cb76c10e-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\version\db  
-
-Database Class Loader started - derby.database.classpath=''
-----------------------------------------------------------------
-2014-07-10 10:53:08.114 GMT:
- Booting Derby version The Apache Software Foundation - Apache Derby - 10.5.3.0 - (802917): instance b0ec4122-0147-1fe7-9dce-0000069cf5d8
-on database directory D:\pkruttc_property\repo\workspaces\default\db  
-
-Database Class Loader started - derby.database.classpath=''
-
-2014-07-10 10:53:09.071 GMT:
-Shutting down instance b0ec4122-0147-1fe7-9dce-0000069cf5d8
-----------------------------------------------------------------
-
-2014-07-10 10:53:09.171 GMT:
-Shutting down instance cb76c10e-0147-1fe7-9dce-0000069cf5d8
+2014-07-10 17:41:52.311 GMT:
+Shutting down instance a816c00e-0147-215d-ee81-0000067a5bb8
 ----------------------------------------------------------------

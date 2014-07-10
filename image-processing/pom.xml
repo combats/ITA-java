@@ -16,6 +16,13 @@
     </properties>
 
     <dependencies>
+        <!--Apache Commons Codec - Base64-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.9</version>
+        </dependency>
+
         <!--Thumbnailator-->
         <dependency>
             <groupId>net.coobird</groupId>

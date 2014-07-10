@@ -4,6 +4,7 @@ import com.softserveinc.ita.controller.entity.ImageFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.imageprocessing.ImageProcessor;
 import com.softserveinc.ita.jcr.JcrDataAccess;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.imgscalr.Scalr;
 import org.junit.Before;
@@ -73,9 +74,9 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
         when(jcrDataAccess.post(imageFile)).thenReturn("File added successfully ");
-        String responce = imageService.putImage(imageFile);
+        String response = imageService.putImage(imageFile);
         verify(jcrDataAccess, times(1)).post(imageFile);
-        assertEquals("File added successfully ", responce);
+        assertEquals("File added successfully ", response);
 
         IOUtils.closeQuietly(is);
     }
@@ -104,12 +105,30 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         when(jcrDataAccess.get(nodeName)).thenReturn(imageFile);
         when(imageProcessor.doScalr(imageFile, imageFile.getMimeType(), height, width)).thenReturn(scaledPic);
 
-        ImageFile responceFile = imageService.getImage(nodeName, height, width);
+        ImageFile responseFile = imageService.getImage(nodeName, height, width);
 
         verify(jcrDataAccess, times(1)).get(nodeName);
         verify(imageProcessor, times(1)).doScalr(imageFile, imageFile.getMimeType(), height, width);
-        assertEquals(scaledPic.getContent().length, responceFile.getContent().length);
+        assertEquals(scaledPic.getContent().length, responseFile.getContent().length);
 
+        IOUtils.closeQuietly(is);
+    }
+
+    @Test
+    public void testGetImageInOriginalSizeAndExpectedIsOk() throws JcrException, IOException {
+        String nodeName = "131";
+
+        String fileNameFromResources = "input-1024x768.jpg";
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        byte[] input = IOUtils.toByteArray(is);
+        ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+
+        when(jcrDataAccess.get(nodeName)).thenReturn(imageFile);
+
+        ImageFile responseFile = imageService.getImage(nodeName);
+
+        verify(jcrDataAccess, times(1)).get(nodeName);
+        assertEquals(imageFile.getContent().length, responseFile.getContent().length);
         IOUtils.closeQuietly(is);
     }
 
@@ -120,9 +139,9 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         int width = 200;
 
         when(jcrDataAccess.get(nodeName)).thenThrow(new JcrException());
-        ImageFile responceFile = imageService.getImage(nodeName, height, width);
+        ImageFile responseFile = imageService.getImage(nodeName, height, width);
         verify(jcrDataAccess, times(1)).get(nodeName);
-        assertNull(responceFile);
+        assertNull(responseFile);
     }
 
     @Test
@@ -135,9 +154,9 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
         when(jcrDataAccess.post(imageFile)).thenReturn("File added successfully ");
-        String responce = imageService.postImage(imageFile);
+        String response = imageService.postImage(imageFile);
         verify(jcrDataAccess, times(1)).post(imageFile);
-        assertEquals("File added successfully ", responce);
+        assertEquals("File added successfully ", response);
 
         IOUtils.closeQuietly(is);
 
@@ -155,5 +174,91 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         String delStatus = imageService.deleteImage(nodeName);
         verify(jcrDataAccess, times(1)).delete(nodeName);
         assertNull(delStatus);
+    }
+
+    @Test
+    public void testPostImage64AndExpectedIsOk() throws IOException, JcrException {
+        String nodeName = "133";
+
+        String fileNameFromResources = "input-1024x768.jpg";
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        byte[] input = IOUtils.toByteArray(is);
+        String image64 = Base64.encodeBase64String(input);
+        ImageFile imageFile = new ImageFile(nodeName, nodeName,"image/jpeg", input);
+
+        when(jcrDataAccess.post(imageFile)).thenReturn("File added successfully ");
+
+        String response = imageService.postImage64(nodeName, image64, "image/jpeg");
+
+        verify(jcrDataAccess, times(1)).post(imageFile);
+        assertEquals("File added successfully ", response);
+
+        IOUtils.closeQuietly(is);
+    }
+
+    @Test
+    public void testGetImage64AndExpectedIsOk() throws IOException, JcrException {
+        String nodeName = "133";
+        int height = 200;
+        int width = 200;
+
+        String fileNameFromResources = "input-1024x768.jpg";
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        byte[] input = IOUtils.toByteArray(is);
+        ImageFile imageFile = new ImageFile(nodeName, nodeName,"image/jpeg", input);
+
+            BufferedImage img = ImageIO.read(new ByteArrayInputStream(input));
+            BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, height, width);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(scaledImg, "jpg", baos);
+            byte[] imageInByte = baos.toByteArray();
+            String image64 = Base64.encodeBase64String(imageInByte);
+            baos.flush();
+            baos.close();
+
+        ImageFile scaledPic = new ImageFile(nodeName, nodeName,"image/jpeg", imageInByte);
+
+        when(jcrDataAccess.get(nodeName)).thenReturn(imageFile);
+        when(imageProcessor.doScalr(imageFile, imageFile.getMimeType(), height, width)).thenReturn(scaledPic);
+
+        String response64 = imageService.getImage64(nodeName, height, width);
+
+        verify(jcrDataAccess, times(1)).get(nodeName);
+        verify(imageProcessor, times(1)).doScalr(imageFile, imageFile.getMimeType(), height, width);
+        assertEquals(image64, response64);
+
+        IOUtils.closeQuietly(is);
+    }
+
+    @Test
+    public void testGetImage64InOriginalSizeAndExpectedIsOk() throws IOException, JcrException {
+        String nodeName = "133";
+
+        String fileNameFromResources = "input-1024x768.jpg";
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        byte[] input = IOUtils.toByteArray(is);
+        String image64 = Base64.encodeBase64String(input);
+        ImageFile imageFile = new ImageFile(nodeName, nodeName,"image/jpeg", input);
+
+        when(jcrDataAccess.get(nodeName)).thenReturn(imageFile);
+
+        String response64 = imageService.getImage64(nodeName);
+
+        verify(jcrDataAccess, times(1)).get(nodeName);
+        assertEquals(image64, response64);
+
+        IOUtils.closeQuietly(is);
+    }
+
+    @Test(expected = JcrException.class)
+    public void testGetImage64WithNonExistentNodeNameAndExpectedIsJcrException() throws JcrException, IOException {
+        String nodeName = "Non-Existent-nodeName3";
+        int height = 200;
+        int width = 200;
+
+        when(jcrDataAccess.get(nodeName)).thenThrow(new JcrException());
+        String response64 = imageService.getImage64(nodeName, height, width);
+        verify(jcrDataAccess, times(1)).get(nodeName);
+        assertNull(response64);
     }
 }
