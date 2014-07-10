@@ -19,8 +19,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Applicant> getApplicants() {
-        List<Applicant> allApplicants = (List<Applicant>) sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
-        return allApplicants;
+        return (List<Applicant>) sessionFactory.getCurrentSession().createCriteria(Applicant.class).list();
     }
 
     @Override

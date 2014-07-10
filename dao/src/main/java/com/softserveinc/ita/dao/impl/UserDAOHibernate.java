@@ -33,13 +33,12 @@ public class UserDAOHibernate implements UserDAO {
     public String deleteUserById(String userId) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(session.load(User.class, userId));
-        return "";
+        return userId;
     }
 
     @Override
     public String addUser(User user) {
-        String userId = (String) sessionFactory.getCurrentSession().save(user);
-        return userId;
+        return (String) sessionFactory.getCurrentSession().save(user);
     }
 
     @Override
