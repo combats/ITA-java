@@ -6,16 +6,16 @@ import java.util.Arrays;
 /**
  * Just simple entity to handle some data
  */
-public class ImageFile implements Serializable{
+public class DataTransferFile implements Serializable{
     private String nodeName;
     private String originalFileName;
     private String mimeType;
     private byte[] content;
 
-    public ImageFile() {
+    public DataTransferFile() {
     }
 
-    public ImageFile(String nodeName, String originalFileName, String mimeType, byte[] content) {
+    public DataTransferFile(String nodeName, String originalFileName, String mimeType, byte[] content) {
         this.nodeName = nodeName;
         this.originalFileName = originalFileName;
         this.mimeType = mimeType;
@@ -59,13 +59,13 @@ public class ImageFile implements Serializable{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ImageFile imageFile = (ImageFile) o;
+        DataTransferFile dataTransferFile = (DataTransferFile) o;
 
-        if (nodeName != null ? !nodeName.equals(imageFile.nodeName) : imageFile.nodeName != null)
+        if (nodeName != null ? !nodeName.equals(dataTransferFile.nodeName) : dataTransferFile.nodeName != null)
             return false;
-        if (!Arrays.equals(content, imageFile.content)) return false;
-        if (mimeType != null ? !mimeType.equals(imageFile.mimeType) : imageFile.mimeType != null) return false;
-        if (originalFileName != null ? !originalFileName.equals(imageFile.originalFileName) : imageFile.originalFileName != null) return false;
+        if (!Arrays.equals(content, dataTransferFile.content)) return false;
+        if (mimeType != null ? !mimeType.equals(dataTransferFile.mimeType) : dataTransferFile.mimeType != null) return false;
+        if (originalFileName != null ? !originalFileName.equals(dataTransferFile.originalFileName) : dataTransferFile.originalFileName != null) return false;
 
         return true;
     }

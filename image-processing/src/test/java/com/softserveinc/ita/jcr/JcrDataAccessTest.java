@@ -1,23 +1,15 @@
 package com.softserveinc.ita.jcr;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.jcr.jackrabbit.JcrSessionCreator;
 import org.apache.commons.io.IOUtils;
-import org.apache.jackrabbit.JcrConstants;
-import org.apache.jackrabbit.api.JackrabbitRepository;
-import org.apache.jackrabbit.api.JackrabbitRepositoryFactory;
-import org.apache.jackrabbit.core.RepositoryFactoryImpl;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.jcr.*;
-import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Calendar;
-import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
@@ -40,10 +32,10 @@ public class JcrDataAccessTest extends BaseJcrTest{
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         byte[] input = IOUtils.toByteArray(is);
-        ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+        DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
-        response = jcrDataAccess.post(imageFile);
-        assertEquals("File added successfully ", response);
+        response = jcrDataAccess.post(dataTransferFile);
+        assertEquals("File added successfully " + nodeName, response);
         IOUtils.closeQuietly(is);
     }
 
@@ -55,17 +47,17 @@ public class JcrDataAccessTest extends BaseJcrTest{
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         byte[] input = IOUtils.toByteArray(is);
-        ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+        DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
-        response = jcrDataAccess.post(imageFile);
-        assertEquals("File added successfully ", response);
+        response = jcrDataAccess.post(dataTransferFile);
+        assertEquals("File added successfully " + nodeName, response);
 
-        ImageFile responseImage = jcrDataAccess.get(nodeName);
+        DataTransferFile responseImage = jcrDataAccess.get(nodeName);
 
-        assertEquals(imageFile.getNodeName(), responseImage.getNodeName());
-        assertNotSame(imageFile.getOriginalFileName(), responseImage.getOriginalFileName());
-        assertEquals(imageFile.getContent().length, responseImage.getContent().length);
-        assertEquals(imageFile.getMimeType(), responseImage.getMimeType());
+        assertEquals(dataTransferFile.getNodeName(), responseImage.getNodeName());
+        assertNotSame(dataTransferFile.getOriginalFileName(), responseImage.getOriginalFileName());
+        assertEquals(dataTransferFile.getContent().length, responseImage.getContent().length);
+        assertEquals(dataTransferFile.getMimeType(), responseImage.getMimeType());
         IOUtils.closeQuietly(is);
     }
 
@@ -79,32 +71,32 @@ public class JcrDataAccessTest extends BaseJcrTest{
 
         InputStream is1 = this.getClass().getResourceAsStream("/" + fileNameFromResources1);
         byte[] input1 = IOUtils.toByteArray(is1);
-        ImageFile imageFile1 = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input1);
+        DataTransferFile dataTransferFile1 = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input1);
 
-        response1 = jcrDataAccess.post(imageFile1);
-        assertEquals("File added successfully ", response1);
+        response1 = jcrDataAccess.post(dataTransferFile1);
+        assertEquals("File added successfully " + nodeName, response1);
 
-        ImageFile responseImage1 = jcrDataAccess.get(nodeName);
+        DataTransferFile responseImage1 = jcrDataAccess.get(nodeName);
 
-        assertEquals(imageFile1.getNodeName(), responseImage1.getNodeName());
-        assertNotSame(imageFile1.getOriginalFileName(), responseImage1.getOriginalFileName());
-        assertEquals(imageFile1.getContent().length, responseImage1.getContent().length);
-        assertEquals(imageFile1.getMimeType(), responseImage1.getMimeType());
+        assertEquals(dataTransferFile1.getNodeName(), responseImage1.getNodeName());
+        assertNotSame(dataTransferFile1.getOriginalFileName(), responseImage1.getOriginalFileName());
+        assertEquals(dataTransferFile1.getContent().length, responseImage1.getContent().length);
+        assertEquals(dataTransferFile1.getMimeType(), responseImage1.getMimeType());
         IOUtils.closeQuietly(is1);
 
         InputStream is2 = this.getClass().getResourceAsStream("/" + fileNameFromResources2);
         byte[] input2 = IOUtils.toByteArray(is2);
-        ImageFile imageFile2 = new ImageFile(nodeName, "input-1024x768.jpg","image/png", input2);
+        DataTransferFile dataTransferFile2 = new DataTransferFile(nodeName, "input-1024x768.jpg","image/png", input2);
 
-        response2 = jcrDataAccess.post(imageFile2);
-        assertEquals("File added successfully ", response2);
+        response2 = jcrDataAccess.post(dataTransferFile2);
+        assertEquals("File added successfully " + nodeName, response2);
 
-        ImageFile responseImage2 = jcrDataAccess.get(nodeName);
+        DataTransferFile responseImage2 = jcrDataAccess.get(nodeName);
 
-        assertEquals(imageFile2.getNodeName(), responseImage2.getNodeName());
-        assertNotSame(imageFile2.getOriginalFileName(), responseImage2.getOriginalFileName());
-        assertEquals(imageFile2.getContent().length, responseImage2.getContent().length);
-        assertEquals(imageFile2.getMimeType(), responseImage2.getMimeType());
+        assertEquals(dataTransferFile2.getNodeName(), responseImage2.getNodeName());
+        assertNotSame(dataTransferFile2.getOriginalFileName(), responseImage2.getOriginalFileName());
+        assertEquals(dataTransferFile2.getContent().length, responseImage2.getContent().length);
+        assertEquals(dataTransferFile2.getMimeType(), responseImage2.getMimeType());
         IOUtils.closeQuietly(is2);
     }
 
@@ -112,7 +104,7 @@ public class JcrDataAccessTest extends BaseJcrTest{
     public void testGetNonExistentImageAndExpectedJcrException() throws JcrException {
         String nodeName = "126";
 
-        ImageFile responseImage = jcrDataAccess.get(nodeName);
+        DataTransferFile responseImage = jcrDataAccess.get(nodeName);
     }
 
     @Test
@@ -124,14 +116,14 @@ public class JcrDataAccessTest extends BaseJcrTest{
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         byte[] input = IOUtils.toByteArray(is);
-        ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+        DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
-        response = jcrDataAccess.post(imageFile);
-        assertEquals("File added successfully ", response);
+        response = jcrDataAccess.post(dataTransferFile);
+        assertEquals("File added successfully " + nodeName, response);
 
         deleteResponse = jcrDataAccess.delete(nodeName);
 
-        assertEquals("File successfully deleted", deleteResponse);
+        assertEquals("File successfully deleted " + nodeName, deleteResponse);
         IOUtils.closeQuietly(is);
     }
 

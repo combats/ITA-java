@@ -1,6 +1,6 @@
 package com.softserveinc.ita.jcr;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
 import org.apache.commons.io.IOUtils;
 import org.apache.jackrabbit.api.JackrabbitRepository;
@@ -32,7 +32,7 @@ public class JcrJackrabbitImplREPOSITORYTest extends BaseJcrTest{
             InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
             byte[] input = IOUtils.toByteArray(is);
             String nodeName = "repositoryInitTest";
-            ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+            DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
             JackrabbitRepository repository = (JackrabbitRepository) rf.getRepository(prop);
 
@@ -40,16 +40,16 @@ public class JcrJackrabbitImplREPOSITORYTest extends BaseJcrTest{
             Node root = session.getRootNode();
             Node file = null;
 
-            if (root.hasNode(imageFile.getNodeName())) {
-                file = root.getNode(imageFile.getNodeName());
+            if (root.hasNode(dataTransferFile.getNodeName())) {
+                file = root.getNode(dataTransferFile.getNodeName());
             } else {
-                ByteArrayInputStream bis = new ByteArrayInputStream(imageFile.getContent());
+                ByteArrayInputStream bis = new ByteArrayInputStream(dataTransferFile.getContent());
 
-                file = root.addNode(imageFile.getNodeName(), "nt:file");
+                file = root.addNode(dataTransferFile.getNodeName(), "nt:file");
                 Node content = file.addNode("jcr:content", "nt:resource");
                 Binary binary = session.getValueFactory().createBinary(bis);
                 content.setProperty("jcr:data", binary);
-                content.setProperty("jcr:mimeType", imageFile.getMimeType());
+                content.setProperty("jcr:mimeType", dataTransferFile.getMimeType());
                 session.save();
             }
 
@@ -64,13 +64,13 @@ public class JcrJackrabbitImplREPOSITORYTest extends BaseJcrTest{
     public void testGetANodeAndExpectedIsSuccess() throws JcrException, IOException {
         prop.setProperty("org.apache.jackrabbit.repository.home", REPOSYTORY_HOME_DIR_CHARACTER + ":\\pkruttc_property\\repo");
         prop.setProperty("org.apache.jackrabbit.repository.conf", REPOSYTORY_HOME_DIR_CHARACTER + ":\\pkruttc_property\\repo" + "\\repository.xml");
-            ImageFile responseImageFile = null;
+            DataTransferFile responseDataTransferFile = null;
             String nodeName = "repositoryInitTest";
             String fileNameFromResources = "input-1024x768.jpg";
 
             InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
             byte[] input = IOUtils.toByteArray(is);
-            ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
+            DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
         try {
 
             JackrabbitRepository repository = (JackrabbitRepository) rf.getRepository(prop);
@@ -90,7 +90,7 @@ public class JcrJackrabbitImplREPOSITORYTest extends BaseJcrTest{
                 Binary bin = session.getNode(path).getProperty("jcr:data").getBinary();
                 stream = bin.getStream();
 
-                responseImageFile = new ImageFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
+                responseDataTransferFile = new DataTransferFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
             } else {
                 throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist");
             }
@@ -100,6 +100,6 @@ public class JcrJackrabbitImplREPOSITORYTest extends BaseJcrTest{
         } finally {
             session.logout();
         }
-        assertEquals(imageFile.getNodeName(), responseImageFile.getNodeName());
+        assertEquals(dataTransferFile.getNodeName(), responseDataTransferFile.getNodeName());
     }
 }

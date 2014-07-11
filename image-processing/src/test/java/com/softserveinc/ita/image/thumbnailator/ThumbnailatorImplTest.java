@@ -1,6 +1,6 @@
 package com.softserveinc.ita.image.thumbnailator;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.image.BaseImageScalTest;
 import com.softserveinc.ita.imageprocessing.ImageProcessor;
 import com.softserveinc.ita.imageprocessing.thumbnailator.ThumbnailatorImpl;
@@ -24,7 +24,7 @@ public class ThumbnailatorImplTest extends BaseImageScalTest {
 
     private  BufferedImage src; // was static
     private  byte[] bytesrc;
-    private ImageFile source;
+    private DataTransferFile source;
 
     private int height = 200;
     private int width = 200;
@@ -33,7 +33,7 @@ public class ThumbnailatorImplTest extends BaseImageScalTest {
     public void setup() throws IOException {
         src = load("time-square.png");
         bytesrc = loadByte("time-square.png");
-        source = new ImageFile("nodeName", "originalName", "image/png", bytesrc);
+        source = new DataTransferFile("nodeName", "originalName", "image/png", bytesrc);
     }
 
     @After
@@ -77,7 +77,7 @@ public class ThumbnailatorImplTest extends BaseImageScalTest {
 
     @Test
     public void testResizeWHExact() throws IOException {
-        ImageFile tmpFile = imageProcessor.doScalr(source, source.getMimeType(), width, height);
+        DataTransferFile tmpFile = imageProcessor.doScalr(source, source.getMimeType(), width, height);
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(tmpFile.getContent()));
         assertEquals(load("time-square-thumbnailator-200x200.png"), img);
     }

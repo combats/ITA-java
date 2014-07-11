@@ -1,9 +1,8 @@
 package com.softserveinc.ita.controller;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.service.ImageService;
-import com.sun.istack.internal.NotNull;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -56,8 +55,8 @@ public class ImageController {
         }
 
         String applicantID = ID + "-image";
-        ImageFile imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
-        String response = imageService.postImage(imageFile);
+        DataTransferFile dataTransferFile = new DataTransferFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+        String response = imageService.postImage(dataTransferFile);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -109,7 +108,7 @@ public class ImageController {
                                            @RequestParam(value = "width", required = false) Integer width,
                                            @PathVariable("ID") String ID) throws JcrException, IOException {
 
-        ImageFile imageResponse;
+        DataTransferFile imageResponse;
         if (height != null && width != null) {
             imageResponse = imageService.getImage(ID + "-image", width, height);
         } else {

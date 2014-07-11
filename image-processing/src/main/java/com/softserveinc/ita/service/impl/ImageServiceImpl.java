@@ -1,6 +1,6 @@
 package com.softserveinc.ita.service.impl;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.imageprocessing.ImageProcessor;
 import com.softserveinc.ita.jcr.JcrDataAccess;
@@ -20,13 +20,13 @@ public class ImageServiceImpl implements ImageService {
 
     /**
      * Executes POST and PUT
-     * @param imageFile - image to save
+     * @param dataTransferFile - image to save
      * @return - String with operation status
      * @throws JcrException
      */
     @Override
-    public String postImage(ImageFile imageFile) throws JcrException {
-        return jcrDataAccess.post(imageFile);
+    public String postImage(DataTransferFile dataTransferFile) throws JcrException {
+        return jcrDataAccess.post(dataTransferFile);
     }
 
     /**
@@ -36,8 +36,8 @@ public class ImageServiceImpl implements ImageService {
      * @throws JcrException
      */
     @Override
-    public ImageFile getImage(String nodeName) throws JcrException {
-        ImageFile respFile = jcrDataAccess.get(nodeName);
+    public DataTransferFile getImage(String nodeName) throws JcrException {
+        DataTransferFile respFile = jcrDataAccess.get(nodeName);
         return respFile;
     }
 
@@ -51,9 +51,9 @@ public class ImageServiceImpl implements ImageService {
      * @throws IOException
      */
     @Override
-    public ImageFile getImage(String nodeName, int width, int height) throws JcrException, IOException {
-        ImageFile tempImFile = jcrDataAccess.get(nodeName);
-        ImageFile respFile = imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), width, height);
+    public DataTransferFile getImage(String nodeName, int width, int height) throws JcrException, IOException {
+        DataTransferFile tempImFile = jcrDataAccess.get(nodeName);
+        DataTransferFile respFile = imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), width, height);
         return respFile;
     }
 
@@ -74,7 +74,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public String postImage64(String nodeName, String source, String mime) throws JcrException {
         byte[] fromSource = Base64.decodeBase64(source);
-        ImageFile tempFile = new ImageFile(nodeName, nodeName, mime, fromSource);
+        DataTransferFile tempFile = new DataTransferFile(nodeName, nodeName, mime, fromSource);
 
         return postImage(tempFile);
     }
@@ -87,7 +87,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public String getImage64(String nodeName) throws JcrException {
-        ImageFile tempFile = getImage(nodeName);
+        DataTransferFile tempFile = getImage(nodeName);
 
         return Base64.encodeBase64String(tempFile.getContent());
     }
@@ -103,7 +103,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public String getImage64(String nodeName, int width, int height) throws JcrException, IOException {
-        ImageFile tempFile = getImage(nodeName, width, height);
+        DataTransferFile tempFile = getImage(nodeName, width, height);
 
         return Base64.encodeBase64String(tempFile.getContent());
     }

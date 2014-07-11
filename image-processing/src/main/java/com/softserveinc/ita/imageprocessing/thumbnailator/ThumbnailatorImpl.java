@@ -1,6 +1,6 @@
 package com.softserveinc.ita.imageprocessing.thumbnailator;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.imageprocessing.ImageProcessor;
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -27,7 +27,7 @@ public class ThumbnailatorImpl implements ImageProcessor {
      * @throws IOException
      */
     @Override
-    public ImageFile doScalr(ImageFile source,String mimeType, int width, int height) throws IOException {
+    public DataTransferFile doScalr(DataTransferFile source,String mimeType, int width, int height) throws IOException {
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(source.getContent()));
         BufferedImage thumbnail = Thumbnails.of(img)
                 .size(height, width)
@@ -50,6 +50,6 @@ public class ThumbnailatorImpl implements ImageProcessor {
         baos.flush();
         baos.close();
 
-        return new ImageFile(source.getNodeName(), source.getOriginalFileName(), source.getMimeType(), imageInByte);
+        return new DataTransferFile(source.getNodeName(), source.getOriginalFileName(), source.getMimeType(), imageInByte);
     }
 }

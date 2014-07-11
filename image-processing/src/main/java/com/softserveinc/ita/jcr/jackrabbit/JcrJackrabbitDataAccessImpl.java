@@ -1,6 +1,6 @@
 package com.softserveinc.ita.jcr.jackrabbit;
 
-import com.softserveinc.ita.controller.entity.ImageFile;
+import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.jcr.JcrDataAccess;
 import org.apache.commons.io.IOUtils;
@@ -23,12 +23,12 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
      * Creates or updates the named node (we will use applicantID`s as Node names)
      * this method handles POST & PUT operations because JCR doesn`t support PUT operation
      * for more details see: org.apache.jackrabbit.commons.JcrUtils
-     * @param imageFile - instance that will be saved in repository
+     * @param dataTransferFile - instance that will be saved in repository
      * @return String with status info
      * @throws JcrException
      */
     @Override
-    public String post(ImageFile imageFile) throws JcrException {
+    public String post(DataTransferFile dataTransferFile) throws JcrException {
         String response = null;
 
         Binary binary = null;
@@ -39,18 +39,18 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
             session = jcrSession.getSession();
             Node root = session.getRootNode();
 
-            ByteArrayInputStream bis = new ByteArrayInputStream(imageFile.getContent());
+            ByteArrayInputStream bis = new ByteArrayInputStream(dataTransferFile.getContent());
             binary = session.getValueFactory().createBinary(bis);
 
-            Node file = getOrAddNode(root, imageFile.getNodeName(), JcrConstants.NT_FILE);
+            Node file = getOrAddNode(root, dataTransferFile.getNodeName(), JcrConstants.NT_FILE);
             Node content = getOrAddNode(file, Node.JCR_CONTENT, JcrConstants.NT_RESOURCE);
 
             content.setProperty(JcrConstants.JCR_DATA, binary);
-            content.setProperty(JcrConstants.JCR_MIMETYPE, imageFile.getMimeType());
+            content.setProperty(JcrConstants.JCR_MIMETYPE, dataTransferFile.getMimeType());
             content.setProperty(JcrConstants.JCR_LASTMODIFIED, lastModified);
             session.save();
 
-            response = "File added successfully " + imageFile.getNodeName();
+            response = "File added successfully " + dataTransferFile.getNodeName();
 
         } catch (RepositoryException e) {
             throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method post ["
@@ -88,8 +88,8 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
      * @throws JcrException
      */
     @Override
-    public ImageFile get(String nodeName) throws JcrException {
-        ImageFile responseImageFile = null;
+    public DataTransferFile get(String nodeName) throws JcrException {
+        DataTransferFile responseDataTransferFile = null;
 
         try {
             session = jcrSession.getSession();
@@ -109,7 +109,7 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
                 originalFileName = nodeName;
                 stream = bin.getStream();
 
-                responseImageFile = new ImageFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
+                responseDataTransferFile = new DataTransferFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
             } else {
                 throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get" +
                                                                          " - such node doesn`t exist");
@@ -121,7 +121,7 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
         } finally {
             session.logout();
         }
-        return responseImageFile;
+        return responseDataTransferFile;
     }
 
     /**
