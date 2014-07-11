@@ -1,13 +1,5 @@
 package com.softserveinc.ita.entity;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 17.06.14
- * Time: 19:06
- * To change this template use File | Settings | File Templates.
- */
-
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
