@@ -1,6 +1,9 @@
 package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,24 +12,45 @@ import com.google.gson.annotations.Expose;
  * Time: 18:58
  * To change this template use File | Settings | File Templates.
  */
+
+@Entity
+@Table(name = "QuestionInformation")
 public class QuestionInformation {
 
     @Expose
-    private String questionInformationID;
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "questionInformation_id", unique = true)
+    private String Id;
+
     @Expose
-    private String questionsBlockId;
-    @Expose
+    @Column(name = "Interview_id")
     private String interviewId;
+
     @Expose
+    @Column(name = "Question")
     private String question = "";
+
     @Expose
+    @Column(name = "Answer")
     private String answer = "";
+
     @Expose
+    @Column(name = "Mark")
     private int mark;
+
     @Expose
+    @Column(name = "Comment")
     private String comment = "";
 
+    @Column(name = "Weight")
     private int weight; //weight for each question
+
+    @Expose
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="questionsBlock_id")
+    private QuestionsBlock questionsBlock;
 
     public QuestionInformation() {
     }
@@ -84,12 +108,12 @@ public class QuestionInformation {
         this.weight = weight;
     }
 
-    public String getQuestionInformationID() {
-        return questionInformationID;
+    public String getId() {
+        return Id;
     }
 
-    public void setQuestionInformationID(String questionInformationID) {
-        this.questionInformationID = questionInformationID;
+    public void setId(String id) {
+        this.Id = id;
     }
 
 
@@ -101,12 +125,12 @@ public class QuestionInformation {
         this.interviewId = interviewId;
     }
 
-    public String getQuestionsBlockId() {
-        return questionsBlockId;
+    public QuestionsBlock getQuestionsBlock() {
+        return questionsBlock;
     }
 
-    public void setQuestionsBlockId(String questionsBlockId) {
-        this.questionsBlockId = questionsBlockId;
+    public void setQuestionsBlock(QuestionsBlock questionsBlock) {
+        this.questionsBlock = questionsBlock;
     }
 
     @Override
@@ -118,18 +142,22 @@ public class QuestionInformation {
 
         if (mark != that.mark) return false;
         if (weight != that.weight) return false;
-        if (questionInformationID != null ? !questionInformationID.equals(that.questionInformationID) : that.questionInformationID != null)
-            return false;
+        if (Id != null ? !Id.equals(that.Id) : that.Id != null) return false;
         if (answer != null ? !answer.equals(that.answer) : that.answer != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
+        if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
+        if (questionsBlock != null ? !questionsBlock.equals(that.questionsBlock) : that.questionsBlock != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = questionInformationID != null ? questionInformationID.hashCode() : 0;
+        int result = Id != null ? Id.hashCode() : 0;
+        result = 31 * result + (questionsBlock != null ? questionsBlock.hashCode() : 0);
+        result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (answer != null ? answer.hashCode() : 0);
         result = 31 * result + mark;
@@ -141,7 +169,9 @@ public class QuestionInformation {
     @Override
     public String toString() {
         return "QuestionInformation{" +
-                "QuestionInformationID='" + questionInformationID + '\'' +
+                "Id='" + Id + '\'' +
+                ", questionsBlock=" + questionsBlock +
+                ", interviewId='" + interviewId + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", mark=" + mark +

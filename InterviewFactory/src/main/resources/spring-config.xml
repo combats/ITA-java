@@ -28,10 +28,11 @@
 
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
-    <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServiceMock"/>
-
-    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesMock"/>
+    <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
+    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesImpl"/>
     <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServicesMock"/>
+
+
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
@@ -40,5 +41,6 @@
     <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
     <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
     <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
+
 
 </beans>

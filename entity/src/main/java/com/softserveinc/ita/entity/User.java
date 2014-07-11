@@ -45,10 +45,10 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "UserQuestions", joinColumns = {
-            @JoinColumn(name = "UserId", referencedColumnName = "Id") }, inverseJoinColumns = {
-            @JoinColumn(name = "QuestionId", referencedColumnName = "Id") })
+    @OneToMany(mappedBy="user")
+//    @JoinTable(name = "UserQuestions", joinColumns = {
+//            @JoinColumn(name = "UserId", referencedColumnName = "Id") }, inverseJoinColumns = {
+//            @JoinColumn(name = "QuestionId", referencedColumnName = "Id") })
 
     private List<Question> questions;
 

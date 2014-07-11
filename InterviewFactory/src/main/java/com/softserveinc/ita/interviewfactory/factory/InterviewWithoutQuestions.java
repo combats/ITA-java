@@ -33,11 +33,12 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
         for (int i = 0; i < Users.size(); i++){
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(httpRequestExecutor.getObjectByID(Users.get(i), User.class));
-            userQuestionsBlock.setQuestionsBlockID(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
+            userQuestionsBlock.setId(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
         interview.setType(InterviewType.InterviewWithoutQuestions);
+        interview.setAppointmentId(appointment.getAppointmentId());
         return interview;
     }
 }

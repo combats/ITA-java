@@ -2,7 +2,7 @@ package com.softserveinc.ita.interviewfactory.controller;
 
 
 import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
+import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
 import exceptions.QuestionsBlockNotFound;

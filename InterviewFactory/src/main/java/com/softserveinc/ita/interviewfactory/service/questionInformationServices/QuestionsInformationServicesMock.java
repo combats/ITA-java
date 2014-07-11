@@ -2,7 +2,7 @@ package com.softserveinc.ita.interviewfactory.service.questionInformationService
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
+import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
@@ -98,7 +98,7 @@ public class QuestionsInformationServicesMock implements QuestionsInformationSer
                 interviewService.getInterviewByAppointmentID("1").getQuestionsBlocks().get(Integer.valueOf(questionInformation.getQuestionsBlockId())).getQuestions();
         //--------------mock--------------------
         for (int i = 0; i < questionInformationList.size(); i++){
-            if (questionInformationList.get(i).getQuestionInformationID().equals(questionInformation.getQuestionInformationID())) {
+            if (questionInformationList.get(i).getId().equals(questionInformation.getId())) {
                 questionInformationList.add(i, questionInformation);
                 return questionInformation;
             }
@@ -115,7 +115,7 @@ public class QuestionsInformationServicesMock implements QuestionsInformationSer
         //--------------mock--------------------
 
         for (int i = 0; i < questionInformationList.size(); i++){
-                if (questionInformationList.get(i).getQuestionInformationID().equals(questionsInformationId)) {
+                if (questionInformationList.get(i).getId().equals(questionsInformationId)) {
                     return questionInformationList.get(i);
                 }
     }
@@ -131,7 +131,7 @@ public class QuestionsInformationServicesMock implements QuestionsInformationSer
     @Override
     public void deleteQuestionInformationById(String questionsInformationId) {
         for (int i = 0; i < questionInformationList.size(); i++){
-            if (questionInformationList.get(i).getQuestionInformationID().equals(questionsInformationId)) {
+            if (questionInformationList.get(i).getId().equals(questionsInformationId)) {
                 questionInformationList.remove(i);
             }
         }

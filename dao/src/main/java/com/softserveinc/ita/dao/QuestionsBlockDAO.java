@@ -1,22 +1,18 @@
-package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
+package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.QuestionsBlock;
-import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
-import exceptions.WrongCriteriaException;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Вадим
- * Date: 07.07.14
- * Time: 20:29
+ * Date: 11.07.14
+ * Time: 13:22
  * To change this template use File | Settings | File Templates.
  */
-public interface QuestionsBlockServices {
+public interface QuestionsBlockDAO {
 
     QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId);
-    QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId);
+    QuestionsBlock getQuestionsBlockFromInterviewByQuestionsBlockId(String questionsBlockId);
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);
     QuestionsBlock getStandardQuestionsBlock();

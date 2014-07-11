@@ -22,7 +22,7 @@ public class Question implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "Id", unique = true)
+    @Column(name = "question_id", unique = true)
     private String questionId;
 
     @Column(name = "Question")
@@ -32,8 +32,14 @@ public class Question implements Serializable {
     @Column(name = "Weight")
     @Expose
     private int weight;
-    @ManyToOne
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="Id")
     private User user;
+
+    public Question() {
+    }
 
     public Question(String questionBody, int weight) {
         QuestionBody = questionBody;

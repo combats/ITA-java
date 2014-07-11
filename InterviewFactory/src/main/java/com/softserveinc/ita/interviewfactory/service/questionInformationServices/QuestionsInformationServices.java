@@ -18,9 +18,9 @@ import java.util.List;
  */
 public interface QuestionsInformationServices {
 
-    QuestionInformation postQuestionInformation(QuestionInformation questionInformation);
-    void deleteQuestionInformationById(String questionsInformationId);
-    QuestionInformation editQuestionInformation(QuestionInformation questionInformation) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException ;
-    QuestionInformation getQuestionInformationById(String questionsInformationId) throws QuestionNotFoundException, InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
+    QuestionInformation getQuestionInformationById(String questionInformationId);
+    String addQuestionInformation(QuestionInformation questionInformation, String userId);
+    void deleteQuestionInformationById(String questionInformationId);
+    String updateQuestionInformation(QuestionInformation questionInformation);
 
 }

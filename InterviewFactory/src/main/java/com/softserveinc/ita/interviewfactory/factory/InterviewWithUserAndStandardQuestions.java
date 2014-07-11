@@ -5,9 +5,6 @@ import com.softserveinc.ita.interviewfactory.service.questionInformationServices
 import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
-import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -53,16 +50,17 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
                 QuestionInformation questionInformation = new QuestionInformation();
                 questionInformation.setQuestion(Questions.get(j).getQuestionBody());
                 questionInformation.setWeight(Questions.get(j).getWeight());
-                questionInformation.setQuestionInformationID(String.valueOf(j));//присваиваем айдишку вопросу, убрать когда будет база
+                questionInformation.setId(String.valueOf(j));//присваиваем айдишку вопросу, убрать когда будет база
                 questionInformation.setQuestionsBlockId(Users.get(i));//привсваиваем вопросу айдишку блока, убрать когда будет база
                 userQuestionInformationList.add(questionInformation);
             }
             userQuestionsBlock.setQuestions(userQuestionInformationList);
-            userQuestionsBlock.setQuestionsBlockID(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
+            userQuestionsBlock.setId(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
         interview.setType(InterviewType.InterviewWithUserAndStandardQuestions);
+        interview.setAppointmentId(appointment.getAppointmentId());
         return interview;
     }
 }

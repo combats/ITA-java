@@ -1,9 +1,8 @@
-package com.softserveinc.ita.interviewfactory.service.mainServices;
+package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;
@@ -18,10 +17,10 @@ import java.util.List;
 public interface InterviewService {
 
     List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException, InterviewNotFoundException;
-    Interview putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException;
+    String putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException;
 
     Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException;
 
     void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException, InterviewNotFoundException;
-    Interview updateInterview(Interview interview) throws HttpRequestException, InterviewNotFoundException;
+    void updateInterview(Interview interview) throws HttpRequestException, InterviewNotFoundException;
 }

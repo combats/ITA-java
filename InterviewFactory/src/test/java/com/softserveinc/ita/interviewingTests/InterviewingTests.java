@@ -10,7 +10,6 @@ import exceptions.InterviewNotFoundException;
 import exceptions.QuestionNotFoundException;
 import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
-import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -110,7 +109,7 @@ public class InterviewingTests extends BaseInterviewingTests {
         String id = "1";
         QuestionInformation questionInformation = questionsInformationServices.getQuestionInformationById(id);
         System.out.println(interviewUtilJson.toJson(questionInformation));
-        assertEquals(questionInformation.getQuestionInformationID(), id);
+        assertEquals(questionInformation.getId(), id);
     }
 
     @Test
@@ -118,7 +117,7 @@ public class InterviewingTests extends BaseInterviewingTests {
         QuestionInformation questionInformation = new QuestionInformation();
         questionInformation.setQuestion("wwwww");
         questionInformation.setQuestionsBlockId("1");
-        questionInformation.setQuestionInformationID("1");
+        questionInformation.setId("1");
         questionInformation.setAnswer("wqwqwq");
         questionInformation.setWeight(2);
         questionInformation.setComment("ererer");
