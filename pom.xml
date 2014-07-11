@@ -108,6 +108,21 @@
         </dependency>
     </dependencies>
     
+    <build>
+>
+>     <plugins>
+>      
+>       <plugin>
+>         <groupId>org.codehaus.mojo</groupId>
+>         <artifactId>cobertura-maven-plugin</artifactId>
+>         <configuration>
+>           <maxmem>256m</maxmem>
+>
+>         </configuration>
+>       </plugin>
+>     </plugins>
+>   </build>
+    
  <distributionManagement>
 
   <repository>
