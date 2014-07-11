@@ -14,9 +14,10 @@ public class User {
     private String email;
     private int age = DEFAULT_USER_AGE;
     private String password;
-    private Set securityRoleCollection;
     private boolean active;
-    private Role role;
+    private Role userRole;
+
+  /*  private Set<Role> securityRoleCollection;*/
 
     public User() {
     }
@@ -67,11 +68,16 @@ public class User {
 
     public void setLogin(String login) {this.email = login;}
 
-    public Set<Role> getSecurityRoleCollection() {return securityRoleCollection;}
+    public Role getUserRole() {return userRole;}
+
+    public void setUserRole(Role userRole) {this.userRole = userRole;}
+
+
+  /*  public Set<Role> getSecurityRoleCollection() {return securityRoleCollection;}
 
     public void setSecurityRoleCollection(Set securityRoleCollection) {
         this.securityRoleCollection = securityRoleCollection;
-    }
+    }*/
 
     @Override
     public String toString() {

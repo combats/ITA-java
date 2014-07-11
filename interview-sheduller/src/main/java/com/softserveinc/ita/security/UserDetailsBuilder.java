@@ -26,9 +26,11 @@ public class UserDetailsBuilder {
 
         List<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (Role role : user.getSecurityRoleCollection()) {
+       /* for (Role role : user.getSecurityRoleCollection()) {
             authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }
+        }*/
+
+        authorities.add(new SimpleGrantedAuthority(user.getUserRole().getRoleName()));
          return new org.springframework.security.core.userdetails.User(username, password, enabled,
                 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }

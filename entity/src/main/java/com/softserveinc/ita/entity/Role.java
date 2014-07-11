@@ -19,10 +19,10 @@ public class Role implements Serializable {
 
     /*@Id
     @GeneratedValue*/
-    private Integer id;
-    private String name;
-    private Collection userCollection;
+    private int id;
+    private String ROLE_name;
 
+    /*private Set<User> userCollection;*/
     public Integer getId() {
         return id;
     }
@@ -31,13 +31,12 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRoleName() {return name;}
+    public String getRoleName() {return ROLE_name;}
 
-    public void setRoleName(String name) {this.name = name;}
-
-    public Collection getUserCollection() {return userCollection;}
-
-    public void setUserCollection(Collection userCollection) {this.userCollection = userCollection;}
+    public void setRoleName(String name) {this.ROLE_name = name;}
 
 
+     /*  public Set<User> getUserCollection() {return userCollection;}
+
+    public void setUserCollection(Set<User> userCollection) {this.userCollection = userCollection;}*/
 }
