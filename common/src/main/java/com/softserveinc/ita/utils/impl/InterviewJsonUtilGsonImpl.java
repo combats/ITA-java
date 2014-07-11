@@ -7,13 +7,6 @@ import com.softserveinc.ita.utils.JsonUtil;
 
 import java.text.DateFormat;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 21.06.14
- * Time: 14:28
- * To change this template use File | Settings | File Templates.
- */
 public class InterviewJsonUtilGsonImpl implements JsonUtil {
     private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
             .setDateFormat(DateFormat.DEFAULT)

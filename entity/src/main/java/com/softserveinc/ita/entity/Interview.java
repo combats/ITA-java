@@ -7,14 +7,6 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 17.06.14
- * Time: 19:05
- * To change this template use File | Settings | File Templates.
- */
-
 @Entity
 @Table(name = "Interview")
 public class Interview {
