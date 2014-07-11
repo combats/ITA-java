@@ -3,6 +3,7 @@ package com.softserveinc.ita.controller;
 import com.softserveinc.ita.controller.entity.ImageFile;
 import com.softserveinc.ita.exception.JcrException;
 import com.softserveinc.ita.service.ImageService;
+import com.sun.istack.internal.NotNull;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,10 +19,6 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value="/repo")
 public class ImageController {
-    private String responce;
-    private ImageFile imageFile;
-    private String applicantID;
-    private ImageFile imageResponce;
 
     @Autowired
     private ImageService imageService;
@@ -44,9 +41,9 @@ public class ImageController {
      * @throws JcrException
      */
 
-    @RequestMapping(value = "/imgfile", method= RequestMethod.POST, consumes = "multipart/form-data")
-    public ResponseEntity<String> postImage(@RequestParam("name") String ID,
-                                                  @RequestParam("file") MultipartFile file) throws IOException, JcrException {
+    @RequestMapping(value = "/imgfile/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
+    public ResponseEntity<String> postImage(@PathVariable("ID") String ID,
+                                            @RequestParam("file") MultipartFile file) throws IOException, JcrException {
         if (file.isEmpty()) {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
@@ -58,39 +55,39 @@ public class ImageController {
             ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
         }
 
-        applicantID = ID + "-image";
-        imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
-        responce = imageService.postImage(imageFile);
-        return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
+        String applicantID = ID + "-image";
+        ImageFile imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+        String response = imageService.postImage(imageFile);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    /**
-     * Receives an image and saves it in JCR repository
-     * @param ID - ID of applicant
-     * @param file - photo of applicant
-     * @return - (JSON) String with operation status
-     * @throws IOException
-     * @throws JcrException
-     */
-    @RequestMapping(value = "/imgfile", method = RequestMethod.PUT, consumes = "multipart/form-data")
-    public ResponseEntity<String> putImage(@RequestParam("name") String ID,
-                                                 @RequestParam("file") MultipartFile file) throws IOException, JcrException {
-        if (file.isEmpty()) {
-            return new ResponseEntity<>("You failed to upload " +
-                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
-        }
-
-        String contentType = file.getContentType();
-        if(!isSupportedFormat(contentType)) {
-            return new ResponseEntity<>("You failed to upload " +
-            ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
-        }
-
-        applicantID = ID + "-image";
-        imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
-        responce = imageService.putImage(imageFile);
-        return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
-    }
+//    /**
+//     * Receives an image and saves it in JCR repository
+//     * @param ID - ID of applicant
+//     * @param file - photo of applicant
+//     * @return - (JSON) String with operation status
+//     * @throws IOException
+//     * @throws JcrException
+//     */
+//    @RequestMapping(value = "/imgfile", method = RequestMethod.PUT, consumes = "multipart/form-data")
+//    public ResponseEntity<String> putImage(@RequestParam("name") String ID,
+//                                                 @RequestParam("file") MultipartFile file) throws IOException, JcrException {
+//        if (file.isEmpty()) {
+//            return new ResponseEntity<>("You failed to upload " +
+//                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
+//        }
+//
+//        String contentType = file.getContentType();
+//        if(!isSupportedFormat(contentType)) {
+//            return new ResponseEntity<>("You failed to upload " +
+//            ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
+//        }
+//
+//        String applicantID = ID + "-image";
+//        ImageFile imageFile = new ImageFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+//        String response = imageService.postImage(imageFile);
+//        return new ResponseEntity<>(response + applicantID, HttpStatus.OK);
+//    }
 
     private boolean isSupportedFormat(String format){
         return  format.equals("image/gif") ||
@@ -107,39 +104,24 @@ public class ImageController {
      * @throws JcrException
      * @throws IOException
      */
-    @RequestMapping(value = "/imgfile/height={value1}&width={value2}", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getImage(@PathVariable("value1") int height,
-                                           @PathVariable("value2") int width,
-                                           @RequestParam("name") String ID) throws JcrException, IOException {
+    @RequestMapping(value = "/imgfile/{ID}", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getImage(@RequestParam(value = "height", required = false) Integer height,
+                                           @RequestParam(value = "width", required = false) Integer width,
+                                           @PathVariable("ID") String ID) throws JcrException, IOException {
 
-        imageResponce = imageService.getImage(ID + "-image", width, height);
+        ImageFile imageResponse;
+        if (height != null && width != null) {
+            imageResponse = imageService.getImage(ID + "-image", width, height);
+        } else {
+            imageResponse = imageService.getImage(ID + "-image");
+        }
         final HttpHeaders headers = new HttpHeaders();
-        String responseMediaType = imageResponce.getMimeType();
+        String responseMediaType = imageResponse.getMimeType();
         if(isSupportedFormat(responseMediaType)){
             headers.setContentType(MediaType.parseMediaType(responseMediaType));
         }
-        headers.setContentLength(imageResponce.getContent().length);
-        return new ResponseEntity<>(imageResponce.getContent(), headers, HttpStatus.OK) ;
-    }
-
-    /**
-     * Returns binary representation of Image in original size
-     * @param ID - ID of applicant
-     * @return - byte array image
-     * @throws JcrException
-     * @throws IOException
-     */
-    @RequestMapping(value = "/imgfile", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> getImageOriginalSize(@RequestParam("name") String ID) throws JcrException, IOException {
-
-        imageResponce = imageService.getImage(ID + "-image");
-        final HttpHeaders headers = new HttpHeaders();
-        String responseMediaType = imageResponce.getMimeType();
-        if(isSupportedFormat(responseMediaType)){
-            headers.setContentType(MediaType.parseMediaType(responseMediaType));
-        }
-        headers.setContentLength(imageResponce.getContent().length);
-        return new ResponseEntity<>(imageResponce.getContent(), headers, HttpStatus.OK) ;
+        headers.setContentLength(imageResponse.getContent().length);
+        return new ResponseEntity<>(imageResponse.getContent(), headers, HttpStatus.OK) ;
     }
 
     /**
@@ -148,10 +130,10 @@ public class ImageController {
      * @return - (JSON) String with operation status
      * @throws JcrException
      */
-    @RequestMapping(value = "/imgfile", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteImage(@RequestParam("name") String ID) throws JcrException {
-        responce = imageService.deleteImage(ID + "-image");
-        return new ResponseEntity<>("You successfully deleted " + ID + "-image", HttpStatus.OK);
+    @RequestMapping(value = "/imgfile/{ID}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteImage(@PathVariable("ID") String ID) throws JcrException {
+        String response = imageService.deleteImage(ID + "-image");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -174,9 +156,9 @@ public class ImageController {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the image is not valid Base64 string.", HttpStatus.BAD_REQUEST);
         }
-        applicantID = ID + "-image";
-        responce = imageService.postImage64(applicantID, string64image, contentType);
-        return new ResponseEntity<>(responce + applicantID, HttpStatus.OK);
+        String applicantID = ID + "-image";
+        String response = imageService.postImage64(applicantID, string64image, contentType);
+        return new ResponseEntity<>(response + applicantID, HttpStatus.OK);
     }
 
     private boolean isValidBase64String(String image) {
@@ -191,30 +173,19 @@ public class ImageController {
      * @return
      * @throws JcrException
      * @throws IOException
-     */
-    @RequestMapping(value = "/img/applicant/{ID}/height={value1}&width={value2}", method = RequestMethod.GET)
-    public ResponseEntity<String> getImage64(@PathVariable("ID") String ID,
-                                             @PathVariable("value1") int height,
-                                             @PathVariable("value2") int width) throws JcrException, IOException {
-        applicantID = ID + "-image";
-        String responseInBase64 = imageService.getImage64(applicantID, width, height);
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.TEXT_PLAIN); // Not sure about this
-        headers.setContentLength(responseInBase64.length());
-        return new ResponseEntity<>(responseInBase64, headers, HttpStatus.OK);
-    }
-
-    /**
-     * Returns Base64 String representation of Image in original size
-     * @param ID - ID of applicant
-     * @return - Base64 encoded String
-     * @throws JcrException
-     * @throws IOException
+     * TODO: check utf-8 in Base64 Strings!
      */
     @RequestMapping(value = "/img/applicant/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<String> getImage64OriginalSize(@PathVariable("ID") String ID) throws JcrException, IOException {
-        applicantID = ID + "-image";
-        String responseInBase64 = imageService.getImage64(applicantID);
+    public ResponseEntity<String> getImage64(@PathVariable("ID") String ID,
+                                             @RequestParam(value = "height", required = false) Integer height,
+                                             @RequestParam(value = "width", required = false) Integer width) throws JcrException, IOException {
+        String applicantID = ID + "-image";
+        String responseInBase64;
+        if(height != null && width != null) {
+            responseInBase64 = imageService.getImage64(applicantID, width, height);
+        } else {
+            responseInBase64 = imageService.getImage64(applicantID);
+        }
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.TEXT_PLAIN); // Not sure about this
         headers.setContentLength(responseInBase64.length());

@@ -27,7 +27,7 @@ public class ThumbnailatorImpl implements ImageProcessor {
      * @throws IOException
      */
     @Override
-    public ImageFile doScalr(ImageFile source,String mimeType, int height, int width) throws IOException {
+    public ImageFile doScalr(ImageFile source,String mimeType, int width, int height) throws IOException {
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(source.getContent()));
         BufferedImage thumbnail = Thumbnails.of(img)
                 .size(height, width)

@@ -65,23 +65,6 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
     }
 
     @Test
-    public void testPutImageAndExpectedIsOk() throws JcrException, IOException {
-        String nodeName = "131";
-
-        String fileNameFromResources = "input-1024x768.jpg";
-        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
-        byte[] input = IOUtils.toByteArray(is);
-        ImageFile imageFile = new ImageFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
-
-        when(jcrDataAccess.post(imageFile)).thenReturn("File added successfully ");
-        String response = imageService.putImage(imageFile);
-        verify(jcrDataAccess, times(1)).post(imageFile);
-        assertEquals("File added successfully ", response);
-
-        IOUtils.closeQuietly(is);
-    }
-
-    @Test
     public void testGetImageAndExpectedIsOk() throws JcrException, IOException {
         String nodeName = "131";
         int height = 200;

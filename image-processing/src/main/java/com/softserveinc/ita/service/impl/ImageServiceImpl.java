@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.IOException;
 
 public class ImageServiceImpl implements ImageService {
-    private ImageFile tempImFile;
-    private ImageFile respFile;
 
     @Autowired
     private ImageProcessor imageProcessor;
@@ -20,20 +18,14 @@ public class ImageServiceImpl implements ImageService {
     @Autowired
     private JcrDataAccess jcrDataAccess;
 
-    @Override
-    public String postImage(ImageFile imageFile) throws JcrException {
-        return jcrDataAccess.post(imageFile);
-    }
-
     /**
-     * We are using jcrDataAccess.post() because JCR combines PUT & POST into one POST operation,
-     * overriding data if necessary
-     * @param imageFile - Image file
+     * Executes POST and PUT
+     * @param imageFile - image to save
      * @return - String with operation status
      * @throws JcrException
      */
     @Override
-    public String putImage(ImageFile imageFile) throws JcrException {
+    public String postImage(ImageFile imageFile) throws JcrException {
         return jcrDataAccess.post(imageFile);
     }
 
@@ -45,7 +37,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public ImageFile getImage(String nodeName) throws JcrException {
-        respFile = jcrDataAccess.get(nodeName);
+        ImageFile respFile = jcrDataAccess.get(nodeName);
         return respFile;
     }
 
@@ -59,9 +51,9 @@ public class ImageServiceImpl implements ImageService {
      * @throws IOException
      */
     @Override
-    public ImageFile getImage(String nodeName, int height, int width) throws JcrException, IOException {
-        tempImFile = jcrDataAccess.get(nodeName);
-        respFile = imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), height,width);
+    public ImageFile getImage(String nodeName, int width, int height) throws JcrException, IOException {
+        ImageFile tempImFile = jcrDataAccess.get(nodeName);
+        ImageFile respFile = imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), width, height);
         return respFile;
     }
 
@@ -110,8 +102,8 @@ public class ImageServiceImpl implements ImageService {
      * @throws IOException
      */
     @Override
-    public String getImage64(String nodeName, int height, int width) throws JcrException, IOException {
-        ImageFile tempFile = getImage(nodeName, height, width);
+    public String getImage64(String nodeName, int width, int height) throws JcrException, IOException {
+        ImageFile tempFile = getImage(nodeName, width, height);
 
         return Base64.encodeBase64String(tempFile.getContent());
     }

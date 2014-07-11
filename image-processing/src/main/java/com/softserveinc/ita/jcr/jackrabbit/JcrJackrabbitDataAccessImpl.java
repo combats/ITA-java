@@ -50,7 +50,7 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
             content.setProperty(JcrConstants.JCR_LASTMODIFIED, lastModified);
             session.save();
 
-            response = "File added successfully ";
+            response = "File added successfully " + imageFile.getNodeName();
 
         } catch (RepositoryException e) {
             throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method post ["
@@ -142,7 +142,7 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
                 file.remove();
                 session.save();
 
-                delStatus = "File successfully deleted";
+                delStatus = "File successfully deleted " + nodeName;
             } else {
                 throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete" +
                                                                             " - such node doesn`t exist");

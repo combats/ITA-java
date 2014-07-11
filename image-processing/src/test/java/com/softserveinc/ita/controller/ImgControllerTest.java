@@ -18,6 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -38,31 +39,47 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testPOSTImageAndExpectedIsOk() throws Exception {
-        String endpoint = "/repo/imgfile";
+        String endpoint = "/repo/imgfile/123";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input-1024x768.jpg", "image/jpeg", is);
-        String name = "123";
 
         mockMvc.perform(fileUpload(endpoint)
-                .file(multipartFile)
-                .param("name", name))
+                .file(multipartFile))
                 .andDo(print())
-                .andExpect(content().string("File added successfully " + name + "-image"))
+                .andExpect(content().string("File added successfully " + "123" + "-image"))
                 .andExpect(status().isOk());
     }
 
+//    @Test //TODO: always failing
+//    public void testPUTImageAndExpectedIsOk() throws Exception {
+//        String endpoint = "/repo/imgfile/163";
+//        String fileNameFromResources = "input-1024x768.jpg";
+//
+//        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+//        MockMultipartFile multipartFile = new MockMultipartFile("file", "input-1024x768.jpg", "image/jpeg", is);
+//        HashMap<String, String> contentTypeParams = new HashMap<>();
+//        contentTypeParams.put("boundary", "265001916915724");
+//        MediaType mediaType = new MediaType("multipart", "form-data", contentTypeParams);
+//
+//        mockMvc.perform(put(endpoint)
+//                .content(multipartFile.getBytes())
+//                .contentType(mediaType))
+//                .andDo(print())
+//                .andExpect(content().string("File added successfully " + "163" + "-image"))
+//                .andExpect(status().isOk());
+//    }
+
     @Test
     public void testPOSTImageAndExpectedIsNotOk() throws Exception {
-        String endpoint = "/repo/imgfile";
+        String endpoint = "/repo/imgfile/160";
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input.txt", "text/plain", "Hello World".getBytes());
-        String name = "123";
+        String name = "160";
 
         mockMvc.perform(fileUpload(endpoint)
-                .file(multipartFile)
-                .param("name", name))
+                .file(multipartFile))
                 .andExpect(content().string("You failed to upload " + name + "-image" + " because the file has incorrect type: " + multipartFile.getContentType()))
                 .andExpect(status().isBadRequest())
                 .andDo(print());
@@ -70,14 +87,12 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageAndExpectedIsOk() throws Exception {
-        String endpointPost = "/repo/imgfile";
-        String endpointGet = "/repo/imgfile/height=200&width=200";
+        String endpointPost = "/repo/imgfile/124";
+        String endpointGet = "/repo/imgfile/124?height=200&width=200";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input-1024x768.jpg", "image/jpeg", is);
-        String name = "124";
-
 
         BufferedImage img = ImageIO.read(this.getClass().getResourceAsStream("/" + fileNameFromResources));
         BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, 200, 200);
@@ -89,14 +104,11 @@ public class ImgControllerTest extends BaseMVCTest {
 
 
         mockMvc.perform(fileUpload(endpointPost)
-                .file(multipartFile)
-                .param("name", name))
+                .file(multipartFile))
+                .andDo(print())
                 .andExpect(status().isOk());
 
-        String name1 = "124";
-
-        mockMvc.perform(get(endpointGet)
-                .param("name", name1))
+        mockMvc.perform(get(endpointGet))
                 .andDo(print())
                 .andExpect(content().bytes(imageInByte))
                 .andExpect(content().contentType("image/jpeg"))
@@ -105,10 +117,9 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageAndExpectedIsError() throws Exception {
-        String endpointGet = "/repo/imgfile/height=200&width=200";
-        String name2 = "125";
-        mockMvc.perform(get(endpointGet)
-                .param("name", name2))
+        String endpointGet = "/repo/imgfile/125?height=200&width=200";
+
+        mockMvc.perform(get(endpointGet))
                 .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
@@ -116,33 +127,27 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testDELETENodeAndExpectedIsOk() throws Exception {
-        String endpoint = "/repo/imgfile";
+        String endpoint = "/repo/imgfile/126";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input-1024x768.jpg", "image/jpeg", is);
-        String name = "126";
 
         mockMvc.perform(fileUpload(endpoint)
-                .file(multipartFile)
-                .param("name", name))
+                .file(multipartFile))
                 .andExpect(status().isOk());
 
-        String name3 = "126";
-
-        mockMvc.perform(delete(endpoint)
-                .param("name", name3))
+        mockMvc.perform(delete(endpoint))
                 .andDo(print())
-                .andExpect(content().string("You successfully deleted " + name3 + "-image"))
+                .andExpect(content().string("File successfully deleted " + "126" + "-image"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDELETENodeAndExpectedIsError() throws Exception {
-        String endpoint = "/repo/imgfile";
-        String name5 = "127";
-        mockMvc.perform(delete(endpoint)
-                .param("name", name5))
+        String endpoint = "/repo/imgfile/127";
+
+        mockMvc.perform(delete(endpoint))
                 .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
@@ -150,26 +155,21 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageOriginalsizeAndExpectedIsOk() throws Exception {
-        String endpointPost = "/repo/imgfile";
-        String endpointGet = "/repo/imgfile";
+        String endpointPost = "/repo/imgfile/128";
+        String endpointGet = "/repo/imgfile/128";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input-1024x768.jpg", "image/jpeg", is);
-        String name = "128";
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
 
         mockMvc.perform(fileUpload(endpointPost)
-                .file(multipartFile)
-                .param("name", name))
+                .file(multipartFile))
                 .andExpect(status().isOk());
 
-        String name1 = "128";
-
-        mockMvc.perform(get(endpointGet)
-                .param("name", name1))
+        mockMvc.perform(get(endpointGet))
                 .andDo(print())
                 .andExpect(content().bytes(imageInByte))
                 .andExpect(content().contentType("image/jpeg"))
@@ -209,7 +209,7 @@ public class ImgControllerTest extends BaseMVCTest {
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        String endpointGet = "/repo/img/applicant/100/height=200&width=200";
+        String endpointGet = "/repo/img/applicant/100?height=200&width=200";
 
         BufferedImage img = ImageIO.read(this.getClass().getResourceAsStream("/" + fileNameFromResources));
         BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, 200, 200);
@@ -231,7 +231,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetImage64OriginalSizeAndExpectedIsOk() throws Exception {
-        String fileNameFromResources = "input-imgscalr-Auto-200x200.jpg";
+        String fileNameFromResources = "time-square-imgscarl-resize-QUALITY-AUTO-10x10.png";
         String endpointPost = "/repo/img/applicant/101";
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
@@ -241,15 +241,13 @@ public class ImgControllerTest extends BaseMVCTest {
 
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
-                .header("Content-Type", "image/jpeg"))
+                .header("Content-Type", "image/png"))
                 .andDo(print())
                 .andExpect(status().isOk());
 
         String endpointGet = "/repo/img/applicant/101";
 
-        mockMvc.perform(get(endpointGet)
-                .param("string64image", imageInString)
-                .header("Content-Type", "image/jpeg"))
+        mockMvc.perform(get(endpointGet))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(imageInString));
@@ -257,7 +255,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetImage64AndExpectedIsJcrException() throws Exception {
-        String endpointGet = "/repo/img/applicant/nonexistent/height=200&width=200";
+        String endpointGet = "/repo/img/applicant/nonexistent?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
                 .andDo(print())

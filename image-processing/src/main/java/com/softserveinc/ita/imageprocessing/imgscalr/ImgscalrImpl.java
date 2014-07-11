@@ -27,7 +27,7 @@ public class ImgscalrImpl implements ImageProcessor {
      * @throws IOException
      */
     @Override
-    public ImageFile doScalr(ImageFile source,String mimeType, int height, int width) throws IOException {
+    public ImageFile doScalr(ImageFile source,String mimeType, int width, int height) throws IOException {
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(source.getContent()));
         BufferedImage scaledImg = Scalr.resize(img, Scalr.Method.QUALITY, Scalr.Mode.AUTOMATIC, width, height);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
