@@ -5,7 +5,9 @@ import com.softserveinc.ita.service.ApplicantService;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ApplicantServiceImpl implements ApplicantService {
     @Autowired
     private HttpRequestExecutor httpRequestExecutor;
