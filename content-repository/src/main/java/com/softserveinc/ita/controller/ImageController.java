@@ -2,6 +2,7 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
+import com.softserveinc.ita.exception.RoutingException;
 import com.softserveinc.ita.service.DocumentService;
 import com.softserveinc.ita.service.ImageService;
 import org.apache.commons.codec.binary.Base64;
@@ -48,12 +49,16 @@ public class ImageController {
      * @throws JcrException
      */
 
-    @RequestMapping(value = "/imgfile/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
-    public ResponseEntity<String> postImage(@PathVariable("ID") String ID,
-                                            @RequestParam("file") MultipartFile file) throws IOException, JcrException {
+    @RequestMapping(value = "/imgfile/{client}/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
+    public ResponseEntity<String> postImage(@PathVariable("client") String client,
+                                            @PathVariable("ID") String ID,
+                                            @RequestParam("file") MultipartFile file) throws IOException, JcrException, RoutingException {
+        if(!isValidPathVariable(client)) {
+            throw new RoutingException();
+        }
         if (file.isEmpty()) {
             return new ResponseEntity<>("You failed to upload " +
-                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
+                    ID + IMAGE_SUFFIX + " because the file was empty.", HttpStatus.BAD_REQUEST);
         }
 
         String contentType = file.getContentType();
@@ -61,11 +66,24 @@ public class ImageController {
             return new ResponseEntity<>("You failed to upload " +
             ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
         }
-
-        String applicantID = ID + IMAGE_SUFFIX;
+        String applicantID;
+        if(detectClient(client)){
+            applicantID = ID + APPLICANT_SUFFIX + IMAGE_SUFFIX;
+        } else {
+            applicantID = ID + USER_SUFFIX + IMAGE_SUFFIX;
+        }
         DataTransferFile dataTransferFile = new DataTransferFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
         String response = imageService.postImage(dataTransferFile);
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private boolean isValidPathVariable(String client) {
+        return client.equals("applicant") ||
+               client.equals("user");
+    }
+
+    private boolean detectClient(String client) {
+        return client.equals("applicant");
     }
 
 //    /**
@@ -111,16 +129,25 @@ public class ImageController {
      * @throws JcrException
      * @throws IOException
      */
-    @RequestMapping(value = "/imgfile/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "/imgfile/{client}/{ID}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImage(@RequestParam(value = "height", required = false) Integer height,
                                            @RequestParam(value = "width", required = false) Integer width,
-                                           @PathVariable("ID") String ID) throws JcrException, IOException {
-
+                                           @PathVariable("ID") String ID,
+                                           @PathVariable("client") String client) throws JcrException, IOException, RoutingException {
+        if(!isValidPathVariable(client)) {
+            throw new RoutingException();
+        }
+        String applicantID;
+        if(detectClient(client)){
+            applicantID = ID + APPLICANT_SUFFIX + IMAGE_SUFFIX;
+        } else {
+            applicantID = ID + USER_SUFFIX + IMAGE_SUFFIX;
+        }
         DataTransferFile imageResponse;
         if (height != null && width != null) {
-            imageResponse = imageService.getImage(ID + IMAGE_SUFFIX, width, height);
+            imageResponse = imageService.getImage(applicantID, width, height);
         } else {
-            imageResponse = imageService.getImage(ID + IMAGE_SUFFIX);
+            imageResponse = imageService.getImage(applicantID);
         }
         final HttpHeaders headers = new HttpHeaders();
         String responseMediaType = imageResponse.getMimeType();
@@ -137,9 +164,20 @@ public class ImageController {
      * @return - (JSON) String with operation status
      * @throws JcrException
      */
-    @RequestMapping(value = "/imgfile/{ID}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteImage(@PathVariable("ID") String ID) throws JcrException {
-        String response = imageService.deleteImage(ID + IMAGE_SUFFIX);
+    @RequestMapping(value = "/imgfile/{client}/{ID}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteImage(@PathVariable("client") String client,
+                                              @PathVariable("ID") String ID) throws JcrException, RoutingException {
+
+        if(!isValidPathVariable(client)) {
+            throw new RoutingException();
+        }
+        String applicantID;
+        if(detectClient(client)){
+            applicantID = ID + APPLICANT_SUFFIX + IMAGE_SUFFIX;
+        } else {
+            applicantID = ID + USER_SUFFIX + IMAGE_SUFFIX;
+        }
+        String response = imageService.deleteImage(applicantID);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -151,10 +189,14 @@ public class ImageController {
      * @return (JSON) String with operation status
      * @throws JcrException
      */
-    @RequestMapping(value = "/img/applicant/{ID}", method = RequestMethod.POST)
+    @RequestMapping(value = "/img/{client}/{ID}", method = RequestMethod.POST)
     public ResponseEntity<String> postImage64(@PathVariable("ID") String ID,
+                                              @PathVariable("client") String client,
                                               @RequestHeader("Content-Type") String contentType,
-                                              @RequestParam("string64image") String string64image) throws JcrException {
+                                              @RequestParam("string64image") String string64image) throws JcrException, RoutingException {
+        if(!isValidPathVariable(client)) {
+            throw new RoutingException();
+        }
         if(string64image == null) {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
@@ -163,7 +205,12 @@ public class ImageController {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the image is not valid Base64 string.", HttpStatus.BAD_REQUEST);
         }
-        String applicantID = ID + IMAGE_SUFFIX;
+        String applicantID;
+        if(detectClient(client)){
+            applicantID = ID + APPLICANT_SUFFIX + IMAGE_SUFFIX;
+        } else {
+            applicantID = ID + USER_SUFFIX + IMAGE_SUFFIX;
+        }
         String response = imageService.postImage64(applicantID, string64image, contentType);
         return new ResponseEntity<>(response + applicantID, HttpStatus.OK);
     }
@@ -182,11 +229,20 @@ public class ImageController {
      * @throws IOException
      * TODO: check utf-8 in Base64 Strings!
      */
-    @RequestMapping(value = "/img/applicant/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<String> getImage64(@PathVariable("ID") String ID,
+    @RequestMapping(value = "/img/{client}/{ID}", method = RequestMethod.GET)
+    public ResponseEntity<String> getImage64(@PathVariable("client") String client,
+                                             @PathVariable("ID") String ID,
                                              @RequestParam(value = "height", required = false) Integer height,
-                                             @RequestParam(value = "width", required = false) Integer width) throws JcrException, IOException {
-        String applicantID = ID + IMAGE_SUFFIX;
+                                             @RequestParam(value = "width", required = false) Integer width) throws JcrException, IOException, RoutingException {
+        if(!isValidPathVariable(client)) {
+            throw new RoutingException();
+        }
+        String applicantID ;
+        if(detectClient(client)){
+            applicantID = ID + APPLICANT_SUFFIX + IMAGE_SUFFIX;
+        } else {
+            applicantID = ID + USER_SUFFIX + IMAGE_SUFFIX;
+        }
         String responseInBase64;
         if(height != null && width != null) {
             responseInBase64 = imageService.getImage64(applicantID, width, height);
@@ -264,6 +320,11 @@ public class ImageController {
     @ExceptionHandler(JcrException.class)
     public ResponseEntity<String> handleException(JcrException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(RoutingException.class)
+    public ResponseEntity<String> handleException(RoutingException ex) {
+        return new ResponseEntity<>("You failed to upload because of invalid path: must contain %applicant% or %user% in it.", HttpStatus.BAD_REQUEST);
     }
 
     /**
