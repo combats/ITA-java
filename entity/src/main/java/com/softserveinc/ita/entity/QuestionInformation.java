@@ -2,13 +2,6 @@ package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 18.06.14
- * Time: 18:58
- * To change this template use File | Settings | File Templates.
- */
 public class QuestionInformation {
 
     @Expose
