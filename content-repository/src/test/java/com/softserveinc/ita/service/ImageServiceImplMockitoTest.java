@@ -49,7 +49,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testPostImageAndExpectedIsOk() throws IOException, JcrException {
-        String nodeName = "130";
+        String nodeName = "testImageService100";
 
         String fileNameFromResources = "input-1024x768.jpg";
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -66,7 +66,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testGetImageAndExpectedIsOk() throws JcrException, IOException {
-        String nodeName = "131";
+        String nodeName = "testImageService101";
         int height = 200;
         int width = 200;
 
@@ -76,7 +76,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         DataTransferFile dataTransferFile = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", input);
 
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(input));
-            BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, height, width);
+            BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, width, height);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(scaledImg, "jpg", baos);
             byte[] imageInByte = baos.toByteArray();
@@ -86,12 +86,12 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         DataTransferFile scaledPic = new DataTransferFile(nodeName, "input-1024x768.jpg","image/jpeg", imageInByte);
 
         when(jcrDataAccess.get(nodeName)).thenReturn(dataTransferFile);
-        when(imageProcessor.doScalr(dataTransferFile, dataTransferFile.getMimeType(), height, width)).thenReturn(scaledPic);
+        when(imageProcessor.doScalr(dataTransferFile, dataTransferFile.getMimeType(), width, height)).thenReturn(scaledPic);
 
-        DataTransferFile responseFile = imageService.getImage(nodeName, height, width);
+        DataTransferFile responseFile = imageService.getImage(nodeName, width, height);
 
         verify(jcrDataAccess, times(1)).get(nodeName);
-        verify(imageProcessor, times(1)).doScalr(dataTransferFile, dataTransferFile.getMimeType(), height, width);
+        verify(imageProcessor, times(1)).doScalr(dataTransferFile, dataTransferFile.getMimeType(), width, height);
         assertEquals(scaledPic.getContent().length, responseFile.getContent().length);
 
         IOUtils.closeQuietly(is);
@@ -99,7 +99,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testGetImageInOriginalSizeAndExpectedIsOk() throws JcrException, IOException {
-        String nodeName = "131";
+        String nodeName = "testImageService101";
 
         String fileNameFromResources = "input-1024x768.jpg";
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -117,19 +117,19 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test(expected = JcrException.class)
     public void testGetNonExistentImageAndExpectedJcrException() throws JcrException, IOException {
-        String nodeName = "Non-Existent-nodeName";
+        String nodeName = "testImageServiceNonExistent";
         int height = 200;
         int width = 200;
 
         when(jcrDataAccess.get(nodeName)).thenThrow(new JcrException());
-        DataTransferFile responseFile = imageService.getImage(nodeName, height, width);
+        DataTransferFile responseFile = imageService.getImage(nodeName, width, height);
         verify(jcrDataAccess, times(1)).get(nodeName);
         assertNull(responseFile);
     }
 
     @Test
     public void testDeleteImageAndExpectedIsOk() throws JcrException, IOException {
-        String nodeName = "132";
+        String nodeName = "testImageService102";
 
         String fileNameFromResources = "input-1024x768.jpg";
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -151,7 +151,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test(expected = JcrException.class)
     public void TestDeleteNonExistentImageAndExpectedJcrException() throws JcrException {
-        String nodeName = "new-Non-Existent-nodeName";
+        String nodeName = "testImageServiceNonExistent";
 
         when(jcrDataAccess.delete(nodeName)).thenThrow(new JcrException());
         String delStatus = imageService.deleteImage(nodeName);
@@ -161,7 +161,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testPostImage64AndExpectedIsOk() throws IOException, JcrException {
-        String nodeName = "133";
+        String nodeName = "testImageService103";
 
         String fileNameFromResources = "input-1024x768.jpg";
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -181,7 +181,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testGetImage64AndExpectedIsOk() throws IOException, JcrException {
-        String nodeName = "133";
+        String nodeName = "testImageService103";
         int height = 200;
         int width = 200;
 
@@ -191,7 +191,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         DataTransferFile dataTransferFile = new DataTransferFile(nodeName, nodeName,"image/jpeg", input);
 
             BufferedImage img = ImageIO.read(new ByteArrayInputStream(input));
-            BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, height, width);
+            BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, width, height);
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             ImageIO.write(scaledImg, "jpg", baos);
             byte[] imageInByte = baos.toByteArray();
@@ -202,12 +202,12 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         DataTransferFile scaledPic = new DataTransferFile(nodeName, nodeName,"image/jpeg", imageInByte);
 
         when(jcrDataAccess.get(nodeName)).thenReturn(dataTransferFile);
-        when(imageProcessor.doScalr(dataTransferFile, dataTransferFile.getMimeType(), height, width)).thenReturn(scaledPic);
+        when(imageProcessor.doScalr(dataTransferFile, dataTransferFile.getMimeType(), width, height)).thenReturn(scaledPic);
 
-        String response64 = imageService.getImage64(nodeName, height, width);
+        String response64 = imageService.getImage64(nodeName, width, height);
 
         verify(jcrDataAccess, times(1)).get(nodeName);
-        verify(imageProcessor, times(1)).doScalr(dataTransferFile, dataTransferFile.getMimeType(), height, width);
+        verify(imageProcessor, times(1)).doScalr(dataTransferFile, dataTransferFile.getMimeType(), width, height);
         assertEquals(image64, response64);
 
         IOUtils.closeQuietly(is);
@@ -215,7 +215,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test
     public void testGetImage64InOriginalSizeAndExpectedIsOk() throws IOException, JcrException {
-        String nodeName = "133";
+        String nodeName = "testImageService103";
 
         String fileNameFromResources = "input-1024x768.jpg";
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -235,12 +235,12 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
     @Test(expected = JcrException.class)
     public void testGetImage64WithNonExistentNodeNameAndExpectedIsJcrException() throws JcrException, IOException {
-        String nodeName = "Non-Existent-nodeName3";
+        String nodeName = "testImageServiceNonExistent";
         int height = 200;
         int width = 200;
 
         when(jcrDataAccess.get(nodeName)).thenThrow(new JcrException());
-        String response64 = imageService.getImage64(nodeName, height, width);
+        String response64 = imageService.getImage64(nodeName, width, height);
         verify(jcrDataAccess, times(1)).get(nodeName);
         assertNull(response64);
     }

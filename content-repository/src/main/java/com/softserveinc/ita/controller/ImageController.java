@@ -2,6 +2,7 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.controller.entity.DataTransferFile;
 import com.softserveinc.ita.exception.JcrException;
+import com.softserveinc.ita.service.DocumentService;
 import com.softserveinc.ita.service.ImageService;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,16 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value="/repo")
 public class ImageController {
+    private static final String IMAGE_SUFFIX = "-image";
+    private static final String DOCUMENT_SUFFIX = "-document";
+    private static final String APPLICANT_SUFFIX = "-applicant";
+    private static final String USER_SUFFIX = "-user";
 
     @Autowired
     private ImageService imageService;
+
+    @Autowired
+    private DocumentService documentService;
 
     /**
      * Needed only for the tests with Tomcat
@@ -49,12 +57,12 @@ public class ImageController {
         }
 
         String contentType = file.getContentType();
-        if(!isSupportedFormat(contentType)) {
+        if(!isSupportedFormatForImage(contentType)) {
             return new ResponseEntity<>("You failed to upload " +
             ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
         }
 
-        String applicantID = ID + "-image";
+        String applicantID = ID + IMAGE_SUFFIX;
         DataTransferFile dataTransferFile = new DataTransferFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
         String response = imageService.postImage(dataTransferFile);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -77,7 +85,7 @@ public class ImageController {
 //        }
 //
 //        String contentType = file.getContentType();
-//        if(!isSupportedFormat(contentType)) {
+//        if(!isSupportedFormatForImage(contentType)) {
 //            return new ResponseEntity<>("You failed to upload " +
 //            ID + "-image" + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
 //        }
@@ -88,7 +96,7 @@ public class ImageController {
 //        return new ResponseEntity<>(response + applicantID, HttpStatus.OK);
 //    }
 
-    private boolean isSupportedFormat(String format){
+    private boolean isSupportedFormatForImage(String format){
         return  format.equals("image/gif") ||
                 format.equals("image/jpeg") ||
                 format.equals("image/png");
@@ -110,13 +118,13 @@ public class ImageController {
 
         DataTransferFile imageResponse;
         if (height != null && width != null) {
-            imageResponse = imageService.getImage(ID + "-image", width, height);
+            imageResponse = imageService.getImage(ID + IMAGE_SUFFIX, width, height);
         } else {
-            imageResponse = imageService.getImage(ID + "-image");
+            imageResponse = imageService.getImage(ID + IMAGE_SUFFIX);
         }
         final HttpHeaders headers = new HttpHeaders();
         String responseMediaType = imageResponse.getMimeType();
-        if(isSupportedFormat(responseMediaType)){
+        if(isSupportedFormatForImage(responseMediaType)){
             headers.setContentType(MediaType.parseMediaType(responseMediaType));
         }
         headers.setContentLength(imageResponse.getContent().length);
@@ -131,7 +139,7 @@ public class ImageController {
      */
     @RequestMapping(value = "/imgfile/{ID}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteImage(@PathVariable("ID") String ID) throws JcrException {
-        String response = imageService.deleteImage(ID + "-image");
+        String response = imageService.deleteImage(ID + IMAGE_SUFFIX);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -155,7 +163,7 @@ public class ImageController {
             return new ResponseEntity<>("You failed to upload " +
                     ID + " because the image is not valid Base64 string.", HttpStatus.BAD_REQUEST);
         }
-        String applicantID = ID + "-image";
+        String applicantID = ID + IMAGE_SUFFIX;
         String response = imageService.postImage64(applicantID, string64image, contentType);
         return new ResponseEntity<>(response + applicantID, HttpStatus.OK);
     }
@@ -178,7 +186,7 @@ public class ImageController {
     public ResponseEntity<String> getImage64(@PathVariable("ID") String ID,
                                              @RequestParam(value = "height", required = false) Integer height,
                                              @RequestParam(value = "width", required = false) Integer width) throws JcrException, IOException {
-        String applicantID = ID + "-image";
+        String applicantID = ID + IMAGE_SUFFIX;
         String responseInBase64;
         if(height != null && width != null) {
             responseInBase64 = imageService.getImage64(applicantID, width, height);
@@ -189,6 +197,63 @@ public class ImageController {
         headers.setContentType(MediaType.TEXT_PLAIN); // Not sure about this
         headers.setContentLength(responseInBase64.length());
         return new ResponseEntity<>(responseInBase64, headers, HttpStatus.OK);
+    }
+
+    /**
+     *
+     * @param ID
+     * @param file
+     * @return
+     * @throws IOException
+     * @throws JcrException
+     */
+    @RequestMapping(value = "/doc/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
+    public ResponseEntity<String> postDocument(@PathVariable("ID") String ID,
+                                               @RequestParam("file") MultipartFile file) throws IOException, JcrException {
+        if (file.isEmpty()) {
+            return new ResponseEntity<>("You failed to upload " +
+                    ID + " because the file was empty.", HttpStatus.BAD_REQUEST);
+        }
+
+        String contentType = file.getContentType();
+        if(!isSupportedFormatForDocument(contentType)) {
+            return new ResponseEntity<>("You failed to upload " +
+                    ID + APPLICANT_SUFFIX + DOCUMENT_SUFFIX + " because the file has incorrect type: " + file.getContentType(), HttpStatus.BAD_REQUEST);
+        }
+
+        String applicantID = ID + APPLICANT_SUFFIX + DOCUMENT_SUFFIX;
+        DataTransferFile dataTransferFile = new DataTransferFile(applicantID, file.getOriginalFilename(),file.getContentType(), file.getBytes());
+        String response = documentService.postDocument(dataTransferFile);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    private boolean isSupportedFormatForDocument(String contentType) {
+        return contentType.equals("text/plain") ||
+                contentType.equals("application/pdf") ||
+                contentType.equals("application/vnd.oasis.opendocument.text") || // OpenDocument
+                contentType.equals("application/msword") || // Microsoft Word files
+                contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || // MS Word 2007
+                contentType.equals("text/rtf");
+    }
+
+    @RequestMapping(value = "/doc/{ID}", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> getDocument(@PathVariable("ID") String ID) throws JcrException, IOException {
+
+        DataTransferFile documentResponse;
+        documentResponse = documentService.getDocument(ID + APPLICANT_SUFFIX + DOCUMENT_SUFFIX);
+        final HttpHeaders headers = new HttpHeaders();
+        String responseMediaType = documentResponse.getMimeType();
+        if(isSupportedFormatForDocument(responseMediaType)){
+            headers.setContentType(MediaType.parseMediaType(responseMediaType));
+        }
+        headers.setContentLength(documentResponse.getContent().length);
+        return new ResponseEntity<>(documentResponse.getContent(), headers, HttpStatus.OK) ;
+    }
+
+    @RequestMapping(value = "/doc/{ID}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteDocument(@PathVariable("ID") String ID) throws JcrException {
+        String response = documentService.deleteDocument(ID + APPLICANT_SUFFIX + DOCUMENT_SUFFIX);
+        return new ResponseEntity<>(response, HttpStatus.OK); // TODO: if node does not exist throws exception with 500!!!! Need bad_request
     }
 
     /**

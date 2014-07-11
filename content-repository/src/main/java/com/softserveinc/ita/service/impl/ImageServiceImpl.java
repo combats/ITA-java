@@ -37,8 +37,7 @@ public class ImageServiceImpl implements ImageService {
      */
     @Override
     public DataTransferFile getImage(String nodeName) throws JcrException {
-        DataTransferFile respFile = jcrDataAccess.get(nodeName);
-        return respFile;
+        return jcrDataAccess.get(nodeName);
     }
 
     /**
@@ -53,8 +52,7 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public DataTransferFile getImage(String nodeName, int width, int height) throws JcrException, IOException {
         DataTransferFile tempImFile = jcrDataAccess.get(nodeName);
-        DataTransferFile respFile = imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), width, height);
-        return respFile;
+        return imageProcessor.doScalr(tempImFile, tempImFile.getMimeType(), width, height);
     }
 
 

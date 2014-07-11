@@ -27,6 +27,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public class ImgControllerTest extends BaseMVCTest {
+    private static final String IMAGE_SUFFIX = "-image";
+    private static final String DOCUMENT_SUFFIX = "-document";
+    private static final String APPLICANT_SUFFIX = "-applicant";
+    private static final String USER_SUFFIX = "-user";
+
     private MockMvc mockMvc;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
@@ -39,7 +44,8 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testPOSTImageAndExpectedIsOk() throws Exception {
-        String endpoint = "/repo/imgfile/123";
+        String name = "testController100";
+        String endpoint = "/repo/imgfile/" + name;
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -47,8 +53,7 @@ public class ImgControllerTest extends BaseMVCTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andDo(print())
-                .andExpect(content().string("File added successfully " + "123" + "-image"))
+                .andExpect(content().string("File added successfully " + name + IMAGE_SUFFIX))
                 .andExpect(status().isOk());
     }
 
@@ -73,22 +78,22 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testPOSTImageAndExpectedIsNotOk() throws Exception {
-        String endpoint = "/repo/imgfile/160";
+        String name = "testController101";
+        String endpoint = "/repo/imgfile/" + name;
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input.txt", "text/plain", "Hello World".getBytes());
-        String name = "160";
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("You failed to upload " + name + "-image" + " because the file has incorrect type: " + multipartFile.getContentType()))
-                .andExpect(status().isBadRequest())
-                .andDo(print());
+                .andExpect(content().string("You failed to upload " + name + IMAGE_SUFFIX + " because the file has incorrect type: " + multipartFile.getContentType()))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     public void testGETImageAndExpectedIsOk() throws Exception {
-        String endpointPost = "/repo/imgfile/124";
-        String endpointGet = "/repo/imgfile/124?height=200&width=200";
+        String name = "testController102";
+        String endpointPost = "/repo/imgfile/" + name;
+        String endpointGet = "/repo/imgfile/" + name + "?height=200&width=200";
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -105,11 +110,9 @@ public class ImgControllerTest extends BaseMVCTest {
 
         mockMvc.perform(fileUpload(endpointPost)
                 .file(multipartFile))
-                .andDo(print())
                 .andExpect(status().isOk());
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(content().bytes(imageInByte))
                 .andExpect(content().contentType("image/jpeg"))
                 .andExpect(status().isOk());
@@ -117,17 +120,18 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void testGETImageAndExpectedIsError() throws Exception {
-        String endpointGet = "/repo/imgfile/125?height=200&width=200";
+        String name = "testControllerNonExistent";
+        String endpointGet = "/repo/imgfile/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testDELETENodeAndExpectedIsOk() throws Exception {
-        String endpoint = "/repo/imgfile/126";
+        String name = "testController103";
+        String endpoint = "/repo/imgfile/" + name;
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -138,25 +142,25 @@ public class ImgControllerTest extends BaseMVCTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(delete(endpoint))
-                .andDo(print())
-                .andExpect(content().string("File successfully deleted " + "126" + "-image"))
+                .andExpect(content().string("File successfully deleted " + name + IMAGE_SUFFIX))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDELETENodeAndExpectedIsError() throws Exception {
-        String endpoint = "/repo/imgfile/127";
+        String name = "testController104";
+        String endpoint = "/repo/imgfile/" + name;
 
         mockMvc.perform(delete(endpoint))
-                .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testGETImageOriginalsizeAndExpectedIsOk() throws Exception {
-        String endpointPost = "/repo/imgfile/128";
-        String endpointGet = "/repo/imgfile/128";
+        String name = "testController105";
+        String endpointPost = "/repo/imgfile/" + name;
+        String endpointGet = "/repo/imgfile/" + name;
         String fileNameFromResources = "input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -170,7 +174,6 @@ public class ImgControllerTest extends BaseMVCTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(content().bytes(imageInByte))
                 .andExpect(content().contentType("image/jpeg"))
                 .andExpect(status().isOk());
@@ -178,8 +181,9 @@ public class ImgControllerTest extends BaseMVCTest {
 
     @Test
     public void TestPostImage64AndExpectedIsOk() throws Exception {
+        String name = "testController105";
         String fileNameFromResources = "input-1024x768.jpg";
-        String endpointPost = "/repo/img/applicant/129";
+        String endpointPost = "/repo/img/applicant/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -189,14 +193,15 @@ public class ImgControllerTest extends BaseMVCTest {
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/jpeg"))
-                .andDo(print())
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testGetImage64AndExpectedIsOk() throws Exception {
+        String name = "testController106";
         String fileNameFromResources = "input-1024x768.jpg";
-        String endpointPost = "/repo/img/applicant/100";
+        String endpointPost = "/repo/img/applicant/" + name;
+        String endpointGet = "/repo/img/applicant/" + name + "?height=200&width=200";
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -206,10 +211,8 @@ public class ImgControllerTest extends BaseMVCTest {
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/jpeg"))
-                .andDo(print())
                 .andExpect(status().isOk());
 
-        String endpointGet = "/repo/img/applicant/100?height=200&width=200";
 
         BufferedImage img = ImageIO.read(this.getClass().getResourceAsStream("/" + fileNameFromResources));
         BufferedImage scaledImg = Scalr.resize(img, Scalr.Mode.AUTOMATIC, 200, 200);
@@ -224,15 +227,16 @@ public class ImgControllerTest extends BaseMVCTest {
         mockMvc.perform(get(endpointGet)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/jpeg"))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(image64After));
     }
 
     @Test
     public void testGetImage64OriginalSizeAndExpectedIsOk() throws Exception {
+        String name = "testController107";
         String fileNameFromResources = "time-square-imgscarl-resize-QUALITY-AUTO-10x10.png";
-        String endpointPost = "/repo/img/applicant/101";
+        String endpointPost = "/repo/img/applicant/" + name;
+        String endpointGet = "/repo/img/applicant/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -242,34 +246,122 @@ public class ImgControllerTest extends BaseMVCTest {
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/png"))
-                .andDo(print())
                 .andExpect(status().isOk());
 
-        String endpointGet = "/repo/img/applicant/101";
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(imageInString));
     }
 
     @Test
     public void testGetImage64AndExpectedIsJcrException() throws Exception {
-        String endpointGet = "/repo/img/applicant/nonexistent?height=200&width=200";
+        String name = "testControllerNonExistent";
+        String endpointGet = "/repo/img/applicant/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testGetImage64OriginalSizeAndExpectedIsJcrException() throws Exception {
-        String endpointGet = "/repo/img/applicant/nonexistent2";
+        String name = "testControllerNonExistent";
+        String endpointGet = "/repo/img/applicant/" + name;
 
         mockMvc.perform(get(endpointGet))
-                .andDo(print())
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void testPOSTDocumentAndExpectedIsOk() throws Exception {
+        String name = "testController108";
+        String endpoint = "/repo/doc/" + name;
+        String fileNameFromResources = "plain_text.txt";
+
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        MockMultipartFile multipartFile = new MockMultipartFile("file", fileNameFromResources, "text/plain", is);
+
+        mockMvc.perform(fileUpload(endpoint)
+                .file(multipartFile))
+                .andExpect(content().string("File added successfully " + name + APPLICANT_SUFFIX + DOCUMENT_SUFFIX))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPOSTDocumentAndExpectedIsError() throws Exception {
+        String name = "testController109";
+        String endpoint = "/repo/doc/" + name;
+        String fileNameFromResources = "plain_text.txt";
+
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        MockMultipartFile multipartFile = new MockMultipartFile("file", fileNameFromResources, "image/png", is);
+
+        mockMvc.perform(fileUpload(endpoint)
+                .file(multipartFile))
+                .andExpect(content().string("You failed to upload " +
+                        name + APPLICANT_SUFFIX + DOCUMENT_SUFFIX + " because the file has incorrect type: " + "image/png"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGETDocumentAndExpectedIsOk() throws Exception {
+        String name = "testController110";
+        String endpoint= "/repo/doc/" + name;
+        String fileNameFromResources = "plain_text.txt";
+
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        MockMultipartFile multipartFile = new MockMultipartFile("file", fileNameFromResources, "text/plain", is);
+
+        byte[] docInByte = IOUtils.toByteArray(this.getClass().getResourceAsStream("/" + fileNameFromResources));
+
+        mockMvc.perform(fileUpload(endpoint)
+                .file(multipartFile))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get(endpoint))
+                .andExpect(content().bytes(docInByte))
+                .andExpect(content().contentType("text/plain"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetIDocumentAndExpectedIsJcrException() throws Exception {
+        String name = "testControllerNonExistent";
+        String endpointGet = "/repo/doc/" + name;
+
+        mockMvc.perform(get(endpointGet))
+                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn`t exist"))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
+    public void testDeleteDocumentNodeAndExpectedIsOk() throws Exception {
+        String name = "testController111";
+        String endpoint = "/repo/doc/" + name;
+        String fileNameFromResources = "plain_text.txt";
+
+        InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
+        MockMultipartFile multipartFile = new MockMultipartFile("file", fileNameFromResources, "text/plain", is);
+
+        mockMvc.perform(fileUpload(endpoint)
+                .file(multipartFile))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(delete(endpoint))
+                .andExpect(content().string("File successfully deleted " + name  + APPLICANT_SUFFIX + DOCUMENT_SUFFIX))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteDocumentAndExpectedIsError() throws Exception {
+        String name = "testControllerNonExistent";
+        String endpoint = "/repo/doc/" + name;
+
+        mockMvc.perform(delete(endpoint))
+                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn`t exist"))
                 .andExpect(status().isInternalServerError());
     }
 }

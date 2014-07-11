@@ -18,6 +18,7 @@
     <bean id="jcrDataAccess" class="com.softserveinc.ita.jcr.jackrabbit.JcrJackrabbitDataAccessImpl"/>
     <bean id="imageProcessor" class="com.softserveinc.ita.imageprocessing.imgscalr.ImgscalrImpl"/>
     <bean id="imageService" class="com.softserveinc.ita.service.impl.ImageServiceImpl"/>
+    <bean id="documentService" class="com.softserveinc.ita.service.impl.DocumentServiceImpl"/>
 
     <!--
         Custom session creator (would be a fabric soon...)
