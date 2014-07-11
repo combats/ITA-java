@@ -3,15 +3,13 @@ package com.softserveinc.ita.service.impl;
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.service.mocks.AppointmentServiceMock;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
 public class AppointmentServiceImpl implements AppointmentService {
 
-//    @Autowired
+   @Autowired
     private AppointmentDAO appointmentDAO;
 
     @Override

@@ -8,9 +8,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 
     <!-- Scans within the base package of the application for @Components to
-        configure as beans -->
-
-    <context:annotation-config/>
+        configure as beans -->    <context:annotation-config/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
 
 
@@ -43,7 +41,10 @@
         </property>
         <property name="annotatedClasses">
             <list>
+               
+                
                 <value>com.softserveinc.ita.entity.Role</value>
+               
                 <value>com.softserveinc.ita.entity.Applicant</value>
                 <value>com.softserveinc.ita.entity.Appointment</value>
                 <value>com.softserveinc.ita.entity.Group</value>
