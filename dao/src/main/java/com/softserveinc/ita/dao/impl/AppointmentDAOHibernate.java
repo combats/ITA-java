@@ -57,7 +57,7 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Appointment> getAppointmentByDate(long startOfDay, long endOfDay) {
+    public List<Appointment> getAppointmentsByDate(long startOfDay, long endOfDay) {
         return (List<Appointment>)sessionFactory.getCurrentSession().createCriteria(Appointment.class)
                 .add(Restrictions.between("startTime", startOfDay, endOfDay)).list();
     }

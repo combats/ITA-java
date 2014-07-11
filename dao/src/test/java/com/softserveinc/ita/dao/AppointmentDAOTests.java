@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
@@ -98,7 +97,7 @@ public class AppointmentDAOTests extends BaseDAOTest {
         Session session = sessionFactory.getCurrentSession();
         session.save(appointmentOne);
         session.save(appointmentTwo);
-        List<Appointment> appointments = appointmentDAO.getAppointmentByDate(1000L, 4000L);
+        List<Appointment> appointments = appointmentDAO.getAppointmentsByDate(1000L, 4000L);
         assertThat(2, equalTo(appointments.size()));
     }
 }

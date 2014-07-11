@@ -18,5 +18,5 @@ public interface AppointmentDAO {
 
     String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId);
 
-    List<Appointment> getAppointmentByDate(long startOfDay, long endOfDay);
+    List<Appointment> getAppointmentsByDate(long startOfDay, long endOfDay);
 }
