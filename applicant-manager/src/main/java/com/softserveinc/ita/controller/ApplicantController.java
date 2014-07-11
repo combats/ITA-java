@@ -1,19 +1,14 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
-import com.softserveinc.ita.exception.ApplicantException;
-import com.softserveinc.ita.exception.GroupNotFoundException;
 import com.softserveinc.ita.service.ApplicantService;
-import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -51,13 +46,13 @@ public class ApplicantController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Applicant> addNewApplicant(@RequestBody Applicant applicant) {
         Applicant newApplicant = applicantService.addNewApplicant(applicant);
-        return new ResponseEntity<Applicant>(newApplicant, HttpStatus.OK);
+        return new ResponseEntity<>(newApplicant, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<Applicant> editApplicant(@RequestBody Applicant applicant) {
         Applicant editedApplicant = applicantService.editApplicant(applicant);
-        return new ResponseEntity<Applicant>(editedApplicant, HttpStatus.OK);
+        return new ResponseEntity<>(editedApplicant, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/applicantID", method = RequestMethod.GET, produces = "application/json")
@@ -67,21 +62,6 @@ public class ApplicantController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity(response, HttpStatus.OK);
-    }
-
-    @ExceptionHandler(ApplicantException.class)
-    public @ResponseBody ExceptionJSONInfo handleApplicantException(ApplicantException exception, HttpServletResponse response){
-        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
-        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
-        ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
-        exceptionInfo.setReason(exceptionReason);
-        try {
-            response.sendError(responseStatus);   //send http status code
-        }
-        catch (Exception e){
-
-        }
-        return exceptionInfo;
     }
 
 }
