@@ -1,4 +1,4 @@
-package com.softserveinc.ita.error;
+package com.softserveinc.ita.utils.error;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
