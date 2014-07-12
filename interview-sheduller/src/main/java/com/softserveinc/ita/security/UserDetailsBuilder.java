@@ -16,21 +16,17 @@ public class UserDetailsBuilder {
 
         String password = user.getPassword();
 
-        boolean enabled = user.getActive();
+        boolean enabled = user.isActive();
 
-        boolean accountNonExpired = user.getActive();
+        boolean accountNonExpired = user.isActive();
 
-        boolean credentialsNonExpired = user.getActive();
+        boolean credentialsNonExpired = user.isActive();
 
-        boolean accountNonLocked = user.getActive();
+        boolean accountNonLocked = user.isActive();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-
-       /* for (Role role : user.getSecurityRoleCollection()) {
-            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
-        }*/
-
         authorities.add(new SimpleGrantedAuthority(user.getUserRole().getRoleName()));
+
          return new org.springframework.security.core.userdetails.User(username, password, enabled,
                 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
     }

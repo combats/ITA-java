@@ -26,18 +26,13 @@ public class Role implements Serializable {
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
     private String id;
-    private String ROLE_name;
-    
     @Column(name = "Role")
     private String role;
     
     public Role() {}
 
     public Role(String role) {this.role = role;}
-    /*@Id
-    @GeneratedValue*/
-    
-       /*private Set<User> userCollection;*/
+
     public String getId() {
         return id;
     }
@@ -46,12 +41,8 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRoleName() {return ROLE_name;}
+    public String getRoleName() {return role;}
 
-    public void setRoleName(String name) {this.ROLE_name = name;}
+    public void setRoleName(String name) {this.role = name;}
 
-
-     /*  public Set<User> getUserCollection() {return userCollection;}
-
-    public void setUserCollection(Set<User> userCollection) {this.userCollection = userCollection;}*/
 }

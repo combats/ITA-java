@@ -1,15 +1,17 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.UserDAO;
+import com.softserveinc.ita.entity.Role;
 import com.softserveinc.ita.entity.User;
-import org.hibernate.Session;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Set;
 
 @Repository
 public class UserDAOHibernate implements UserDAO {
@@ -25,31 +27,53 @@ public class UserDAOHibernate implements UserDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<String> getAllUsersId() {
-        return (List<String>) sessionFactory.getCurrentSession().createCriteria(User.class)
-                .setProjection(Projections.projectionList().add(Projections.property("id"))).list();
+        List<String> usersId = new ArrayList<String>();
+        List<User> users = sessionFactory.getCurrentSession().createCriteria(User.class).list();
+        for (User user : users) {
+            if (user != null) {
+                usersId.add(user.getId());
+            }
+        }
+        return usersId;
     }
 
     @Override
     public String deleteUserById(String userId) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(session.load(User.class, userId));
-        return userId;
+        User user = (User) sessionFactory.getCurrentSession().createCriteria(User.class)
+                .add(Restrictions.eq("UserId", userId)).uniqueResult();
+        sessionFactory.getCurrentSession().delete(user);
+        return "";
     }
 
     @Override
     public String addUser(User user) {
-        return (String) sessionFactory.getCurrentSession().save(user);
+        sessionFactory.getCurrentSession().save(user);
+        return "";
     }
 
     @Override
     public String updateUser(User user) {
         sessionFactory.getCurrentSession().update(user);
-        return user.getId();
+        return "";
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<User> getAllUsers() {
-        return (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class).list();
+        return sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
+
+    public User findByName(String username) {
+
+        return (User) sessionFactory.getCurrentSession().load(User.class, username);
+    }
+
+    /*public String activateUser(Integer id) {}*/
+    /*public String disableUser(Integer id) {}*/
+
+    public Role getSecurityRoleForUsername(String username) {
+        User user = (User) sessionFactory.getCurrentSession().load(User.class, username);
+        Role role = user.getUserRole();
+        return role;
+        }
 }

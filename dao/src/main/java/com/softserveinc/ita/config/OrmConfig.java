@@ -1,7 +1,6 @@
 package com.softserveinc.ita.config;
 
 
-import org.apache.tomcat.dbcp.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,10 +8,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
-import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
-import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
@@ -33,29 +31,39 @@ public class OrmConfig {
     @Value("${jdbc.password}")
     private String password;
 
-
-    @Autowired
-    private Environment env;
-
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(restDataSource());
-        sessionFactory.setPackagesToScan("com.softserveinc.ita.dao");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-
-        return sessionFactory;
-    }
+    @Value("${hibernate.dialect}")
+    private String hibernateDialect;
+    @Value("${hibernate.show_sql}")
+    private String hibernateShowSql;
+    @Value("${hibernate.hbm2ddl.auto}")
+    private String hibernateHBM2DDLAuto;
 
     @Bean
-    public DataSource restDataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName(driverClassName);
         dataSource.setUrl(url);
         dataSource.setUsername(username);
         dataSource.setPassword(password);
-
         return dataSource;
+    }
+
+    @Bean
+    public Properties hibernateProperties() {
+        Properties properties = new Properties();
+        properties.put("hibernate.dialect", hibernateDialect);
+        properties.put("hibernate.show_sql", hibernateShowSql);
+        properties.put("hibernate.hbm2ddl.auto", hibernateHBM2DDLAuto);
+        return properties;
+    }
+
+    @Bean
+    @SuppressWarnings("deprecation")
+    public SessionFactory sessionFactory() {
+        return new LocalSessionFactoryBuilder(dataSource())
+                .scanPackages("com.softserveinc.ita.dao")
+                .addProperties(hibernateProperties())
+                .buildSessionFactory();
     }
 
     @Bean
@@ -64,20 +72,5 @@ public class OrmConfig {
         HibernateTransactionManager hibernateTransactionManager = new HibernateTransactionManager();
         hibernateTransactionManager.setSessionFactory(sessionFactory);
         return hibernateTransactionManager;
-    }
-
-    @Bean
-    public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
-        return new PersistenceExceptionTranslationPostProcessor();
-    }
-
-    Properties hibernateProperties() {
-        return new Properties() {
-            {
-                setProperty("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
-                setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
-                setProperty("hibernate.globally_quoted_identifiers", "true");
-            }
-        };
     }
 }

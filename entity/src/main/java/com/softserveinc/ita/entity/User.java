@@ -36,11 +36,14 @@ public class User implements Serializable {
     private int age = DEFAULT_USER_AGE;
     @Column(name = "Password")
     private String password;
-    @JoinTable(name = "UserRoles", joinColumns = {
-    @JoinColumn(name = "UserId", referencedColumnName = "Id")}, inverseJoinColumns = {
-    @JoinColumn(name = "RoleId", referencedColumnName = "Id")})
-    @ManyToMany
-    private Set<Role> securityRoleCollection;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="Roles",
+            joinColumns = {@JoinColumn(name="UserId", referencedColumnName="Id")},
+            inverseJoinColumns = {@JoinColumn(name="RoleId", referencedColumnName="Id")}
+    )
+    private Role userRole;
+
     @Column(name = "Active")
     private boolean active;
 
@@ -70,14 +73,14 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public User(String name, String surname, String phone, String email, int age, String password, Set<Role> securityRoleCollection, boolean active, List<Question> questions) {
+    public User(String name, String surname, String phone, String email, int age, String password, Role userRole, boolean active, List<Question> questions) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
         this.age = age;
         this.password = password;
-        this.securityRoleCollection = securityRoleCollection;
+        this.userRole = userRole;
         this.active = active;
         this.questions = questions;
     }
@@ -114,14 +117,9 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public Set<Role> getSecurityRoleCollection() {
-        return securityRoleCollection;
-    }
+    public Role getUserRole() {return userRole;}
 
-    public void setSecurityRoleCollection(Set<Role> securityRoleCollection) {
-        this.securityRoleCollection = securityRoleCollection;
-    }
-
+    public void setUserRole(Role userRole) {this.userRole = userRole;}
     public String getPassword() {
         return password;
     }
@@ -134,9 +132,7 @@ public class User implements Serializable {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public void setEmail(String email) {this.email = email;}
 
     public String getPhone() {
         return phone;
@@ -153,6 +149,8 @@ public class User implements Serializable {
     public void setSurname(String surname) {
         this.surname = surname;
     }
+
+    public String getLogin() { return email;}
 
     public List<Question> getQuestions() {
         return questions;
@@ -177,7 +175,7 @@ public class User implements Serializable {
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
         if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
-        if (securityRoleCollection != null ? !securityRoleCollection.equals(user.securityRoleCollection) : user.securityRoleCollection != null)
+        if (userRole != null ? !userRole.equals(user.userRole) : user.userRole != null)
             return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
@@ -193,7 +191,7 @@ public class User implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (securityRoleCollection != null ? securityRoleCollection.hashCode() : 0);
+        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
@@ -209,7 +207,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", password='" + password + '\'' +
-                ", securityRoleCollection=" + securityRoleCollection +
+                ", securityRoleCollection=" + userRole +
                 ", active=" + active +
                 ", questions=" + questions +
                 '}';

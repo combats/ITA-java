@@ -1,6 +1,5 @@
 package com.softserveinc.ita.dao.impl;
 
-
 import com.softserveinc.ita.dao.RoleDAO;
 import com.softserveinc.ita.entity.Role;
 import org.hibernate.Session;
