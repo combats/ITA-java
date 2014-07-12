@@ -52,8 +52,13 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
+        <groupId>com.softserveinc.ita</groupId>
+        <artifactId>http-request-service</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </dependency>
+        <dependency>
             <groupId>com.softserveinc.ita</groupId>
-            <artifactId>http-request-service</artifactId>
+            <artifactId>dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

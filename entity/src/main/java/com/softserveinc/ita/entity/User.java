@@ -44,6 +44,8 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
+  /*  private Set<Role> securityRoleCollection;*/
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "UserQuestions", joinColumns = {
             @JoinColumn(name = "UserId", referencedColumnName = "Id") }, inverseJoinColumns = {
