@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 21.06.14
- * Time: 20:53
- * To change this template use File | Settings | File Templates.
- */
 @Controller
 @RequestMapping("/interviews")
 public class InterviewController {

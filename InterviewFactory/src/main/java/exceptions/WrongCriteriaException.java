@@ -1,12 +1,6 @@
 package exceptions;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 19.06.14
- * Time: 16:46
- * To change this template use File | Settings | File Templates.
- */
+
 public class WrongCriteriaException extends InterviewException {
 
     public WrongCriteriaException() {
