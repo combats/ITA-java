@@ -13,7 +13,6 @@ import java.util.Set;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
 
     @Id
@@ -32,8 +31,6 @@ public class User implements Serializable {
     private String phone;
     @Column(name = "Email")
     private String email;
-    @Column(name = "Age")
-    private int age = DEFAULT_USER_AGE;
     @Column(name = "Password")
     private String password;
 
@@ -42,7 +39,7 @@ public class User implements Serializable {
             joinColumns = {@JoinColumn(name="UserId", referencedColumnName="Id")},
             inverseJoinColumns = {@JoinColumn(name="RoleId", referencedColumnName="Id")}
     )
-    private Role userRole;
+    private Role role;
 
     @Column(name = "Active")
     private boolean active;
@@ -67,20 +64,19 @@ public class User implements Serializable {
         this.surname = userSurname;
     }
 
-    public User(String userID, String name, int age) {
+    public User(String userID, String name, String email) {
         this.id = userID;
         this.name = name;
-        this.age = age;
-    }
+        this.email = email;
+}
 
-    public User(String name, String surname, String phone, String email, int age, String password, Role userRole, boolean active, List<Question> questions) {
+    public User(String name, String surname, String phone, String email, int age, String password, Role role, boolean active, List<Question> questions) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
-        this.age = age;
         this.password = password;
-        this.userRole = userRole;
+        this.role = role;
         this.active = active;
         this.questions = questions;
     }
@@ -101,14 +97,6 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public boolean isActive() {
         return active;
     }
@@ -117,9 +105,9 @@ public class User implements Serializable {
         this.active = active;
     }
 
-    public Role getUserRole() {return userRole;}
+    public Role getUserRole() {return role;}
 
-    public void setUserRole(Role userRole) {this.userRole = userRole;}
+    public void setUserRole(Role userRole) {this.role = userRole;}
     public String getPassword() {
         return password;
     }
@@ -168,14 +156,13 @@ public class User implements Serializable {
         User user = (User) o;
 
         if (active != user.active) return false;
-        if (age != user.age) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
         if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
-        if (userRole != null ? !userRole.equals(user.userRole) : user.userRole != null)
+        if (role != null ? !role.equals(user.role) : user.role != null)
             return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
@@ -189,9 +176,8 @@ public class User implements Serializable {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + age;
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
+        result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
@@ -205,9 +191,8 @@ public class User implements Serializable {
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", age=" + age +
                 ", password='" + password + '\'' +
-                ", securityRoleCollection=" + userRole +
+                ", securityRoleCollection=" + role +
                 ", active=" + active +
                 ", questions=" + questions +
                 '}';

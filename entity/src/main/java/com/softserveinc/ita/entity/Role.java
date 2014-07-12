@@ -27,11 +27,11 @@ public class Role implements Serializable {
     @Column(name = "Id", unique = true)
     private String id;
     @Column(name = "Role")
-    private String role;
+    private String name;
     
     public Role() {}
 
-    public Role(String role) {this.role = role;}
+    public Role(String name) {this.name = name;}
 
     public String getId() {
         return id;
@@ -41,8 +41,8 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRoleName() {return role;}
+    public String getName() {return name;}
 
-    public void setRoleName(String name) {this.role = name;}
+    public void setName(String name) {this.name = name;}
 
 }

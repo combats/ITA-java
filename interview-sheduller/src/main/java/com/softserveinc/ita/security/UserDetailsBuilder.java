@@ -25,7 +25,7 @@ public class UserDetailsBuilder {
         boolean accountNonLocked = user.isActive();
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority(user.getUserRole().getRoleName()));
+        authorities.add(new SimpleGrantedAuthority(user.getUserRole().getName()));
 
          return new org.springframework.security.core.userdetails.User(username, password, enabled,
                 accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
