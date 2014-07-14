@@ -1,4 +1,4 @@
-package com.softserveinc.ita.search;
+package com.softserveinc.ita;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -8,7 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:dao-test-context.xml"})
-@TransactionConfiguration(defaultRollback = true)
-@Transactional
 public abstract class BaseTest {
 }

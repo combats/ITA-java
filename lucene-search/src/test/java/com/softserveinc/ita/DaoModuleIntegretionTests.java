@@ -1,19 +1,21 @@
-package com.softserveinc.ita.search;
+package com.softserveinc.ita;
 
 import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.search.BaseTest;
+import com.softserveinc.ita.BaseTest;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
-import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
-
+@TransactionConfiguration(defaultRollback = true)
+@Transactional
 public class DaoModuleIntegretionTests extends BaseTest {
 
     @Autowired
