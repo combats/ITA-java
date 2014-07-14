@@ -13,13 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 04.07.14
- * Time: 16:00
- * To change this template use File | Settings | File Templates.
- */
+
 public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
 
     //-------------VadimNaumenko mock for tests------------------------------------

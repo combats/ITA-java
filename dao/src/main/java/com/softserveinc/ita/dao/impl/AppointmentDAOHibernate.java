@@ -54,4 +54,11 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
                 .setProjection(Projections.projectionList().add(Projections.property("GroupId"), groupId).add(Projections.property("ApplicantId"), applicantId));
         return (String) criteria.setProjection(Projections.property("id")).uniqueResult();
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Appointment> getAppointmentsByDate(long startOfDay, long endOfDay) {
+        return (List<Appointment>)sessionFactory.getCurrentSession().createCriteria(Appointment.class)
+                .add(Restrictions.between("startTime", startOfDay, endOfDay)).list();
+    }
 }

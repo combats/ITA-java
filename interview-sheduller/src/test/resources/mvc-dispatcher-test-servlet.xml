@@ -11,7 +11,7 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.softserveinc.ita.mvc"/>
     <context:component-scan base-package="com.softserveinc.ita.utils.error"/>
-    <context:component-scan base-package="com.softserveinc.ita.service"/>
+    <context:component-scan base-package="com.softserveinc.ita.service.mocks"/>
     <context:component-scan base-package="com.softserveinc.ita.validators"/>
     <context:component-scan base-package="com.softserveinc.ita.controller"/>
     <mvc:annotation-driven/>
@@ -27,9 +27,4 @@
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
-
-    <!--services-->
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>
-    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
-    <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
 </beans>

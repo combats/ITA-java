@@ -41,22 +41,18 @@
         </property>
         <property name="annotatedClasses">
             <list>
-               
-                
-                <value>com.softserveinc.ita.entity.Role</value>
-                <value>com.softserveinc.ita.entity.Applicant</value>
-                <value>com.softserveinc.ita.entity.Appointment</value>
                 <value>com.softserveinc.ita.entity.Group</value>
                 <value>com.softserveinc.ita.entity.Question</value>
+                <value>com.softserveinc.ita.entity.Role</value>
                 <value>com.softserveinc.ita.entity.User</value>
-                <value>com.softserveinc.ita.entity.QuestionInformation</value>
-                <value>com.softserveinc.ita.entity.InterviewType</value>
-                <value>com.softserveinc.ita.entity.QuestionsBlock</value>
-                <value>com.softserveinc.ita.entity.Interview</value>
+                <value>com.softserveinc.ita.entity.Applicant</value>
+                <value>com.softserveinc.ita.entity.Appointment</value>
             </list>
         </property>
     </bean>
 
-
+    <bean id="userDAO" class="com.softserveinc.ita.dao.impl.UserDAOHibernate"/>
+    <bean id="applicantDAO" class="com.softserveinc.ita.dao.impl.ApplicantDAOHibernate"/>
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
+    <bean id="roleDAO" class="com.softserveinc.ita.dao.impl.RoleDAOHibernate" />
 </beans>
-

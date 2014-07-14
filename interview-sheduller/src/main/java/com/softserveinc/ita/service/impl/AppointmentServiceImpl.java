@@ -3,10 +3,12 @@ package com.softserveinc.ita.service.impl;
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class AppointmentServiceImpl implements AppointmentService {
 
    @Autowired
@@ -34,8 +36,10 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public List<Appointment> getAppointmentsByDate(long date) {
-        return null;
-        //TODO: under construction
+        DateTime dateTime = new DateTime(date);
+        DateTime startOfDay = dateTime.withTime(0, 0, 0, 0);
+        DateTime endOfDay = dateTime.withTime(23, 59, 59, 999);
+        return appointmentDAO.getAppointmentsByDate(startOfDay.getMillis(), endOfDay.getMillis());
     }
 
     @Override

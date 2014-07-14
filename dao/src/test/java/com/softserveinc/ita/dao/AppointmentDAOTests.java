@@ -87,4 +87,17 @@ public class AppointmentDAOTests extends BaseDAOTest {
         String actualId = appointmentDAO.getAppointmentIdByGroupIdAndApplicantId("TestGroupId", "TestApplicantId");
         assertThat(expectedId, equalTo(actualId));
     }
+
+    @Test
+    public void testGetAppointmentByDate() {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2", "3");
+        Appointment appointmentOne = new Appointment(userIdList, "TestApplicantId", 2000L);
+        Appointment appointmentTwo = new Appointment(userIdList, "TestApplicantId", 3000L);
+        Session session = sessionFactory.getCurrentSession();
+        session.save(appointmentOne);
+        session.save(appointmentTwo);
+        List<Appointment> appointments = appointmentDAO.getAppointmentsByDate(1000L, 4000L);
+        assertThat(2, equalTo(appointments.size()));
+    }
 }

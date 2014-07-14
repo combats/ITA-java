@@ -6,13 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 18.06.14
- * Time: 22:43
- * To change this template use File | Settings | File Templates.
- */
+
 @Entity
 @Table(name = "Questions")
 public class Question implements Serializable {

@@ -11,13 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 26.06.14
- * Time: 12:48
- * To change this template use File | Settings | File Templates.
- */
+
 @Component("InterviewWithUserAndStandardQuestions")
 public class InterviewWithUserAndStandardQuestions implements CreateInterviewStrategy {
 

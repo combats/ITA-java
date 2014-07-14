@@ -67,20 +67,5 @@ public class UserController {
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-
-    @ExceptionHandler(UserException.class)
-    public @ResponseBody ExceptionJSONInfo handleUserException(UserException exception, HttpServletResponse response){
-        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
-        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
-        ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
-        exceptionInfo.setReason(exceptionReason);
-        try {
-            response.sendError(responseStatus);   //send http status code
-        }
-        catch (Exception e){
-
-        }
-        return exceptionInfo;
-    }
 }
 
