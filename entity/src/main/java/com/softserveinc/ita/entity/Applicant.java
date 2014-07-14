@@ -1,13 +1,19 @@
 package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
+import org.apache.solr.analysis.LowerCaseFilterFactory;
+import org.apache.solr.analysis.SnowballPorterFilterFactory;
+import org.apache.solr.analysis.StandardTokenizerFactory;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.search.annotations.*;
+import org.hibernate.search.annotations.Parameter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "Applicants")
+@Indexed
 public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -20,8 +26,10 @@ public class Applicant implements Serializable {
     private String id;
 
     @Column(name = "Name")
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String name;
     @Column(name = "Surname")
+    @Field(index=Index.YES, analyze=Analyze.YES, store=Store.NO)
     private String surname;
     @Column(name = "Email")
     private String email;

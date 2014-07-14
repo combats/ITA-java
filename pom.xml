@@ -26,6 +26,7 @@
         <module>applicant-manager</module>
         <module>web-ui</module>
         <module>group-manager</module>
+        <module>lucene-search</module>
     </modules>
 
     <dependencies>
@@ -104,7 +105,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>4.2.11.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
     </dependencies>
     
