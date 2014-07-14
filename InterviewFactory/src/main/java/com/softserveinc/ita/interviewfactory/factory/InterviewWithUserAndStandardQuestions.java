@@ -28,7 +28,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
     QuestionsBlockServices questionsBlockServices;
 
     @Autowired
-    QuestionsInformationServices questionsInformationServices;
+    QuestionsInformationServices questionsInformationService;
 
     @Override
     public Interview create(String interviewId) throws HttpRequestException {
@@ -42,7 +42,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
 
         for (int i = 0; i < Users.size(); i++){
             User user = httpRequestExecutor.getObjectByID(Users.get(i), User.class);
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(user);
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
             List<QuestionInformation> userQuestionInformationList = new ArrayList<QuestionInformation>();
             List<Question> Questions = user.getQuestions();
 
@@ -50,12 +50,9 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
                 QuestionInformation questionInformation = new QuestionInformation();
                 questionInformation.setQuestion(Questions.get(j).getQuestionBody());
                 questionInformation.setWeight(Questions.get(j).getWeight());
-                questionInformation.setId(String.valueOf(j));//присваиваем айдишку вопросу, убрать когда будет база
-                questionInformation.setQuestionsBlockId(Users.get(i));//привсваиваем вопросу айдишку блока, убрать когда будет база
                 userQuestionInformationList.add(questionInformation);
             }
             userQuestionsBlock.setQuestions(userQuestionInformationList);
-            userQuestionsBlock.setId(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

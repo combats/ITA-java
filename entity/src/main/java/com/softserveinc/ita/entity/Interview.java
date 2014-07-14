@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Interview")
-public class Interview {
+public class Interview implements Serializable {
 
     @Expose
     @Id

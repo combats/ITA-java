@@ -12,12 +12,13 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "QuestionBlocks")
-public class QuestionsBlock {
+public class QuestionsBlock implements Serializable {
 
     @Expose
     @Id

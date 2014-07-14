@@ -94,15 +94,15 @@ public class InterviewingTests extends BaseInterviewingTests {
     @Test
     public void testGetQuestionsBlockByUserIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
         String userId = "1";
-        QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockByUserId(userId, appointmentIdList.get(1));
-        assertEquals(questionsBlock.getUser().getId(), userId);
+        QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockFromInterviewByUserId(userId, appointmentIdList.get(1));
+        assertEquals(questionsBlock.getUserId(), userId);
     }
 
-    @Test
-    public void testGetStandardQuestionsBlockByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
-        QuestionsBlock questionsBlock = questionsBlockServices.getStandardQuestionsBlockFromInterview(appointmentIdList.get(1));
-        assertEquals(questionsBlock.getUser(), null);
-    }
+//    @Test
+//    public void testGetStandardQuestionsBlockByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+//        QuestionsBlock questionsBlock = questionsBlockServices.getStandardQuestionsBlockFromInterview(appointmentIdList.get(1));
+//        assertEquals(questionsBlock.getUserId(), null);
+//    }
 
     @Test
     public void testGetQuestionInformationByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
@@ -113,17 +113,15 @@ public class InterviewingTests extends BaseInterviewingTests {
     }
 
     @Test
-    public void editQuestionInformation() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
+    public void updateQuestionInformation() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
         QuestionInformation questionInformation = new QuestionInformation();
         questionInformation.setQuestion("wwwww");
-        questionInformation.setQuestionsBlockId("1");
-        questionInformation.setId("1");
         questionInformation.setAnswer("wqwqwq");
         questionInformation.setWeight(2);
         questionInformation.setComment("ererer");
         questionInformation.setMark(3);
-        QuestionInformation questionInformation1 = questionsInformationServices.editQuestionInformation(questionInformation);
-        assertEquals(questionInformation, questionInformation1);
+        String updatedQuestionInformationId = questionsInformationServices.updateQuestionInformation(questionInformation);
+        assertEquals(questionInformation, updatedQuestionInformationId);
     }
 
 }

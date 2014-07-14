@@ -25,10 +25,12 @@ import java.util.List;
 public class InterviewServiceImpl implements InterviewService {
 
     @Autowired
-    private InterviewDAO interviewDAO;
+    InterviewDAO interviewDAO;
 
     @Autowired
-    private AppointmentDAO appointmentDAO;
+    AppointmentDAO appointmentDAO;
+
+
 
     @Autowired
     InterviewFactory interviewFactory;

@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Time: 13:22
  * To change this template use File | Settings | File Templates.
  */
+@Repository
 public class QuestionsBlockDAOHibernate implements QuestionsBlockDAO {
 
     @Autowired

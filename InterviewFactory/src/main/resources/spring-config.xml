@@ -2,17 +2,28 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:tx="http://www.springframework.org/schema/tx"
 
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:annotation-config />
-    <context:component-scan base-package="com.softserveinc.ita.interviewfactory"/>
-
-    <context:component-scan base-package="com.softserveinc.ita.interviewfactory.*" />
+    <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
+
+    <!--For @Annotation-based configuration-->
+    <context:annotation-config/>
+
+    <!-- For bean-components (@Component, @Service)  -->
+    <context:component-scan base-package="com.softserveinc.ita.interviewfactory"/>
+    <context:component-scan base-package="com.softserveinc.ita.dao"/>
+    <context:component-scan base-package="com.softserveinc.ita.mvc"/>
+    <context:component-scan base-package="com.softserveinc.ita.interviewingTests"/>
+    <context:component-scan base-package="com.softserveinc.ita.factoryInterviewTests"/>
+
+    <context:component-scan base-package="com.softserveinc.ita.utils"/>
 
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -28,9 +39,14 @@
 
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
+    <bean id="interviewDAO" class="com.softserveinc.ita.dao.impl.InterviewDAOHibernate"/>
+    <bean id="questionInformationDAO" class="com.softserveinc.ita.dao.impl.QuestionInformationDAOHibernate"/>
+    <bean id="questionsBlockDAO" class="com.softserveinc.ita.dao.impl.QuestionsBlockDAOHibernate"/>
+
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
     <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesImpl"/>
-    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServicesMock"/>
+    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServiceImpl"/>
 
 
 
@@ -41,6 +57,5 @@
     <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
     <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
     <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
-
 
 </beans>

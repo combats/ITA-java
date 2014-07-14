@@ -37,8 +37,7 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
         List<String> Users = appointment.getUserIdList();
 
         for (int i = 0; i < Users.size(); i++){
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(httpRequestExecutor.getObjectByID(Users.get(i), User.class));
-            userQuestionsBlock.setId(Users.get(i));   //присваивает QuestionsBlock айдишку юзера, когда будет база убрать!
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);

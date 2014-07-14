@@ -17,7 +17,7 @@ public interface QuestionsBlockServices {
 
     QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId);
     QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId);
-    String updateQuestionsBlock(QuestionsBlock newQuestionsBlock);
+    String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);
     QuestionsBlock getStandardQuestionsBlock();
     void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock);

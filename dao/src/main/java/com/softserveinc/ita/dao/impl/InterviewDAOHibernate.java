@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ import java.util.List;
  * Time: 11:13
  * To change this template use File | Settings | File Templates.
  */
+@Repository
 public class InterviewDAOHibernate implements InterviewDAO {
 
     @Autowired

@@ -26,7 +26,7 @@ import java.util.List;
 public class InterviewController {
 
     @Autowired
-    private InterviewService interviewService;
+    InterviewService interviewService;
 
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.FOUND)

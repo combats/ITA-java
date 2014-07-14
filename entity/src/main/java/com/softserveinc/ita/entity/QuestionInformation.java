@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,7 +16,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "QuestionInformation")
-public class QuestionInformation {
+public class QuestionInformation implements Serializable {
 
     @Expose
     @Id

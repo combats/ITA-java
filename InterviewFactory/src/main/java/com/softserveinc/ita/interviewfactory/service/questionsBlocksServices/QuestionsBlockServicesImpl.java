@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
     @Autowired
-    private QuestionsBlockDAO questionsBlockDAO;
+    QuestionsBlockDAO questionsBlockDAO;
 
     @Override
     public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId){
@@ -32,7 +32,8 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     }
 
     @Override
-    public String updateQuestionsBlock(QuestionsBlock newQuestionsBlock) {
+    public String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId) {
+        newQuestionsBlock.setUserId(userId);
         return questionsBlockDAO.updateQuestionsBlock(newQuestionsBlock);
     }
 

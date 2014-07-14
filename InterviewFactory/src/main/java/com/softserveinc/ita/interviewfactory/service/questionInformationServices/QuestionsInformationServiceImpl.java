@@ -6,6 +6,7 @@ import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,10 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {
 
     @Autowired
-    private QuestionInformationDAO questionInformationDAO;
+    QuestionInformationDAO questionInformationDAO;
 
     @Autowired
-    private QuestionsBlockServices questionsBlockService;
+    QuestionsBlockServices questionsBlockService;
 
     @Override
     public QuestionInformation getQuestionInformationById(String questionsInformationId) {
