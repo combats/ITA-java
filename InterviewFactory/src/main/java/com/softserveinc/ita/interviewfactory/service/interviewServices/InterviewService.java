@@ -16,11 +16,11 @@ import java.util.List;
  */
 public interface InterviewService {
 
-    List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException, InterviewNotFoundException;
+    List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException;
     String putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException;
 
     Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException;
 
-    void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException, InterviewNotFoundException;
-    void updateInterview(Interview interview) throws HttpRequestException, InterviewNotFoundException;
+    void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException;
+    void updateInterview(Interview interview) throws HttpRequestException;
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Component("InterviewWithoutQuestions")
 public class InterviewWithoutQuestions implements CreateInterviewStrategy {
@@ -19,7 +21,7 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
     public Interview create(String interviewId) throws HttpRequestException {
 
         Interview interview = new Interview(interviewId);
-        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
+        Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
 
         List<String> Users = appointment.getUserIdList();
@@ -30,7 +32,7 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
         interview.setType(InterviewType.InterviewWithoutQuestions);
-        interview.setAppointmentId(appointment.getAppointmentId());
+        interview.setInterviewId(appointment.getAppointmentId());
         return interview;
     }
 }

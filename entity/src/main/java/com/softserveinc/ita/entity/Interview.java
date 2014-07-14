@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Interview")
@@ -17,11 +18,9 @@ public class Interview implements Serializable {
     private String interviewId;
 
     @Expose
-    @OneToMany(mappedBy="interview")
-//    @JoinTable(name = "InterviewQuestionBlocks", joinColumns = {
-//            @JoinColumn(name = "InterviewId", referencedColumnName = "interviewId")}, inverseJoinColumns = {
-//            @JoinColumn(name = "QuestionsBlockId", referencedColumnName = "Id")})
-    private List<QuestionsBlock> questionsBlocks;
+    @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionsBlock.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "interview_questionsBlockId", referencedColumnName="interview_id")
+    private Set<QuestionsBlock> questionsBlocks;
 
     @Column(name = "InterviewType")
     private InterviewType type;
@@ -33,28 +32,28 @@ public class Interview implements Serializable {
         this.interviewId = interviewId;
     }
 
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public Set<QuestionsBlock> getQuestionsBlocks() {
+        return questionsBlocks;
+    }
+
     public InterviewType getType() {
         return type;
     }
 
-    public void setType(InterviewType type) {
-        this.type = type;
-    }
-
-    public List<QuestionsBlock> getQuestionsBlocks() {
-        return questionsBlocks;
-    }
-
-    public String getAppointmentId() {
-        return interviewId;
-    }
-
-    public void setAppointmentId(String interviewId) {
+    public void setInterviewId(String interviewId) {
         this.interviewId = interviewId;
     }
 
-    public void setQuestionsBlocks(List<QuestionsBlock> answerBlocks) {
-        this.questionsBlocks = answerBlocks;
+    public void setQuestionsBlocks(Set<QuestionsBlock> questionsBlocks) {
+        this.questionsBlocks = questionsBlocks;
+    }
+
+    public void setType(InterviewType type) {
+        this.type = type;
     }
 
     @Override
@@ -64,9 +63,9 @@ public class Interview implements Serializable {
 
         Interview interview = (Interview) o;
 
-        if (questionsBlocks != null ? !questionsBlocks.equals(interview.questionsBlocks) : interview.questionsBlocks != null)
-            return false;
         if (interviewId != null ? !interviewId.equals(interview.interviewId) : interview.interviewId != null)
+            return false;
+        if (questionsBlocks != null ? !questionsBlocks.equals(interview.questionsBlocks) : interview.questionsBlocks != null)
             return false;
         if (type != interview.type) return false;
 
@@ -84,7 +83,7 @@ public class Interview implements Serializable {
     @Override
     public String toString() {
         return "Interview{" +
-                "appointmentId='" + interviewId + '\'' +
+                "interviewId='" + interviewId + '\'' +
                 ", questionsBlocks=" + questionsBlocks +
                 ", type=" + type +
                 '}';

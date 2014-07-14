@@ -17,6 +17,7 @@ public interface QuestionsBlockServices {
 
     QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId);
     QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId);
+    void addQuestionsBlock(QuestionsBlock questionsBlock) throws WrongCriteriaException, HttpRequestException, InterviewNotFoundException;
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);
     QuestionsBlock getStandardQuestionsBlock();

@@ -2,6 +2,7 @@ package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.User;
 
 import java.util.List;
 
@@ -21,5 +22,7 @@ public interface InterviewDAO {
     void removeInterviewByAppointmentId(String appointmentId);
 
     void updateInterview(Interview interview);
+    List<String> getAllInterviewsId();
+    List<Interview> getAllInterviews();
 
 }

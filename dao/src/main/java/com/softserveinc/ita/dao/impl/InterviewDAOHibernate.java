@@ -3,6 +3,7 @@ package com.softserveinc.ita.dao.impl;
 import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.User;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
@@ -46,6 +47,19 @@ public class InterviewDAOHibernate implements InterviewDAO {
     @Override
     public void updateInterview(Interview interview) {
         sessionFactory.getCurrentSession().update(interview);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Interview> getAllInterviews() {
+        return (List<Interview>) sessionFactory.getCurrentSession().createCriteria(Interview.class).list();
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getAllInterviewsId() {
+        return (List<String>) sessionFactory.getCurrentSession().createCriteria(Interview.class)
+                .setProjection(Projections.projectionList().add(Projections.property("interviewId"))).list();
     }
 
 }

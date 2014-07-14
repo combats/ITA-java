@@ -48,11 +48,6 @@ public class QuestionInformation implements Serializable {
     @Column(name = "Weight")
     private int weight; //weight for each question
 
-    @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="questionsBlock_id")
-    private QuestionsBlock questionsBlock;
-
     public QuestionInformation() {
     }
 
@@ -67,6 +62,14 @@ public class QuestionInformation implements Serializable {
         this.mark = mark;
         this.comment = comment;
         this.weight = weight;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public String getInterviewId() {
+        return interviewId;
     }
 
     public String getQuestion() {
@@ -89,6 +92,14 @@ public class QuestionInformation implements Serializable {
         return weight;
     }
 
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
+
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -109,31 +120,6 @@ public class QuestionInformation implements Serializable {
         this.weight = weight;
     }
 
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        this.Id = id;
-    }
-
-
-    public String getInterviewId() {
-        return interviewId;
-    }
-
-    public void setInterviewId(String interviewId) {
-        this.interviewId = interviewId;
-    }
-
-    public QuestionsBlock getQuestionsBlock() {
-        return questionsBlock;
-    }
-
-    public void setQuestionsBlock(QuestionsBlock questionsBlock) {
-        this.questionsBlock = questionsBlock;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -148,8 +134,6 @@ public class QuestionInformation implements Serializable {
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
         if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
-        if (questionsBlock != null ? !questionsBlock.equals(that.questionsBlock) : that.questionsBlock != null)
-            return false;
 
         return true;
     }
@@ -157,7 +141,6 @@ public class QuestionInformation implements Serializable {
     @Override
     public int hashCode() {
         int result = Id != null ? Id.hashCode() : 0;
-        result = 31 * result + (questionsBlock != null ? questionsBlock.hashCode() : 0);
         result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (answer != null ? answer.hashCode() : 0);
@@ -171,7 +154,6 @@ public class QuestionInformation implements Serializable {
     public String toString() {
         return "QuestionInformation{" +
                 "Id='" + Id + '\'' +
-                ", questionsBlock=" + questionsBlock +
                 ", interviewId='" + interviewId + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +

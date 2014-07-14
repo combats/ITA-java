@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "QuestionBlocks")
@@ -24,16 +25,13 @@ public class QuestionsBlock implements Serializable {
     String userId;
 
     @Expose
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="interview_id")
-    private Interview interview;
+    @Column(name = "InterviewId")
+    String interviewId;
 
     @Expose
-    @OneToMany(mappedBy="questionsBlock")
-//    @JoinTable(name = "QuestionInformationQuestionBlock", joinColumns = {
-//            @JoinColumn(name = "QuestionsBlockId", referencedColumnName = "Id")}, inverseJoinColumns = {
-//            @JoinColumn(name = "QuestionInformationId", referencedColumnName = "Id")})
-    private List<QuestionInformation> questions;
+    @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
+    private Set<QuestionInformation> questions;
 
     @Expose
     @Column(name = "Final_comment")
@@ -50,7 +48,19 @@ public class QuestionsBlock implements Serializable {
         this.userId = userId;
     }
 
-    public List<QuestionInformation> getQuestions() {
+    public String getId() {
+        return Id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public Set<QuestionInformation> getQuestions() {
         return questions;
     }
 
@@ -62,7 +72,19 @@ public class QuestionsBlock implements Serializable {
         return bonusPoints;
     }
 
-    public void setQuestions(List<QuestionInformation> questions) {
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
+
+    public void setQuestions(Set<QuestionInformation> questions) {
         this.questions = questions;
     }
 
@@ -72,30 +94,6 @@ public class QuestionsBlock implements Serializable {
 
     public void setBonusPoints(int bonusPoints) {
         this.bonusPoints = bonusPoints;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public void setId(String id) {
-        this.Id = id;
-    }
-
-    public Interview getInterview() {
-        return interview;
-    }
-
-    public void setInterview(Interview interview) {
-        this.interview = interview;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     @Override
@@ -108,7 +106,7 @@ public class QuestionsBlock implements Serializable {
         if (bonusPoints != that.bonusPoints) return false;
         if (Id != null ? !Id.equals(that.Id) : that.Id != null) return false;
         if (finalComment != null ? !finalComment.equals(that.finalComment) : that.finalComment != null) return false;
-        if (interview != null ? !interview.equals(that.interview) : that.interview != null) return false;
+        if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
         if (questions != null ? !questions.equals(that.questions) : that.questions != null) return false;
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
@@ -119,7 +117,7 @@ public class QuestionsBlock implements Serializable {
     public int hashCode() {
         int result = Id != null ? Id.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
-        result = 31 * result + (interview != null ? interview.hashCode() : 0);
+        result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (finalComment != null ? finalComment.hashCode() : 0);
         result = 31 * result + bonusPoints;
@@ -131,7 +129,7 @@ public class QuestionsBlock implements Serializable {
         return "QuestionsBlock{" +
                 "Id='" + Id + '\'' +
                 ", userId='" + userId + '\'' +
-                ", interview=" + interview +
+                ", interviewId='" + interviewId + '\'' +
                 ", questions=" + questions +
                 ", finalComment='" + finalComment + '\'' +
                 ", bonusPoints=" + bonusPoints +

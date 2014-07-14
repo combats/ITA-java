@@ -1,5 +1,6 @@
 package com.softserveinc.ita.dao;
 
+import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 
 /**
@@ -11,7 +12,7 @@ import com.softserveinc.ita.entity.QuestionsBlock;
  */
 public interface QuestionsBlockDAO {
 
-    QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId);
+    QuestionsBlock getQuestionsBlockByInterviewIdAndUserId(String userID, String appointmentId);
     QuestionsBlock getQuestionsBlockFromInterviewByQuestionsBlockId(String questionsBlockId);
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);

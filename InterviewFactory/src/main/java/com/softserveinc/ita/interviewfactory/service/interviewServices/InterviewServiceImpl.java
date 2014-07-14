@@ -39,7 +39,7 @@ public class InterviewServiceImpl implements InterviewService {
     HttpRequestExecutor httpRequestExecutor;
 
     @Override
-    public List<Interview> getInterviewByApplicantID(String applicantId) throws HttpRequestException, InterviewNotFoundException {
+    public List<Interview> getInterviewByApplicantID(String applicantId) throws HttpRequestException {
         List<Interview> listForReturn = new ArrayList<>();
         List<Appointment> listWithApplicant = appointmentDAO.getAppointmentByApplicantId(applicantId);
         for (Appointment appointment : listWithApplicant){
@@ -80,12 +80,12 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException, InterviewNotFoundException {
+    public void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException {
         interviewDAO.removeInterviewByAppointmentId(interviewId);
     }
 
     @Override
-    public void updateInterview(Interview interview) throws HttpRequestException, InterviewNotFoundException {
+    public void updateInterview(Interview interview) throws HttpRequestException {
         interviewDAO.updateInterview(interview);
     }
 }

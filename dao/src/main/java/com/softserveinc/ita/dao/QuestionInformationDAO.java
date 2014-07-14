@@ -12,8 +12,6 @@ import com.softserveinc.ita.entity.QuestionInformation;
 public interface QuestionInformationDAO {
 
     QuestionInformation getQuestionInformationById(String questionsInformationId);
-    String addQuestionInformation(QuestionInformation questionInformation);
-    void deleteQuestionInformationById(String questionsInformationId);
     String updateQuestionInformation(QuestionInformation questionInformation);
 
 }

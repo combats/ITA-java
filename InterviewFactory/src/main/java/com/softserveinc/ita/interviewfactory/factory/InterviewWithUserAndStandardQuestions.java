@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 
 @Component("InterviewWithUserAndStandardQuestions")
@@ -27,7 +29,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
     @Override
     public Interview create(String interviewId) throws HttpRequestException {
         Interview interview = new Interview(interviewId);
-        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
+        Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
 
         allQuestionsBlocks.add(questionsBlockServices.getStandardQuestionsBlock());
 
@@ -37,7 +39,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
         for (int i = 0; i < Users.size(); i++){
             User user = httpRequestExecutor.getObjectByID(Users.get(i), User.class);
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
-            List<QuestionInformation> userQuestionInformationList = new ArrayList<QuestionInformation>();
+            Set<QuestionInformation> userQuestionInformationList = new HashSet<>();
             List<Question> Questions = user.getQuestions();
 
             for (int j = 0; j < Questions.size(); j++){
@@ -51,7 +53,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
         interview.setType(InterviewType.InterviewWithUserAndStandardQuestions);
-        interview.setAppointmentId(appointment.getAppointmentId());
+        interview.setInterviewId(appointment.getAppointmentId());
         return interview;
     }
 }

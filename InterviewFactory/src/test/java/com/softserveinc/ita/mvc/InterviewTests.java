@@ -175,7 +175,7 @@ public class InterviewTests extends BaseMVCTest {
     public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, WrongCriteriaException, QuestionsBlockNotFound {
         Interview actual = interviewService.getInterviewByAppointmentID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setAppointmentId("1");
+        expected.setInterviewId("1");
         assertEquals(expected, actual);
     }
 
@@ -183,7 +183,7 @@ public class InterviewTests extends BaseMVCTest {
     public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
         List<Interview> actual = interviewService.getInterviewByApplicantID("1");
         Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setAppointmentId("1");
+        expected.setInterviewId("1");
         assertEquals(expected, actual.get(0));
     }
 

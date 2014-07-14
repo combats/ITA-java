@@ -4,27 +4,31 @@ import com.softserveinc.ita.entity.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
-
 
 /**
  * Created with IntelliJ IDEA.
  * User: Вадим
  * Date: 14.07.14
- * Time: 13:22
+ * Time: 16:18
  * To change this template use File | Settings | File Templates.
  */
-public class InterviewDAOTests extends BaseDAOTest {
+public class QuestionsBlockDAOTests extends BaseDAOTest {
 
     @Autowired
-    private InterviewDAO interviewDAO;
+    private QuestionsBlockDAO questionsBlockDAO;
+
     @Autowired
     private SessionFactory sessionFactory;
 
+    @Autowired
+    private InterviewDAO interviewDAO;
+
     @Test
-    public void testGetInterviewById() {
+    public void testGetQuestionsBlockFromInterviewByQuestionsBlockId()  {
 
         Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
         QuestionsBlock questionsBlock = new QuestionsBlock();
@@ -47,56 +51,18 @@ public class InterviewDAOTests extends BaseDAOTest {
         interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
         String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
-        assertEquals(interviewActual, interviewExpected);
+        Set<QuestionsBlock> allQuestionsBlocksActual = interviewActual.getQuestionsBlocks();
+        Iterator<QuestionsBlock> it = allQuestionsBlocksActual.iterator();
+        QuestionsBlock questionsBlockActual = it.next();
+        String questionsBlockId = questionsBlockActual.getId();
+
+        QuestionsBlock questionsBlockExpected = questionsBlockDAO.getQuestionsBlockFromInterviewByQuestionsBlockId(questionsBlockId);
+        assertEquals(questionsBlockExpected, questionsBlockActual);
 
     }
 
     @Test
-    public void testPutInterview() {
-        Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
-        QuestionsBlock questionsBlock = new QuestionsBlock();
-        Set<QuestionInformation> questionInformationsList = new HashSet<>();
-        QuestionInformation questionInformation = new QuestionInformation();
-        questionInformation.setQuestion("Question body");
-        questionInformation.setAnswer("answer");
-        questionInformation.setComment("normas");
-        questionInformation.setMark(2);
-        questionInformation.setWeight(1);
-        questionInformation.setInterviewId("1");
-        questionInformationsList.add(questionInformation);
-        questionsBlock.setQuestions(questionInformationsList);
-
-        Interview interviewExpected = new Interview();
-        allQuestionsBlocks.add(questionsBlock);
-        interviewExpected.setInterviewId("1");
-
-        interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
-        String interviewId = interviewDAO.putInterview(interviewExpected);
-        Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
-        assertEquals(interviewActual, interviewExpected);
-
-    }
-
-    @Test
-    public void testGetAllInterviews() {
-
-        Interview interview1 = new Interview();
-        interview1.setInterviewId("1");
-        Interview interview2 = new Interview();
-        interview2.setInterviewId("2");
-        Interview interview3 = new Interview();
-        interview3.setInterviewId("3");
-        interviewDAO.putInterview(interview1);
-        interviewDAO.putInterview(interview2);
-        interviewDAO.putInterview(interview3);
-        List<Interview> interviewIdList = interviewDAO.getAllInterviews();
-        assertEquals(3, interviewIdList.size());
-
-    }
-
-    @Test
-    public void testUpdateInterview() {
+    public void testUpdateQuestionsBlockFromInterviewByQuestionsBlockId()  {
 
         Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
         QuestionsBlock questionsBlock = new QuestionsBlock();
@@ -117,25 +83,22 @@ public class InterviewDAOTests extends BaseDAOTest {
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
         interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
-        String interviewId = interviewDAO.putInterview(interviewExpected);
+        String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
-        assertEquals(interviewActual, interviewExpected);
-        questionInformation.setQuestion("Question body2");
-        Set<QuestionInformation> questionInformationsList2 = new HashSet<>();
-        questionInformationsList2.add(questionInformation);
-        QuestionsBlock questionsBlock2 = new QuestionsBlock();
-        questionsBlock2.setQuestions(questionInformationsList2);
-        Set<QuestionsBlock> allQuestionsBlocks2 = new HashSet<>();
-        allQuestionsBlocks2.add(questionsBlock2);
-        interviewExpected.setQuestionsBlocks(allQuestionsBlocks2);
-        interviewDAO.updateInterview(interviewExpected);
-        Interview interviewActual2 = interviewDAO.getInterviewByAppointmentId(interviewId);
-        assertEquals(interviewActual2, interviewExpected);
+        Set<QuestionsBlock> allQuestionsBlocksActual = interviewActual.getQuestionsBlocks();
+        Iterator<QuestionsBlock> it = allQuestionsBlocksActual.iterator();
+        QuestionsBlock questionsBlockActual = it.next();
+        questionsBlockActual.setUserId("3");
+        String questionsBlockId = questionsBlockActual.getId();
+
+        String questionsBlockExpectedId = questionsBlockDAO.updateQuestionsBlock(questionsBlockActual);
+        assertEquals(questionsBlockExpectedId, questionsBlockId);
 
     }
 
     @Test
-    public void testRemoveInterviewByAppointmentId() {
+    public void testGetQuestionsBlockFromInterviewByUserId()  {
+
         Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
         QuestionsBlock questionsBlock = new QuestionsBlock();
         Set<QuestionInformation> questionInformationsList = new HashSet<>();
@@ -148,32 +111,26 @@ public class InterviewDAOTests extends BaseDAOTest {
         questionInformation.setInterviewId("1");
         questionInformationsList.add(questionInformation);
         questionsBlock.setQuestions(questionInformationsList);
+        questionsBlock.setUserId("2");
+        questionsBlock.setInterviewId("1");
+        questionsBlock.setBonusPoints(12);
+        questionsBlock.setFinalComment("wefwef");
 
         Interview interviewExpected = new Interview();
         allQuestionsBlocks.add(questionsBlock);
-        String appointmentId = "1";
-        interviewExpected.setInterviewId(appointmentId);
+        interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
         interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
-        interviewDAO.putInterview(interviewExpected);
-        interviewDAO.removeInterviewByAppointmentId(appointmentId);
+        String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
+        Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
+        Set<QuestionsBlock> allQuestionsBlocksActual = interviewActual.getQuestionsBlocks();
+        Iterator<QuestionsBlock> it = allQuestionsBlocksActual.iterator();
+        QuestionsBlock questionsBlockActual = it.next();
+        String questionsBlockUserId = questionsBlockActual.getUserId();
 
-    }
-
-    @Test
-    public void testGetAllInterviewsId() {
-        Interview interview1 = new Interview();
-        interview1.setInterviewId("1");
-        Interview interview2 = new Interview();
-        interview2.setInterviewId("2");
-        Interview interview3 = new Interview();
-        interview3.setInterviewId("3");
-        interviewDAO.putInterview(interview1);
-        interviewDAO.putInterview(interview2);
-        interviewDAO.putInterview(interview3);
-        List<String> interviewIdList = interviewDAO.getAllInterviewsId();
-        assertEquals(3, interviewIdList.size());
+        QuestionsBlock questionsBlockExpected = questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(questionsBlockUserId, interviewId);
+        assertEquals(questionsBlockExpected, questionsBlockActual);
 
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
 public interface QuestionsInformationServices {
 
     QuestionInformation getQuestionInformationById(String questionInformationId);
-    String addQuestionInformation(QuestionInformation questionInformation, String userId);
+    void addQuestionInformation(QuestionInformation questionInformation, String userId) throws WrongCriteriaException, HttpRequestException;
     void deleteQuestionInformationById(String questionInformationId);
     String updateQuestionInformation(QuestionInformation questionInformation);
 

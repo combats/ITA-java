@@ -30,17 +30,6 @@ public class QuestionInformationDAOHibernate implements QuestionInformationDAO {
     }
 
     @Override
-    public String addQuestionInformation(QuestionInformation questionInformation) {
-        return (String) sessionFactory.getCurrentSession().save(questionInformation);
-    }
-
-    @Override
-    public void deleteQuestionInformationById(String questionsInformationId) {
-        Session session = sessionFactory.getCurrentSession();
-        session.delete(session.load(QuestionInformation.class, questionsInformationId));
-    }
-
-    @Override
     public String updateQuestionInformation(QuestionInformation questionInformation) {
         sessionFactory.getCurrentSession().update(questionInformation);
         return questionInformation.getId();

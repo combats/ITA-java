@@ -2,7 +2,9 @@ package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
 
 import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.dao.QuestionsBlockDAO;
+import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.QuestionsBlock;
+import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
 import exceptions.QuestionsBlockNotFound;
@@ -21,14 +23,25 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     @Autowired
     QuestionsBlockDAO questionsBlockDAO;
 
+    @Autowired
+    InterviewService interviewService;
+
     @Override
     public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId){
-          return questionsBlockDAO.getQuestionsBlockFromInterviewByUserId(userID, appointmentId);
+          return questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(userID, appointmentId);
     }
 
     @Override
     public QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId) {
         return questionsBlockDAO.getQuestionsBlockFromInterviewByQuestionsBlockId(questionsBlockId);
+    }
+
+    @Override
+    public void addQuestionsBlock(QuestionsBlock questionsBlock) throws WrongCriteriaException, HttpRequestException {
+        String interviewId = questionsBlock.getInterviewId();
+        Interview interview = interviewService.getInterviewByAppointmentID(interviewId);
+        interview.getQuestionsBlocks().add(questionsBlock);
+        interviewService.updateInterview(interview);
     }
 
     @Override

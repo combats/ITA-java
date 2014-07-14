@@ -1,12 +1,17 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.QuestionsBlockDAO;
+import com.softserveinc.ita.entity.Appointment;
+import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 /**
@@ -34,10 +39,12 @@ public class QuestionsBlockDAOHibernate implements QuestionsBlockDAO {
     }
 
     @Override
-    public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId) {
+    public QuestionsBlock getQuestionsBlockByInterviewIdAndUserId(String userID, String appointmentId) {
+
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuestionsBlock.class)
-                .setProjection(Projections.projectionList().add(Projections.property("UserId"), userID).add(Projections.property("interview_id"), appointmentId));
-        return (QuestionsBlock) criteria.uniqueResult();
+                .setProjection(Projections.projectionList().add(Projections.property("UserId"), userID).add(Projections.property("InterviewId"), appointmentId));
+        String id = (String) criteria.setProjection(Projections.property("id")).uniqueResult();
+        return (QuestionsBlock) sessionFactory.getCurrentSession().load(QuestionsBlock.class, id);
     }
 
     @Override
