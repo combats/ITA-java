@@ -1,5 +1,6 @@
 package com.softserveinc.ita.service;
 
+import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.web.client.RestTemplate;
 
@@ -16,4 +17,6 @@ public interface HttpRequestExecutor {
     RestTemplate getRestTemplate();
 
     String getBaseUrl();
+
+    List<Appointment> getListOfObjectsByID(String applicantId, Class<Appointment> appointmentClass);
 }

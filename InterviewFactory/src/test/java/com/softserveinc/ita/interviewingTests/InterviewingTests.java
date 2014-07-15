@@ -3,7 +3,7 @@ package com.softserveinc.ita.interviewingTests;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
-import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
+import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;

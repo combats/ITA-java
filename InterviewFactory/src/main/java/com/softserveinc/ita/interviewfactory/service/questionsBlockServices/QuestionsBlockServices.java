@@ -1,9 +1,8 @@
-package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
+package com.softserveinc.ita.interviewfactory.service.questionsBlockServices;
 
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 /**

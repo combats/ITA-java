@@ -2,13 +2,13 @@ package com.softserveinc.ita.interviewfactory.factory;
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
-import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
+import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,12 +17,15 @@ import java.util.Set;
 @Component("InterviewWithUserAndStandardQuestions")
 public class InterviewWithUserAndStandardQuestions implements CreateInterviewStrategy {
 
+    @Qualifier("httpRequestExecutor")
     @Autowired
     HttpRequestExecutor httpRequestExecutor;
 
+    @Qualifier("questionsBlockService")
     @Autowired
     QuestionsBlockServices questionsBlockServices;
 
+    @Qualifier("questionsInformationService")
     @Autowired
     QuestionsInformationServices questionsInformationService;
 

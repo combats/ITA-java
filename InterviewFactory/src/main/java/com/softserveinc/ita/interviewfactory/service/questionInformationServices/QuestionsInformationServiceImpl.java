@@ -1,11 +1,10 @@
 package com.softserveinc.ita.interviewfactory.service.questionInformationServices;
 
-import com.softserveinc.ita.dao.QuestionInformationDAO;
-import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
+import com.softserveinc.ita.interviewfactory.dao.questionInformationDAO.QuestionInformationDAO;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
-import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
+import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +21,15 @@ import java.util.Set;
  */
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {
 
+
     @Autowired
     QuestionInformationDAO questionInformationDAO;
 
+    @Qualifier("questionsBlockService")
     @Autowired
     QuestionsBlockServices questionsBlockService;
 
+    @Qualifier("interviewService")
     @Autowired
     InterviewService interviewService;
 

@@ -35,12 +35,11 @@
     <!--external services-->
 
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
-    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesImpl"/>
+    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServicesImpl"/>
     <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServiceImpl"/>
-    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
-    <bean id="interviewDAO" class="com.softserveinc.ita.dao.impl.InterviewDAOHibernate"/>
-    <bean id="questionInformationDAO" class="com.softserveinc.ita.dao.impl.QuestionInformationDAOHibernate"/>
-    <bean id="questionsBlockDAO" class="com.softserveinc.ita.dao.impl.QuestionsBlockDAOHibernate"/>
+    <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAOMock"/>
+    <bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.questionInformationDAO.QuestionInformationDOAMock"/>
+    <bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.questionsBlockDAO.QuestionsBlockDAOMock"/>
 
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
@@ -50,5 +49,6 @@
     <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
     <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
     <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
+
 
 </beans>

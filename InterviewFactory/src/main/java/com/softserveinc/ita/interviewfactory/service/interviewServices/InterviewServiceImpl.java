@@ -1,16 +1,20 @@
 package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
-import com.softserveinc.ita.dao.AppointmentDAO;
-import com.softserveinc.ita.dao.InterviewDAO;
+
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
+import com.softserveinc.ita.entity.QuestionInformation;
+import com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAO;
+import com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAOMock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
+import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,24 +28,24 @@ import java.util.List;
  */
 public class InterviewServiceImpl implements InterviewService {
 
+
+
     @Autowired
     InterviewDAO interviewDAO;
 
-    @Autowired
-    AppointmentDAO appointmentDAO;
-
-
-
+    @Qualifier("interviewFactory")
     @Autowired
     InterviewFactory interviewFactory;
 
+    @Qualifier("httpRequestExecutor")
     @Autowired
     HttpRequestExecutor httpRequestExecutor;
 
     @Override
     public List<Interview> getInterviewByApplicantID(String applicantId) throws HttpRequestException {
         List<Interview> listForReturn = new ArrayList<>();
-        List<Appointment> listWithApplicant = appointmentDAO.getAppointmentByApplicantId(applicantId);
+        List<Appointment> listWithApplicant = httpRequestExecutor.getListOfObjectsByID(applicantId, Appointment.class);
+
         for (Appointment appointment : listWithApplicant){
             listForReturn.add(interviewDAO.getInterviewByAppointmentId(appointment.getAppointmentId()));
         }
@@ -87,5 +91,15 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public void updateInterview(Interview interview) throws HttpRequestException {
         interviewDAO.updateInterview(interview);
+    }
+
+    @Override
+    public List<String> getAllInterviewsId() throws HttpRequestException {
+        return interviewDAO.getAllInterviewsId();
+    }
+
+    @Override
+    public List<Interview> getAllInterviews() throws HttpRequestException {
+        return interviewDAO.getAllInterviews();
     }
 }

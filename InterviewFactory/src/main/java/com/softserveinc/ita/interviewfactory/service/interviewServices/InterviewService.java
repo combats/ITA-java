@@ -23,4 +23,6 @@ public interface InterviewService {
 
     void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException;
     void updateInterview(Interview interview) throws HttpRequestException;
+    List<String> getAllInterviewsId() throws HttpRequestException;
+    List<Interview> getAllInterviews() throws HttpRequestException;
 }

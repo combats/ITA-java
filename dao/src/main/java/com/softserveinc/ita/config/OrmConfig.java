@@ -24,14 +24,14 @@ import java.util.Properties;
 @ComponentScan({"com.softserveinc.ita.dao"})
 public class OrmConfig {
 
-    @Value("${jdbc.driverClassName}")
-    private String driverClassName;
-    @Value("${jdbc.url}")
-    private String url;
-    @Value("${jdbc.username}")
-    private String username;
-    @Value("${jdbc.password}")
-    private String password;
+ //   @Value("${jdbc.driverClassName}")
+    private String driverClassName = "com.mysql.jdbc.Driver";
+ //   @Value("${jdbc.url}")
+    private String url = "jdbc:mysql://localhost:3306/interview";
+ //   @Value("${jdbc.username}")
+    private String username = "root";
+ //   @Value("${jdbc.password}")
+    private String password = "A1k40jna";
 
 
     @Autowired

@@ -127,14 +127,24 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     }
 
     @Override
+    public List<Appointment> getListOfObjectsByID(String applicantId, Class<Appointment> appointmentClass) {
+        List<Appointment> listWithApplicant = new ArrayList<>();
+        listWithApplicant.add(appointmentList.get(0));
+        return listWithApplicant;
+    }
+
+    @Override
     public List<String> getAllObjectsID(Class objectClass) throws HttpRequestException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public RestTemplate getRestTemplate(){ return restTemplate;}
-
-    public String getBaseUrl() {
-        return baseUrl;
+    @Override
+    public RestTemplate getRestTemplate() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public String getBaseUrl() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

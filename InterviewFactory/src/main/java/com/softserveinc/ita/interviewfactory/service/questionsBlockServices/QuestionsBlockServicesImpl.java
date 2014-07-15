@@ -1,15 +1,13 @@
-package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
+package com.softserveinc.ita.interviewfactory.service.questionsBlockServices;
 
-import com.softserveinc.ita.dao.InterviewDAO;
-import com.softserveinc.ita.dao.QuestionsBlockDAO;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.QuestionsBlock;
+import com.softserveinc.ita.interviewfactory.dao.questionsBlockDAO.QuestionsBlockDAO;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,9 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
+
     @Autowired
     QuestionsBlockDAO questionsBlockDAO;
 
+    @Qualifier("interviewService")
     @Autowired
     InterviewService interviewService;
 

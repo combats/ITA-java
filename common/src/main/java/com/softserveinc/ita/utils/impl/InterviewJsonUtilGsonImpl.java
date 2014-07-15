@@ -11,7 +11,7 @@ public class InterviewJsonUtilGsonImpl implements JsonUtil {
     private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
             .setDateFormat(DateFormat.DEFAULT)
             .setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
+        //    .excludeFieldsWithoutExposeAnnotation()
             .create();
 
     @Override

@@ -1,16 +1,4 @@
-package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
-
-import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
-import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
-import exceptions.WrongCriteriaException;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.softserveinc.ita.interviewfactory.service.questionsBlockServices;
 
 /**
  * Created with IntelliJ IDEA.
