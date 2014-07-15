@@ -23,4 +23,14 @@ public class SearchController {
     public List<Applicant> getApplicantsByName(@PathVariable String wildcard) {
         return applicantSearchService.getApplicantsByName(wildcard);
     }
+    @RequestMapping(value = "/applicants/lastName/{wildcard}", method = RequestMethod.GET)
+    @ResponseBody
+    public List<Applicant> getApplicantsByLastName(@PathVariable String wildcard) {
+        return applicantSearchService.getApplicantsByLastName(wildcard);
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
+    public String showMainPage() {
+        return "index";
+    }
 }

@@ -12,8 +12,7 @@
     <!-- Scans within the base package of the application for @Components to
         configure as beans -->
     <context:annotation-config/>
-    <context:component-scan base-package="com.softserveinc.ita.service"/>
-    <context:component-scan base-package="com.softserveinc.ita.dao"/>
+    <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
 
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
@@ -32,7 +31,6 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="packagesToScan" value="com.softserveinc.ita.dao"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
@@ -42,15 +40,10 @@
                 <prop key="hibernate.search.default.indexBase">${hibernate.search.default.indexBase}</prop>
             </props>
         </property>
-        
+
         <property name="annotatedClasses">
             <list>
-                <value>com.softserveinc.ita.entity.Group</value>
-                <value>com.softserveinc.ita.entity.Question</value>
-                <value>com.softserveinc.ita.entity.Role</value>
-                <value>com.softserveinc.ita.entity.User</value>
                 <value>com.softserveinc.ita.entity.Applicant</value>
-                <value>com.softserveinc.ita.entity.Appointment</value>
             </list>
         </property>
     </bean>

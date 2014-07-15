@@ -2,9 +2,7 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
@@ -18,13 +16,13 @@ import java.util.List;
 @RequestMapping("/appointments")
 public class AppointmentController {
     @Autowired
-    private Validator appointmentValidator;
+    private Validator validator;
     @Autowired
     private AppointmentService appointmentService;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
-        binder.setValidator(appointmentValidator);
+        binder.setValidator(validator);
     }
 
     @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")

@@ -22,7 +22,7 @@ public class ApplicantSearchServiceTests extends BaseTest {
     @Autowired
     private ApplicantSearchService service;
 
-    private boolean setUpIsDone = false;
+    private static boolean setUpIsDone = false;
     @Before
     public void setup() {
         //Used Before with flag instead of BeforeClass to avoid static initialization.
@@ -52,16 +52,16 @@ public class ApplicantSearchServiceTests extends BaseTest {
     @Test
     public void testSearchApplicantByNameReturnsProperApplicant() {
         List<Applicant> result = service.getApplicantsByName("john");
-        assertEquals(result.get(0).getName(), "John");
+        assertEquals(1,result.size());
     }
     @Test
     public void testSearchApplicantByLastNameReturnsProperApplicant() {
-        List<Applicant> result = service.getApplicantsByName("doe");
-        assertEquals(result.get(0).getName(), "Doe");
+        List<Applicant> result = service.getApplicantsByLastName("doe");
+        assertEquals(1,result.size());
     }
     @Test
     public void testSearchApplicantByLastNameReturnsProperApplicants() {
-        List<Applicant> result = service.getApplicantsByName("*s");
-        assertEquals(result.size(), 2);
+        List<Applicant> result = service.getApplicantsByLastName("*s");
+        assertEquals(2,result.size());
     }
 }
