@@ -22,6 +22,7 @@
                     <option value="In process">In progress</option>
                     <option value="Planned">Planned</option>
                     <option value="Offering">Offering</option>
+                    <option value="Finished">Finished</option>
                 </select>
             </span>
                     </h1>

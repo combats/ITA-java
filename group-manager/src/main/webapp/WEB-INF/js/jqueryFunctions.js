@@ -16,8 +16,8 @@ function viewGroups() {
             for (index = 0; index < data.length; index++) {
                 var view = {
                     ref: 'groups/list/' + data[index].groupID,
-                    image: data[index].course.imageRef,
                     courseName: "Course : " + data[index].course.name,
+                    image: data[index].course.imageRef,
                     groupName: "Group : " + data[index].groupName,
                     groupId: data[index].groupID
                 }
@@ -31,7 +31,6 @@ function viewGroups() {
                 groupId: "id0"
             }
             output += Mustache.render(template, view);
-
             $("#portfolio1").html(output);
         },
         error: function(data){

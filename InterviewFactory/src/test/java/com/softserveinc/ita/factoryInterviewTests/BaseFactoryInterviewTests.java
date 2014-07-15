@@ -1,12 +1,5 @@
 package com.softserveinc.ita.factoryInterviewTests;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 26.06.14
- * Time: 13:38
- * To change this template use File | Settings | File Templates.
- */
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
