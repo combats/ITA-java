@@ -15,10 +15,12 @@ public class Group implements Serializable{
     public static final String PLANNED_STATUS = "Planned";
     public static final String OFFERING_STATUS = "Offering";
     public static final String BOARDING_STATUS = "Boarding";
+    public static final String FINISHED_STATUS = "Finished";
     private static final long serialVersionUID = 1L;
 
     public enum Status implements Serializable {
-        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS);
+        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS),
+        FINISHED(FINISHED_STATUS);
         private String name;
         Status(String name) {
             this.name = name;
@@ -82,6 +84,14 @@ public class Group implements Serializable{
     }
     public Status getGroupStatus() {
         return groupStatus;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
