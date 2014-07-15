@@ -45,7 +45,8 @@ public class Group implements Serializable{
     private String groupName;
     private Status groupStatus;
     private Course course;
-
+    private long duration;
+    private int capacity;
     public Group() {}
 
     public Group(String groupID) {
@@ -92,6 +93,22 @@ public class Group implements Serializable{
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public long getDuration() {
+        return duration;
+    }
+
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     @Override

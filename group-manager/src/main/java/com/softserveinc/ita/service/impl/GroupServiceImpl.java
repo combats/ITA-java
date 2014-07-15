@@ -1,6 +1,7 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.WrongGroupStatusException;
 import com.softserveinc.ita.service.GroupService;
@@ -20,6 +21,11 @@ public class GroupServiceImpl implements GroupService {
             throw new WrongGroupStatusException();
         }
         return groupDao.getGroupsByStatus(groupStatus);
+    }
+
+    @Override
+    public ArrayList<Course> getCourses() {
+        return groupDao.getCourses();
     }
 
     private boolean isWrongStatus(String groupStatus){

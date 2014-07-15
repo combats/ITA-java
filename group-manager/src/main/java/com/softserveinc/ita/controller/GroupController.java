@@ -1,5 +1,6 @@
 package com.softserveinc.ita.controller;
 
+import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.GroupException;
@@ -27,6 +28,11 @@ public class GroupController {
     @ResponseBody
     ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
         return groupService.getGroupsByStatus(status);
+    }
+
+    @RequestMapping(value ="/courses", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody ArrayList<Course> getCourses(){
+        return groupService.getCourses();
     }
 
     @ExceptionHandler(GroupException.class)
