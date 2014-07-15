@@ -36,6 +36,8 @@
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
+
+    <bean id="userDetailsBuilder" class="com.softserveinc.ita.security.UserDetailsBuilder"/>
     <!--dao-->
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
 </beans>
