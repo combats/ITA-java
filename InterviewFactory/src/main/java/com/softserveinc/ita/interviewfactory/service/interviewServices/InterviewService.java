@@ -2,7 +2,6 @@ package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;

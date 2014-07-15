@@ -15,7 +15,6 @@ import java.util.Set;
 @Component("InterviewWithoutQuestions")
 public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
-    @Qualifier("httpRequestExecutor")
     @Autowired
     HttpRequestExecutor httpRequestExecutor;
 

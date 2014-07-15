@@ -17,15 +17,12 @@ import java.util.Set;
 @Component("InterviewWithUserAndStandardQuestions")
 public class InterviewWithUserAndStandardQuestions implements CreateInterviewStrategy {
 
-    @Qualifier("httpRequestExecutor")
     @Autowired
     HttpRequestExecutor httpRequestExecutor;
 
-    @Qualifier("questionsBlockService")
     @Autowired
     QuestionsBlockServices questionsBlockServices;
 
-    @Qualifier("questionsInformationService")
     @Autowired
     QuestionsInformationServices questionsInformationService;
 

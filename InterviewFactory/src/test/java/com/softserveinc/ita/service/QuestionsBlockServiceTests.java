@@ -2,6 +2,8 @@ package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
+import com.softserveinc.ita.entity.QuestionInformation;
+import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
@@ -11,9 +13,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -32,68 +37,44 @@ public class QuestionsBlockServiceTests extends BaseServiceTests{
     @Autowired
     InterviewFactory interviewFactory;
 
-    @Test
-    public void testAddQuestionsBlockAndExpectOk() {
+    @Qualifier("interviewService")
+    @Autowired
+    InterviewService interviewService;
 
-      assertEquals();
+    @Test
+    public void testAddQuestionsBlockAndExpectOk() throws WrongCriteriaException, HttpRequestException {
+        Interview interviewBefore = interviewService.getInterviewByAppointmentID("1");
+        Set<QuestionsBlock> allQuestionBlocksBefore = interviewBefore.getQuestionsBlocks();
+
+        QuestionsBlock questionsBlock = new QuestionsBlock();
+        questionsBlock.setInterviewId("1");
+        questionsBlockServices.addQuestionsBlock(questionsBlock);
+        Interview interview = interviewService.getInterviewByAppointmentID("1");
+        Set<QuestionsBlock> allQuestionBlocksAfter = interview.getQuestionsBlocks();
+
+        assertEquals(allQuestionBlocksAfter.size(), allQuestionBlocksBefore.size());
 
     }
 
     @Test
-    public void testGetInterviewByIdAndExpectNewInterview() throws HttpRequestException, WrongCriteriaException {
+    public void testGetQuestionsBlockFromInterviewByUserIdAndExpectOk() throws WrongCriteriaException, HttpRequestException {
+        QuestionsBlock questionsBlock = new QuestionsBlock();
+        Set<QuestionInformation> questionInformationsList = new HashSet<>();
+        QuestionInformation questionInformation = new QuestionInformation();
+        questionInformation.setQuestion("Question body");
+        questionInformation.setAnswer("answer");
+        questionInformation.setComment("normas");
+        questionInformation.setMark(2);
+        questionInformation.setWeight(1);
+        questionInformation.setInterviewId("1");
+        questionInformationsList.add(questionInformation);
+        questionsBlock.setQuestions(questionInformationsList);
+        questionsBlock.setInterviewId("1");
+        questionsBlock.setUserId("1");
+        questionsBlock.setId("1");
+        QuestionsBlock questionsBlockActual = questionsBlockServices.getQuestionsBlockFromInterviewByUserId("1", "1");
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("3");
-        Interview interviewExpected = interviewService.getInterviewByAppointmentID(interviewActual.getInterviewId());
-        assertEquals(interviewActual, interviewExpected);
-
-    }
-
-    @Test
-    public void testPutInterviewAndExpectOk() throws HttpRequestException, WrongCriteriaException {
-        Interview interviewActual1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
-        Interview interviewActual2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create("2");
-        Interview interviewActual3 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("3");
-
-        String interviewExpected1 = interviewService.putInterview(interviewActual1.getInterviewId(), "InterviewWithoutQuestions");
-        String interviewExpected2 = interviewService.putInterview(interviewActual2.getInterviewId(), "InterviewWithStandardQuestions");
-        String interviewExpected3 = interviewService.putInterview(interviewActual3.getInterviewId(), "InterviewWithUserAndStandardQuestions");
-
-        assertEquals(interviewActual1.getInterviewId(), interviewExpected1);
-        assertEquals(interviewActual2.getInterviewId(), interviewExpected2);
-        assertEquals(interviewActual3.getInterviewId(), interviewExpected3);
-
-    }
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    @Test
-    public void testPutInterviewAndExpectWrongCriteriaException() throws HttpRequestException, WrongCriteriaException {
-        thrown.expect(WrongCriteriaException.class);
-        thrown.expectMessage("Type is wrong");
-        String interviewExpected1 = interviewService.putInterview("1", "InterviewWithoutQuestionssdsd");
-    }
-
-    @Test
-    public void testGetInterviewByApplicantIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
-
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
-        List<Interview> interviewExpectedList = interviewService.getInterviewByApplicantID("1");
-        assertEquals(interviewActual, interviewExpectedList.get(0));
-
-    }
-
-    @Test
-    public void testGetAllInterviews() throws HttpRequestException {
-
-        List<Interview> interviewsListActual = new ArrayList<>();
-        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
-        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("2");
-        interviewsListActual.add(interview1);
-        interviewsListActual.add(interview2);
-
-        List<Interview> interviewsListExpected= interviewService.getAllInterviews();
-        assertEquals(interviewsListExpected, interviewsListActual);
+        assertEquals(questionsBlockActual, questionsBlock);
 
     }
 }

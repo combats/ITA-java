@@ -46,10 +46,10 @@ public class InterviewServiceTests extends BaseServiceTests {
     }
 
     @Test
-    public void testGetInterviewByIdAndExpectNewInterview() throws HttpRequestException, WrongCriteriaException {
+    public void testGetInterviewByIdAndExpectNewInterview() throws HttpRequestException, WrongCriteriaException, InterruptedException {
 
         Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("3");
-        Interview interviewExpected = interviewService.getInterviewByAppointmentID(interviewActual.getInterviewId());
+        Interview interviewExpected = interviewService.getInterviewByAppointmentID("3");
         assertEquals(interviewActual, interviewExpected);
 
     }

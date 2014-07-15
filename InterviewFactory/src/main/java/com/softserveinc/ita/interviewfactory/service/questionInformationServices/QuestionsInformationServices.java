@@ -2,9 +2,6 @@ package com.softserveinc.ita.interviewfactory.service.questionInformationService
 
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;

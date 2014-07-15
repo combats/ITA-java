@@ -19,7 +19,6 @@ import java.util.List;
  */
 public class InterviewDAOMock implements InterviewDAO {
 
-    @Qualifier("interviewFactory")
     @Autowired
     InterviewFactory interviewFactory;
 
@@ -74,7 +73,11 @@ public class InterviewDAOMock implements InterviewDAO {
             interviewsList.add(interview2);
 
         for (int i = 0; i < interviewsList.size(); i++){
-            if (interviewsList.get(i).getInterviewId().equals(interview.getInterviewId())) interviewsList.add(i, interview);
+            if (interviewsList.get(i).getInterviewId().equals(interview.getInterviewId())) {
+                interviewsList.add(i, interview);
+                break;
+            }
+
         }
     }
 

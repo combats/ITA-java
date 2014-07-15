@@ -18,11 +18,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
  */
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
-
     @Autowired
     QuestionsBlockDAO questionsBlockDAO;
 
-    @Qualifier("interviewService")
     @Autowired
     InterviewService interviewService;
 

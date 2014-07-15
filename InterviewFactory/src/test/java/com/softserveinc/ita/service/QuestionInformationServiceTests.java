@@ -1,5 +1,18 @@
 package com.softserveinc.ita.service;
 
+import com.softserveinc.ita.entity.QuestionInformation;
+import com.softserveinc.ita.entity.QuestionsBlock;
+import com.softserveinc.ita.interviewfactory.dao.questionsBlockDAO.QuestionsBlockDAOMock;
+import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
+import com.softserveinc.ita.service.exception.HttpRequestException;
+import exceptions.WrongCriteriaException;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Iterator;
+
+import static junit.framework.Assert.assertEquals;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Вадим
@@ -8,4 +21,22 @@ package com.softserveinc.ita.service;
  * To change this template use File | Settings | File Templates.
  */
 public class QuestionInformationServiceTests extends BaseServiceTests {
+
+    @Autowired
+    QuestionsInformationServices questionsInformationServices;
+
+    @Test
+    public void testAddQuestionInformationAndExpectOk() throws WrongCriteriaException, HttpRequestException {
+        QuestionInformation questionInformation = new QuestionInformation();
+        questionInformation.setAnswer("wefef");
+        questionInformation.setQuestion("verver");
+        questionInformation.setInterviewId("1");
+        questionsInformationServices.addQuestionInformation(questionInformation, "1");
+        QuestionsBlock questionsBlock = QuestionsBlockDAOMock.allQuestionsBlocks.get(0);
+        Iterator<QuestionInformation> it = questionsBlock.getQuestions().iterator();
+        QuestionInformation questionInformation1 = it.next();
+        assertEquals(questionInformation1, questionInformation);
+
+    }
+
 }

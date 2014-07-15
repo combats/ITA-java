@@ -6,9 +6,6 @@ import com.softserveinc.ita.interviewfactory.service.questionInformationServices
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,7 +89,7 @@ public class InterviewingTests extends BaseInterviewingTests {
     //-------------------------------------Mocks----------------------------------------------------
 
     @Test
-    public void testGetQuestionsBlockByUserIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public void testGetQuestionsBlockByUserIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
         String userId = "1";
         QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockFromInterviewByUserId(userId, appointmentIdList.get(1));
         assertEquals(questionsBlock.getUserId(), userId);
@@ -105,7 +102,7 @@ public class InterviewingTests extends BaseInterviewingTests {
 //    }
 
     @Test
-    public void testGetQuestionInformationByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
+    public void testGetQuestionInformationByIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
         String id = "1";
         QuestionInformation questionInformation = questionsInformationServices.getQuestionInformationById(id);
         System.out.println(interviewUtilJson.toJson(questionInformation));
@@ -113,7 +110,7 @@ public class InterviewingTests extends BaseInterviewingTests {
     }
 
     @Test
-    public void updateQuestionInformation() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException {
+    public void updateQuestionInformation() throws HttpRequestException, WrongCriteriaException{
         QuestionInformation questionInformation = new QuestionInformation();
         questionInformation.setQuestion("wwwww");
         questionInformation.setAnswer("wqwqwq");

@@ -4,14 +4,10 @@ package com.softserveinc.ita.interviewfactory.service.interviewServices;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
-import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAO;
-import com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAOMock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,16 +24,12 @@ import java.util.List;
  */
 public class InterviewServiceImpl implements InterviewService {
 
-
-
     @Autowired
     InterviewDAO interviewDAO;
 
-    @Qualifier("interviewFactory")
     @Autowired
     InterviewFactory interviewFactory;
 
-    @Qualifier("httpRequestExecutor")
     @Autowired
     HttpRequestExecutor httpRequestExecutor;
 

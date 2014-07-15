@@ -17,10 +17,13 @@ import java.util.Set;
  * To change this template use File | Settings | File Templates.
  */
 public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
+
+    public static List<QuestionsBlock> allQuestionsBlocks = new ArrayList();
+
     @Override
     public QuestionsBlock getQuestionsBlockByInterviewIdAndUserId(String userID, String appointmentId) {
 
-        Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
+
         QuestionsBlock questionsBlock = new QuestionsBlock();
         Set<QuestionInformation> questionInformationsList = new HashSet<>();
         QuestionInformation questionInformation = new QuestionInformation();
@@ -46,7 +49,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
     @Override
     public QuestionsBlock getQuestionsBlockFromInterviewByQuestionsBlockId(String questionsBlockId) {
-        Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
+
         QuestionsBlock questionsBlock = new QuestionsBlock();
         Set<QuestionInformation> questionInformationsList = new HashSet<>();
         QuestionInformation questionInformation = new QuestionInformation();
@@ -72,7 +75,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
     @Override
     public String updateQuestionsBlock(QuestionsBlock newQuestionsBlock) {
-        List<QuestionsBlock> allQuestionsBlocks = new ArrayList();
+
         QuestionsBlock questionsBlock = new QuestionsBlock();
         Set<QuestionInformation> questionInformationsList = new HashSet<>();
         QuestionInformation questionInformation = new QuestionInformation();

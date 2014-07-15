@@ -21,15 +21,12 @@ import java.util.Set;
  */
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {
 
-
     @Autowired
     QuestionInformationDAO questionInformationDAO;
 
-    @Qualifier("questionsBlockService")
     @Autowired
     QuestionsBlockServices questionsBlockService;
 
-    @Qualifier("interviewService")
     @Autowired
     InterviewService interviewService;
 
