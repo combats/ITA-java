@@ -1,10 +1,7 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
-import com.softserveinc.ita.entity.QuestionInformation;
-import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
@@ -15,9 +12,7 @@ import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -39,7 +34,7 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Test
     public void testGetInterviewByIdAndExpectEqual() throws HttpRequestException, WrongCriteriaException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         Interview interviewExpected = interviewService.getInterviewByAppointmentID(interviewActual.getInterviewId());
         assertEquals(interviewActual, interviewExpected);
 
@@ -48,21 +43,21 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Test
     public void testGetInterviewByIdAndExpectNewInterview() throws HttpRequestException, WrongCriteriaException, InterruptedException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("3");
-        Interview interviewExpected = interviewService.getInterviewByAppointmentID("3");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("4");
+        Interview interviewExpected = interviewService.getInterviewByAppointmentID("4");
         assertEquals(interviewActual, interviewExpected);
 
     }
 
     @Test
     public void testPutInterviewAndExpectOk() throws HttpRequestException, WrongCriteriaException {
-        Interview interviewActual1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
-        Interview interviewActual2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create("2");
-        Interview interviewActual3 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("3");
+        Interview interviewActual1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
+        Interview interviewActual2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS).create("2");
+        Interview interviewActual3 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create("3");
 
-        String interviewExpected1 = interviewService.putInterview(interviewActual1.getInterviewId(), "InterviewWithoutQuestions");
-        String interviewExpected2 = interviewService.putInterview(interviewActual2.getInterviewId(), "InterviewWithStandardQuestions");
-        String interviewExpected3 = interviewService.putInterview(interviewActual3.getInterviewId(), "InterviewWithUserAndStandardQuestions");
+        String interviewExpected1 = interviewService.putInterview(interviewActual1.getInterviewId(), InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
+        String interviewExpected2 = interviewService.putInterview(interviewActual2.getInterviewId(), InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS);
+        String interviewExpected3 = interviewService.putInterview(interviewActual3.getInterviewId(), InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS);
 
         assertEquals(interviewActual1.getInterviewId(), interviewExpected1);
         assertEquals(interviewActual2.getInterviewId(), interviewExpected2);
@@ -77,13 +72,13 @@ public class InterviewServiceTests extends BaseServiceTests {
     public void testPutInterviewAndExpectWrongCriteriaException() throws HttpRequestException, WrongCriteriaException {
         thrown.expect(WrongCriteriaException.class);
         thrown.expectMessage("Type is wrong");
-        String interviewExpected1 = interviewService.putInterview("1", "InterviewWithoutQuestionssdsd");
+        interviewService.putInterview("1", null);
     }
 
     @Test
     public void testGetInterviewByApplicantIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         List<Interview> interviewExpectedList = interviewService.getInterviewByApplicantID("1");
         assertEquals(interviewActual, interviewExpectedList.get(0));
 
@@ -93,8 +88,8 @@ public class InterviewServiceTests extends BaseServiceTests {
     public void testGetAllInterviews() throws HttpRequestException {
 
         List<Interview> interviewsListActual = new ArrayList<>();
-        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
-        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("2");
+        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
+        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         interviewsListActual.add(interview1);
         interviewsListActual.add(interview2);
 

@@ -18,30 +18,24 @@ import java.io.Serializable;
 @Table(name = "QuestionInformation")
 public class QuestionInformation implements Serializable {
 
-    @Expose
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "questionInformation_id", unique = true)
     private String Id;
 
-    @Expose
     @Column(name = "Interview_id")
     private String interviewId;
 
-    @Expose
     @Column(name = "Question")
     private String question = "";
 
-    @Expose
     @Column(name = "Answer")
     private String answer = "";
 
-    @Expose
     @Column(name = "Mark")
     private int mark;
 
-    @Expose
     @Column(name = "Comment")
     private String comment = "";
 

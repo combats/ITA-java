@@ -13,31 +13,25 @@ import java.util.Set;
 @Table(name = "QuestionBlocks")
 public class QuestionsBlock implements Serializable {
 
-    @Expose
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "questionsBlock_id", unique = true)
     private String Id;
 
-    @Expose
     @Column(name = "UserId")
     String userId;
 
-    @Expose
     @Column(name = "InterviewId")
     String interviewId;
 
-    @Expose
     @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
     private Set<QuestionInformation> questions;
 
-    @Expose
     @Column(name = "Final_comment")
     private String finalComment;
 
-    @Expose
     @Column(name = "Bonus_points")
     private int bonusPoints;
 

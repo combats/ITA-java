@@ -1,13 +1,10 @@
-package com.softserveinc.ita.interviewingTests;
+package com.softserveinc.ita.interviewing;
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
-import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
-import exceptions.WrongCriteriaException;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -88,37 +85,37 @@ public class InterviewingTests extends BaseInterviewingTests {
 
     //-------------------------------------Mocks----------------------------------------------------
 
-    @Test
-    public void testGetQuestionsBlockByUserIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
-        String userId = "1";
-        QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockFromInterviewByUserId(userId, appointmentIdList.get(1));
-        assertEquals(questionsBlock.getUserId(), userId);
-    }
-
 //    @Test
-//    public void testGetStandardQuestionsBlockByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
-//        QuestionsBlock questionsBlock = questionsBlockServices.getStandardQuestionsBlockFromInterview(appointmentIdList.get(1));
-//        assertEquals(questionsBlock.getUserId(), null);
+//    public void testGetQuestionsBlockByUserIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
+//        String userId = "1";
+//        QuestionsBlock questionsBlock = questionsBlockServices.getQuestionsBlockFromInterviewByUserId(userId, appointmentIdList.get(1));
+//        assertEquals(questionsBlock.getUserId(), userId);
 //    }
-
-    @Test
-    public void testGetQuestionInformationByIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
-        String id = "1";
-        QuestionInformation questionInformation = questionsInformationServices.getQuestionInformationById(id);
-        System.out.println(interviewUtilJson.toJson(questionInformation));
-        assertEquals(questionInformation.getId(), id);
-    }
-
-    @Test
-    public void updateQuestionInformation() throws HttpRequestException, WrongCriteriaException{
-        QuestionInformation questionInformation = new QuestionInformation();
-        questionInformation.setQuestion("wwwww");
-        questionInformation.setAnswer("wqwqwq");
-        questionInformation.setWeight(2);
-        questionInformation.setComment("ererer");
-        questionInformation.setMark(3);
-        String updatedQuestionInformationId = questionsInformationServices.updateQuestionInformation(questionInformation);
-        assertEquals(questionInformation, updatedQuestionInformationId);
-    }
+//
+////    @Test
+////    public void testGetStandardQuestionsBlockByIdAndExpectOk() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+////        QuestionsBlock questionsBlock = questionsBlockServices.getStandardQuestionsBlockFromInterview(appointmentIdList.get(1));
+////        assertEquals(questionsBlock.getUserId(), null);
+////    }
+//
+//    @Test
+//    public void testGetQuestionInformationByIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
+//        String id = "1";
+//        QuestionInformation questionInformation = questionsInformationServices.getQuestionInformationById(id);
+//        System.out.println(interviewUtilJson.toJson(questionInformation));
+//        assertEquals(questionInformation.getId(), id);
+//    }
+//
+//    @Test
+//    public void updateQuestionInformation() throws HttpRequestException, WrongCriteriaException{
+//        QuestionInformation questionInformation = new QuestionInformation();
+//        questionInformation.setQuestion("wwwww");
+//        questionInformation.setAnswer("wqwqwq");
+//        questionInformation.setWeight(2);
+//        questionInformation.setComment("ererer");
+//        questionInformation.setMark(3);
+//        String updatedQuestionInformationId = questionsInformationServices.updateQuestionInformation(questionInformation);
+//        assertEquals(questionInformation, updatedQuestionInformationId);
+//    }
 
 }

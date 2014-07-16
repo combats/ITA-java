@@ -1,6 +1,7 @@
 package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.InterviewType;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 
@@ -16,7 +17,7 @@ import java.util.List;
 public interface InterviewService {
 
     List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException;
-    String putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException;
+    String putInterview(String appointmentID, InterviewType type) throws HttpRequestException, WrongCriteriaException;
 
     Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException;
 

@@ -4,13 +4,12 @@ package com.softserveinc.ita.interviewfactory.service.interviewServices;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
-import com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAO;
+import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,23 +44,28 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public String putInterview(String appointmentID, String type) throws HttpRequestException, WrongCriteriaException {
+    public String putInterview(String appointmentID, InterviewType type) throws HttpRequestException, WrongCriteriaException {
 
-        if (type.equals("InterviewWithoutQuestions")) {
+        if (type == null) throw new WrongCriteriaException("Type is wrong");
+        else
+        if (type.equals(InterviewType.INTERVIEW_WITHOUT_QUESTIONS)) {
             Interview interview =
-                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create(appointmentID);
+                    interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create(appointmentID);
             return interviewDAO.putInterview(interview);
         }
-        if (type.equals("InterviewWithStandardQuestions")) {
+        else
+        if (type.equals(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS)) {
             Interview interview =
-                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create(appointmentID);
+                    interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS).create(appointmentID);
             return interviewDAO.putInterview(interview);
         }
-        if (type.equals("InterviewWithUserAndStandardQuestions")) {
+        else
+        if (type.equals(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS)) {
             Interview interview =
-                    interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create(appointmentID);
+                    interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create(appointmentID);
             return interviewDAO.putInterview(interview);
         }
+        else
         throw new WrongCriteriaException("Type is wrong");
     }
 
@@ -69,7 +73,7 @@ public class InterviewServiceImpl implements InterviewService {
     public Interview getInterviewByAppointmentID(String appointmentId) throws WrongCriteriaException, HttpRequestException {
         Interview interview = interviewDAO.getInterviewByAppointmentId(appointmentId);
         if (interview == null){
-            String interviewId = putInterview(appointmentId, "InterviewWithoutQuestions");
+            String interviewId = putInterview(appointmentId, InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
             interview = interviewDAO.getInterviewByAppointmentId(interviewId);
         }
         return interview;

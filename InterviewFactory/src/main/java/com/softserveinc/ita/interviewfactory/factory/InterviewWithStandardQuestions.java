@@ -5,7 +5,6 @@ import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.Ques
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -13,7 +12,7 @@ import java.util.List;
 import java.util.Set;
 
 
-@Component("InterviewWithStandardQuestions")
+@Component("INTERVIEW_WITH_STANDARD_QUESTIONS")
 public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
 
     @Autowired
@@ -26,18 +25,20 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
     public Interview create(String interviewId) throws HttpRequestException {
         Interview interview = new Interview(interviewId);
         Set<QuestionsBlock> allQuestionsBlocks = new HashSet<>();
-
-        allQuestionsBlocks.add(questionsBlockServices.getStandardQuestionsBlock());
+        QuestionsBlock standardQuestionsBlock = questionsBlockServices.getStandardQuestionsBlock();
+        standardQuestionsBlock.setInterviewId(interviewId);
+        allQuestionsBlocks.add(standardQuestionsBlock);
 
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
         List<String> Users = appointment.getUserIdList();
 
         for (int i = 0; i < Users.size(); i++){
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+            userQuestionsBlock.setInterviewId(interviewId);
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
-        interview.setType(InterviewType.InterviewWithStandardQuestions);
+        interview.setType(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS);
         interview.setInterviewId(appointment.getAppointmentId());
         return interview;
     }

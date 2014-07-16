@@ -105,7 +105,7 @@ public class InterviewTests extends BaseMVCTest {
     @Test
     public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws HttpRequestException, WrongCriteriaException{
         Interview actual = interviewService.getInterviewByAppointmentID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
+        Interview expected = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         expected.setInterviewId("1");
         assertEquals(expected, actual);
     }
@@ -113,7 +113,7 @@ public class InterviewTests extends BaseMVCTest {
     @Test
     public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws HttpRequestException, WrongCriteriaException {
         List<Interview> actual = interviewService.getInterviewByApplicantID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
+        Interview expected = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         expected.setInterviewId("1");
         assertEquals(expected, actual.get(0));
     }

@@ -1,5 +1,6 @@
-package com.softserveinc.ita.interviewfactory.dao.questionInformationDAO;
+package com.softserveinc.ita.interviewfactory.dao.mock;
 
+import com.softserveinc.ita.dao.QuestionInformationDAO;
 import com.softserveinc.ita.entity.QuestionInformation;
 
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.Set;
  * Time: 13:21
  * To change this template use File | Settings | File Templates.
  */
-public class QuestionInformationDOAMock implements QuestionInformationDAO  {
+public class QuestionInformationDOAMock implements QuestionInformationDAO {
 
     @Override
     public QuestionInformation getQuestionInformationById(String questionsInformationId) {

@@ -4,15 +4,13 @@ import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Component("InterviewWithoutQuestions")
+@Component("INTERVIEW_WITHOUT_QUESTIONS")
 public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
     @Autowired
@@ -29,10 +27,11 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
         for (int i = 0; i < Users.size(); i++){
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+            userQuestionsBlock.setInterviewId(interviewId);
             allQuestionsBlocks.add(userQuestionsBlock);
         }
         interview.setQuestionsBlocks(allQuestionsBlocks);
-        interview.setType(InterviewType.InterviewWithoutQuestions);
+        interview.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         interview.setInterviewId(appointment.getAppointmentId());
         return interview;
     }

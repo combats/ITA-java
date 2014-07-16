@@ -53,7 +53,7 @@ public class QuestionInformationDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
         Set<QuestionsBlock> allQuestionsBlocksActual = interviewActual.getQuestionsBlocks();
@@ -100,7 +100,7 @@ public class QuestionInformationDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
         Set<QuestionsBlock> allQuestionsBlocksActual = interviewActual.getQuestionsBlocks();

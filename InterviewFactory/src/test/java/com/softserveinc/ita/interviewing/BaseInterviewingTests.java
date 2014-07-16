@@ -1,4 +1,4 @@
-package com.softserveinc.ita.interviewingTests;
+package com.softserveinc.ita.interviewing;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

@@ -36,9 +36,6 @@
 
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
-    <bean id="interviewDAO" class="com.softserveinc.ita.dao.impl.InterviewDAOHibernate"/>
-    <bean id="questionInformationDAO" class="com.softserveinc.ita.dao.impl.QuestionInformationDAOHibernate"/>
-    <bean id="questionsBlockDAO" class="com.softserveinc.ita.dao.impl.QuestionsBlockDAOHibernate"/>
 
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
     <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServicesImpl"/>
@@ -47,9 +44,5 @@
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
-
-    <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
-    <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
-    <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
 
 </beans>

@@ -15,7 +15,7 @@
     <context:component-scan base-package="com.softserveinc.ita.mvc"/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
     <context:component-scan base-package="com.softserveinc.ita.config"/>
-    <context:component-scan base-package="com.softserveinc.ita.interviewingTests"/>
+    <context:component-scan base-package="com.softserveinc.ita.interviewing"/>
     <context:component-scan base-package="com.softserveinc.ita.factoryInterviewTests"/>
     <context:component-scan base-package="com.softserveinc.ita.utils"/>
     <mvc:annotation-driven/>
@@ -37,18 +37,13 @@
     <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
     <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServicesImpl"/>
     <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServiceImpl"/>
-    <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.interviewDAO.InterviewDAOMock"/>
-    <bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.questionInformationDAO.QuestionInformationDOAMock"/>
-    <bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.questionsBlockDAO.QuestionsBlockDAOMock"/>
+    <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock"/>
+    <bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionInformationDOAMock"/>
+    <bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionsBlockDAOMock"/>
 
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
-
-    <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
-    <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
-    <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
-
 
 </beans>

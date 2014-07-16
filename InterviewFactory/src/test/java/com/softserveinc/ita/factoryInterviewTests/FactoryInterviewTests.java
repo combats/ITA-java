@@ -10,6 +10,7 @@ import org.json.simple.parser.JSONParser;
 import org.junit.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,32 +35,32 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
 
     @Test
     public void testCreateInterviewWithoutQuestions() throws IOException, ParseException, JSONException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException {
-    Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("1");
+    Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
 
-    Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithoutQuestions).create("2");
-         System.out.println(interviewUtilJson.toJson(interview1));
-//        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithoutQuestions1.json")));
-//        Object object1 = parser.parse(reader1);
-//        String json1 = object1.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
-//
-//        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithoutQuestions2.json")));
-//        Object object2 = parser.parse(reader2);
-//        String json2 = object2.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
+    Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
+
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithoutQuestions1.json")));
+        Object object1 = parser.parse(reader1);
+        String json1 = object1.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
+
+        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithoutQuestions2.json")));
+        Object object2 = parser.parse(reader2);
+        String json2 = object2.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
 
     }
 
     @Test
     public void testCreateInterviewWithStandardQuestions() throws JSONException, IOException, ParseException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException {
-        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create("1");
-        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithStandardQuestions).create("2");
+        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS).create("1");
+        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_STANDARD_QUESTIONS).create("2");
 
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
@@ -80,23 +81,23 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
 
     @Test
     public void testCreateInterviewWithUserAndStandardQuestions() throws HttpRequestException, IOException, org.json.simple.parser.ParseException, JSONException {
-        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("2");
-        System.out.println(interviewUtilJson.toJson(interview1));
-//        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
-//        Object object1 = parser.parse(reader1);
-//        String json1 = object1.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
-//
-//        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
-//                getClass().getResourceAsStream(
-//                        "/JsonTestInterviewWithUserAndStandardQuestions2.json")));
-//        Object object2 = parser.parse(reader2);
-//        String json2 = object2.toString();
-//
-//        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
+        Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create("1");
+        Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create("2");
+
+        BufferedReader reader1 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
+        Object object1 = parser.parse(reader1);
+        String json1 = object1.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview1), json1, true);
+
+        BufferedReader reader2 = new BufferedReader(new InputStreamReader(
+                getClass().getResourceAsStream(
+                        "/JsonTestInterviewWithUserAndStandardQuestions2.json")));
+        Object object2 = parser.parse(reader2);
+        String json2 = object2.toString();
+
+        JSONAssert.assertEquals(interviewUtilJson.toJson(interview2), json2, true);
     }
 }

@@ -12,12 +12,10 @@ import java.util.Set;
 @Table(name = "Interview")
 public class Interview implements Serializable {
 
-    @Expose
     @Id
     @Column(name = "interview_id", unique = true)
     private String interviewId;
 
-    @Expose
     @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionsBlock.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "interview_questionsBlockId", referencedColumnName="interview_id")
     private Set<QuestionsBlock> questionsBlocks;

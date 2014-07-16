@@ -1,0 +1,57 @@
+{
+    "InterviewId": "2",
+    "QuestionsBlocks": [
+        {
+            "Id": null,
+            "UserId": "3",
+            "InterviewId": "2",
+            "Questions": null,
+            "FinalComment": null,
+            "BonusPoints": 0
+        },
+        {
+            "Id": null,
+            "UserId": "1",
+            "InterviewId": "2",
+            "Questions": null,
+            "FinalComment": null,
+            "BonusPoints": 0
+        },
+        {
+            "Id": null,
+            "UserId": "2",
+            "InterviewId": "2",
+            "Questions": null,
+            "FinalComment": null,
+            "BonusPoints": 0
+        },
+        {
+            "Id": "Hz, standart vopros",
+            "UserId": null,
+            "InterviewId": "2",
+            "Questions": [
+                {
+                    "Id": "Hz, standart vopros",
+                    "InterviewId": null,
+                    "Question": "How are you?",
+                    "Answer": "",
+                    "Mark": 0,
+                    "Comment": "",
+                    "Weight": 3
+                },
+                {
+                    "Id": "Hz, standart vopros",
+                    "InterviewId": null,
+                    "Question": "What is your name?",
+                    "Answer": "",
+                    "Mark": 0,
+                    "Comment": "",
+                    "Weight": 2
+                }
+            ],
+            "FinalComment": null,
+            "BonusPoints": 0
+        }
+    ],
+    "Type": "INTERVIEW_WITH_STANDARD_QUESTIONS"
+}

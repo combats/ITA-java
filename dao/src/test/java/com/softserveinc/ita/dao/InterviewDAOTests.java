@@ -44,7 +44,7 @@ public class InterviewDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         String interviewId = (String) sessionFactory.getCurrentSession().save(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
         assertEquals(interviewActual, interviewExpected);
@@ -71,7 +71,7 @@ public class InterviewDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         String interviewId = interviewDAO.putInterview(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
         assertEquals(interviewActual, interviewExpected);
@@ -116,7 +116,7 @@ public class InterviewDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         String interviewId = interviewDAO.putInterview(interviewExpected);
         Interview interviewActual = interviewDAO.getInterviewByAppointmentId(interviewId);
         assertEquals(interviewActual, interviewExpected);
@@ -155,7 +155,7 @@ public class InterviewDAOTests extends BaseDAOTest {
         interviewExpected.setInterviewId(appointmentId);
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);
-        interviewExpected.setType(InterviewType.InterviewWithoutQuestions);
+        interviewExpected.setType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
         interviewDAO.putInterview(interviewExpected);
         interviewDAO.removeInterviewByAppointmentId(appointmentId);
 
