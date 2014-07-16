@@ -10,6 +10,7 @@
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="css/users.css">
+<script src="js/jquery.validate.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -62,7 +63,7 @@
                             </label>
                         </div>
                         <div class="fields">
-                            <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
+                                <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
                         </div>
                     </div>
 

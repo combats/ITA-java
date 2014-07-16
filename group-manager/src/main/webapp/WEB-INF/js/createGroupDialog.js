@@ -49,7 +49,8 @@ $(function () {
         e.preventDefault();
         e.stopPropagation();
         if($("#userForm").valid()){
-            alert("group is valid");
+        }
+        else{
         }
     });
 
