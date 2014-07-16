@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <context:annotation-config />
+    <context:component-scan base-package="com.softserveinc.ita.interviewfactory"/>
+
+    <context:component-scan base-package="com.softserveinc.ita.interviewfactory.*" />
+    <mvc:annotation-driven/>
+
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <bean id="httpRequestExecutor" class="com.softserveinc.ita.interviewfactory.HttpRequestExecutorFactoryMock" >
+        <constructor-arg name="baseUrl" value="http://localhost:8080"/>
+    </bean>
+
+    <!--aux/utils-->
+
+    <bean id="jsonUtilJaxson" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
+    <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
+    <!--external services-->
+    <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServiceMock"/>
+
+    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesMock"/>
+    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServicesMock"/>
+
+    <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
+        <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
+    </bean>
+
+    <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
+    <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
+    <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
+
+</beans>
