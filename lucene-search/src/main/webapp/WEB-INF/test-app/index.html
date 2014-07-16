@@ -6,10 +6,29 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 </head>
 <body>
-<input input type="radio" ng-model="byName" ng-value=true>by name</body>
-<input input type="radio" ng-model="byName" ng-value=false>by surname</body>
-{{byName}}
+<div class="form-group" style="padding: 20px;">
+    <h1>Hibernate Search Test Page</h1>
+    <br>
+
+    <div>
+        <label>
+            <input input type="radio" ng-model="byName" ng-value=true ng-change="textChanged()">by name
+        </label>
+        <label>
+            <input input type="radio" ng-model="byName" ng-value=false ng-change="textChanged()">by surname
+        </label>
+    </div>
+    <br>
+    <input class="form-control" type="text" ng-model="wildcard" ng-change="textChanged()"
+           placeholder="enter wildcard over here">
+    <br>
+
+    <div>
+        <span ng-repeat="applicant in applicants" class="list-group-item">
+            <b>{{ applicant.name }} {{ applicant.surname}}</b> with id {{applicant.id}}</span>
+    </div>
+</div>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>
-<script src="js/app.js" type="text/javascript"></script>
+<script src="search/js/app.js" type="text/javascript"></script>
 </body>
 </html>

@@ -13,7 +13,6 @@ import org.hibernate.search.Search;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.sql.DataSource;
 import java.util.List;
 
 @Service
@@ -22,11 +21,15 @@ public class ApplicantSearchServiceImpl implements ApplicantSearchService {
     private SessionFactory sessionFactory;
 
     private static boolean setUpIsDone = false;
-    public void setup() {
-        //Used Before with flag instead of BeforeClass to avoid static initialization.
+
+    /**
+     * This method is used PURELY for test purposes. As we haven't got any real DB yet, this will give some values to play with
+     */
+    public void writeTestValuesToDB() {
         if (setUpIsDone) {
             return;
         }
+        setUpIsDone = true;
         Session session = sessionFactory.openSession();
         session.getTransaction().begin();
         session.save(new Applicant("John", "Doe"));
@@ -43,13 +46,12 @@ public class ApplicantSearchServiceImpl implements ApplicantSearchService {
         }catch (InterruptedException ex){
             System.err.println("Error creating search indexer: " + ex.getMessage());
         }
-        setUpIsDone = true;
         session.close();
     }
 
     @Override
     public List<Applicant> getApplicantsByName(String wildcard) {
-        setup();
+        writeTestValuesToDB();
         Session session = sessionFactory.openSession();
         FullTextSession fullTextSession = Search.getFullTextSession(session);
 
@@ -68,7 +70,7 @@ public class ApplicantSearchServiceImpl implements ApplicantSearchService {
 
     @Override
     public List<Applicant> getApplicantsByLastName(String wildcard) {
-        setup();
+        writeTestValuesToDB();
         Session session = sessionFactory.openSession();
         FullTextSession fullTextSession = Search.getFullTextSession(session);
 
