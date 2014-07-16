@@ -11,7 +11,6 @@
 
     <artifactId>applicants-notification</artifactId>
     <packaging>war</packaging>
-
     <name>applicants-notification</name>
 
     <properties>

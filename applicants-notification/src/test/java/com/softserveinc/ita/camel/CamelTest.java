@@ -69,13 +69,13 @@ public class CamelTest extends CamelSpringTestSupport {
         messageList.add(info8);
         messageList.add(info9);
         messageList.add(info10);
-        notify = new NotifyBuilder(context).from(producerUri).whenDone(10).create();  //whenDone(?) -> expected number of messages.
+        notify = new NotifyBuilder(context).from(producerUri).whenDone(messageList.size()).create();  //whenDone(?) -> expected number of messages.
 
     }
 
     @Test
     public void testServiceProducesCorrectNumberOfMessages() throws Exception {
-        consumerMock.expectedMessageCount(10);
+        consumerMock.expectedMessageCount(messageList.size());
         queueManager.notifyApplicants(messageList);
         boolean matches = notify.matches(5, TimeUnit.SECONDS);        //wait 5s for messages to be consumed
         assertTrue(matches);
@@ -84,7 +84,7 @@ public class CamelTest extends CamelSpringTestSupport {
 
     @Test
     public void testServiceProducesCorrectMessageBodies() throws Exception {
-        consumerMock.expectedBodiesReceived(messageList);
+        consumerMock.expectedBodiesReceivedInAnyOrder(messageList);
         queueManager.notifyApplicants(messageList);
         boolean matches = notify.matches(5, TimeUnit.SECONDS);
         assertTrue(matches);

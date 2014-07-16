@@ -16,7 +16,7 @@ public class QueueManagerServiceImpl implements QueueManager {
             QueueManagerServiceImpl.class.getName());
 
     @Produce(uri = "activemq:notification.queue")   //Creates a producer that writes to the JMS queue that is automatically created by ActiveMQ.
-            ProducerTemplate producer;  //TODO: think about interface instead of ProducerTemplate
+            ProducerTemplate producer;
 
     public void notifyApplicants(List<NotificationJSONInfo> infoList) {
         for (NotificationJSONInfo info : infoList) {

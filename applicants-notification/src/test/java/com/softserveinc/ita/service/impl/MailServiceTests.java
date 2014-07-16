@@ -92,6 +92,11 @@ public class MailServiceTests extends MailServiceBaseTests {
         wiser.start();
     }
 
+    @After
+    public void tearDown(){
+        wiser.stop();
+    }
+
     @Test
     public void notifyPassedApplicant() throws Exception {
         when(httpRequestExecutor.getObjectByID(applicant1.getId(), Applicant.class)).thenReturn(applicant1);
@@ -99,6 +104,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         when(httpRequestExecutor.getObjectByIDs(applicant1.getId(), group1.getGroupID(), Appointment.class))
                 .thenReturn(appointment1);
         when(httpRequestExecutor.getObjectByID(responsibleHr1.getId(), User.class)).thenReturn(responsibleHr1);
+
         NotificationJSONInfo notificationInfo = new NotificationJSONInfo(applicant1.getId(), group1.getGroupID(),
                 responsibleHr1.getId());
         String notificationJsonInfo = jsonUtil.toJson(notificationInfo);
@@ -197,8 +203,5 @@ public class MailServiceTests extends MailServiceBaseTests {
         assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
     }
 
-    @After
-    public void doAfter(){
-        wiser.stop();
-    }
+
 }

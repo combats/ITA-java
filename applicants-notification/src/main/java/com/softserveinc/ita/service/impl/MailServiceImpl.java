@@ -75,22 +75,24 @@ public class MailServiceImpl implements MailService {
             applicant = httpRequestExecutor.getObjectByID(applicantId, Applicant.class);
             group = httpRequestExecutor.getObjectByID(groupId, Group.class);
             responsibleHr = httpRequestExecutor.getObjectByID(responsibleHrId, User.class);
+
+            Applicant.Status status = group.getApplicants().get(applicantId);
+            switch (status) {
+                case NOT_SCHEDULED:
+                    sendNotScheduledLetterModel(applicant, group, responsibleHr);
+                    break;
+                case SCHEDULED:
+                    sendScheduledLetter(applicant, group, responsibleHr);
+                    break;
+                case NOT_PASSED:
+                    sendNotPassedLetter(applicant, group);
+                    break;
+                case PASSED:
+                    sendPassedLetter(applicant, group, responsibleHr);
+                    break;
+            }
         } catch (HttpRequestException e) {
             e.printStackTrace();
-        }
-        switch (group.getApplicants().get(applicant.getId())) {
-            case NOT_SCHEDULED:
-                sendNotScheduledLetterModel(applicant, group, responsibleHr);
-                break;
-            case SCHEDULED:
-                sendScheduledLetter(applicant, group, responsibleHr);
-                break;
-            case NOT_PASSED:
-                sendNotPassedLetter(applicant, group);
-                break;
-            case PASSED:
-                sendPassedLetter(applicant, group, responsibleHr);
-                break;
         }
     }
 
