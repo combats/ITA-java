@@ -17,7 +17,6 @@
     });
 </script>
 
-
 <div id="dialog-form-add-group" class="dialog" style="padding: 0px;">
     <div class="inner">
         <div id="user-box">
@@ -36,7 +35,7 @@
                     </div>
 
                     <div class="fieldgroup">
-                        <div class="headline surname" >
+                        <div class="headline address" >
                             <label for="gAddress">
                                 Address:
                             </label>
@@ -47,14 +46,46 @@
                     </div>
 
                     <div class="fieldgroup">
-                        <div class="headline role">
+                        <div class="headline course">
                             <label for="gCourse">
                                 Course:
                             </label>
                         </div>
                         <select name="groupCourse" id="gCourse" class="inputDLP roleCombobox">
-                            <option value="">Select group course</option>
                         </select>
+                    </div>
+
+                    <div class="fieldgroup">
+                        <div class="headline capacity" >
+                            <label for="gCapacity">
+                                Capacity:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
+                        </div>
+                    </div>
+
+                    <div class="fieldgroup">
+                        <div class="headline startDate" >
+                            <label for="gStartDate">
+                                Start date:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input name = "groupStartDate" id="gStartDate" class = "inputDLP">
+                        </div>
+                    </div>
+
+                    <div class="fieldgroup">
+                        <div class="headline endDate" >
+                            <label for="gEndDate">
+                                End date:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input name = "groupEndDate" id="gEndDate" class = "inputDLP">
+                        </div>
                     </div>
 
                     <br>
