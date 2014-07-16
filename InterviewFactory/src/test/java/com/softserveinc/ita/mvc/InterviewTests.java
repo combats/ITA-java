@@ -2,25 +2,17 @@ package com.softserveinc.ita.mvc;
 
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
-import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
+import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import com.softserveinc.ita.utils.JsonUtil;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,14 +29,10 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
  */
 public class InterviewTests extends BaseMVCTest {
 
-    private static long startTime = 1403308782454L;
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
     private MockMvc mockMvc;
 
     @Autowired
     InterviewService interviewService;
-    private static Appointment appointment1 = null;
-    private static Appointment appointment2 = null;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
@@ -53,73 +41,16 @@ public class InterviewTests extends BaseMVCTest {
     @Autowired
     InterviewFactory interviewFactory;
 
-    @Autowired
-    private JsonUtil interviewUtilJson;
-
-    @Autowired
-    private JsonUtil jsonUtilJaxson;
-
     @Before
     public void setup() {
         this.mockMvc = webAppContextSetup(this.wac).build();
     }
 
-    //-------------VadimNaumenko mock for tests------------------------------------
-
-    @BeforeClass
-    public static void setUpOnce() {
-
-        User user1 = new User("1", "IT Project Manager");
-        User user2 = new User("2", "Software Developer");
-        User user3 = new User("3", "HR Manager");
-
-        Applicant applicant1 = new Applicant("1", "Gena");
-        Applicant applicant2 = new Applicant("2", "Gesha");
-
-        List<String> usersIdList = new ArrayList<String>(); {
-
-            Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
-            Question question2 = new Question("Have you ever were connected with database developing?", 3);
-            Question question3 = new Question("Tell me something about JUnit testing.", 2);
-            Question question4 = new Question("Your last book you read?", 3);
-            Question question5 = new Question("Where did you study?", 2);
-            Question question6 = new Question("Are you married?", 3);
-            List<Question> questionsList1 = new ArrayList<Question>();
-            Collections.addAll(questionsList1, question1, question2);
-            user1.setQuestions(questionsList1);
-            List<Question> questionsList2 = new ArrayList<Question>();
-            Collections.addAll(questionsList2, question3, question4);
-            user2.setQuestions(questionsList1);
-            List<Question> questionsList3 = new ArrayList<Question>();
-            Collections.addAll(questionsList3, question5, question6);
-            user3.setQuestions(questionsList1);
-            Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
-        }
-
-        List<String> appointmentIdList = new ArrayList<String>();{
-            appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
-            appointment1.setAppointmentId("1");
-            appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
-            appointment2.setAppointmentId("2");
-            appointmentIdList.add(appointment1.getAppointmentId());
-            appointmentIdList.add(appointment2.getAppointmentId());
-        }
-
-        applicant1.setId("1");
-        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
-        appointment1.setAppointmentId("1");
-        applicant2.setId("2");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
-        appointment2.setAppointmentId("2");
-    }
-
-    //-------------VadimNaumenko mock from tests
-
     @Test
     public void testGetInterviewByAppointmentIDAndExpectIsAccepted() throws Exception {
 
         mockMvc.perform(
-                get("/interviews/" + appointment1.getAppointmentId())
+                get("/interviews/" + "1")
         )
                 .andExpect(status().isFound())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -172,18 +103,18 @@ public class InterviewTests extends BaseMVCTest {
     }
 
     @Test
-    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, WrongCriteriaException, QuestionsBlockNotFound {
+    public void testGetInterviewByAppointmentIdAndExpectInterviewEqualExpectedOne() throws HttpRequestException, WrongCriteriaException{
         Interview actual = interviewService.getInterviewByAppointmentID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setAppointmentId("1");
+        Interview expected = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
+        expected.setInterviewId("1");
         assertEquals(expected, actual);
     }
 
     @Test
-    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException {
+    public void testGetInterviewByApplicantIdAndExpectInterviewEqualExpectedOne() throws HttpRequestException, WrongCriteriaException {
         List<Interview> actual = interviewService.getInterviewByApplicantID("1");
-        Interview expected = interviewFactory.getInterviewWithType(InterviewType.InterviewWithUserAndStandardQuestions).create("1");
-        expected.setAppointmentId("1");
+        Interview expected = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
+        expected.setInterviewId("1");
         assertEquals(expected, actual.get(0));
     }
 

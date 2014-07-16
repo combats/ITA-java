@@ -24,6 +24,7 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     Appointment appointment1;
     Appointment appointment2;
     Appointment appointment3;
+    Appointment appointment4;
 
     private User user1 = new User("1", "IT Project Manager");
     private User user2 = new User("2", "Software Developer");
@@ -87,9 +88,12 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
         appointment2.setAppointmentId("2");
         appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment3.setAppointmentId("3");
+        appointment4 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment4.setAppointmentId("4");
         appointmentList.add(appointment1);
         appointmentList.add(appointment2);
         appointmentList.add(appointment3);
+        appointmentList.add(appointment4);
     }
     //-------------VadimNaumenko mock from tests
 
@@ -127,14 +131,24 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     }
 
     @Override
+    public List<Appointment> getListOfObjectsByID(String id, Class<Appointment> clazz) {
+        List<Appointment> listWithApplicant = new ArrayList<>();
+        listWithApplicant.add(appointmentList.get(0));
+        return listWithApplicant;
+    }
+
+    @Override
     public List<String> getAllObjectsID(Class objectClass) throws HttpRequestException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public RestTemplate getRestTemplate(){ return restTemplate;}
-
-    public String getBaseUrl() {
-        return baseUrl;
+    @Override
+    public RestTemplate getRestTemplate() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    @Override
+    public String getBaseUrl() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

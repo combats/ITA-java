@@ -1,10 +1,13 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.UserDAO;
+import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -52,4 +55,5 @@ public class UserDAOHibernate implements UserDAO {
     public List<User> getAllUsers() {
         return (List<User>) sessionFactory.getCurrentSession().createCriteria(User.class).list();
     }
+
 }

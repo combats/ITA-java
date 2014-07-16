@@ -4,22 +4,23 @@ import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "Interview")
-public class Interview {
+public class Interview implements Serializable {
 
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "InterviewId", unique = true)
-    @Expose
+    @Column(name = "interview_id", unique = true)
     private String interviewId;
-    @Expose
-    private List<QuestionsBlock> answerBlocks = new ArrayList<>();
 
+    @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionsBlock.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "interview_questionsBlockId", referencedColumnName="interview_id")
+    private Set<QuestionsBlock> questionsBlocks;
+
+    @Column(name = "InterviewType")
     private InterviewType type;
 
     public Interview() {
@@ -29,28 +30,28 @@ public class Interview {
         this.interviewId = interviewId;
     }
 
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public Set<QuestionsBlock> getQuestionsBlocks() {
+        return questionsBlocks;
+    }
+
     public InterviewType getType() {
         return type;
     }
 
-    public void setType(InterviewType type) {
-        this.type = type;
-    }
-
-    public List<QuestionsBlock> getQuestionsBlocks() {
-        return answerBlocks;
-    }
-
-    public String getAppointmentId() {
-        return interviewId;
-    }
-
-    public void setAppointmentId(String interviewId) {
+    public void setInterviewId(String interviewId) {
         this.interviewId = interviewId;
     }
 
-    public void setQuestionsBlocks(List<QuestionsBlock> answerBlocks) {
-        this.answerBlocks = answerBlocks;
+    public void setQuestionsBlocks(Set<QuestionsBlock> questionsBlocks) {
+        this.questionsBlocks = questionsBlocks;
+    }
+
+    public void setType(InterviewType type) {
+        this.type = type;
     }
 
     @Override
@@ -60,9 +61,9 @@ public class Interview {
 
         Interview interview = (Interview) o;
 
-        if (answerBlocks != null ? !answerBlocks.equals(interview.answerBlocks) : interview.answerBlocks != null)
-            return false;
         if (interviewId != null ? !interviewId.equals(interview.interviewId) : interview.interviewId != null)
+            return false;
+        if (questionsBlocks != null ? !questionsBlocks.equals(interview.questionsBlocks) : interview.questionsBlocks != null)
             return false;
         if (type != interview.type) return false;
 
@@ -72,7 +73,7 @@ public class Interview {
     @Override
     public int hashCode() {
         int result = interviewId != null ? interviewId.hashCode() : 0;
-        result = 31 * result + (answerBlocks != null ? answerBlocks.hashCode() : 0);
+        result = 31 * result + (questionsBlocks != null ? questionsBlocks.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         return result;
     }
@@ -80,8 +81,8 @@ public class Interview {
     @Override
     public String toString() {
         return "Interview{" +
-                "appointmentId='" + interviewId + '\'' +
-                ", answerBlocks=" + answerBlocks +
+                "interviewId='" + interviewId + '\'' +
+                ", questionsBlocks=" + questionsBlocks +
                 ", type=" + type +
                 '}';
     }

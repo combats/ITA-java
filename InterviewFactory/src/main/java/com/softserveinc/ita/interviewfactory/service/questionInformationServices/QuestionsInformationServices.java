@@ -2,9 +2,6 @@ package com.softserveinc.ita.interviewfactory.service.questionInformationService
 
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;
@@ -18,9 +15,9 @@ import java.util.List;
  */
 public interface QuestionsInformationServices {
 
-    QuestionInformation postQuestionInformation(QuestionInformation questionInformation);
-    void deleteQuestionInformationById(String questionsInformationId);
-    QuestionInformation editQuestionInformation(QuestionInformation questionInformation) throws InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException, QuestionNotFoundException ;
-    QuestionInformation getQuestionInformationById(String questionsInformationId) throws QuestionNotFoundException, InterviewNotFoundException, HttpRequestException, QuestionsBlockNotFound, WrongCriteriaException;
+    QuestionInformation getQuestionInformationById(String questionInformationId);
+    void addQuestionInformation(QuestionInformation questionInformation, String userId) throws WrongCriteriaException, HttpRequestException;
+    void deleteQuestionInformationById(String questionInformationId);
+    String updateQuestionInformation(QuestionInformation questionInformation);
 
 }

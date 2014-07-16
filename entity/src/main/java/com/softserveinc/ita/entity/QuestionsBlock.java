@@ -1,33 +1,60 @@
 package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-public class QuestionsBlock {
+@Entity
+@Table(name = "QuestionBlocks")
+public class QuestionsBlock implements Serializable {
 
-    @Expose
-    User user;
-    @Expose
-    private String questionsBlockID;
-    @Expose
-    private String interviewId;
-    @Expose
-    private List<QuestionInformation> questions = new ArrayList<>();
-    @Expose
-    private String finalComment = "";
-    @Expose
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "questionsBlock_id", unique = true)
+    private String Id;
+
+    @Column(name = "UserId")
+    String userId;
+
+    @Column(name = "InterviewId")
+    String interviewId;
+
+    @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
+    private Set<QuestionInformation> questions;
+
+    @Column(name = "Final_comment")
+    private String finalComment;
+
+    @Column(name = "Bonus_points")
     private int bonusPoints;
 
     public QuestionsBlock() {
     }
 
-    public QuestionsBlock(User user) {
-        this.user = user;
+    public QuestionsBlock(String userId) {
+        this.userId = userId;
     }
 
-    public List<QuestionInformation> getQuestions() {
+    public String getId() {
+        return Id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public Set<QuestionInformation> getQuestions() {
         return questions;
     }
 
@@ -39,15 +66,19 @@ public class QuestionsBlock {
         return bonusPoints;
     }
 
-    public String getInterviewId() {
-        return interviewId;
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setInterviewId(String interviewId) {
         this.interviewId = interviewId;
     }
 
-    public void setQuestions(List<QuestionInformation> questions) {
+    public void setQuestions(Set<QuestionInformation> questions) {
         this.questions = questions;
     }
 
@@ -59,18 +90,6 @@ public class QuestionsBlock {
         this.bonusPoints = bonusPoints;
     }
 
-    public String getQuestionsBlockID() {
-        return questionsBlockID;
-    }
-
-    public void setQuestionsBlockID(String questionsBlockID) {
-        this.questionsBlockID = questionsBlockID;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,19 +98,20 @@ public class QuestionsBlock {
         QuestionsBlock that = (QuestionsBlock) o;
 
         if (bonusPoints != that.bonusPoints) return false;
-        if (questionsBlockID != null ? !questionsBlockID.equals(that.questionsBlockID) : that.questionsBlockID != null)
-            return false;
+        if (Id != null ? !Id.equals(that.Id) : that.Id != null) return false;
         if (finalComment != null ? !finalComment.equals(that.finalComment) : that.finalComment != null) return false;
+        if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
         if (questions != null ? !questions.equals(that.questions) : that.questions != null) return false;
-        if (user != null ? !user.equals(that.user) : that.user != null) return false;
+        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = user != null ? user.hashCode() : 0;
-        result = 31 * result + (questionsBlockID != null ? questionsBlockID.hashCode() : 0);
+        int result = Id != null ? Id.hashCode() : 0;
+        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (finalComment != null ? finalComment.hashCode() : 0);
         result = 31 * result + bonusPoints;
@@ -101,8 +121,9 @@ public class QuestionsBlock {
     @Override
     public String toString() {
         return "QuestionsBlock{" +
-                "user=" + user +
-                ", QuestionsBlockID='" + questionsBlockID + '\'' +
+                "Id='" + Id + '\'' +
+                ", userId='" + userId + '\'' +
+                ", interviewId='" + interviewId + '\'' +
                 ", questions=" + questions +
                 ", finalComment='" + finalComment + '\'' +
                 ", bonusPoints=" + bonusPoints +

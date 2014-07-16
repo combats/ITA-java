@@ -1,4 +1,4 @@
-package com.softserveinc.ita.interviewingTests;
+package com.softserveinc.ita.service;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -16,5 +16,5 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 @ContextConfiguration(locations = {"classpath:spring-test-config.xml"})
 
-abstract class BaseInterviewingTests {
+abstract class BaseServiceTests {
 }

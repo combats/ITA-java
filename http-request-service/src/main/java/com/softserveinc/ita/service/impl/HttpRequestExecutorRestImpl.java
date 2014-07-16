@@ -1,5 +1,6 @@
 package com.softserveinc.ita.service.impl;
 
+import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import org.springframework.http.ResponseEntity;
@@ -73,6 +74,11 @@ public class HttpRequestExecutorRestImpl implements HttpRequestExecutor {
       return   "\nStatus text : " + ex.getStatusText()+
               "\nStatus code : "  +ex.getStatusCode() +
               "\nResponse body : " +  ex.getResponseBodyAsString();
+    }
+
+    @Override
+    public List<Appointment> getListOfObjectsByID(String applicantId, Class<Appointment> appointmentClass) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
 

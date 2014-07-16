@@ -17,11 +17,6 @@
     <tx:annotation-driven/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
 
-
-    <bean id="userDAO" class="com.softserveinc.ita.dao.impl.UserDAOHibernate"/>
-    <bean id="applicantDAO" class="com.softserveinc.ita.dao.impl.ApplicantDAOHibernate"/>
-    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
-    <bean id="roleDAO" class="com.softserveinc.ita.dao.impl.RoleDAOHibernate" />
     <!-- Aspect -->
     <bean id="logAspect" class="com.softserveinc.ita.aspect.AspectLoggingDAO" />
 
