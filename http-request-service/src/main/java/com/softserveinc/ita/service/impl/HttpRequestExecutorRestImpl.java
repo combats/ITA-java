@@ -80,4 +80,6 @@ public class HttpRequestExecutorRestImpl implements HttpRequestExecutor {
     public List<Appointment> getListOfObjectsByID(String applicantId, Class<Appointment> appointmentClass) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+
 }

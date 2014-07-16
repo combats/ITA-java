@@ -131,7 +131,7 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     }
 
     @Override
-    public List<Appointment> getListOfObjectsByID(String applicantId, Class<Appointment> appointmentClass) {
+    public List<Appointment> getListOfObjectsByID(String id, Class<Appointment> clazz) {
         List<Appointment> listWithApplicant = new ArrayList<>();
         listWithApplicant.add(appointmentList.get(0));
         return listWithApplicant;
