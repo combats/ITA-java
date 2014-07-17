@@ -136,8 +136,13 @@ public class MailServiceImpl implements MailService {
 
     private void sendScheduledLetter(Applicant applicant, Group group, User responsibleHr) {
         Appointment appointment = null;
+        String appointmentID;
         try {
-            appointment = httpRequestExecutor.getObjectByIDs(applicant.getId(), group.getGroupID(), Appointment.class);
+            HashMap<Class, String> groupAndApplicantIDs = new HashMap<>();
+            groupAndApplicantIDs.put(Applicant.class, applicant.getId());
+            groupAndApplicantIDs.put(Group.class, group.getGroupID());
+            appointmentID = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, groupAndApplicantIDs).get(0);
+            appointment = httpRequestExecutor.getObjectByID(appointmentID, Appointment.class);
         } catch (HttpRequestException e) {
             e.printStackTrace();
         }

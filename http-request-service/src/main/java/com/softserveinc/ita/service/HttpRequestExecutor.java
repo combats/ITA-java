@@ -20,6 +20,4 @@ public interface HttpRequestExecutor {
     RestTemplate getRestTemplate();
 
     String getBaseUrl();
-
-    <T> T getObjectByIDs(String id1, String id2, Class<T> objectClass) throws HttpRequestException;
 }
