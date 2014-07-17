@@ -23,6 +23,6 @@
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
     <bean id="roleDAO" class="com.softserveinc.ita.dao.impl.RoleDAOHibernate" />
     <!-- Aspect -->
-    <bean id="logAspect" class="com.softserveinc.ita.aspect.AspectLoggingDAO" />
+    <!--<bean id="logAspect" class="com.softserveinc.ita.utils.aspect.AspectLoggingDAO" />-->
 
 </beans>

@@ -1,4 +1,4 @@
-package com.softserveinc.ita.aspect;
+package com.softserveinc.ita.utils.aspect;
 
 import org.apache.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
@@ -14,7 +14,7 @@ public class AspectLoggingDAO {
 
     private final Logger logger = Logger.getLogger(getClass());
 
-    @Around("execution(* com.softserveinc.ita.dao..*.*(..))")
+    @Around("execution(* com.softserveinc.ita..*.*(..))")
     public Object logAround(ProceedingJoinPoint joinPoint) throws Throwable {
         StringBuilder logMessage = new StringBuilder();
         long start = System.currentTimeMillis();
@@ -42,10 +42,11 @@ public class AspectLoggingDAO {
         logMessage.append("\n");
         logMessage.append("*******************************************END*******************************************");
         logger.info(logMessage.toString());
+        System.err.println("552525");
         return obj;
     }
 
-    @AfterThrowing(value = "execution(* com.softserveinc.ita.dao..*.*(..))", throwing = "ex")
+    @AfterThrowing(value = "execution(* com.softserveinc.ita..*.*(..))", throwing = "ex")
     public void logAfterThrowing(JoinPoint joinPoint, Exception ex) {
         String clazz = joinPoint.getTarget().getClass().getName();
         String methodName = joinPoint.getSignature().getName();
