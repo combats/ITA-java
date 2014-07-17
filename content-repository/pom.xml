@@ -108,7 +108,7 @@
     </dependencies>
 
     <build>
-        <finalName>RepositoryUITEST</finalName>
+        <finalName>content-repository</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

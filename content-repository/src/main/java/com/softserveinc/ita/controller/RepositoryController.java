@@ -46,8 +46,8 @@ public class RepositoryController {
                                             @RequestParam("file") MultipartFile file) throws Exception {
 
         checkImageFile(file, ID);
-        String NODE = detectClient(ID, client);
-        DataTransferFile dataTransferFile = new DataTransferFile(NODE, file.getOriginalFilename(),
+        String requestedNODE = detectClient(ID, client);
+        DataTransferFile dataTransferFile = new DataTransferFile(requestedNODE, file.getOriginalFilename(),
                                                                  file.getContentType(), file.getBytes());
 
         String response = imageService.postImage(dataTransferFile);
@@ -90,12 +90,12 @@ public class RepositoryController {
                                            @PathVariable("ID") String ID,
                                            @PathVariable("client") String client) throws Exception {
 
-        String NODE = detectClient(ID, client);
+        String requestedNODE = detectClient(ID, client);
         DataTransferFile imageResponse;
         if (height != null && width != null) {
-            imageResponse = imageService.getImage(NODE, width, height);
+            imageResponse = imageService.getImage(requestedNODE, width, height);
         } else {
-            imageResponse = imageService.getImage(NODE);
+            imageResponse = imageService.getImage(requestedNODE);
         }
         final HttpHeaders headers = new HttpHeaders();
         String responseMediaType = imageResponse.getMimeType();
@@ -120,8 +120,8 @@ public class RepositoryController {
     public ResponseEntity<String> deleteImage(@PathVariable("client") String client,
                                               @PathVariable("ID") String ID) throws Exception {
 
-        String NODE = detectClient(ID, client);
-        String response = imageService.deleteImage(NODE);
+        String requestedNODE = detectClient(ID, client);
+        String response = imageService.deleteImage(requestedNODE);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -140,8 +140,8 @@ public class RepositoryController {
                                               @RequestParam("string64image") String string64image) throws Exception {
 
         checkBase64ImageFile(string64image, ID, contentType);
-        String NODE = detectClient(ID, client);
-        String response = imageService.postImage64(NODE, string64image, contentType);
+        String requestedNODE = detectClient(ID, client);
+        String response = imageService.postImage64(requestedNODE, string64image, contentType);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -178,12 +178,12 @@ public class RepositoryController {
                                              @RequestParam(value = "width", required = false) Integer width)
                                              throws Exception {
 
-        String NODE = detectClient(ID, client);
+        String requestedNODE = detectClient(ID, client);
         Base64DataTransferFile responseInBase64;
         if(height != null && width != null) {
-            responseInBase64 = imageService.getImage64(NODE, width, height);
+            responseInBase64 = imageService.getImage64(requestedNODE, width, height);
         } else {
-            responseInBase64 = imageService.getImage64(NODE);
+            responseInBase64 = imageService.getImage64(requestedNODE);
         }
         final HttpHeaders headers = new HttpHeaders();
 
