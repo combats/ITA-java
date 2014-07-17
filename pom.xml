@@ -26,6 +26,7 @@
         <module>applicant-manager</module>
         <module>web-ui</module>
         <module>group-manager</module>
+        <module>content-repository</module>
     </modules>
 
     <dependencies>
