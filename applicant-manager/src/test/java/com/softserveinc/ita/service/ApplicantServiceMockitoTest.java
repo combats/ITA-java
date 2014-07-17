@@ -1,35 +1,35 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.dao.impl.ApplicantDAO;
-import com.softserveinc.ita.dao.impl.ApplicantDAOMockImpl;
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.service.impl.ApplicantServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.mockito.Mock;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static junit.framework.Assert.assertEquals;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     private List<Applicant> standartList;
     private List<Applicant> applicants;
 
-   // @Autowired
+    @Autowired
     @InjectMocks
-    private ApplicantService applicantService = new ApplicantServiceImpl();//TODO:Find out why there are problems with Autowired.
+    private ApplicantService applicantService;
 
-    //@Autowired
+    @Autowired
     @Mock
-    private ApplicantDAO applicantDao = new ApplicantDAOMockImpl(); //TODO:Find out why there are problems with Autowired.
+    private ApplicantDAO applicantDao;
 
     public ApplicantServiceMockitoTest() {
         standartList = new ArrayList<>();
@@ -47,7 +47,7 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
     public void testApplicantServiceGetApplicantsListAndExpectedIsEquallity() {
         when(applicantDao.getApplicants()).thenReturn(standartList);
         assertEquals(standartList, applicantService.getApplicants());
-        verify(applicantDao).getApplicants();
+        verify(applicantDao, times(1)).getApplicants();
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
 
         when(applicantDao.getApplicantsByGroupID("1")).thenReturn(mockApplicants);
         applicants = applicantService.getApplicantsByGroupID("1");
-        verify(applicantDao).getApplicantsByGroupID("1");
+        verify(applicantDao, times(1)).getApplicantsByGroupID("1");
         assertEquals(applicants, mockApplicants);
     }
 
@@ -68,7 +68,7 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
         List<Applicant> mockApplicants = new ArrayList<>();
         when(applicantDao.getApplicantsByGroupID("2")).thenReturn(mockApplicants);
         applicants = applicantService.getApplicantsByGroupID("2");
-        verify(applicantDao).getApplicantsByGroupID("2");
+        verify(applicantDao, times(1)).getApplicantsByGroupID("2");
         assertEquals(applicants, mockApplicants);
     }
 }
