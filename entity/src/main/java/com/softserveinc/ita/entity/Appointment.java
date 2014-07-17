@@ -17,8 +17,8 @@ public class Appointment implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    public static final long DEFAULT_ACTUAL_START_TIME = 0L;
+    private static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private static final long DEFAULT_ACTUAL_START_TIME = 0L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")

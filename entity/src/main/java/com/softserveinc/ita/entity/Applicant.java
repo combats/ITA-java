@@ -26,6 +26,20 @@ public class Applicant implements Serializable {
     @Column(name = "Email")
     private String email;
 
+    public enum Status {
+        NOT_SCHEDULED("NOT_SCHEDULED"), SCHEDULED("SCHEDULED"), PASSED("PASSED"), NOT_PASSED("NOT_PASSED");
+        private final String value;
+
+        Status(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public String toString() {
+            return value;
+        }
+    }
+
     public Applicant() {}
 
     public Applicant(String applicantId) {
@@ -35,7 +49,6 @@ public class Applicant implements Serializable {
         this.name = name;
         this.surname = surname;
     }
-
 
     public String getId() {
         return id;
@@ -76,9 +89,8 @@ public class Applicant implements Serializable {
 
         Applicant applicant = (Applicant) o;
 
-        if (id != null ? !id.equals(applicant.id) : applicant.id != null)
-            return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
+        if (id != null ? !id.equals(applicant.id) : applicant.id != null) return false;
         if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
         if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
@@ -97,8 +109,7 @@ public class Applicant implements Serializable {
     @Override
     public String toString() {
         return "Applicant{" +
-//                "version=" + version +
-                ", applicantId='" + id + '\'' +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +

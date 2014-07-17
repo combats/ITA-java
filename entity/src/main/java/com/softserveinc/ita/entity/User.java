@@ -25,22 +25,29 @@ public class User implements Serializable {
 
     @Column(name = "Name")
     private String name = DEFAULT_USER_NAME;
+
     @Column(name = "Surname")
     @Expose
     private String surname;
+
     @Column(name = "Phone")
     private String phone;
+
     @Column(name = "Email")
     private String email;
+
     @Column(name = "Age")
     private int age = DEFAULT_USER_AGE;
+
     @Column(name = "Password")
     private String password;
-    @JoinTable(name = "UserRoles", joinColumns = {
-    @JoinColumn(name = "UserId", referencedColumnName = "Id")}, inverseJoinColumns = {
-    @JoinColumn(name = "RoleId", referencedColumnName = "Id")})
-    @ManyToMany
-    private Set<Role> securityRoleCollection;
+
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinTable(name="UserRoles",
+            joinColumns = {@JoinColumn(name="UserId", referencedColumnName="Id")},
+            inverseJoinColumns = {@JoinColumn(name="RoleId", referencedColumnName="Id")}
+    )
+    private Role role;
     @Column(name = "Active")
     private boolean active;
 
@@ -75,9 +82,16 @@ public class User implements Serializable {
         this.email = email;
         this.age = age;
         this.password = password;
-        this.securityRoleCollection = securityRoleCollection;
         this.active = active;
         this.questions = questions;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public String getId() {
@@ -110,14 +124,6 @@ public class User implements Serializable {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public Set<Role> getSecurityRoleCollection() {
-        return securityRoleCollection;
-    }
-
-    public void setSecurityRoleCollection(Set<Role> securityRoleCollection) {
-        this.securityRoleCollection = securityRoleCollection;
     }
 
     public String getPassword() {
@@ -175,8 +181,6 @@ public class User implements Serializable {
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
         if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
-        if (securityRoleCollection != null ? !securityRoleCollection.equals(user.securityRoleCollection) : user.securityRoleCollection != null)
-            return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
@@ -191,7 +195,6 @@ public class User implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + age;
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (securityRoleCollection != null ? securityRoleCollection.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
@@ -207,7 +210,6 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", age=" + age +
                 ", password='" + password + '\'' +
-                ", securityRoleCollection=" + securityRoleCollection +
                 ", active=" + active +
                 ", questions=" + questions +
                 '}';

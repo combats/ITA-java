@@ -30,7 +30,9 @@ public class AspectLoggingDAO {
         logMessage.append("Parameters: ");
         logMessage.append(Arrays.toString(joinPoint.getArgs()));
         logMessage.append("\n");
+
         Object obj = joinPoint.proceed();
+
         logMessage.append("Method execution completed!!!\n");
         long elapsedTime = System.currentTimeMillis() - start;
         logMessage.append("Method execution for method: ");
