@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 @Table(name = "Roles")
@@ -21,20 +20,9 @@ public class Role implements Serializable {
     @Column(name = "Role")
     private String role;
 
-    @ManyToMany(mappedBy = "securityRoleCollection")
-    private Collection<User> userCollection;
-
     public Role() {}
 
     public Role(String role) {this.role = role;}
-
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
-    }
 
     public String getId() {
         return id;
