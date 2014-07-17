@@ -40,7 +40,8 @@ public class Group implements Serializable{
     private String groupName;
     @Column(name = "GroupStatus")
     private Status groupStatus;
-
+    private long startTime;
+    private String address;
     private Course course;
 
     public enum Status implements Serializable {
@@ -74,6 +75,27 @@ public class Group implements Serializable{
         this.groupID = groupID;
         this.course = course;
         this.groupName = groupName;
+    }
+    public Group(String groupId, Course course, String address, long startTime) {
+        this.groupID = groupId;
+        this.course = course;
+        this.address = address;
+        this.startTime = startTime;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGroupID() {
