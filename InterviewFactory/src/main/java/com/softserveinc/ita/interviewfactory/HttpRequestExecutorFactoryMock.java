@@ -6,15 +6,17 @@ import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
+import com.softserveinc.ita.service.impl.AbstractHttpRequestExecutorRestImpl;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
-public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
+public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorRestImpl{
 
     //-------------VadimNaumenko mock for tests------------------------------------
 
@@ -97,6 +99,7 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     private final String baseUrl;
 
     public HttpRequestExecutorFactoryMock (String baseUrl) {
+        super(baseUrl);
         this.baseUrl = baseUrl;
         this.restTemplate  = new RestTemplate();
     }
@@ -130,6 +133,8 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     public List<String> getAllObjectsID(Class objectClass) throws HttpRequestException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+
 
     public RestTemplate getRestTemplate(){ return restTemplate;}
 
