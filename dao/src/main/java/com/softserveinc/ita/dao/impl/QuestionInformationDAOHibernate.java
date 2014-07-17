@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @Repository
+
 public class QuestionInformationDAOHibernate implements QuestionInformationDAO {
 
     @Autowired
@@ -35,4 +37,8 @@ public class QuestionInformationDAOHibernate implements QuestionInformationDAO {
         return questionInformation.getId();
     }
 
+    @Override
+    public void deleteQuestionInformationById(String questionInformationId) {
+        sessionFactory.getCurrentSession().delete(getQuestionInformationById(questionInformationId));
+    }
 }

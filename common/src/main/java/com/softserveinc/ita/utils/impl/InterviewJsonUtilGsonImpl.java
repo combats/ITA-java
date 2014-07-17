@@ -26,5 +26,24 @@ public class InterviewJsonUtilGsonImpl implements JsonUtil {
         return gson.toJson(o);
     }
 
+//    ObjectMapper mapper = new ObjectMapper();
+//    @Override
+//    public <T> T fromJson(String s, Class<T> classOfT) {
+//        try {
+//            return mapper.readValue(s, classOfT);
+//        } catch (IOException e) {
+//            return null;
+//        }
+//    }
+//
+//    @Override
+//    public String toJson(Object o) {
+//        try {
+//            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(o);
+//        } catch (IOException e) {
+//            return null;
+//        }
+//    }
+
 }
 

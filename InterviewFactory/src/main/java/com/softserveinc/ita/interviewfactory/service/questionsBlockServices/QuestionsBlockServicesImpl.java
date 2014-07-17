@@ -1,13 +1,20 @@
 package com.softserveinc.ita.interviewfactory.service.questionsBlockServices;
 
 import com.softserveinc.ita.dao.QuestionsBlockDAO;
+import com.softserveinc.ita.entity.FinalComment;
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -16,6 +23,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
  * Time: 14:05
  * To change this template use File | Settings | File Templates.
  */
+@Transactional
+@Service
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
     @Autowired
@@ -23,6 +32,22 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
     @Autowired
     InterviewService interviewService;
+
+    //Standard questions mock
+
+    private QuestionsBlock standardQuestionsBlock = new QuestionsBlock();{
+        QuestionInformation questionInformation1 = new QuestionInformation();
+        questionInformation1.setQuestion("What is your name?");
+        QuestionInformation questionInformation2 = new QuestionInformation();
+        questionInformation2.setQuestion("How are you?");
+
+        Set<QuestionInformation> QuestionInformationList = new HashSet<QuestionInformation>();{
+            QuestionInformationList.add(questionInformation1);
+            QuestionInformationList.add(questionInformation2);
+        }
+
+        standardQuestionsBlock.setQuestions(QuestionInformationList);
+    }
 
     @Override
     public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId){
@@ -45,21 +70,41 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     @Override
     public String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId) {
         newQuestionsBlock.setUserId(userId);
+        newQuestionsBlock.setId(getQuestionsBlockFromInterviewByUserId(userId, newQuestionsBlock.getInterviewId()).getId());
         return questionsBlockDAO.updateQuestionsBlock(newQuestionsBlock);
     }
 
     @Override
-    public QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId){
-        return questionsBlockDAO.getStandardQuestionsBlockFromInterview(interviewId);
+    public void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId) {
+        QuestionsBlock questionsBlock = questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(userId, finalComment.getInterviewId());
+        questionsBlock.setFinalComment(finalComment.getFinalComment());
+        questionsBlock.setBonusPoints(finalComment.getBonusPoints());
+        questionsBlockDAO.updateQuestionsBlock(questionsBlock);
+    }
+
+    @Override
+    public void deleteQuestionsBlockById(String questionsBlockId) {
+        questionsBlockDAO.deleteQuestionsBlockById(questionsBlockId);
+    }
+
+    @Override
+    public QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) throws WrongCriteriaException, HttpRequestException {
+        Set<QuestionsBlock> questionsBlocks = interviewService.getInterviewByAppointmentID(interviewId).getQuestionsBlocks();
+
+        for (QuestionsBlock questionsBlock1 : questionsBlocks){
+            if(questionsBlock1.getUserId() == null)
+                return questionsBlock1;
+        }
+        return null;
     }
 
     @Override
     public QuestionsBlock getStandardQuestionsBlock() {
-        return questionsBlockDAO.getStandardQuestionsBlock();
+        return standardQuestionsBlock;
     }
 
     @Override
     public void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock) {
-        questionsBlockDAO.setStandardQuestionsBlock(standardQuestionsBlock);
+        this.standardQuestionsBlock = standardQuestionsBlock;
     }
 }

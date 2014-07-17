@@ -6,6 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ public class AppointmentDAOTests extends BaseDAOTest {
 
     @Autowired
     private AppointmentDAO appointmentDAO;
+    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 

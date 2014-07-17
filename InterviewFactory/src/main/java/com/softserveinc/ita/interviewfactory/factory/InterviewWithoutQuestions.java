@@ -27,6 +27,8 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
         for (int i = 0; i < Users.size(); i++){
             QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+            Set<QuestionInformation> questionInformationSet = new HashSet<>();
+            userQuestionsBlock.setQuestions(questionInformationSet);
             userQuestionsBlock.setInterviewId(interviewId);
             allQuestionsBlocks.add(userQuestionsBlock);
         }

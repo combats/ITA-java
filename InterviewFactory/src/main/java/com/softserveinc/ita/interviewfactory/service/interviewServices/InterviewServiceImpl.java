@@ -10,6 +10,8 @@ import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +23,9 @@ import java.util.List;
  * Time: 12:13
  * To change this template use File | Settings | File Templates.
  */
+
+@Transactional
+@Service
 public class InterviewServiceImpl implements InterviewService {
 
     @Autowired

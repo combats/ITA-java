@@ -16,8 +16,10 @@ import java.util.List;
 public interface QuestionsInformationServices {
 
     QuestionInformation getQuestionInformationById(String questionInformationId);
+    //add return id
     void addQuestionInformation(QuestionInformation questionInformation, String userId) throws WrongCriteriaException, HttpRequestException;
     void deleteQuestionInformationById(String questionInformationId);
     String updateQuestionInformation(QuestionInformation questionInformation);
 
+    String getQuestionInformationIdByQuestionInformationBody(QuestionInformation questionInformation, String userId) throws WrongCriteriaException, HttpRequestException;
 }

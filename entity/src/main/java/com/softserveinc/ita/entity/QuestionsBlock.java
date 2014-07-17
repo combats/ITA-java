@@ -25,7 +25,7 @@ public class QuestionsBlock implements Serializable {
     @Column(name = "InterviewId")
     String interviewId;
 
-    @OneToMany(fetch=FetchType.LAZY, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
     private Set<QuestionInformation> questions;
 
@@ -101,7 +101,7 @@ public class QuestionsBlock implements Serializable {
         if (Id != null ? !Id.equals(that.Id) : that.Id != null) return false;
         if (finalComment != null ? !finalComment.equals(that.finalComment) : that.finalComment != null) return false;
         if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
-        if (questions != null ? !questions.equals(that.questions) : that.questions != null) return false;
+
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
 
         return true;
@@ -112,7 +112,6 @@ public class QuestionsBlock implements Serializable {
         int result = Id != null ? Id.hashCode() : 0;
         result = 31 * result + (userId != null ? userId.hashCode() : 0);
         result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
-        result = 31 * result + (questions != null ? questions.hashCode() : 0);
         result = 31 * result + (finalComment != null ? finalComment.hashCode() : 0);
         result = 31 * result + bonusPoints;
         return result;

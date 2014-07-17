@@ -42,7 +42,7 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(fetch=FetchType.LAZY, targetEntity=Question.class, cascade=CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "user_questions", referencedColumnName="Id")
     private List<Question> questions;
 

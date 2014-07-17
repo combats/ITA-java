@@ -54,4 +54,9 @@ public class QuestionInformationDOAMock implements QuestionInformationDAO {
         }
         return null;
     }
+
+    @Override
+    public void deleteQuestionInformationById(String questionInformationId) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

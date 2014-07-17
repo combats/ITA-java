@@ -37,12 +37,10 @@
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
     <!--external services-->
 
-    <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewServiceImpl"/>
-    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServicesImpl"/>
-    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServiceImpl"/>
-
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
+
+
 
 </beans>

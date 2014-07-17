@@ -7,6 +7,7 @@ import com.softserveinc.ita.entity.QuestionsBlock;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -26,6 +27,7 @@ public class QuestionInformationDAOTests extends BaseDAOTest {
     @Autowired
     private QuestionInformationDAO questionInformationDAO;
 
+    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 

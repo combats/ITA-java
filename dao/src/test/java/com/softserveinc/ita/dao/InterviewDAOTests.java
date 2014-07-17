@@ -4,6 +4,8 @@ import com.softserveinc.ita.entity.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
@@ -20,6 +22,7 @@ public class InterviewDAOTests extends BaseDAOTest {
 
     @Autowired
     private InterviewDAO interviewDAO;
+    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 

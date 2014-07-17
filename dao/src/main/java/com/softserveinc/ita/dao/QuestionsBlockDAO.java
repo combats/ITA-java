@@ -15,6 +15,7 @@ public interface QuestionsBlockDAO {
     QuestionsBlock getQuestionsBlockByInterviewIdAndUserId(String userID, String appointmentId);
     QuestionsBlock getQuestionsBlockFromInterviewByQuestionsBlockId(String questionsBlockId);
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock);
+    void deleteQuestionsBlockById(String questionsBlockId);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);
     QuestionsBlock getStandardQuestionsBlock();
     void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock);

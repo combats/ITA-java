@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -32,6 +33,14 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
 
         QuestionsBlock standardQuestionsBlock = questionsBlockServices.getStandardQuestionsBlock();
         standardQuestionsBlock.setInterviewId(interviewId);
+
+        Set<QuestionInformation> questionInformationSet2 = standardQuestionsBlock.getQuestions();
+        Iterator<QuestionInformation> it = questionInformationSet2.iterator();
+        while(it.hasNext()){
+            it.next().setInterviewId(interviewId);
+        }
+        standardQuestionsBlock.setQuestions(questionInformationSet2);
+
         allQuestionsBlocks.add(standardQuestionsBlock);
 
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
@@ -46,6 +55,7 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
 
             for (int j = 0; j < Questions.size(); j++){
                 QuestionInformation questionInformation = new QuestionInformation();
+                questionInformation.setInterviewId(interviewId);
                 questionInformation.setQuestion(Questions.get(j).getQuestionBody());
                 questionInformation.setWeight(Questions.get(j).getWeight());
                 userQuestionInformationList.add(questionInformation);

@@ -1,5 +1,6 @@
 package com.softserveinc.ita.interviewfactory.service.questionsBlockServices;
 
+import com.softserveinc.ita.entity.FinalComment;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
@@ -17,7 +18,9 @@ public interface QuestionsBlockServices {
     QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId);
     void addQuestionsBlock(QuestionsBlock questionsBlock) throws WrongCriteriaException, HttpRequestException;
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId);
-    QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId);
+    void deleteQuestionsBlockById(String questionsBlockId);
+    QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) throws WrongCriteriaException, HttpRequestException;
     QuestionsBlock getStandardQuestionsBlock();
     void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock);
+    void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId);
 }

@@ -28,16 +28,16 @@ public class QuestionInformation implements Serializable {
     private String interviewId;
 
     @Column(name = "Question")
-    private String question = "";
+    private String question;
 
     @Column(name = "Answer")
-    private String answer = "";
+    private String answer;
 
     @Column(name = "Mark")
     private int mark;
 
     @Column(name = "Comment")
-    private String comment = "";
+    private String comment;
 
     @Column(name = "Weight")
     private int weight; //weight for each question

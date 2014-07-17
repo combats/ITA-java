@@ -81,9 +81,9 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
 
     List<Appointment> appointmentList = new ArrayList<>();{
         applicant1.setId("1");
+        applicant2.setId("2");
         appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
-        applicant2.setId("2");
         appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
         appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);

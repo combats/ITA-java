@@ -13,5 +13,6 @@ public interface QuestionInformationDAO {
 
     QuestionInformation getQuestionInformationById(String questionsInformationId);
     String updateQuestionInformation(QuestionInformation questionInformation);
+    void deleteQuestionInformationById(String questionInformationId);
 
 }

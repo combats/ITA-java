@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ public class QuestionsBlockDAOTests extends BaseDAOTest {
     @Autowired
     private QuestionsBlockDAO questionsBlockDAO;
 
+    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 
@@ -116,8 +118,25 @@ public class QuestionsBlockDAOTests extends BaseDAOTest {
         questionsBlock.setBonusPoints(12);
         questionsBlock.setFinalComment("wefwef");
 
+        QuestionsBlock questionsBlock2 = new QuestionsBlock();
+        Set<QuestionInformation> questionInformationsList2 = new HashSet<>();
+        QuestionInformation questionInformation2 = new QuestionInformation();
+        questionInformation2.setQuestion("Question body2");
+        questionInformation2.setAnswer("answer2");
+        questionInformation2.setComment("normas2");
+        questionInformation2.setMark(2);
+        questionInformation2.setWeight(1);
+        questionInformation2.setInterviewId("1");
+        questionInformationsList2.add(questionInformation);
+        questionsBlock2.setQuestions(questionInformationsList2);
+        questionsBlock2.setUserId("1");
+        questionsBlock2.setInterviewId("1");
+        questionsBlock2.setBonusPoints(12);
+        questionsBlock2.setFinalComment("wefwef");
+
         Interview interviewExpected = new Interview();
         allQuestionsBlocks.add(questionsBlock);
+        allQuestionsBlocks.add(questionsBlock2);
         interviewExpected.setInterviewId("1");
 
         interviewExpected.setQuestionsBlocks(allQuestionsBlocks);

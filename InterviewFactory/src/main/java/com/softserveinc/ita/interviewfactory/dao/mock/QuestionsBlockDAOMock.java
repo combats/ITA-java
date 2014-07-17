@@ -131,6 +131,11 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
     }
 
     @Override
+    public void deleteQuestionsBlockById(String questionsBlockId) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     public QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) {
                 Set<QuestionsBlock> questionsBlocks = interviewDAO.getInterviewByAppointmentId(interviewId).getQuestionsBlocks();
 
