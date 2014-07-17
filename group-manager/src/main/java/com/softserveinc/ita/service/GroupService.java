@@ -8,4 +8,6 @@ public interface GroupService {
     ArrayList<Group> getGroupsByStatus(String groupStatus);
 
     ArrayList<Course> getCourses();
+
+    Group createGroup(Group group);
 }

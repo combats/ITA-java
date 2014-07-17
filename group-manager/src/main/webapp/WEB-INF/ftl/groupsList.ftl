@@ -10,7 +10,9 @@
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="css/users.css">
+<link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css">
 <script src="js/jquery.validate.js"></script>
+<script src="js/jquery.timepicker.js"></script>
 
 <script>
     $(document).ready(function(){
@@ -77,6 +79,18 @@
                             <input name = "groupStartDate" id="gStartDate" class = "inputDLP">
                         </div>
                     </div>
+
+                    <div class="fieldgroup">
+                        <div class="headline startTime" >
+                            <label for="gStartTime">
+                                Start time:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input class="timePicker" name = "groupStartTime" id="gStartTime">
+                        </div>
+                    </div>
+
 
                     <div class="fieldgroup">
                         <div class="headline endDate" >

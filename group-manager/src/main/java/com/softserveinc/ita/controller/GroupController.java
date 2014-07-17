@@ -35,6 +35,13 @@ public class GroupController {
         return groupService.getCourses();
     }
 
+    @RequestMapping(value = "/addGroup",method = RequestMethod.POST)
+    public @ResponseBody Group addGroup(@RequestBody Group group){
+        return groupService.createGroup(group);
+    }
+
+
+
     @ExceptionHandler(GroupException.class)
     public @ResponseBody
     ExceptionJSONInfo handleApplicantException(GroupException exception, HttpServletResponse response){

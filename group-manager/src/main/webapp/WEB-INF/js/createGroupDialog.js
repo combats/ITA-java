@@ -1,6 +1,9 @@
 $(function () {
     $("#gStartDate").datepicker();
     $("#gEndDate").datepicker();
+    $("#gStartTime").timepicker();
+    $('#gStartTime').timepicker({ 'step': 10 });
+    $('#gStartTime').timepicker({ 'timeFormat': 'H:i' });
     $("#dialog-form-add-group").dialog({
         modal: true,
         autoOpen: false,
@@ -36,6 +39,7 @@ $(function () {
             $("#gStartDate").val("");
             $("#gEndDate").val("");
             $("#gAddress").val("");
+            $('#gStartTime').val("");
             $("#gCourse").append("<option value=''>Select group course</option>");
         }
     });
@@ -49,10 +53,63 @@ $(function () {
         e.preventDefault();
         e.stopPropagation();
         if($("#userForm").valid()){
+            var group = getGroupFromForm();
+            sendGroup(group);
         }
         else{
         }
     });
+
+    function getGroupFromForm() {
+        var course = {};
+        status.name = $("#gCourse").val();
+        var group =  {};
+        group.name = $("#gName").val();
+        group.address = $("#gAddress").val();
+        group.capacity = $("#gCapacity").val();
+        group.startTime =  new Date($("#gStartDate").val()).getTime();
+        group.endTime = new Date($("gEndTimeDate").val()).getTime();
+        group.groupStatus = $("#drop").val();
+        return group;
+    };
+
+    function sendGroup(group) {
+        var jsonGroup = JSON.stringify(group);
+        var success = true;
+        $.ajax({
+            url: '/groups/addGroup',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            type: requestType,
+            data: jsonGroup,
+            error: function (data, errorThrown) {
+                success = false;
+                alert('Failed to add/edit user. Error: ' + errorThrown);
+            }
+        });
+        return success;
+    };
+
+
+    jQuery.validator.addMethod("greaterThan",
+        function (value, element, params) {
+            if (!/Invalid|NaN/.test(new Date(value))) {
+                return new Date(value) > new Date($(params).val());
+            }
+
+            return isNaN(value) && isNaN($(params).val())
+                || (Number(value) > Number($(params).val()));
+        });
+
+    jQuery.validator.addMethod("greaterThanToday",
+        function (value, element, params) {
+            if (!/Invalid|NaN/.test(new Date(value))) {
+                return new Date(value) > params;
+            }
+            return isNaN(value) && isNaN(params)
+                || (Number(value) > Number(params));
+        });
 
     $("#userForm").validate({
         rules: {
@@ -76,39 +133,49 @@ $(function () {
             },
             groupStartDate: {
                 required: true,
-                date: true
+                date: true,
+                greaterThanToday: new Date()
+            },
+            groupStartTime:{
+                required:true
             },
             groupEndDate: {
                 required: true,
-                date: true
+                date: true,
+                greaterThan: "#gStartDate"
             }
         },
         messages: {
             groupName: {
                 required: "Group name is required",
-                minlength: jQuery.validator.format("At least {0} characters required in \"Group name\" field."),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Group name\" field.")
+                minlength: jQuery.validator.format("At least {0} characters is required"),
+                maxlength: jQuery.validator.format("No more than {0} characters is allowed")
             },
             groupAddress: {
                 required: "Group address is required.",
-                minlength: jQuery.validator.format("At least {0} characters required in \"Group address\" field."),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Group address\" field.")
+                minlength: jQuery.validator.format("At least {0} characters is required"),
+                maxlength: jQuery.validator.format("No more than {0} characters is allowed")
             },
             groupCourse: {
                 required: "Group course is required."
             },
             groupCapacity: {
                 required: "Group capacity is required.",
-                min: jQuery.validator.format("At least 1 student required in \"Group capacity\" field."),
-                number : "Should be a correct number."
+                number : "Should be a correct number.",
+                min: jQuery.validator.format("At least 1 student is required")
             },
             groupStartDate: {
-                required: "Group start date is required.",
-                date: "Should be a correct date."
+                required: "Start date is required.",
+                date: "Should be a correct date.",
+                greaterThanToday: "Must be greater than today date"
+            },
+            groupStartTime:{
+                required : "Start time is required"
             },
             groupEndDate: {
-                required: "Group end date is required.",
-                date: "Should be a correct date."
+                required: "End date is required.",
+                date: "Should be a correct date.",
+                greaterThan: "Must be greater than start date"
             }
         }
     });

@@ -8,4 +8,6 @@ public interface GroupDao {
     ArrayList<Group> getGroupsByStatus(String groupStatus);
 
     ArrayList<Course> getCourses();
+
+    Group addGroup(Group group);
 }

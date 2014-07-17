@@ -28,6 +28,11 @@ public class GroupServiceImpl implements GroupService {
         return groupDao.getCourses();
     }
 
+    @Override
+    public Group createGroup(Group group) {
+        return groupDao.addGroup(group);
+    }
+
     private boolean isWrongStatus(String groupStatus){
         for(Group.Status status : Group.Status.values()){
             if(status.getName().equals(groupStatus)){
@@ -36,4 +41,6 @@ public class GroupServiceImpl implements GroupService {
         }
         return true;
     }
+
+
 }

@@ -52,4 +52,11 @@ public class GroupDaoMockImpl implements GroupDao {
         courses.add(new Course("Sharp", "pen-net.png"));
         return courses;
     }
+
+    @Override
+    public Group addGroup(Group group) {
+        groups.add(group);
+        group.setGroupID("id100");
+        return group;
+    }
 }

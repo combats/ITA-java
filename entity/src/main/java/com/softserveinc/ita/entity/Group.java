@@ -45,8 +45,9 @@ public class Group implements Serializable{
     private String groupName;
     private Status groupStatus;
     private Course course;
-    private long duration;
     private int capacity;
+    private long startTime;
+    private long endTime;
     public Group() {}
 
     public Group(String groupID) {
@@ -58,6 +59,15 @@ public class Group implements Serializable{
         this.groupID = groupID;
         this.course = course;
         this.groupName = groupName;
+    }
+
+    public Group(String groupName, Status groupStatus, Course course, int capacity, long startTime, long endTime) {
+        this.groupName = groupName;
+        this.groupStatus = groupStatus;
+        this.course = course;
+        this.capacity = capacity;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public String getGroupName() {
@@ -95,20 +105,28 @@ public class Group implements Serializable{
         this.course = course;
     }
 
-    public long getDuration() {
-        return duration;
-    }
-
-    public void setDuration(long duration) {
-        this.duration = duration;
-    }
-
     public int getCapacity() {
         return capacity;
     }
 
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+
+    public long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     @Override
