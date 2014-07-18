@@ -101,10 +101,7 @@ public class MailServiceTests extends MailServiceBaseTests {
     public void notifyPassedApplicant() throws Exception {
         when(httpRequestExecutor.getObjectByID(applicant1.getId(), Applicant.class)).thenReturn(applicant1);
         when(httpRequestExecutor.getObjectByID(group1.getGroupID(), Group.class)).thenReturn(group1);
-        when(httpRequestExecutor.getObjectByIDs(applicant1.getId(), group1.getGroupID(), Appointment.class))
-                .thenReturn(appointment1);
         when(httpRequestExecutor.getObjectByID(responsibleHr1.getId(), User.class)).thenReturn(responsibleHr1);
-
         NotificationJSONInfo notificationInfo = new NotificationJSONInfo(applicant1.getId(), group1.getGroupID(),
                 responsibleHr1.getId());
         String notificationJsonInfo = jsonUtil.toJson(notificationInfo);
@@ -126,8 +123,6 @@ public class MailServiceTests extends MailServiceBaseTests {
     public void notifyNotPassedApplicant() throws Exception {
         when(httpRequestExecutor.getObjectByID(applicant2.getId(), Applicant.class)).thenReturn(applicant2);
         when(httpRequestExecutor.getObjectByID(group1.getGroupID(), Group.class)).thenReturn(group1);
-        when(httpRequestExecutor.getObjectByIDs(applicant2.getId(), group1.getGroupID(), Appointment.class)).
-                thenReturn(appointment2);
         when(httpRequestExecutor.getObjectByID(responsibleHr1.getId(), User.class)).thenReturn(responsibleHr1);
         NotificationJSONInfo notificationInfo = new NotificationJSONInfo(applicant2.getId(), group1.getGroupID(),
                 responsibleHr1.getId());
@@ -144,8 +139,15 @@ public class MailServiceTests extends MailServiceBaseTests {
     public void notifyScheduledApplicant() throws Exception {
         when(httpRequestExecutor.getObjectByID(applicant3.getId(), Applicant.class)).thenReturn(applicant3);
         when(httpRequestExecutor.getObjectByID(group2.getGroupID(), Group.class)).thenReturn(group2);
-        when(httpRequestExecutor.getObjectByIDs(applicant3.getId(), group2.getGroupID(), Appointment.class)).
-                thenReturn(appointment3);
+        HashMap<Class, String> groupAndApplicantIDs = new HashMap<>();
+        groupAndApplicantIDs.put(Applicant.class, applicant3.getId());
+        groupAndApplicantIDs.put(Group.class, group2.getGroupID());
+        ArrayList<String> appointmetIdList = new ArrayList<String>();
+        appointmetIdList.add(appointment3.getAppointmentId());
+        when(httpRequestExecutor.getListObjectsIdByPrams(Appointment.class,groupAndApplicantIDs))
+                .thenReturn(appointmetIdList);
+        when(httpRequestExecutor.getObjectByID(appointment3.getAppointmentId(),Appointment.class))
+                .thenReturn(appointment3);
         when(httpRequestExecutor.getObjectByID(responsibleHr2.getId(), User.class)).thenReturn(responsibleHr2);
         NotificationJSONInfo notificationInfo = new NotificationJSONInfo(applicant3.getId(), group2.getGroupID(),
                 responsibleHr2.getId());
