@@ -17,17 +17,17 @@ public class GroupDaoMockImpl implements GroupDao {
         groups.add(new Group(Group.Status.OFFERING, "id2", new Course("Sharp", "pen-net.png"), "kv041"));
         groups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
         groups.add(new Group(Group.Status.IN_PROCESS, "id4", new Course("Sharp", "pen-net.png"), "kv012"));
-        groups.add(new Group(Group.Status.OFFERING, "id5", new Course("Java Script", "pen-net.png"), "kv054"));
-        groups.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
+        groups.add(new Group(Group.Status.OFFERING, "id5", new Course("Java Script", "pen-jsui.png"), "kv054"));
+        groups.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-jsui.png"), "kv061"));
         groups.add(new Group(Group.Status.OFFERING, "id7", new Course("DevOps", "pen-devops.png"), "kv068"));
         groups.add(new Group(Group.Status.OFFERING, "id8", new Course("DevOps", "pen-devops.png"), "kv075"));
         groups.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));
         groups.add(new Group(Group.Status.IN_PROCESS, "id10", new Course("Sharp", "pen-net.png"), "kv064"));
-        groups.add(new Group(Group.Status.OFFERING, "id11", new Course("Java Script", "pen-net.png"), "kv123"));
-        groups.add(new Group(Group.Status.IN_PROCESS, "id12", new Course("Java Script", "pen-net.png"), "kv532"));
+        groups.add(new Group(Group.Status.OFFERING, "id11", new Course("Java Script", "pen-jsui.png"), "kv123"));
+        groups.add(new Group(Group.Status.IN_PROCESS, "id12", new Course("Java Script", "pen-jsui.png"), "kv532"));
         groups.add(new Group(Group.Status.BOARDING, "id13", new Course("DevOps", "pen-devops.png"), "kv0753"));
         groups.add(new Group(Group.Status.OFFERING, "id14", new Course("DevOps", "pen-devops.png"), "kv112"));
-        groups.add(new Group(Group.Status.FINISHED, "id15", new Course("Java Script", "pen-net.png"), "kv532"));
+        groups.add(new Group(Group.Status.FINISHED, "id15", new Course("Java Script", "pen-jsui.png"), "kv532"));
         groups.add(new Group(Group.Status.FINISHED, "id16", new Course("DevOps", "pen-devops.png"), "kv0753"));
         groups.add(new Group(Group.Status.FINISHED, "id17", new Course("DevOps", "pen-devops.png"), "kv112"));
     }
@@ -47,7 +47,7 @@ public class GroupDaoMockImpl implements GroupDao {
     public ArrayList<Course> getCourses() {
         courses.clear();
         courses.add(new Course("DevOps", "pen-devops.png"));
-        courses.add(new Course("Java Script", "pen-net.png"));
+        courses.add(new Course("Java Script", "pen-jsui.png"));
         courses.add(new Course("Java", "pen-java.png"));
         courses.add(new Course("Sharp", "pen-net.png"));
         return courses;
@@ -55,8 +55,22 @@ public class GroupDaoMockImpl implements GroupDao {
 
     @Override
     public Group addGroup(Group group) {
-//        groups.add(group);
-//        group.setGroupID("id100");
+        groups.add(group);
+        group.setGroupID("id100");
+        switch(group.getCourse().getName()){
+            case "DevOps":
+                group.getCourse().setImageRef("pen-devops.png");
+                break;
+            case "Java Script":
+                group.getCourse().setImageRef("pen-jsui.png");
+                break;
+            case "Java":
+                group.getCourse().setImageRef("pen-java.png");
+                break;
+            case "Sharp":
+                group.getCourse().setImageRef("pen-net.png");
+                break;
+        }
         return group;
     }
 }

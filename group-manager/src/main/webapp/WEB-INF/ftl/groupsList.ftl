@@ -57,7 +57,6 @@
                         <select name="groupCourse" id="gCourse" class="inputDLP roleCombobox">
                         </select>
                     </div>
-
                     <div class="fieldgroup">
                         <div class="headline capacity" >
                             <label for="gCapacity">
@@ -68,7 +67,6 @@
                                 <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
                         </div>
                     </div>
-
                     <div class="fieldgroup">
                         <div class="headline startDate" >
                             <label for="gStartDate">
@@ -102,7 +100,6 @@
                             <input name = "groupEndDate" id="gEndDate" class = "inputDLP">
                         </div>
                     </div>
-
                     <br>
                     <button id="saveUButton" class="btn saveButton">SAVE</button>
                     <button id="cancelUButton" class="btn cancelButton">CANCEL</button>

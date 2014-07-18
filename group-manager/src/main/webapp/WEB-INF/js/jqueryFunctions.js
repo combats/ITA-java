@@ -3,18 +3,21 @@ function viewGroups() {
     jQuery.get("template/iconTemplate", function (data) {
         template = data;
     });
-    var createGroupHtml;
-    jQuery.get("template/createGroupHtml", function (data) {
-        createGroupHtml = data;
-    });
+    var output = "";
+    var createGroupHtml="";
     var selectedValue = $("#drop").val();
     var statusUrl = "/groups/" + selectedValue;
+    if (selectedValue == "Planned") {
+        jQuery.get("template/createGroupHtml", function (data) {
+            createGroupHtml = data;
+        });
+    }
     $.ajax({
         url: statusUrl,
         dataType: "json",
         type: "GET",
         success: function (data) {
-            var output = "";
+
             var image;
             for (var index = 0; index < data.length; index++) {
                 var view = {
@@ -33,6 +36,8 @@ function viewGroups() {
             console.log("" + data);
         }
     });
+
+
 }
 
 function viewDialog() {

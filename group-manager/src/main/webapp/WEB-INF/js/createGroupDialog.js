@@ -87,7 +87,7 @@ $(function () {
             type: "POST",
             data: jsonGroup,
             success: function (data) {
-                alert("isok");
+                viewGroups();
             },
             error: function (data) {
                 alert("error");
