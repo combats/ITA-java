@@ -31,8 +31,8 @@ public class UserDAOTests extends BaseDAOTest {
     @Test
     public void testAddUser() {
         User expected = new User("TestUser", "Test");
-        String userID = userDAO.addUser(expected);
-        User actual = (User) sessionFactory.getCurrentSession().load(User.class, userID);
+        User user = userDAO.addUser(expected);
+        User actual = (User) sessionFactory.getCurrentSession().load(User.class, user.getId());
         assertEquals(expected, actual);
     }
 
