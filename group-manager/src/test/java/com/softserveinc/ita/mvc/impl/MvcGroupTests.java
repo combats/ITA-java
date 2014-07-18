@@ -1,5 +1,6 @@
 package com.softserveinc.ita.mvc.impl;
 
+import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
 import com.softserveinc.ita.utils.JsonUtil;
@@ -11,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
@@ -78,5 +80,15 @@ public class MvcGroupTests extends MvcGroupBaseTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
-
+    @Test
+    public void testPostGroupAndExpectJsonType() throws Exception {
+        Group group = new Group("3");
+        group.setGroupStatus(Group.Status.IN_PROCESS);
+        String jsonGroup = jsonUtil.toJson(group);
+        mockMvc.perform(post("/groups/addGroup")
+                .content(jsonGroup)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 }

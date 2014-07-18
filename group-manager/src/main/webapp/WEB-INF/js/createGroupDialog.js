@@ -55,37 +55,43 @@ $(function () {
         if($("#userForm").valid()){
             var group = getGroupFromForm();
             sendGroup(group);
-        }
-        else{
+            $("#dialog-form-add-group").dialog("close");
         }
     });
 
     function getGroupFromForm() {
         var course = {};
-        status.name = $("#gCourse").val();
+        course.name = $("#gCourse").val();
         var group =  {};
-        group.name = $("#gName").val();
+        group.groupID = "1";
+        group.groupStatus = "PLANNED";
+        group.groupName = $("#gName").val();
         group.address = $("#gAddress").val();
         group.capacity = $("#gCapacity").val();
-        group.startTime =  new Date($("#gStartDate").val()).getTime();
-        group.endTime = new Date($("gEndTimeDate").val()).getTime();
-        group.groupStatus = $("#drop").val();
+        group.startTime = new Date($("#gStartDate").val()).getTime() + $("#gStartTime").timepicker('getSecondsFromMidnight') * 60;
+        group.endTime = new Date($("#gEndDate").val()).getTime();
+        group.course = course;
         return group;
     };
 
     function sendGroup(group) {
         var jsonGroup = JSON.stringify(group);
+        alert(jsonGroup);
         var success = true;
         $.ajax({
-            url: '/groups/addGroup',
-            contentType: "application/json; charset=utf-8",
+            url: location.origin + "/groups/addGroup",
+            contentType: 'application/json',
+            mimeType: 'application/json',
             dataType: "json",
             async: false,
-            type: requestType,
+            type: "POST",
             data: jsonGroup,
-            error: function (data, errorThrown) {
-                success = false;
-                alert('Failed to add/edit user. Error: ' + errorThrown);
+            success: function (data) {
+                alert("isok");
+            },
+            error: function (data) {
+                alert("error");
+                console.log("" + data);
             }
         });
         return success;

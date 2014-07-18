@@ -55,8 +55,8 @@ public class GroupDaoMockImpl implements GroupDao {
 
     @Override
     public Group addGroup(Group group) {
-        groups.add(group);
-        group.setGroupID("id100");
+//        groups.add(group);
+//        group.setGroupID("id100");
         return group;
     }
 }

@@ -5,18 +5,43 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "Groups")
 public class Group implements Serializable{
 
+    private static final long serialVersionUID = 1L;
     public static final String IN_PROCESS_STATUS = "In process";
     public static final String PLANNED_STATUS = "Planned";
     public static final String OFFERING_STATUS = "Offering";
     public static final String BOARDING_STATUS = "Boarding";
     public static final String FINISHED_STATUS = "Finished";
-    private static final long serialVersionUID = 1L;
+
+
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
+    private String groupID;
+
+    @Enumerated(EnumType.STRING)
+    @ElementCollection
+    @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
+    @MapKeyColumn(name = "ApplicantId")
+    @Column(name = "ApplicantsStatus")
+    private Map<String, Applicant.Status> applicants = new HashMap<>();
+    @Column(name = "GroupName")
+    private String groupName;
+    @Column(name = "GroupStatus")
+    private Status groupStatus;
+    private long startTime;
+    private long endTime;
+    private int capacity;
+    private String address;
+    private Course course;
 
     public enum Status implements Serializable {
         IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS),
@@ -33,49 +58,43 @@ public class Group implements Serializable{
         }
     }
 
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "Id", unique = true)
-    private String groupID;
-
-    @ElementCollection
-    @CollectionTable(name = "ApplicantsInGroup", joinColumns = @JoinColumn(name = "Id"))
-    private List<Applicant> applicantsInGroup = new ArrayList<>();
-    private String groupName;
-    private Status groupStatus;
-    private Course course;
-    private int capacity;
-    private long startTime;
-    private long endTime;
     public Group() {}
 
     public Group(String groupID) {
         this.groupID = groupID;
     }
 
+    public Group(String groupID, Course course, String groupName) {
+        this.groupID = groupID;
+        this.course = course;
+        this.groupName = groupName;
+    }
     public Group(Status groupStatus, String groupID, Course course, String groupName) {
         this.groupStatus = groupStatus;
         this.groupID = groupID;
         this.course = course;
         this.groupName = groupName;
     }
-
-    public Group(String groupName, Status groupStatus, Course course, int capacity, long startTime, long endTime) {
-        this.groupName = groupName;
-        this.groupStatus = groupStatus;
+    public Group(String groupId, Course course, String address, long startTime) {
+        this.groupID = groupId;
         this.course = course;
-        this.capacity = capacity;
+        this.address = address;
         this.startTime = startTime;
-        this.endTime = endTime;
     }
 
-    public String getGroupName() {
-        return groupName;
+    public long getStartTime() {
+        return startTime;
     }
 
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
+    public void setStartTime(long startTime) {
+        this.startTime = startTime;
+    }
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getGroupID() {
@@ -86,23 +105,12 @@ public class Group implements Serializable{
         this.groupID = groupID;
     }
 
-    public List<Applicant> getApplicantsInGroup() {
-        return applicantsInGroup;
+    public long getEndTime() {
+        return endTime;
     }
 
-    public void setApplicantsInGroup(List<Applicant> applicantsInGroup) {
-        this.applicantsInGroup = applicantsInGroup;
-    }
-    public Status getGroupStatus() {
-        return groupStatus;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
+    public void setEndTime(long endTime) {
+        this.endTime = endTime;
     }
 
     public int getCapacity() {
@@ -113,31 +121,37 @@ public class Group implements Serializable{
         this.capacity = capacity;
     }
 
-    public long getStartTime() {
-        return startTime;
+
+    public Map<String, Applicant.Status> getApplicants() {
+        return applicants;
     }
 
-    public void setStartTime(long startTime) {
-        this.startTime = startTime;
+    public void setApplicants(Map<String, Applicant.Status> applicants) {
+        this.applicants = applicants;
     }
 
-    public long getEndTime() {
-        return endTime;
+    public String getGroupName() {
+        return groupName;
     }
 
-    public void setEndTime(long endTime) {
-        this.endTime = endTime;
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 
-    @Override
-    public String toString() {
-        return "Group{" +
-                "groupID='" + groupID + '\'' +
-                ", applicantsInGroup=" + applicantsInGroup +
-                ", groupName='" + groupName + '\'' +
-                ", groupStatus=" + groupStatus +
-                ", course=" + course +
-                '}';
+    public Status getGroupStatus() {
+        return groupStatus;
+    }
+
+    public void setGroupStatus(Status groupStatus) {
+        this.groupStatus = groupStatus;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Override
@@ -147,7 +161,11 @@ public class Group implements Serializable{
 
         Group group = (Group) o;
 
-        if (!applicantsInGroup.equals(group.applicantsInGroup)) return false;
+        if (capacity != group.capacity) return false;
+        if (endTime != group.endTime) return false;
+        if (startTime != group.startTime) return false;
+        if (!address.equals(group.address)) return false;
+        if (!applicants.equals(group.applicants)) return false;
         if (!course.equals(group.course)) return false;
         if (!groupID.equals(group.groupID)) return false;
         if (!groupName.equals(group.groupName)) return false;
@@ -159,10 +177,29 @@ public class Group implements Serializable{
     @Override
     public int hashCode() {
         int result = groupID.hashCode();
-        result = 31 * result + applicantsInGroup.hashCode();
+        result = 31 * result + applicants.hashCode();
         result = 31 * result + groupName.hashCode();
         result = 31 * result + groupStatus.hashCode();
+        result = 31 * result + (int) (startTime ^ (startTime >>> 32));
+        result = 31 * result + (int) (endTime ^ (endTime >>> 32));
+        result = 31 * result + capacity;
+        result = 31 * result + address.hashCode();
         result = 31 * result + course.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Group{" +
+                "groupID='" + groupID + '\'' +
+                ", applicants=" + applicants +
+                ", groupName='" + groupName + '\'' +
+                ", groupStatus=" + groupStatus +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", capacity=" + capacity +
+                ", address='" + address + '\'' +
+                ", course=" + course +
+                '}';
     }
 }
