@@ -33,9 +33,6 @@ public class QuestionsInformationServiceImpl implements QuestionsInformationServ
     QuestionInformationDAO questionInformationDAO;
 
     @Autowired
-    private JsonUtil interviewUtilJson;
-
-    @Autowired
     QuestionsBlockServices questionsBlockService;
 
     @Autowired
