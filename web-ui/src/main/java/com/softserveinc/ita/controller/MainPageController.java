@@ -1,4 +1,4 @@
-package com.softserveinc.ita;
+package com.softserveinc.ita.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,4 +11,8 @@ public class MainPageController {
 	public String showMainPage() {
 		return "main";
 	}
+    @RequestMapping(value = "interview", method = RequestMethod.GET)
+    public String showPage() {
+        return "interview/pages/app";
+    }
 }
