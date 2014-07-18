@@ -29,7 +29,6 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         List<ObjectError> bodyOfResponse = ex.getBindingResult().getAllErrors();
         return handleExceptionInternal(ex, bodyOfResponse, headers, HttpStatus.BAD_REQUEST, request);
     }
-
     /**
      *
      * @param exception -> Controller specific exception.

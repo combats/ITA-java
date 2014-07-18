@@ -120,7 +120,6 @@
             <version>4.2.11.Final</version>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
           <plugin>
@@ -153,7 +152,6 @@
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
                     </includes>
-
                 </configuration>
             </plugin>
         </plugins>
