@@ -11,6 +11,8 @@ import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
@@ -23,7 +25,7 @@ import java.util.Set;
  * Time: 14:23
  * To change this template use File | Settings | File Templates.
  */
-@Transactional
+@Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {
 
@@ -94,13 +96,5 @@ public class QuestionsInformationServiceImpl implements QuestionsInformationServ
     @Override
     public void deleteQuestionInformationById(String questionInformationId) {
         questionInformationDAO.deleteQuestionInformationById(questionInformationId);
-//        QuestionInformation questionInformation = questionInformationDAO.getQuestionInformationById(questionInformationId);
-//        QuestionsBlock questionsBlock = questionsBlockService.getQuestionsBlockFromInterviewByUserId(userId, questionInformation.getInterviewId());
-//        Set<QuestionInformation> questionInformationSet = questionsBlock.getQuestions();
-//        Iterator<QuestionInformation> it3 = questionInformationSet.iterator();
-//
-//        while(it3.hasNext()){
-//        }
-//        }
     }
 }

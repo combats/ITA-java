@@ -6,15 +6,17 @@ import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
+import com.softserveinc.ita.service.impl.AbstractHttpRequestExecutorRestImpl;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 
-public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
+public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorRestImpl{
 
     //-------------VadimNaumenko mock for tests------------------------------------
 
@@ -31,6 +33,7 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     private User user3 = new User("3", "HR Manager");
 
     private Applicant applicant1 = new Applicant("1", "Gena");
+
     private Applicant applicant2 = new Applicant("2", "Gesha");
 
     List<String> usersIdList = new ArrayList<String>(); {
@@ -81,10 +84,10 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
 
     List<Appointment> appointmentList = new ArrayList<>();{
         applicant1.setId("1");
-        applicant2.setId("2");
         appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        applicant2.setId("2");
+        appointment2 = new Appointment(usersIdList, applicant1.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
         appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment3.setAppointmentId("3");
@@ -95,12 +98,19 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
         appointmentList.add(appointment3);
         appointmentList.add(appointment4);
     }
+
+    List<String> appointmentIdList1 = new ArrayList<>();{
+        appointmentIdList1.add(appointment1.getAppointmentId());
+        appointmentIdList1.add(appointment2.getAppointmentId());
+    }
+
     //-------------VadimNaumenko mock from tests
 
     private final RestTemplate restTemplate;
     private final String baseUrl;
 
     public HttpRequestExecutorFactoryMock (String baseUrl) {
+        super(baseUrl);
         this.baseUrl = baseUrl;
         this.restTemplate  = new RestTemplate();
     }
@@ -131,24 +141,12 @@ public class HttpRequestExecutorFactoryMock implements HttpRequestExecutor {
     }
 
     @Override
-    public List<Appointment> getListOfObjectsByID(String id, Class<Appointment> clazz) {
-        List<Appointment> listWithApplicant = new ArrayList<>();
-        listWithApplicant.add(appointmentList.get(0));
-        return listWithApplicant;
-    }
-
-    @Override
     public List<String> getAllObjectsID(Class objectClass) throws HttpRequestException {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
-    public RestTemplate getRestTemplate() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public String getBaseUrl() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public List<String> getListObjectsIdByPrams(Class objectClass, Map<Class, String> urlValues) throws HttpRequestException {
+        return appointmentIdList1;
     }
 }

@@ -22,7 +22,7 @@ public class InterviewDAOMock implements InterviewDAO {
     @Autowired
     InterviewFactory interviewFactory;
 
-    List<Interview> interviewsList = new ArrayList<>();
+    public static List<Interview> interviewsList = new ArrayList<>();
 
     @Override
     public Interview getInterviewByAppointmentId(String appointmentId) {
@@ -40,7 +40,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
 
         for (Interview interview : interviewsList){
@@ -65,7 +65,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
         interviewsList.add(interview);
         return interview.getInterviewId();
@@ -73,7 +73,7 @@ public class InterviewDAOMock implements InterviewDAO {
 
     @Override
     public void removeInterviewByAppointmentId(String appointmentId) {
-
+        interviewsList.clear();
         Interview interview1 = null;
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
@@ -87,7 +87,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
         for (int i = 0; i < interviewsList.size(); i++){
             if (interviewsList.get(i).getInterviewId().equals(appointmentId)) interviewsList.remove(i);
@@ -96,7 +96,7 @@ public class InterviewDAOMock implements InterviewDAO {
 
     @Override
     public void updateInterview(Interview interview) {
-
+        interviewsList.clear();
         Interview interview1 = null;
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
@@ -110,7 +110,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
         for (int i = 0; i < interviewsList.size(); i++){
             if (interviewsList.get(i).getInterviewId().equals(interview.getInterviewId())) {
@@ -123,7 +123,7 @@ public class InterviewDAOMock implements InterviewDAO {
 
     @Override
     public List<String> getAllInterviewsId(){
-
+        interviewsList.clear();
         Interview interview1 = null;
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
@@ -137,7 +137,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
         List<String> interviewsIdList = new ArrayList<>();
         for (Interview interview : interviewsList){
@@ -148,7 +148,7 @@ public class InterviewDAOMock implements InterviewDAO {
 
     @Override
     public List<Interview> getAllInterviews() {
-        List<Interview> interviewsList = new ArrayList<>();
+        interviewsList.clear();
         Interview interview1 = null;
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
@@ -162,7 +162,7 @@ public class InterviewDAOMock implements InterviewDAO {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         interviewsList.add(interview1);
-            interviewsList.add(interview2);
+        interviewsList.add(interview2);
 
 
         return interviewsList;

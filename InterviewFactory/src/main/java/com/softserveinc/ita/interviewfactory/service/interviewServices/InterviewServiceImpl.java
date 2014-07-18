@@ -1,6 +1,7 @@
 package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 
+import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.InterviewType;
@@ -11,10 +12,14 @@ import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,7 +29,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 
-@Transactional
+@Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class InterviewServiceImpl implements InterviewService {
 
@@ -38,12 +43,14 @@ public class InterviewServiceImpl implements InterviewService {
     HttpRequestExecutor httpRequestExecutor;
 
     @Override
-    public List<Interview> getInterviewByApplicantID(String applicantId) throws HttpRequestException {
+    public List<Interview> getInterviewByApplicantID(String applicantId) throws HttpRequestException, WrongCriteriaException {
         List<Interview> listForReturn = new ArrayList<>();
-        List<Appointment> listWithApplicant = httpRequestExecutor.getListOfObjectsByID(applicantId, Appointment.class);
+        Map<Class, String> httpApplicantParamMap = new HashMap<>();
+        httpApplicantParamMap.put(Applicant.class, applicantId);
+        List<String> listWithAppointmentsId = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, httpApplicantParamMap);
 
-        for (Appointment appointment : listWithApplicant){
-            listForReturn.add(interviewDAO.getInterviewByAppointmentId(appointment.getAppointmentId()));
+        for (String id : listWithAppointmentsId){
+            listForReturn.add(getInterviewByAppointmentID(id));
         }
         return listForReturn;
     }
@@ -101,6 +108,11 @@ public class InterviewServiceImpl implements InterviewService {
 
     @Override
     public List<Interview> getAllInterviews() throws HttpRequestException {
-        return interviewDAO.getAllInterviews();
+        List<String> allInterviewIdList = getAllInterviewsId();
+        List<Interview> allInterviewsList = new ArrayList<>();
+        for (String id : allInterviewIdList){
+            allInterviewsList.add(interviewDAO.getInterviewByAppointmentId(id));
+        }
+        return allInterviewsList;
     }
 }

@@ -11,6 +11,8 @@ import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
@@ -23,7 +25,7 @@ import java.util.Set;
  * Time: 14:05
  * To change this template use File | Settings | File Templates.
  */
-@Transactional
+@Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
@@ -68,9 +70,13 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     }
 
     @Override
+    public String getQuestionsBlockIdByQuestionsBlockBody(QuestionsBlock questionsBlock, String userId)  {
+        return questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(userId, questionsBlock.getInterviewId()).getId();
+    }
+
+        @Override
     public String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId) {
         newQuestionsBlock.setUserId(userId);
-        newQuestionsBlock.setId(getQuestionsBlockFromInterviewByUserId(userId, newQuestionsBlock.getInterviewId()).getId());
         return questionsBlockDAO.updateQuestionsBlock(newQuestionsBlock);
     }
 

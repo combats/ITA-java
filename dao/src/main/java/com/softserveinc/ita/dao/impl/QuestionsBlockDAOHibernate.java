@@ -33,7 +33,10 @@ public class QuestionsBlockDAOHibernate implements QuestionsBlockDAO {
 
     @Override
     public QuestionsBlock getQuestionsBlockFromInterviewByQuestionsBlockId(String questionsBlockId) {
-        return (QuestionsBlock) sessionFactory.getCurrentSession().load(QuestionsBlock.class, questionsBlockId);
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(QuestionsBlock.class)
+                .add(Restrictions.like("Id", questionsBlockId));
+
+        return (QuestionsBlock) criteria.uniqueResult();
     }
 
     @Override

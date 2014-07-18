@@ -16,7 +16,7 @@ import java.util.List;
  */
 public interface InterviewService {
 
-    List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException;
+    List<Interview> getInterviewByApplicantID(String ID) throws HttpRequestException, WrongCriteriaException;
     String putInterview(String appointmentID, InterviewType type) throws HttpRequestException, WrongCriteriaException;
 
     Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException;

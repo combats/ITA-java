@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -23,14 +24,14 @@ public class QuestionsBlock implements Serializable {
     String userId;
 
     @Column(name = "InterviewId")
-    String interviewId;
+    String interviewId = "";
 
     @OneToMany(fetch=FetchType.EAGER, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
     @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
-    private Set<QuestionInformation> questions;
+    private Set<QuestionInformation> questions = new HashSet<>();
 
     @Column(name = "Final_comment")
-    private String finalComment;
+    private String finalComment = "";
 
     @Column(name = "Bonus_points")
     private int bonusPoints;

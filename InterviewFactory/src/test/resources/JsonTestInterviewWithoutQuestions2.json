@@ -3,26 +3,26 @@
     "QuestionsBlocks": [
         {
             "Id": null,
-            "UserId": "3",
+            "UserId": "1",
             "InterviewId": "2",
-            "Questions": null,
-            "FinalComment": null,
+            "Questions": [],
+            "FinalComment": "",
             "BonusPoints": 0
         },
         {
             "Id": null,
-            "UserId": "1",
+            "UserId": "3",
             "InterviewId": "2",
-            "Questions": null,
-            "FinalComment": null,
+            "Questions": [],
+            "FinalComment": "",
             "BonusPoints": 0
         },
         {
             "Id": null,
             "UserId": "2",
             "InterviewId": "2",
-            "Questions": null,
-            "FinalComment": null,
+            "Questions": [],
+            "FinalComment": "",
             "BonusPoints": 0
         }
     ],

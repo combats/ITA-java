@@ -19,6 +19,7 @@ public interface QuestionsBlockServices {
     void addQuestionsBlock(QuestionsBlock questionsBlock) throws WrongCriteriaException, HttpRequestException;
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId);
     void deleteQuestionsBlockById(String questionsBlockId);
+    String getQuestionsBlockIdByQuestionsBlockBody(QuestionsBlock questionsBlock, String userId);
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) throws WrongCriteriaException, HttpRequestException;
     QuestionsBlock getStandardQuestionsBlock();
     void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock);

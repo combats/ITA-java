@@ -37,7 +37,6 @@ public class QuestionsBlockServiceTests extends BaseServiceTests{
     @Autowired
     InterviewFactory interviewFactory;
 
-    @Qualifier("interviewService")
     @Autowired
     InterviewService interviewService;
 
