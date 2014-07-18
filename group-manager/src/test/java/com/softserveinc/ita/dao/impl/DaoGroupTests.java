@@ -18,7 +18,7 @@ public class DaoGroupTests extends DaoGroupBaseTest {
     @Test
     public void testGetGroupByExistingStatusIdAndExpectCorrectResult() throws Exception {
         Group.Status status = Group.Status.BOARDING;
-        ArrayList<Group> expectedGroups = new ArrayList<Group>();
+        ArrayList<Group> expectedGroups = new ArrayList<>();
         expectedGroups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
         expectedGroups.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
         expectedGroups.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));

@@ -7,7 +7,6 @@ import exceptions.QuestionNotFoundException;
 import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.

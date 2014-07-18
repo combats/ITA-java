@@ -23,7 +23,7 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
     @Override
     public Interview create(String interviewId) throws HttpRequestException {
         Interview interview = new Interview(interviewId);
-        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
+        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<>();
 
         allQuestionsBlocks.add(questionsBlockServices.getStandardQuestionsBlock());
 

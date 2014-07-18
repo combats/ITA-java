@@ -3,7 +3,6 @@ package com.softserveinc.ita.interviewfactory.service.mainServices;
 import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 
 import java.util.List;

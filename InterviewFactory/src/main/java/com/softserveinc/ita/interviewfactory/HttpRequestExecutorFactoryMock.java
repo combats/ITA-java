@@ -4,16 +4,13 @@ import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.Question;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.service.impl.AbstractHttpRequestExecutorRestImpl;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 
 public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorRestImpl{
@@ -34,7 +31,7 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
     private Applicant applicant1 = new Applicant("1", "Gena");
     private Applicant applicant2 = new Applicant("2", "Gesha");
 
-    List<String> usersIdList = new ArrayList<String>(); {
+    List<String> usersIdList = new ArrayList<>(); {
 
         Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
         Question question2 = new Question("Have you ever were connected with database developing?", 3);
@@ -57,7 +54,7 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
-    List<User> usersList = new ArrayList<User>(); {
+    List<User> usersList = new ArrayList<>(); {
 
         Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
         Question question2 = new Question("Have you ever were connected with database developing?", 3);

@@ -35,7 +35,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
 
     @Test
       public void testGetGroupsByCorrectStatusAndExpectCorrectList() throws Exception{
-        ArrayList<Group> expectedList = new ArrayList<Group>();
+        ArrayList<Group> expectedList = new ArrayList<>();
         expectedList.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
         expectedList.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
         expectedList.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));

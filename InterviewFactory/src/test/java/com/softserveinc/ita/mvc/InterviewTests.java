@@ -76,7 +76,7 @@ public class InterviewTests extends BaseMVCTest {
         Applicant applicant1 = new Applicant("1", "Gena");
         Applicant applicant2 = new Applicant("2", "Gesha");
 
-        List<String> usersIdList = new ArrayList<String>(); {
+        List<String> usersIdList = new ArrayList<>(); {
 
             Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
             Question question2 = new Question("Have you ever were connected with database developing?", 3);
@@ -84,19 +84,19 @@ public class InterviewTests extends BaseMVCTest {
             Question question4 = new Question("Your last book you read?", 3);
             Question question5 = new Question("Where did you study?", 2);
             Question question6 = new Question("Are you married?", 3);
-            List<Question> questionsList1 = new ArrayList<Question>();
+            List<Question> questionsList1 = new ArrayList<>();
             Collections.addAll(questionsList1, question1, question2);
             user1.setQuestions(questionsList1);
-            List<Question> questionsList2 = new ArrayList<Question>();
+            List<Question> questionsList2 = new ArrayList<>();
             Collections.addAll(questionsList2, question3, question4);
             user2.setQuestions(questionsList1);
-            List<Question> questionsList3 = new ArrayList<Question>();
+            List<Question> questionsList3 = new ArrayList<>();
             Collections.addAll(questionsList3, question5, question6);
             user3.setQuestions(questionsList1);
             Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
         }
 
-        List<String> appointmentIdList = new ArrayList<String>();{
+        List<String> appointmentIdList = new ArrayList<>();{
             appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
             appointment1.setAppointmentId("1");
             appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);

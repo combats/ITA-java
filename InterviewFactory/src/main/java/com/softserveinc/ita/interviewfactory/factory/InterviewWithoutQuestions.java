@@ -19,7 +19,7 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
     public Interview create(String interviewId) throws HttpRequestException {
 
         Interview interview = new Interview(interviewId);
-        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<QuestionsBlock>();
+        List<QuestionsBlock> allQuestionsBlocks = new ArrayList<>();
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
 
         List<String> Users = appointment.getUserIdList();

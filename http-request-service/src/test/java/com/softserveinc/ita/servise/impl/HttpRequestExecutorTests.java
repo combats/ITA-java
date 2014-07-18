@@ -69,7 +69,7 @@ public class HttpRequestExecutorTests extends BaseHttpReqTest {
         listID.add("5");
         listID.add("6");
 
-        parametersMap =  new LinkedHashMap<Class, String>();
+        parametersMap =  new LinkedHashMap<>();
         parametersMap.put(appointment.getClass(), appointment.getAppointmentId());
         parametersMap.put(user.getClass(),user.getId());
 
@@ -113,7 +113,7 @@ public class HttpRequestExecutorTests extends BaseHttpReqTest {
 
     @Test
     public void testGetListObjectsIdByPrams() throws Exception {
-      List<String> expectedList = new LinkedList<String>();
+      List<String> expectedList = new LinkedList<>();
         expectedList.add(user.getId());
 
         mockServer.expect(requestTo(service.getBaseUrl()+"/"+ urlSubclass +"s?"+

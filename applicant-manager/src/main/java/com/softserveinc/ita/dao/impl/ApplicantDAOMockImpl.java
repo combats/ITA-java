@@ -13,7 +13,7 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     private List<Applicant> applicantsInAGroup;
     private Group group;
     private AtomicInteger idAutoGeneration = new AtomicInteger();
-    private Hashtable<String, Applicant> applicants = new Hashtable<String, Applicant>();
+    private Hashtable<String, Applicant> applicants = new Hashtable<>();
     private List<Applicant> allApplicants = new ArrayList<>();
 
     public ApplicantDAOMockImpl() {

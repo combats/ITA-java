@@ -14,7 +14,7 @@ public class GroupDaoMockImpl implements GroupDao {
 
     @Override
     public ArrayList<Group> getGroupsByStatus(String groupStatus) {
-        ArrayList<Group> groups = new ArrayList<Group>();
+        ArrayList<Group> groups = new ArrayList<>();
         groups.add(new Group(Group.Status.IN_PROCESS, "id1", new Course("Java", "pen-java.png"), "kv001"));
         groups.add(new Group(Group.Status.OFFERING, "id2", new Course("Sharp", "pen-net.png"), "kv041"));
         groups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
@@ -32,7 +32,7 @@ public class GroupDaoMockImpl implements GroupDao {
         groups.add(new Group(Group.Status.FINISHED, "id15", new Course("Java Script", "pen-net.png"), "kv532"));
         groups.add(new Group(Group.Status.FINISHED, "id16", new Course("DevOps", "pen-devops.png"), "kv0753"));
         groups.add(new Group(Group.Status.FINISHED, "id17", new Course("DevOps", "pen-devops.png"), "kv112"));
-        ArrayList<Group> chosenByStatusGroups = new ArrayList<Group>();
+        ArrayList<Group> chosenByStatusGroups = new ArrayList<>();
         for (Group group : groups) {
             if (groupStatus.equals(group.getGroupStatus().getName())) {
                 chosenByStatusGroups.add(group);

@@ -1,17 +1,16 @@
 package com.softserveinc.ita.interviewfactory.service.questionsBlocksServices;
 
-import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.entity.QuestionInformation;
+import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.interviewfactory.service.mainServices.InterviewService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.InterviewNotFoundException;
 import exceptions.QuestionsBlockNotFound;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

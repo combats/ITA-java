@@ -39,8 +39,7 @@ public class ApplicantController {
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody Applicant getApplicantById(@PathVariable String applicantId)
             throws ApplicantDoesNotExistException {
-        Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
-        return searchedApplicant;
+        return applicantService.getApplicantById(applicantId);
     }
 
     @RequestMapping(method = RequestMethod.POST)

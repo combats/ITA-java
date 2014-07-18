@@ -5,9 +5,6 @@ import com.softserveinc.ita.interviewfactory.service.questionInformationServices
 import com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import exceptions.InterviewNotFoundException;
-import exceptions.QuestionsBlockNotFound;
-import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

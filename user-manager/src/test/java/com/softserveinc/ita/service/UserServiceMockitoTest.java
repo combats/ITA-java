@@ -2,9 +2,7 @@ package com.softserveinc.ita.service;
 
 
 import com.softserveinc.ita.dao.UserDAO;
-import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
-import com.softserveinc.ita.service.impl.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
