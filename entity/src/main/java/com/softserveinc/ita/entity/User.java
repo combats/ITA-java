@@ -6,7 +6,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "Users")
@@ -42,11 +41,7 @@ public class User implements Serializable {
     @Column(name = "Password")
     private String password;
 
-    @OneToOne(cascade=CascadeType.ALL)
-    @JoinTable(name="UserRoles",
-            joinColumns = {@JoinColumn(name="UserId", referencedColumnName="Id")},
-            inverseJoinColumns = {@JoinColumn(name="RoleId", referencedColumnName="Id")}
-    )
+    @ManyToOne(targetEntity = Role.class)
     private Role role;
     @Column(name = "Active")
     private boolean active;
@@ -75,7 +70,7 @@ public class User implements Serializable {
         this.age = age;
     }
 
-    public User(String name, String surname, String phone, String email, int age, String password, Set<Role> securityRoleCollection, boolean active, List<Question> questions) {
+    public User(String name, String surname, String phone, String email, int age, String password, boolean active, List<Question> questions) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
