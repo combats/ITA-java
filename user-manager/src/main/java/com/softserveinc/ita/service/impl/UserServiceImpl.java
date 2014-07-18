@@ -9,6 +9,8 @@ import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,21 +22,26 @@ public class UserServiceImpl implements UserService {
     private UserDAO userDao;
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public ArrayList<String> getAllUsersID() {
         return userDao.getAllUsersID();
     }
+
     @Override
-    public User getUserByID(String UserID) throws InvalidUserIDException
-    {
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public User getUserByID(String UserID) throws InvalidUserIDException {
         if (userDao.getUserByID(UserID) == null) throw new InvalidUserIDException();
         return userDao.getUserByID(UserID);
     }
+
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public String deleteUser(String userID) throws UserDoesNotExistException {
        return userDao.deleteUser(userID);
     }
     
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public User editUser(User changingUser) throws UserDoesNotExistException, EmptyUserException {
         if (isEmpty(changingUser)) {
             throw new EmptyUserException();
@@ -47,12 +54,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public User postNewUser(User user) throws UserAlreadyExistsException {
         userDao.postNewUser(user);
         return user;
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<User> getUsers() {
         return userDao.getUsers();
     }
