@@ -4,25 +4,17 @@ import com.softserveinc.ita.entity.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+
 
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 14.07.14
- * Time: 16:18
- * To change this template use File | Settings | File Templates.
- */
 public class QuestionsBlockDAOTests extends BaseDAOTest {
 
     @Autowired
     private QuestionsBlockDAO questionsBlockDAO;
 
-    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 

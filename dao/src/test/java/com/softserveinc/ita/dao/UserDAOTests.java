@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
@@ -18,14 +17,12 @@ public class UserDAOTests extends BaseDAOTest {
 
     @Autowired
     private UserDAO userDAO;
-    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 
     @Test
     public void testGetUserById() {
         User expected = new User("TestUserOne", "Test");
-        Session session = sessionFactory.getCurrentSession();
         String userID = (String) sessionFactory.getCurrentSession().save(expected);
         User actual = userDAO.getUserById(userID);
         assertEquals(expected, actual);

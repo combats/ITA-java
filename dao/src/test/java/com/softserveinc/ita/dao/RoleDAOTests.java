@@ -6,7 +6,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.List;
 
@@ -15,7 +14,6 @@ import static org.junit.Assert.assertThat;
 
 public class RoleDAOTests extends BaseDAOTest {
 
-    @Qualifier("sessionFactory")
     @Autowired
     SessionFactory sessionFactory;
     @Autowired

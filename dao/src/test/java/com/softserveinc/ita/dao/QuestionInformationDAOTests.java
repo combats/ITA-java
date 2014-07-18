@@ -7,7 +7,6 @@ import com.softserveinc.ita.entity.QuestionsBlock;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -15,19 +14,11 @@ import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 14.07.14
- * Time: 19:52
- * To change this template use File | Settings | File Templates.
- */
 public class QuestionInformationDAOTests extends BaseDAOTest {
 
     @Autowired
     private QuestionInformationDAO questionInformationDAO;
 
-    @Qualifier("sessionFactory")
     @Autowired
     private SessionFactory sessionFactory;
 
