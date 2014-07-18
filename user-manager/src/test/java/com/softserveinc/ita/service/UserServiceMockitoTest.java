@@ -11,20 +11,20 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 
 import static junit.framework.Assert.assertEquals;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class UserServiceMockitoTest extends BaseServiceTest {
-   // @Autowired
+    @Autowired
     @InjectMocks
-    private UserService userService = new UserServiceImpl(); //TODO:Find out why there are problems with Autowired.
+    private UserService userService;
 
-    //@Autowired
+    @Autowired
     @Mock
-    private UserDAO userDao = new UserDAOMockImpl(); //TODO:Find out why there are problems with Autowired.
+    private UserDAO userDao;
 
     @Before
     public void init() {
@@ -36,7 +36,7 @@ public class UserServiceMockitoTest extends BaseServiceTest {
 
         when(userDao.deleteUser(muserID)).thenReturn(muserID);
         String result = userService.deleteUser(muserID);
-        verify(userDao).deleteUser(muserID);
+        verify(userDao, times(1)).deleteUser(muserID);
         assertEquals(muserID, result);
     }
 
@@ -46,6 +46,6 @@ public class UserServiceMockitoTest extends BaseServiceTest {
 
         doThrow(new UserDoesNotExistException()).when(userDao).deleteUser(muserID);
         userService.deleteUser(muserID);
-        verify(userDao).deleteUser(muserID);
+        verify(userDao, times(1)).deleteUser(muserID);
     }
 }

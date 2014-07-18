@@ -70,10 +70,9 @@ public class AppointmentController {
         appointmentService.updateAppointment(appointment);
     }
 
-
-    @RequestMapping(value = "/groups/{groupId}/applicants/{applicantId}", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public String getAppointmentIdByGroupIdAndApplicantId(@PathVariable String groupId, @PathVariable String applicantId) {
+    public String getAppointmentIdByGroupIdAndApplicantId(@RequestParam(value = "group") String groupId, @RequestParam(value="applicant") String applicantId) {
         return appointmentService.getAppointmentIdByGroupIdAndApplicantId(groupId, applicantId);
     }
 }
