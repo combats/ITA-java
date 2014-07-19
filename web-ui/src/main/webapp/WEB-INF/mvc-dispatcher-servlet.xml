@@ -14,6 +14,7 @@
 
     <mvc:resources location="/WEB-INF/common/" mapping="/common/**"/>
     <mvc:resources location="/WEB-INF/interview/" mapping="/interview/**"/>
+    <mvc:resources location="/WEB-INF/user/" mapping="/user/**"/>
     <mvc:resources location="/WEB-INF/main/" mapping="/**"/>
 
     <!-- freemarker config -->

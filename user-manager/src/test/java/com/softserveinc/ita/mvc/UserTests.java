@@ -102,7 +102,8 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithNotExistingIdAndExpectNotFound() throws Exception {
-        User user = new User("id4","Andrey",34);
+        User user = new User("id4");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/users").
@@ -113,7 +114,8 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithExistingIdAndExpectIsoK() throws Exception {
-        User user = new User("id3","Andrey",34);
+        User user = new User("id3");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/users").
@@ -124,7 +126,8 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithExistingIdAndExpectEqualsWithResult() throws Exception{
-        User user = new User("id3","Andrey",34);
+        User user = new User("id3");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/users").

@@ -15,4 +15,9 @@ public class MainPageController {
     public String showPage() {
         return "interview/pages/app";
     }
+
+    @RequestMapping(value = "ui/users", method = RequestMethod.GET)
+    public String showUsers() {
+        return "users";
+    }
 }

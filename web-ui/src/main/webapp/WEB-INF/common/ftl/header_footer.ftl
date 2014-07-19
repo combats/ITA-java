@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 		<title>interviewer-home</title>
-		<link rel="stylesheet" href="css/icons/entypo/css/entypo.css" />
-        <link rel="stylesheet" href="css/flexslider.css" />
-		<link rel="stylesheet" type="text/css" href="css/style.css" />
+		<link rel="stylesheet" href="/common/css/icons/entypo/css/entypo.css" />
+        <link rel="stylesheet" href="/common/css/flexslider.css" />
+		<link rel="stylesheet" href="/common/css/style.css" />
 	</head>
 
 	<body class=" ">
@@ -17,7 +17,7 @@
 				<div class="navbar-inner">
 					<div class="container">
 
-						<a class="brand" href="#">IT Interviewer</a>
+						<a class="brand" href="/">IT Interviewer</a>
 
 						<div class="nav-collapse">
 							<ul class="nav pull-left">
@@ -34,7 +34,7 @@
 									<a href="#" class="dropdown-toggle">Schedule</a>
 								</li>
 								<li class="dropdown">
-									<a href="#" class="dropdown-toggle">Users</a>
+									<a href="/ui/users" class="dropdown-toggle">Users</a>
 								</li>
 							</ul>
 						</div>
@@ -55,10 +55,10 @@
 					<div class="container">
 						<div class="row-fluid">
 							<div class="span4">
-								<p><a href="#">FAQ</a></p>
+								<p>03057 Dehtyarivska Street 21G, KIEV</p>
 							</div>
 							<div class="span4">
-								<p>03057 Dehtyarivska Street 21G, KIEV</p>
+								<p>.</p>
 							</div>
 							<div class="span4 doRight">
 								<p>2014 ITA Java group  All Rights Reserved</p>

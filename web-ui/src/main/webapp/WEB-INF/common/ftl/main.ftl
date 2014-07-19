@@ -2,7 +2,7 @@
 
 <@header_footer.main_page>
 
-    <script src="js/jquery.min.js"></script>
+    <script src="common/js/jquery.min.js"></script>
     <script src="js/jquery.flexslider-min.js"></script>
     <script src="js/jquery.contenthover.min.js"></script>
     <script src="js/main.js"></script>
@@ -56,7 +56,7 @@
 		<div class="row-fluid">
 			<div class="span4">
 				<div class="iconBox doCenter">
-					<span class="entypo cog"><i></i></span>
+					<span class="entypo clock"><i></i></span>
 					<h3 class="light">Schedule</h3>
 					<p>
 						your appointments with candidates.
@@ -65,7 +65,7 @@
 			</div>
 			<div class="span4">
 				<div class="iconBox doCenter">
-					<span class="entypo lamp"><i></i></span>
+					<span class="entypo thumbs-up"><i></i></span>
 					<h3 class="light">Estimate</h3>
 					<p>
 						and comment candidate answers through the interview.

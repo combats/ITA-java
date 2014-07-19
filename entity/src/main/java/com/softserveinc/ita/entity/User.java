@@ -12,7 +12,6 @@ import java.util.List;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final int DEFAULT_USER_AGE = 0;
     public static final String DEFAULT_USER_NAME = "";
 
     @Id
@@ -35,9 +34,6 @@ public class User implements Serializable {
     @Column(name = "Email")
     private String email;
 
-    @Column(name = "Age")
-    private int age = DEFAULT_USER_AGE;
-
     @Column(name = "Password")
     private String password;
 
@@ -59,23 +55,17 @@ public class User implements Serializable {
     public User(String userId) {
         this.id = userId;
     }
+
     public User(String userName, String userSurname) {
         this.name = userName;
         this.surname = userSurname;
     }
 
-    public User(String userID, String name, int age) {
-        this.id = userID;
-        this.name = name;
-        this.age = age;
-    }
-
-    public User(String name, String surname, String phone, String email, int age, String password, boolean active, List<Question> questions) {
+    public User(String name, String surname, String phone, String email, String password, boolean active, List<Question> questions) {
         this.name = name;
         this.surname = surname;
         this.phone = phone;
         this.email = email;
-        this.age = age;
         this.password = password;
         this.active = active;
         this.questions = questions;
@@ -103,14 +93,6 @@ public class User implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
     }
 
     public boolean isActive() {
@@ -169,7 +151,6 @@ public class User implements Serializable {
         User user = (User) o;
 
         if (active != user.active) return false;
-        if (age != user.age) return false;
         if (email != null ? !email.equals(user.email) : user.email != null) return false;
         if (id != null ? !id.equals(user.id) : user.id != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
@@ -188,7 +169,6 @@ public class User implements Serializable {
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + age;
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
         result = 31 * result + (questions != null ? questions.hashCode() : 0);
@@ -203,7 +183,6 @@ public class User implements Serializable {
                 ", surname='" + surname + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", age=" + age +
                 ", password='" + password + '\'' +
                 ", active=" + active +
                 ", questions=" + questions +
