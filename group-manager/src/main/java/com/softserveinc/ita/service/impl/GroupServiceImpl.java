@@ -33,6 +33,11 @@ public class GroupServiceImpl implements GroupService {
         return groupDao.addGroup(group);
     }
 
+    @Override
+    public ArrayList<Group> getAllGroups() {
+        return groupDao.getAllGroups();
+    }
+
     private boolean isWrongStatus(String groupStatus){
         for(Group.Status status : Group.Status.values()){
             if(status.getName().equals(groupStatus)){

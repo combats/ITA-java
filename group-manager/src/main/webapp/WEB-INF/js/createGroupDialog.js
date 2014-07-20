@@ -12,27 +12,7 @@ $(function () {
         dialogClass: 'dialog',
         show: { effect: "fade", duration: 800 },
         hide: { effect: "fade", duration: 800 },
-        open: function () {
-            $.ajax({
-                url: "/groups/courses",
-                dataType: "json",
-                type: "GET",
-                success: function (data) {
-                    var output = "<option value=''>Select group course</option>";
-                    var template = "<option value={{courseName}}>{{courseName}}</option>";
-                    for (var index = 0; index < data.length; index++) {
-                        var view = {
-                            courseName: data[index].name
-                        }
-                    output+=Mustache.render(template,view);
-                    }
-                    $("#gCourse").html(output);
-                },
-                error: function (data) {
-                    console.log("" + data);
-                }
-            });
-        },
+        open: createCourseMenu("#gCourse", "Select group course"),
         close: function () {
             $("#gName").val("");
             $("#gCapacity").val("");
@@ -40,7 +20,8 @@ $(function () {
             $("#gEndDate").val("");
             $("#gAddress").val("");
             $('#gStartTime').val("");
-            $("#gCourse").append("<option value=''>Select group course</option>");
+//            $("#gCourse").set("<option value=''>Select group course</option>");
+            $("#gCourse").val("Select group course");
         }
     });
 
@@ -76,7 +57,6 @@ $(function () {
 
     function sendGroup(group) {
         var jsonGroup = JSON.stringify(group);
-        alert(jsonGroup);
         var success = true;
         $.ajax({
             url: location.origin + "/groups/addGroup",
@@ -90,7 +70,6 @@ $(function () {
                 viewGroups();
             },
             error: function (data) {
-                alert("error");
                 console.log("" + data);
             }
         });
@@ -185,5 +164,30 @@ $(function () {
             }
         }
     });
-
 });
+
+function createCourseMenu(position, value) {
+    $.ajax({
+        url: "/groups/courses",
+        dataType: "json",
+        type: "GET",
+        async: false,
+        success: function (data) {
+            var output = "<option value='' id='defaultChoose'  selected></option>";
+            var template = "<option value={{courseName}}>{{courseName}}</option>";
+            for (var index = 0; index < data.length; index++) {
+                var view = {
+                    courseName: data[index].name
+                }
+                output += Mustache.render(template, view);
+            }
+            $(position).html(output);
+            $("#defaultChoose").attr('value', value);
+            $("#defaultChoose").html(value);
+        },
+        error: function (data) {
+            console.log("" + data);
+        }
+    });
+}
+

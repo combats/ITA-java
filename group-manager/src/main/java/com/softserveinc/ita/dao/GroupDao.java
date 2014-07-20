@@ -10,4 +10,6 @@ public interface GroupDao {
     ArrayList<Course> getCourses();
 
     Group addGroup(Group group);
+
+    ArrayList<Group> getAllGroups();
 }

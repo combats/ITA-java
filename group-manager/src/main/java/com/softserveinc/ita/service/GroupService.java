@@ -10,4 +10,6 @@ public interface GroupService {
     ArrayList<Course> getCourses();
 
     Group createGroup(Group group);
+
+    ArrayList<Group> getAllGroups();
 }

@@ -1,5 +1,6 @@
 package com.softserveinc.ita.mvc.impl;
 
+import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
@@ -83,6 +84,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testPostGroupAndExpectJsonType() throws Exception {
         Group group = new Group("3");
+        group.setCourse(new Course("Java"));
         group.setGroupStatus(Group.Status.IN_PROCESS);
         String jsonGroup = jsonUtil.toJson(group);
         mockMvc.perform(post("/groups/addGroup")
@@ -90,5 +92,21 @@ public class MvcGroupTests extends MvcGroupBaseTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllGroupsAndExpectIsOk() throws Exception {
+        mockMvc.perform(
+                get("/groups/allGroups")
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllGroupsAndExpectJsonType() throws Exception {
+        mockMvc.perform(
+                get("/groups/allGroups")
+        )
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }

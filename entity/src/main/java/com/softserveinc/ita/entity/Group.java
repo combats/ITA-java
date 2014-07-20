@@ -16,7 +16,6 @@ public class Group implements Serializable{
     private static final long serialVersionUID = 1L;
     public static final String IN_PROCESS_STATUS = "In process";
     public static final String PLANNED_STATUS = "Planned";
-    public static final String OFFERING_STATUS = "Offering";
     public static final String BOARDING_STATUS = "Boarding";
     public static final String FINISHED_STATUS = "Finished";
 
@@ -44,7 +43,7 @@ public class Group implements Serializable{
     private Course course;
 
     public enum Status implements Serializable {
-        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), OFFERING(OFFERING_STATUS), BOARDING(BOARDING_STATUS),
+        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), BOARDING(BOARDING_STATUS),
         FINISHED(FINISHED_STATUS);
         private String name;
         Status(String name) {

@@ -41,6 +41,11 @@ public class GroupController {
         return groupService.createGroup(group);
     }
 
+    @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody ArrayList<Group> getAllGroups(){
+        return groupService.getAllGroups();
+    }
+
     @ExceptionHandler(GroupException.class)
     public @ResponseBody
     ExceptionJSONInfo handleApplicantException(GroupException exception, HttpServletResponse response){

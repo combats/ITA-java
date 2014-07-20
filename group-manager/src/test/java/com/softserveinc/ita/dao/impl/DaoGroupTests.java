@@ -6,6 +6,7 @@ import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
@@ -18,12 +19,15 @@ public class DaoGroupTests extends DaoGroupBaseTest {
     @Test
     public void testGetGroupByExistingStatusIdAndExpectCorrectResult() throws Exception {
         Group.Status status = Group.Status.BOARDING;
-        ArrayList<Group> expectedGroups = new ArrayList<Group>();
-        expectedGroups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
-        expectedGroups.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
-        expectedGroups.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));
-        expectedGroups.add(new Group(Group.Status.BOARDING, "id13", new Course("DevOps", "pen-devops.png"), "kv0753"));
+        int expectedGroupsNumber = 4;
         ArrayList<Group> realResult = groupDao.getGroupsByStatus(status.getName());
-        assertEquals(realResult,expectedGroups);
+        assertEquals(realResult.size(), expectedGroupsNumber);
+    }
+
+    @Test
+    public void testAddNewGroupAndExpectCorrectNewGroup() {
+        Group group = new Group(Group.Status.IN_PROCESS, "id43", new Course("Java", "pen-java.png"), "kv321");
+        Group newGroup = groupDao.addGroup(group);
+        assertEquals(group.getGroupID(), newGroup.getGroupID());
     }
 }
