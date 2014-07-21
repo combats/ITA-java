@@ -14,15 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 11.07.14
- * Time: 11:13
- * To change this template use File | Settings | File Templates.
- */
 @Repository
-
 public class InterviewDAOHibernate implements InterviewDAO {
 
     @Autowired

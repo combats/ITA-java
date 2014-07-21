@@ -12,13 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 15.07.14
- * Time: 13:21
- * To change this template use File | Settings | File Templates.
- */
 public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
     public static List<QuestionsBlock> allQuestionsBlocks = new ArrayList();
@@ -67,6 +60,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
         questionsBlock.setInterviewId("1");
         questionsBlock.setUserId("1");
         questionsBlock.setId("1");
+
         allQuestionsBlocks.add(questionsBlock);
 
         for (QuestionsBlock questionsBlock1 : allQuestionsBlocks){
@@ -81,6 +75,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
         QuestionsBlock questionsBlock = new QuestionsBlock();
         Set<QuestionInformation> questionInformationsList = new HashSet<>();
+
         QuestionInformation questionInformation = new QuestionInformation();
         questionInformation.setQuestion("Question body");
         questionInformation.setAnswer("answer");
@@ -93,6 +88,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
         questionsBlock.setInterviewId("1");
         questionsBlock.setUserId("1");
         questionsBlock.setId("1");
+        allQuestionsBlocks.clear();
         allQuestionsBlocks.add(questionsBlock);
 
         for (QuestionsBlock questionsBlock1 : allQuestionsBlocks){

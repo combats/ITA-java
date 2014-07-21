@@ -16,13 +16,7 @@ import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 15.07.14
- * Time: 14:19
- * To change this template use File | Settings | File Templates.
- */
+
 public class InterviewServiceTests extends BaseServiceTests {
 
     @Autowired
@@ -43,8 +37,8 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Test
     public void testGetInterviewByIdAndExpectNewInterview() throws HttpRequestException, WrongCriteriaException, InterruptedException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("3");
-        Interview interviewExpected = interviewService.getInterviewByAppointmentID("3");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("4");
+        Interview interviewExpected = interviewService.getInterviewByAppointmentID("4");
         assertEquals(interviewActual, interviewExpected);
 
     }

@@ -5,16 +5,9 @@ import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 07.07.14
- * Time: 20:29
- * To change this template use File | Settings | File Templates.
- */
 public interface QuestionsBlockServices {
 
-    QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId);
+    QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId) throws WrongCriteriaException, HttpRequestException;
     QuestionsBlock getQuestionsBlockByQuestionsBlockId(String questionsBlockId);
     void addQuestionsBlock(QuestionsBlock questionsBlock) throws WrongCriteriaException, HttpRequestException;
     String updateQuestionsBlock(QuestionsBlock newQuestionsBlock, String userId);
@@ -23,5 +16,5 @@ public interface QuestionsBlockServices {
     QuestionsBlock getStandardQuestionsBlockFromInterview(String interviewId) throws WrongCriteriaException, HttpRequestException;
     QuestionsBlock getStandardQuestionsBlock();
     void setStandardQuestionsBlock(QuestionsBlock standardQuestionsBlock);
-    void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId);
+    void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId) throws WrongCriteriaException, HttpRequestException;
 }

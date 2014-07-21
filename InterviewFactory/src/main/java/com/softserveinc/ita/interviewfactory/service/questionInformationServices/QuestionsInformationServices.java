@@ -6,13 +6,6 @@ import exceptions.WrongCriteriaException;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 07.07.14
- * Time: 20:32
- * To change this template use File | Settings | File Templates.
- */
 public interface QuestionsInformationServices {
 
     QuestionInformation getQuestionInformationById(String questionInformationId);

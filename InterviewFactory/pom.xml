@@ -67,7 +67,7 @@
 
 
     <build>
-        <finalName>InterviewFactory</finalName>
+        <finalName>interview</finalName>
 
     </build>
 

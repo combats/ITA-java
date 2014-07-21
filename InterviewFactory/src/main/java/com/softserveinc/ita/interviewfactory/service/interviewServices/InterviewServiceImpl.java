@@ -21,14 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 11.07.14
- * Time: 12:13
- * To change this template use File | Settings | File Templates.
- */
-
 @Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class InterviewServiceImpl implements InterviewService {

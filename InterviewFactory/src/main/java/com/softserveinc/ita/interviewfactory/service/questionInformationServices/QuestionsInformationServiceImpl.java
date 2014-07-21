@@ -18,13 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Iterator;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 11.07.14
- * Time: 14:23
- * To change this template use File | Settings | File Templates.
- */
 @Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {

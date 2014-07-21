@@ -10,13 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 15.07.14
- * Time: 13:21
- * To change this template use File | Settings | File Templates.
- */
 public class InterviewDAOMock implements InterviewDAO {
 
     @Autowired

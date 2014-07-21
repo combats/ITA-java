@@ -18,13 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 11.07.14
- * Time: 14:05
- * To change this template use File | Settings | File Templates.
- */
 @Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
@@ -52,7 +45,8 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     }
 
     @Override
-    public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId){
+    public QuestionsBlock getQuestionsBlockFromInterviewByUserId(String userID, String appointmentId) throws WrongCriteriaException, HttpRequestException {
+        interviewService.getInterviewByAppointmentID(appointmentId);
           return questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(userID, appointmentId);
     }
 
@@ -81,11 +75,11 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
     }
 
     @Override
-    public void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId) {
-        QuestionsBlock questionsBlock = questionsBlockDAO.getQuestionsBlockByInterviewIdAndUserId(userId, finalComment.getInterviewId());
+    public void updateFinalCommentInQuestionsBlock(FinalComment finalComment, String userId) throws WrongCriteriaException, HttpRequestException {
+        QuestionsBlock questionsBlock = getQuestionsBlockFromInterviewByUserId(userId, finalComment.getInterviewId());
         questionsBlock.setFinalComment(finalComment.getFinalComment());
         questionsBlock.setBonusPoints(finalComment.getBonusPoints());
-        questionsBlockDAO.updateQuestionsBlock(questionsBlock);
+        updateQuestionsBlock(questionsBlock, userId);
     }
 
     @Override

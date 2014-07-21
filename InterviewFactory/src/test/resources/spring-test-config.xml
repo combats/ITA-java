@@ -27,6 +27,7 @@
     <!--aux/utils-->
 
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <!--external services-->
 
     <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock"/>

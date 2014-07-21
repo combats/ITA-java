@@ -8,13 +8,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 15.07.14
- * Time: 13:21
- * To change this template use File | Settings | File Templates.
- */
 public class QuestionInformationDOAMock implements QuestionInformationDAO {
 
     @Override
@@ -46,6 +39,7 @@ public class QuestionInformationDOAMock implements QuestionInformationDAO {
         questionInformation.setMark(2);
         questionInformation.setWeight(1);
         questionInformation.setInterviewId("1");
+        questionInformation.setId("1");
         questionInformationsList.add(questionInformation);
 
         for (int i = 0; i < questionInformationsList.size(); i++){
@@ -57,6 +51,20 @@ public class QuestionInformationDOAMock implements QuestionInformationDAO {
 
     @Override
     public void deleteQuestionInformationById(String questionInformationId) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        List<QuestionInformation> questionInformationsList = new ArrayList();
+        QuestionInformation questionInformation = new QuestionInformation();
+        questionInformation.setQuestion("Question body");
+        questionInformation.setAnswer("answer");
+        questionInformation.setComment("normas");
+        questionInformation.setMark(2);
+        questionInformation.setWeight(1);
+        questionInformation.setInterviewId("1");
+        questionInformation.setId("1");
+        questionInformationsList.add(questionInformation);
+
+        for (int i = 0; i < questionInformationsList.size(); i++){
+            if (questionInformationsList.get(i).getId().equals(questionInformationId))
+                questionInformationsList.remove(i);
+        }
     }
 }

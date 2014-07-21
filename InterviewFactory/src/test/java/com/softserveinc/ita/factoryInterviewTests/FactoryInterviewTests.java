@@ -16,13 +16,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 26.06.14
- * Time: 13:39
- * To change this template use File | Settings | File Templates.
- */
 public class FactoryInterviewTests extends BaseFactoryInterviewTests {
 
     @Autowired

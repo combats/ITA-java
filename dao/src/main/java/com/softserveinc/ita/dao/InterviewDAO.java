@@ -6,13 +6,6 @@ import com.softserveinc.ita.entity.User;
 
 import java.util.List;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 11.07.14
- * Time: 10:47
- * To change this template use File | Settings | File Templates.
- */
 public interface InterviewDAO {
 
     Interview getInterviewByAppointmentId(String appointmentId);

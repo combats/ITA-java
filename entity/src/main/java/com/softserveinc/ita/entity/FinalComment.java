@@ -1,12 +1,5 @@
 package com.softserveinc.ita.entity;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Вадим
- * Date: 17.07.14
- * Time: 21:07
- * To change this template use File | Settings | File Templates.
- */
 public class FinalComment {
 
     private String finalComment;
