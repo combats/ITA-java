@@ -61,6 +61,6 @@
 </dependencies>
 
     <build>
-        <finalName>user-manager</finalName>
+        <finalName>users</finalName>
     </build>
 </project>
