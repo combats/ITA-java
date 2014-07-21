@@ -1,7 +1,9 @@
 package com.softserveinc.ita.logging;
 
 import org.apache.log4j.Logger;
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
@@ -46,20 +48,32 @@ public class AopControllerLogging {
         if (requestMappingValues.length != 0) {
             methodURL = requestMappingValues[0];
         }
-        logMessage.append("-----START SNIPPET-----\n");
+        logMessage.append(" ********START SNIPPET********\n");
         logMessage.append(requestMappingMethod + " request to the URL: " + controllerURL + methodURL + "\n");
         if (realParameters.length != 0) {
-            logMessage.append("Passed parameters is (are): ");
+            logMessage.append(" Passed parameter is: ");
             for (Object o : realParameters) {
                 logMessage.append(o.toString() + " \n");
             }
         } else {
-            logMessage.append("no parameters have been passed\n");
+            logMessage.append(" no parameters have been passed\n");
         }
         Object obj = joinPoint.proceed();
-        logMessage.append("-----END SNIPPET-----");
+        logMessage.append(" ********END SNIPPET********");
         logger.info(logMessage.toString());
         System.out.println(logMessage.toString());
         return obj;
+    }
+
+    @AfterThrowing(pointcut = "publicMethodWithAnnotationRequestMappingInsideAClassMarkedWithController()", throwing = "ex")
+    public void logAfterThrowing(JoinPoint joinPoint, Exception ex) {
+        String clazz = joinPoint.getTarget().getClass().getName();
+        String methodName = joinPoint.getSignature().getName();
+        StringBuilder logMessage = new StringBuilder();
+        logMessage.append("After Throwing From Method ");
+        logMessage.append(methodName);
+        logMessage.append(" In Class ");
+        logMessage.append(clazz);
+        logger.error(logMessage);
     }
 }
