@@ -1,10 +1,7 @@
 package com.softserveinc.ita.interviewfactory.controller;
 
 
-import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.FinalComment;
-import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.QuestionInformation;
+import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
@@ -42,6 +39,14 @@ public class InterviewController {
     public Interview getInterviewByAppointmentId(@PathVariable("interviewId") String interviewId)
             throws WrongCriteriaException, HttpRequestException {
         return interviewService.getInterviewByAppointmentID(interviewId);
+    }
+
+    @RequestMapping(value = "/{interviewId}/result", method = RequestMethod.GET, produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public InterviewResults getInterviewResultsByInterviewId(@PathVariable("interviewId") String interviewId)
+            throws WrongCriteriaException, HttpRequestException {
+        return interviewService.getInterviewResultsByInterviewId(interviewId);
     }
 
     @RequestMapping(value = "/{interviewId}", method = RequestMethod.DELETE)

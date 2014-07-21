@@ -39,4 +39,6 @@
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
 
+    <!--<import resource="dao-test-context.xml"/>-->
+
 </beans>

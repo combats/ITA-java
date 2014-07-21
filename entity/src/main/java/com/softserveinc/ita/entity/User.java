@@ -35,7 +35,7 @@ public class User implements Serializable {
     @Column(name = "Password")
     private String password;
 
-    @ManyToOne(targetEntity = Role.class)
+    @ManyToOne(fetch=FetchType.EAGER, targetEntity = Role.class)
     private Role role;
     @Column(name = "Active")
     private boolean active;

@@ -1,6 +1,7 @@
 package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 import com.softserveinc.ita.entity.Interview;
+import com.softserveinc.ita.entity.InterviewResults;
 import com.softserveinc.ita.entity.InterviewType;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
@@ -18,4 +19,5 @@ public interface InterviewService {
     void updateInterview(Interview interview) throws HttpRequestException;
     List<String> getAllInterviewsId() throws HttpRequestException;
     List<Interview> getAllInterviews() throws HttpRequestException;
+    InterviewResults getInterviewResultsByInterviewId(String InterviewId) throws WrongCriteriaException, HttpRequestException;
 }

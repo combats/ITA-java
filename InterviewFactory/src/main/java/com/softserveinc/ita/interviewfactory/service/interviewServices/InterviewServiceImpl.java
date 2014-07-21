@@ -1,10 +1,7 @@
 package com.softserveinc.ita.interviewfactory.service.interviewServices;
 
 
-import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.InterviewType;
+import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
 import com.softserveinc.ita.service.HttpRequestExecutor;
@@ -16,10 +13,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
@@ -106,5 +100,35 @@ public class InterviewServiceImpl implements InterviewService {
             allInterviewsList.add(interviewDAO.getInterviewByAppointmentId(id));
         }
         return allInterviewsList;
+    }
+
+    @Override
+    public InterviewResults getInterviewResultsByInterviewId(String InterviewId) throws WrongCriteriaException, HttpRequestException {
+        InterviewResults interviewResults = new InterviewResults();
+        String finalComment = "";
+        int totalPoints = 0;
+
+        Set<QuestionsBlock> questionsBlocksSet = getInterviewByAppointmentID(InterviewId).getQuestionsBlocks();
+        Iterator<QuestionsBlock> it = questionsBlocksSet.iterator();
+        while(it.hasNext()){
+            QuestionsBlock questionsBlock = it.next();
+            Set<QuestionInformation> questionInformationSet = questionsBlock.getQuestions();
+            Iterator<QuestionInformation> it2 = questionInformationSet.iterator();
+            while(it2.hasNext()){
+                QuestionInformation questionInformation = it2.next();
+                totalPoints = totalPoints + questionInformation.getMark() * questionInformation.getWeight();
+
+            }
+            User user = httpRequestExecutor.getObjectByID(questionsBlock.getUserId(), User.class);
+            String role = user.getRole().getName();
+            finalComment = finalComment + role + ": " +  questionsBlock.getFinalComment() + ";\n";
+            totalPoints = totalPoints + questionsBlock.getBonusPoints();
+        }
+
+        interviewResults.setFinalComment(finalComment);
+        interviewResults.setTotalPoints(totalPoints);
+        interviewResults.setInterviewId(InterviewId);
+        return interviewResults;
+
     }
 }

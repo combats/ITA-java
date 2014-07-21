@@ -25,20 +25,20 @@
                 {
                     "Id": null,
                     "InterviewId": "2",
-                    "Question": "What is your name?",
+                    "Question": "How are you?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 0
+                    "Weight": 1
                 },
                 {
                     "Id": null,
                     "InterviewId": "2",
-                    "Question": "How are you?",
+                    "Question": "What is your name?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 0
+                    "Weight": 1
                 }
             ],
             "FinalComment": "",

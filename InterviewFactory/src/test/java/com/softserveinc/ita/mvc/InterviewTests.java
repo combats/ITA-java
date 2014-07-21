@@ -51,10 +51,10 @@ public class InterviewTests extends BaseMVCTest {
     private InterviewFactory interviewFactory;
 
     @Autowired
-    private JsonUtil interviewUtilJson;
+    private JsonUtil jsonUtil;
 
     @Autowired
-    private JsonUtil jsonUtil;
+    private JsonUtil interviewUtilJson;
 
     @Before
     public void setup() {
@@ -213,6 +213,17 @@ public class InterviewTests extends BaseMVCTest {
         finalCommentActual.setBonusPoints(questionsBlockActual.getBonusPoints());
 
         Assert.assertEquals(finalComment, finalCommentActual);
+    }
+
+    @Test
+    public void testGetInterviewResultsByInterviewIdAndExpectOk() throws Exception {
+
+        mockMvc.perform(
+                get("/1/result")
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
     }
 
     @Test

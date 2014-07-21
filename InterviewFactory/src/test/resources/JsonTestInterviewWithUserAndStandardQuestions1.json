@@ -9,20 +9,20 @@
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with quality assurance engineering?",
+                    "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 2
+                    "Weight": 3
                 },
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with database developing?",
+                    "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 3
+                    "Weight": 2
                 }
             ],
             "FinalComment": "",
@@ -36,20 +36,20 @@
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with quality assurance engineering?",
+                    "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 2
+                    "Weight": 3
                 },
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with database developing?",
+                    "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 3
+                    "Weight": 2
                 }
             ],
             "FinalComment": "",
@@ -63,20 +63,20 @@
                 {
                     "Id": null,
                     "InterviewId": "2",
-                    "Question": "What is your name?",
+                    "Question": "How are you?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 0
+                    "Weight": 1
                 },
                 {
                     "Id": null,
                     "InterviewId": "2",
-                    "Question": "How are you?",
+                    "Question": "What is your name?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 0
+                    "Weight": 1
                 }
             ],
             "FinalComment": "",
@@ -90,20 +90,20 @@
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with quality assurance engineering?",
+                    "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 2
+                    "Weight": 3
                 },
                 {
                     "Id": null,
                     "InterviewId": "1",
-                    "Question": "Have you ever were connected with database developing?",
+                    "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
-                    "Mark": 0,
+                    "Mark": 1,
                     "Comment": "",
-                    "Weight": 3
+                    "Weight": 2
                 }
             ],
             "FinalComment": "",

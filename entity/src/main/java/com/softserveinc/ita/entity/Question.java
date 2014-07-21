@@ -23,7 +23,7 @@ public class Question implements Serializable {
     private String QuestionBody;
 
     @Column(name = "Weight")
-    private int weight;
+    private int weight = 1;
 
     public Question() {
     }

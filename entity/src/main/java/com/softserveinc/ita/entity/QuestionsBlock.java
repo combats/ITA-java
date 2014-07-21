@@ -14,6 +14,9 @@ import java.util.Set;
 @Table(name = "QuestionBlocks")
 public class QuestionsBlock implements Serializable {
 
+    public static final String DEFAULT_FINAL_COMMENT = "";
+    public static final int DEFAULT_BONUS_POINTS = 0;
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -31,10 +34,10 @@ public class QuestionsBlock implements Serializable {
     private Set<QuestionInformation> questions = new HashSet<>();
 
     @Column(name = "Final_comment")
-    private String finalComment = "";
+    private String finalComment = DEFAULT_FINAL_COMMENT;
 
     @Column(name = "Bonus_points")
-    private int bonusPoints;
+    private int bonusPoints = DEFAULT_BONUS_POINTS;
 
     public QuestionsBlock() {
     }

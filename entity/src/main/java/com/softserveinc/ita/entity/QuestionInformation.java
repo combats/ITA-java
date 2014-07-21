@@ -10,6 +10,10 @@ import java.io.Serializable;
 @Table(name = "QuestionInformation")
 public class QuestionInformation implements Serializable {
 
+    public static final String DEFAULT_COMMENT = "";
+    public static final int DEFAULT_MARK = 1;
+    public static final int DEFAULT_WEIGHT = 1;
+
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -26,13 +30,13 @@ public class QuestionInformation implements Serializable {
     private String answer = "";
 
     @Column(name = "Mark")
-    private int mark;
+    private int mark = DEFAULT_MARK;
 
     @Column(name = "Comment")
-    private String comment = "";
+    private String comment = DEFAULT_COMMENT;
 
     @Column(name = "Weight")
-    private int weight; //weight for each question
+    private int weight = DEFAULT_WEIGHT; //weight for each question
 
     public QuestionInformation() {
     }

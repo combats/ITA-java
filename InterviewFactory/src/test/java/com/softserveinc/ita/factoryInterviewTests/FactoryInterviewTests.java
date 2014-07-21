@@ -76,7 +76,6 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     public void testCreateInterviewWithUserAndStandardQuestions() throws HttpRequestException, IOException, org.json.simple.parser.ParseException, JSONException {
         Interview interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create("1");
         Interview interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS).create("2");
-
         BufferedReader reader1 = new BufferedReader(new InputStreamReader(
                 getClass().getResourceAsStream(
                         "/JsonTestInterviewWithUserAndStandardQuestions1.json")));
