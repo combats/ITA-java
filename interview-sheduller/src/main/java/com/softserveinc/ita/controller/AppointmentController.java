@@ -6,6 +6,7 @@ import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
@@ -22,8 +23,6 @@ public class AppointmentController {
     private Validator appointmentValidator;
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private JsonUtil jsonUtil;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -35,12 +34,13 @@ public class AppointmentController {
     public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
-
+    @Secured("ROLE_ADMIN")
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
     public void removeAppointmentById(@PathVariable String appointmentId) {
         appointmentService.removeAppointmentById(appointmentId);
     }
 
+    @Secured({"ROLE_ADMIN", "ROLE_HR"})
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public
@@ -50,6 +50,7 @@ public class AppointmentController {
         return appointmentService.putAppointment(appointment);
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
@@ -58,6 +59,7 @@ public class AppointmentController {
         return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 
+    @Secured("ROLE_USER")
     @RequestMapping(value = "/date/{date}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Appointment> getAppointmentsByDate(@PathVariable long date) {

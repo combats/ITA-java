@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

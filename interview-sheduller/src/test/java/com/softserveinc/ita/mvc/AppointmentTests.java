@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.BaseMVCTest;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.entity.exceptions.DateException;
 import com.softserveinc.ita.utils.JsonUtil;
