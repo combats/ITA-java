@@ -12,13 +12,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
 @Controller
-@RequestMapping(value="/repo")
+@RequestMapping(value="/")
 public class RepositoryController {
     String nodeName;
     private static final String APPLICANT_SUFFIX = "-applicant";
@@ -30,6 +31,12 @@ public class RepositoryController {
     @Autowired
     private DocumentService documentService;
 
+    @RequestMapping(method = RequestMethod.GET)
+    public String getIndex(ModelMap modelMap) {
+        modelMap.addAttribute("message", "Hello, hello!");
+        return "index";
+    }
+
     /**
      * Receives an image and saves it in JCR repository
      * @param ID - ID of applicant
@@ -39,7 +46,7 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      */
 
-    @RequestMapping(value = "/imgfile/{client}/{ID}", method= {RequestMethod.POST, RequestMethod.PUT},
+    @RequestMapping(value = "imgfile/{client}/{ID}", method= {RequestMethod.POST, RequestMethod.PUT},
                                                       consumes = "multipart/form-data")
     public ResponseEntity<String> postImage(@PathVariable("client") String client,
                                             @PathVariable("ID") String ID,
@@ -84,7 +91,7 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      * @throws java.io.IOException
      */
-    @RequestMapping(value = "/imgfile/{client}/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "imgfile/{client}/{ID}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getImage(@RequestParam(value = "height", required = false) Integer height,
                                            @RequestParam(value = "width", required = false) Integer width,
                                            @PathVariable("ID") String ID,
@@ -116,7 +123,7 @@ public class RepositoryController {
      * @return - (JSON) String with operation status
      * @throws com.softserveinc.ita.exception.JcrException
      */
-    @RequestMapping(value = "/imgfile/{client}/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "imgfile/{client}/{ID}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteImage(@PathVariable("client") String client,
                                               @PathVariable("ID") String ID) throws Exception {
 
@@ -133,7 +140,7 @@ public class RepositoryController {
      * @return (JSON) String with operation status
      * @throws com.softserveinc.ita.exception.JcrException
      */
-    @RequestMapping(value = "/img/{client}/{ID}", method = RequestMethod.POST)
+    @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.POST)
     public ResponseEntity<String> postImage64(@PathVariable("ID") String ID,
                                               @PathVariable("client") String client,
                                               @RequestHeader("Content-Type") String contentType,
@@ -171,7 +178,7 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      * @throws java.io.IOException
      */
-    @RequestMapping(value = "/img/{client}/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.GET)
     public ResponseEntity<String> getImage64(@PathVariable("client") String client,
                                              @PathVariable("ID") String ID,
                                              @RequestParam(value = "height", required = false) Integer height,
@@ -204,7 +211,7 @@ public class RepositoryController {
      * @throws java.io.IOException
      * @throws com.softserveinc.ita.exception.JcrException
      */
-    @RequestMapping(value = "/doc/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
+    @RequestMapping(value = "doc/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
     public ResponseEntity<String> postDocument(@PathVariable("ID") String ID,
                                                @RequestParam("file") MultipartFile file) throws Exception {
 
@@ -236,7 +243,7 @@ public class RepositoryController {
                contentType.equals("application/rtf");
     }
 
-    @RequestMapping(value = "/doc/{ID}", method = RequestMethod.GET)
+    @RequestMapping(value = "doc/{ID}", method = RequestMethod.GET)
     public ResponseEntity<byte[]> getDocument(@PathVariable("ID") String ID) throws JcrException, IOException {
 
         DataTransferFile documentResponse;
@@ -251,7 +258,7 @@ public class RepositoryController {
         return new ResponseEntity<>(documentResponse.getContent(), headers, HttpStatus.OK) ;
     }
 
-    @RequestMapping(value = "/doc/{ID}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "doc/{ID}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteDocument(@PathVariable("ID") String ID) throws JcrException {
         String response = documentService.deleteDocument(ID + APPLICANT_SUFFIX);
         return new ResponseEntity<>(response, HttpStatus.OK);

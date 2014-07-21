@@ -7,9 +7,10 @@ import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/groups")
@@ -25,7 +26,7 @@ public class GroupController {
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
+    List<Group> getGroupsByStatus(@PathVariable String status) {
         return groupService.getGroupsByStatus(status);
     }
 

@@ -21,7 +21,7 @@ public class ApplicantController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Applicant>> getApplicants() {
         List<Applicant> resultList = applicantService.getApplicants();
-        if(resultList.isEmpty() || resultList == null){
+        if (resultList.isEmpty() || resultList == null) {
             return new ResponseEntity<>(resultList, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(resultList, HttpStatus.OK);
@@ -30,14 +30,16 @@ public class ApplicantController {
     @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
     public ResponseEntity<List<Applicant>> getApplicantsByGroupID(@PathVariable String groupID) {
         List<Applicant> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
-        if(resultBYGroupID.isEmpty() || resultBYGroupID == null){
+        if (resultBYGroupID.isEmpty() || resultBYGroupID == null) {
             return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(resultBYGroupID, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Applicant getApplicantById(@PathVariable String applicantId)
+    public
+    @ResponseBody
+    Applicant getApplicantById(@PathVariable String applicantId)
             throws ApplicantDoesNotExistException {
         Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
         return searchedApplicant;
@@ -63,5 +65,4 @@ public class ApplicantController {
         }
         return new ResponseEntity(response, HttpStatus.OK);
     }
-
 }
