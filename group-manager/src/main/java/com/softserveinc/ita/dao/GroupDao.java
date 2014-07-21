@@ -5,7 +5,6 @@ import com.softserveinc.ita.entity.Group;
 import java.util.ArrayList;
 
 public interface GroupDao {
-    ArrayList<Group> getGroupsByStatus(Group.Status groupStatus);
 
     ArrayList<Course> getCourses();
 

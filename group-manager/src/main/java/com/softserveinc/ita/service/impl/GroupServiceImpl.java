@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -18,27 +19,34 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus) {
-        if(isWrongStatus(groupStatus)){
-            throw new WrongGroupStatusException();
-        }
-        return groupDao.getGroupsByStatus(groupStatus);
-    }
-
-    public ArrayList<Group> getGroupsByStatusDate(Group.Status groupStatus) {
         ArrayList<Group> groups = groupDao.getAllGroups();
-        switch(groupStatus){
-            case PLANNED :
-                break;
-            case BOARDING:
-                break;
-            case IN_PROCESS:
-                break;
-            case FINISHED:
-                break;
-
+        ArrayList<Group> choosenGroups = new ArrayList<>();
+        long currentTime = System.currentTimeMillis();
+        for (Group group : groups) {
+            switch (groupStatus) {
+                case PLANNED:
+                    if (currentTime < group.getStartBoardingTime()) {
+                        choosenGroups.add(group);
+                    }
+                    break;
+                case BOARDING:
+                    if (currentTime > group.getStartBoardingTime() && currentTime < group.getStartTime()) {
+                        choosenGroups.add(group);
+                    }
+                    break;
+                case IN_PROCESS:
+                    if (currentTime > group.getStartTime() && currentTime < group.getEndTime()) {
+                        choosenGroups.add(group);
+                    }
+                    break;
+                case FINISHED:
+                    if (currentTime > group.getEndTime()) {
+                        choosenGroups.add(group);
+                    }
+                    break;
+            }
         }
-
-        return null;
+        return choosenGroups;
     }
 
     @Override

@@ -28,7 +28,6 @@ public class Group implements Serializable{
     @Column(name = "GroupName")
     private String groupName;
     @Column(name = "GroupStatus")
-    private Status groupStatus;
     private long startBoardingTime;
     private long startTime;
     private long endTime;
@@ -46,22 +45,20 @@ public class Group implements Serializable{
         this.groupID = groupID;
     }
 
-    public Group(String groupID, Course course, String groupName) {
-        this.groupID = groupID;
-        this.course = course;
-        this.groupName = groupName;
-    }
-    public Group(Status groupStatus, String groupID, Course course, String groupName) {
-        this.groupStatus = groupStatus;
-        this.groupID = groupID;
-        this.course = course;
-        this.groupName = groupName;
-    }
     public Group(String groupId, Course course, String address, long startTime) {
         this.groupID = groupId;
         this.course = course;
         this.address = address;
         this.startTime = startTime;
+    }
+
+    public Group(String groupID, Course course, String groupName) {
+        this.groupID = groupID;
+        this.course = course;
+        this.groupName = groupName;
+        this.startBoardingTime = startBoardingTime;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public long getStartBoardingTime() {
@@ -128,14 +125,6 @@ public class Group implements Serializable{
         this.groupName = groupName;
     }
 
-    public Status getGroupStatus() {
-        return groupStatus;
-    }
-
-    public void setGroupStatus(Status groupStatus) {
-        this.groupStatus = groupStatus;
-    }
-
     public Course getCourse() {
         return course;
     }
@@ -159,7 +148,6 @@ public class Group implements Serializable{
         if (!course.equals(group.course)) return false;
         if (!groupID.equals(group.groupID)) return false;
         if (!groupName.equals(group.groupName)) return false;
-        if (groupStatus != group.groupStatus) return false;
 
         return true;
     }
@@ -169,7 +157,6 @@ public class Group implements Serializable{
         int result = groupID.hashCode();
         result = 31 * result + applicants.hashCode();
         result = 31 * result + groupName.hashCode();
-        result = 31 * result + groupStatus.hashCode();
         result = 31 * result + (int) (startTime ^ (startTime >>> 32));
         result = 31 * result + (int) (endTime ^ (endTime >>> 32));
         result = 31 * result + capacity;
@@ -184,7 +171,6 @@ public class Group implements Serializable{
                 "groupID='" + groupID + '\'' +
                 ", applicants=" + applicants +
                 ", groupName='" + groupName + '\'' +
-                ", groupStatus=" + groupStatus +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", capacity=" + capacity +

@@ -78,7 +78,6 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     public void testPostGroupAndExpectJsonType() throws Exception {
         Group group = new Group("3");
         group.setCourse(new Course("Java"));
-        group.setGroupStatus(Group.Status.IN_PROCESS);
         String jsonGroup = jsonUtil.toJson(group);
         mockMvc.perform(post("/groups/addGroup")
                 .content(jsonGroup)
