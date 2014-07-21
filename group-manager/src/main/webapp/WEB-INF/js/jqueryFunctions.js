@@ -14,22 +14,26 @@ function viewGroups() {
     var createGroupHtml="";
     var selectedStatus = $("#statuses").val();
     var selectedCourse = $("#courses").val();
-    var statusUrl = "/groups/" + selectedStatus;
+    var getGroupsUrl;
+    if (selectedStatus == "All groups") {
+        getGroupsUrl = "/groups/allGroups";
+    }
+    else {
+        getGroupsUrl = "/groups/" + selectedStatus;
+    }
     if (selectedStatus == "PLANNED") {
         jQuery.get("template/createGroupHtml", function (data) {
             createGroupHtml = data;
         });
     }
     $.ajax({
-//        url: statusUrl,
-        url: "/groups/allGroups",
+        url: getGroupsUrl,
         dataType: "json",
         type: "GET",
         success: function (data) {
             var image;
             for (var index = 0; index < data.length; index++) {
-                if ((data[index].groupStatus == selectedStatus || selectedStatus == "All groups" )
-                    && (data[index].course.name == selectedCourse || selectedCourse == "All courses")) {
+                if (data[index].course.name == selectedCourse || selectedCourse == "All courses") {
                     var view = {
                         ref: 'groups/list/' + data[index].groupID,
                         image: data[index].course.imageRef,
@@ -42,7 +46,6 @@ function viewGroups() {
             }
             output += createGroupHtml;
             $("#portfolio1").html(output);
-
         },
         error: function(data){
             console.log("" + data);

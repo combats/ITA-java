@@ -39,14 +39,9 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         expectedList.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
         expectedList.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
         expectedList.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));
-        when(groupDao.getGroupsByStatus(Group.Status.BOARDING.getName())).thenReturn(expectedList);
-        assertEquals(expectedList, groupService.getGroupsByStatus(Group.Status.BOARDING.getName()));
-        verify(groupDao, atLeastOnce()).getGroupsByStatus(Group.Status.BOARDING.getName());
-    }
-
-    @Test(expected=WrongGroupStatusException.class)
-    public void testGetGroupByWrongStatusAndExpectException() throws Exception{
-        groupService.getGroupsByStatus("wrongStatus");
+        when(groupDao.getGroupsByStatus(Group.Status.BOARDING)).thenReturn(expectedList);
+        assertEquals(expectedList, groupService.getGroupsByStatus(Group.Status.BOARDING));
+        verify(groupDao, atLeastOnce()).getGroupsByStatus(Group.Status.BOARDING);
     }
 
     @Test

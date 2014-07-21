@@ -27,7 +27,7 @@ public class GroupController {
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
+    ArrayList<Group> getGroupsByStatus(@PathVariable Group.Status status) {
         return groupService.getGroupsByStatus(status);
     }
 
@@ -44,19 +44,5 @@ public class GroupController {
     @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = "application/json")
     public @ResponseBody ArrayList<Group> getAllGroups(){
         return groupService.getAllGroups();
-    }
-
-    @ExceptionHandler(GroupException.class)
-    public @ResponseBody
-    ExceptionJSONInfo handleApplicantException(GroupException exception, HttpServletResponse response){
-        int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value();
-        String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();
-        ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
-        exceptionInfo.setReason(exceptionReason);
-        try {
-            response.sendError(responseStatus);
-        } catch (IOException e) {
-        }
-        return exceptionInfo;
     }
 }

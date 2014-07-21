@@ -20,7 +20,7 @@ public class DaoGroupTests extends DaoGroupBaseTest {
     public void testGetGroupByExistingStatusIdAndExpectCorrectResult() throws Exception {
         Group.Status status = Group.Status.BOARDING;
         int expectedGroupsNumber = 4;
-        ArrayList<Group> realResult = groupDao.getGroupsByStatus(status.getName());
+        ArrayList<Group> realResult = groupDao.getGroupsByStatus(status);
         assertEquals(realResult.size(), expectedGroupsNumber);
     }
 

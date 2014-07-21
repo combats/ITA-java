@@ -36,7 +36,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/Boarding")
+                get("/groups/BOARDING")
         )
                 .andExpect(status().isOk());
     }
@@ -53,16 +53,9 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/groups/status")
+                get("/groups/BOARDING")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
-    }
-
-    @Test
-    public void testGetGroupsByStatusAndExpectReasonWasConvertedToJson() throws Exception{
-        mockMvc.perform(
-                get("/groups/wrong").accept(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Group status does not exist"))));
     }
 
     @Test

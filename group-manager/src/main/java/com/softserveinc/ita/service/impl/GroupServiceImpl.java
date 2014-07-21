@@ -7,6 +7,7 @@ import com.softserveinc.ita.exception.impl.WrongGroupStatusException;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 
 @Service
@@ -16,11 +17,28 @@ public class GroupServiceImpl implements GroupService {
     private GroupDao groupDao;
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(String groupStatus) {
+    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus) {
         if(isWrongStatus(groupStatus)){
             throw new WrongGroupStatusException();
         }
         return groupDao.getGroupsByStatus(groupStatus);
+    }
+
+    public ArrayList<Group> getGroupsByStatusDate(Group.Status groupStatus) {
+        ArrayList<Group> groups = groupDao.getAllGroups();
+        switch(groupStatus){
+            case PLANNED :
+                break;
+            case BOARDING:
+                break;
+            case IN_PROCESS:
+                break;
+            case FINISHED:
+                break;
+
+        }
+
+        return null;
     }
 
     @Override
@@ -38,14 +56,12 @@ public class GroupServiceImpl implements GroupService {
         return groupDao.getAllGroups();
     }
 
-    private boolean isWrongStatus(String groupStatus){
+    private boolean isWrongStatus(Group.Status groupStatus) {
         for(Group.Status status : Group.Status.values()){
-            if(status.getName().equals(groupStatus)){
+            if (status.equals(groupStatus)) {
                 return false;
             }
         }
         return true;
     }
-
-
 }

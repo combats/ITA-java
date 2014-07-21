@@ -67,9 +67,21 @@
                                 <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
                         </div>
                     </div>
+
                     <div class="fieldgroup">
-                        <div class="headline startDate" >
-                            <label for="gStartDate">
+                        <div class="headline startBoardingDate" >
+                            <label for="gStartBoardingDate">
+                                Start boarding:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input name="groupStartBoardingDate" id="gStartBoardingDate" class="inputDLP">
+                        </div>
+                    </div>
+
+                    <div class="fieldgroup">
+                        <div class="headline startDate">
+                        <label for="gStartDate">
                                 Start date:
                             </label>
                         </div>

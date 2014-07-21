@@ -27,10 +27,10 @@ public class GroupDaoMockImpl implements GroupDao {
     }
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(String groupStatus) {
+    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus) {
         ArrayList<Group> chosenByStatusGroups = new ArrayList<Group>();
         for (Group group : groups) {
-            if (groupStatus.equals(group.getGroupStatus().getName())) {
+            if (groupStatus.equals(group.getGroupStatus())) {
                 chosenByStatusGroups.add(group);
             }
         }
@@ -55,7 +55,7 @@ public class GroupDaoMockImpl implements GroupDao {
             case "DevOps":
                 group.getCourse().setImageRef("pen-devops.png");
                 break;
-            case "Java Script":
+            case "JavaScript":
                 group.getCourse().setImageRef("pen-jsui.png");
                 break;
             case "Java":

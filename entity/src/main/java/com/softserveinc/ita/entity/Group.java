@@ -4,9 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Entity
@@ -14,11 +12,6 @@ import java.util.Map;
 public class Group implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    public static final String IN_PROCESS_STATUS = "In process";
-    public static final String PLANNED_STATUS = "Planned";
-    public static final String BOARDING_STATUS = "Boarding";
-    public static final String FINISHED_STATUS = "Finished";
-
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -31,11 +24,12 @@ public class Group implements Serializable{
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")
-    private Map<String, Applicant.Status> applicants = new HashMap<>();
+    private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
     @Column(name = "GroupName")
     private String groupName;
     @Column(name = "GroupStatus")
     private Status groupStatus;
+    private long startBoardingTime;
     private long startTime;
     private long endTime;
     private int capacity;
@@ -43,18 +37,7 @@ public class Group implements Serializable{
     private Course course;
 
     public enum Status implements Serializable {
-        IN_PROCESS(IN_PROCESS_STATUS), PLANNED(PLANNED_STATUS), BOARDING(BOARDING_STATUS),
-        FINISHED(FINISHED_STATUS);
-        private String name;
-        Status(String name) {
-            this.name = name;
-        }
-        public String getName() {
-            return name;
-        }
-        public void setName(String name) {
-            this.name = name;
-        }
+        IN_PROCESS, PLANNED, BOARDING, FINISHED;
     }
 
     public Group() {}
@@ -79,6 +62,14 @@ public class Group implements Serializable{
         this.course = course;
         this.address = address;
         this.startTime = startTime;
+    }
+
+    public long getStartBoardingTime() {
+        return startBoardingTime;
+    }
+
+    public void setStartBoardingTime(long startBoardingTime) {
+        this.startBoardingTime = startBoardingTime;
     }
 
     public long getStartTime() {
@@ -121,11 +112,11 @@ public class Group implements Serializable{
     }
 
 
-    public Map<String, Applicant.Status> getApplicants() {
+    public Map<String, ApplicantBenchmark> getApplicants() {
         return applicants;
     }
 
-    public void setApplicants(Map<String, Applicant.Status> applicants) {
+    public void setApplicants(Map<String, ApplicantBenchmark> applicants) {
         this.applicants = applicants;
     }
 

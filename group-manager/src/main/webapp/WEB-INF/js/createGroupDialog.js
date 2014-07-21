@@ -1,6 +1,7 @@
 $(function () {
     $("#gStartDate").datepicker();
     $("#gEndDate").datepicker();
+    $("#gStartBoardingDate").datepicker();
     $("#gStartTime").timepicker();
     $('#gStartTime').timepicker({ 'step': 10 });
     $('#gStartTime').timepicker({ 'timeFormat': 'H:i' });
@@ -20,7 +21,7 @@ $(function () {
             $("#gEndDate").val("");
             $("#gAddress").val("");
             $('#gStartTime').val("");
-//            $("#gCourse").set("<option value=''>Select group course</option>");
+            $('#gStartBoardingDate').val("");
             $("#gCourse").val("Select group course");
         }
     });
@@ -49,6 +50,8 @@ $(function () {
         group.groupName = $("#gName").val();
         group.address = $("#gAddress").val();
         group.capacity = $("#gCapacity").val();
+        group.startBoardingTime = new Date($("#gStartBoardingDate").val()).getTime();
+        alert(group.startBoardingTime);
         group.startTime = new Date($("#gStartDate").val()).getTime() + $("#gStartTime").timepicker('getSecondsFromMidnight') * 60;
         group.endTime = new Date($("#gEndDate").val()).getTime();
         group.course = course;
@@ -76,6 +79,13 @@ $(function () {
         return success;
     };
 
+    jQuery.validator.addMethod("greaterThanBoardingDate",
+        function (value, element, params) {
+            var week = 604800000;
+            var startDate = new Date(value).getTime();
+            var boardingDate = new Date($(params).val()).getTime();
+            return boardingDate + week <= startDate;
+        });
 
     jQuery.validator.addMethod("greaterThan",
         function (value, element, params) {
@@ -96,6 +106,10 @@ $(function () {
                 || (Number(value) > Number(params));
         });
 
+    jQuery.validator.addMethod("notDefaultValue", function (value) {
+        return value != "Select group course";
+    });
+
     $("#userForm").validate({
         rules: {
             groupName: {
@@ -109,17 +123,24 @@ $(function () {
                 maxlength: 40
             },
             groupCourse: {
-                required: true
+                required: true,
+                notDefaultValue: true
             },
             groupCapacity: {
                 required: true,
                 min : 1,
                 number : true
             },
-            groupStartDate: {
+            groupStartBoardingDate: {
                 required: true,
                 date: true,
                 greaterThanToday: new Date()
+            },
+            groupStartDate: {
+                required: true,
+                date: true,
+                greaterThanToday: new Date(),
+                greaterThanBoardingDate: "#gStartBoardingDate"
             },
             groupStartTime:{
                 required:true
@@ -142,17 +163,25 @@ $(function () {
                 maxlength: jQuery.validator.format("No more than {0} characters is allowed")
             },
             groupCourse: {
-                required: "Group course is required."
+                required: "Group course is required.",
+                notDefaultValue: "Choose group course"
             },
             groupCapacity: {
                 required: "Group capacity is required.",
                 number : "Should be a correct number.",
                 min: jQuery.validator.format("At least 1 student is required")
             },
+            groupStartBoardingDate: {
+                required: "Start boarding date is required",
+                date: "Should be a correct date format",
+                greaterThanToday: "Should be greater than today's date"
+
+            },
             groupStartDate: {
                 required: "Start date is required.",
-                date: "Should be a correct date.",
-                greaterThanToday: "Must be greater than today date"
+                date: "Should be a correct date format.",
+                greaterThanToday: "Should be greater than today's date",
+                greaterThanBoardingDate: "Should be greater than boarding date not less than 1 week"
             },
             groupStartTime:{
                 required : "Start time is required"
