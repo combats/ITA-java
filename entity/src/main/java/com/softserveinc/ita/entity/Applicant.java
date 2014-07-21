@@ -16,7 +16,6 @@ public class Applicant implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    @Expose
     private String id;
 
     @Column(name = "Name")

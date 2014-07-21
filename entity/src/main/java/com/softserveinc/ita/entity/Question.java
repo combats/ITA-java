@@ -16,18 +16,17 @@ public class Question implements Serializable {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "Id", unique = true)
+    @Column(name = "question_id", unique = true)
     private String questionId;
 
     @Column(name = "Question")
-    @Expose
     private String QuestionBody;
 
     @Column(name = "Weight")
-    @Expose
-    private int weight;
-    @ManyToOne
-    private User user;
+    private int weight = 1;
+
+    public Question() {
+    }
 
     public Question(String questionBody, int weight) {
         QuestionBody = questionBody;
@@ -50,14 +49,6 @@ public class Question implements Serializable {
         this.weight = weight;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -69,7 +60,6 @@ public class Question implements Serializable {
         if (QuestionBody != null ? !QuestionBody.equals(question.QuestionBody) : question.QuestionBody != null)
             return false;
         if (questionId != null ? !questionId.equals(question.questionId) : question.questionId != null) return false;
-        if (user != null ? !user.equals(question.user) : question.user != null) return false;
 
         return true;
     }
@@ -79,7 +69,6 @@ public class Question implements Serializable {
         int result = questionId != null ? questionId.hashCode() : 0;
         result = 31 * result + (QuestionBody != null ? QuestionBody.hashCode() : 0);
         result = 31 * result + weight;
-        result = 31 * result + (user != null ? user.hashCode() : 0);
         return result;
     }
 
@@ -89,7 +78,6 @@ public class Question implements Serializable {
                 "questionId='" + questionId + '\'' +
                 ", QuestionBody='" + QuestionBody + '\'' +
                 ", weight=" + weight +
-                ", user=" + user +
                 '}';
     }
 }
