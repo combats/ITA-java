@@ -39,7 +39,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTUserImageAndExpectedIsOk() throws Exception {
         String name = "testController100";
-        String endpoint = "/repo/imgfile/user/" + name;
+        String endpoint = "/imgfile/user/" + name;
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -54,7 +54,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTApplicantImageAndExpectedIsOk() throws Exception {
         String name = "testController100";
-        String endpoint = "/repo/imgfile/applicant/" + name;
+        String endpoint = "/imgfile/applicant/" + name;
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -69,7 +69,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTUserImageAndExpectedIsNotOk() throws Exception {
         String name = "testController101";
-        String endpoint = "/repo/imgfile/user/" + name;
+        String endpoint = "/imgfile/user/" + name;
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input.txt", "text/plain", "Hello World".getBytes());
 
@@ -82,7 +82,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTApplicantImageAndExpectedIsNotOk() throws Exception {
         String name = "testController101";
-        String endpoint = "/repo/imgfile/applicant/" + name;
+        String endpoint = "/imgfile/applicant/" + name;
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "input.txt", "text/plain", "Hello World".getBytes());
 
@@ -95,7 +95,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTUFOImageAndExpectedIsNotOk() throws Exception {
         String name = "testController101";
-        String endpoint = "/repo/imgfile/ufo/" + name;
+        String endpoint = "/imgfile/ufo/" + name;
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "iWantToBelieve.png", "image/png", "Hello World".getBytes());
 
@@ -108,8 +108,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETUserImageAndExpectedIsOk() throws Exception {
         String name = "testController102";
-        String endpointPost = "/repo/imgfile/user/" + name;
-        String endpointGet = "/repo/imgfile/user/" + name + "?height=200&width=200";
+        String endpointPost = "/imgfile/user/" + name;
+        String endpointGet = "/imgfile/user/" + name + "?height=200&width=200";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -137,8 +137,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETApplicantImageAndExpectedIsOk() throws Exception {
         String name = "testController102";
-        String endpointPost = "/repo/imgfile/applicant/" + name;
-        String endpointGet = "/repo/imgfile/applicant/" + name + "?height=200&width=200";
+        String endpointPost = "/imgfile/applicant/" + name;
+        String endpointGet = "/imgfile/applicant/" + name + "?height=200&width=200";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -166,7 +166,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETUFOImageAndExpectedIsOk() throws Exception {
         String name = "testController102";
-        String endpointGet = "/repo/imgfile/ufo/" + name + "?height=200&width=200";
+        String endpointGet = "/imgfile/ufo/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
@@ -176,7 +176,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETApplicantImageAndExpectedIsError() throws Exception {
         String name = "testControllerNonExistent";
-        String endpointGet = "/repo/imgfile/applicant/" + name + "?height=200&width=200";
+        String endpointGet = "/imgfile/applicant/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
@@ -186,7 +186,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteApplicantImageAndExpectedIsOk() throws Exception {
         String name = "testController103";
-        String endpoint = "/repo/imgfile/applicant/" + name;
+        String endpoint = "/imgfile/applicant/" + name;
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -204,7 +204,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteUserImageAndExpectedIsOk() throws Exception {
         String name = "testController103";
-        String endpoint = "/repo/imgfile/user/" + name;
+        String endpoint = "/imgfile/user/" + name;
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -222,7 +222,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteUFOImageAndExpectedIsOk() throws Exception {
         String name = "testController103";
-        String endpoint = "/repo/imgfile/ufo/" + name;
+        String endpoint = "/imgfile/ufo/" + name;
 
         mockMvc.perform(delete(endpoint))
                 .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
@@ -232,7 +232,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteApplicantImageAndExpectedIsError() throws Exception {
         String name = "testController104";
-        String endpoint = "/repo/imgfile/applicant/" + name;
+        String endpoint = "/imgfile/applicant/" + name;
 
         mockMvc.perform(delete(endpoint))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn't exist"))
@@ -242,8 +242,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETApplicantImageOriginalsizeAndExpectedIsOk() throws Exception {
         String name = "testController105";
-        String endpointPost = "/repo/imgfile/applicant/" + name;
-        String endpointGet = "/repo/imgfile/applicant/" + name;
+        String endpointPost = "/imgfile/applicant/" + name;
+        String endpointGet = "/imgfile/applicant/" + name;
         String fileNameFromResources = "test-files/input-1024x768.jpg";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -266,7 +266,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void TestPostUserImage64AndExpectedIsOk() throws Exception {
         String name = "testController105";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
-        String endpointPost = "/repo/img/user/" + name;
+        String endpointPost = "/img/user/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -283,7 +283,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void TestPostApplicantImage64AndExpectedIsOk() throws Exception {
         String name = "testController105";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
-        String endpointPost = "/repo/img/applicant/" + name;
+        String endpointPost = "/img/applicant/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -300,7 +300,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void TestPostUfoImage64AndExpectedIsOk() throws Exception {
         String name = "testController105";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
-        String endpointPost = "/repo/img/ufo/" + name;
+        String endpointPost = "/img/ufo/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -318,8 +318,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void testGetApplicantImage64AndExpectedIsOk() throws Exception {
         String name = "testController106";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
-        String endpointPost = "/repo/img/applicant/" + name;
-        String endpointGet = "/repo/img/applicant/" + name + "?height=200&width=200";
+        String endpointPost = "/img/applicant/" + name;
+        String endpointGet = "/img/applicant/" + name + "?height=200&width=200";
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -353,8 +353,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void testGetUserImage64OriginalSizeAndExpectedIsOk() throws Exception {
         String name = "testController107";
         String fileNameFromResources = "test-files/time-square-imgscarl-resize-QUALITY-AUTO-10x10.png";
-        String endpointPost = "/repo/img/user/" + name;
-        String endpointGet = "/repo/img/user/" + name;
+        String endpointPost = "/img/user/" + name;
+        String endpointGet = "/img/user/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -376,8 +376,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
     public void testGetUfoImage64OriginalSizeAndExpectedIsOk() throws Exception {
         String name = "testController107";
         String fileNameFromResources = "test-files/time-square-imgscarl-resize-QUALITY-AUTO-10x10.png";
-        String endpointPost = "/repo/img/user/" + name;
-        String endpointGet = "/repo/img/ufo/" + name;
+        String endpointPost = "/img/user/" + name;
+        String endpointGet = "/img/ufo/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -398,7 +398,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGetUserImage64AndExpectedIsJcrException() throws Exception {
         String name = "testControllerNonExistent";
-        String endpointGet = "/repo/img/user/" + name + "?height=200&width=200";
+        String endpointGet = "/img/user/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
@@ -408,7 +408,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGetApplicantImage64OriginalSizeAndExpectedIsJcrException() throws Exception {
         String name = "testControllerNonExistent";
-        String endpointGet = "/repo/img/applicant/" + name;
+        String endpointGet = "/img/applicant/" + name;
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
@@ -418,7 +418,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTDocumentAndExpectedIsOk() throws Exception {
         String name = "testController108";
-        String endpoint = "/repo/doc/" + name;
+        String endpoint = "/doc/" + name;
         String fileNameFromResources = "test-files/plain_text.txt";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -433,7 +433,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testPOSTDocumentAndExpectedIsError() throws Exception {
         String name = "testController109";
-        String endpoint = "/repo/doc/" + name;
+        String endpoint = "/doc/" + name;
         String fileNameFromResources = "test-files/plain_text.txt";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -448,7 +448,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGETDocumentAndExpectedIsOk() throws Exception {
         String name = "testController110";
-        String endpoint= "/repo/doc/" + name;
+        String endpoint= "/doc/" + name;
         String fileNameFromResources = "test-files/plain_text.txt";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -469,7 +469,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGetIDocumentAndExpectedIsJcrException() throws Exception {
         String name = "testControllerNonExistent";
-        String endpointGet = "/repo/doc/" + name;
+        String endpointGet = "/doc/" + name;
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
@@ -479,7 +479,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteDocumentNodeAndExpectedIsOk() throws Exception {
         String name = "testController111";
-        String endpoint = "/repo/doc/" + name;
+        String endpoint = "/doc/" + name;
         String fileNameFromResources = "test-files/plain_text.txt";
 
         InputStream is = this.getClass().getResourceAsStream("/" + fileNameFromResources);
@@ -497,7 +497,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testDeleteDocumentAndExpectedIsError() throws Exception {
         String name = "testControllerNonExistent";
-        String endpoint = "/repo/doc/" + name;
+        String endpoint = "/doc/" + name;
 
         mockMvc.perform(delete(endpoint))
                 .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn't exist"))
