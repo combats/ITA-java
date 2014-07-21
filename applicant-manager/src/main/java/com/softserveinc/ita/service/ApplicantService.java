@@ -6,9 +6,8 @@ import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import java.util.List;
 
 public interface ApplicantService {
-    List<Applicant> getApplicants();
 
-    List<Applicant> getApplicantsByGroupID(String groupID);
+    List<Applicant> getApplicants();
 
     Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException;
 

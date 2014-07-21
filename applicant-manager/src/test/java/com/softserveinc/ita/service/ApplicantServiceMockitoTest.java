@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertEquals;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
+
     private List<Applicant> standartList;
-    private List<Applicant> applicants;
 
     @Autowired
     @InjectMocks
@@ -50,25 +50,4 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
         verify(applicantDao, times(1)).getApplicants();
     }
 
-    @Test
-    public void testGetApplicantsInGroupAndExpectediIsOk() {
-        List<Applicant> mockApplicants = new ArrayList<>();
-        mockApplicants.add(new Applicant("123"));
-        mockApplicants.add(new Applicant("124"));
-        mockApplicants.add(new Applicant("125"));
-
-        when(applicantDao.getApplicantsByGroupID("1")).thenReturn(mockApplicants);
-        applicants = applicantService.getApplicantsByGroupID("1");
-        verify(applicantDao, times(1)).getApplicantsByGroupID("1");
-        assertEquals(applicants, mockApplicants);
-    }
-
-    @Test
-    public void testGetApplicantsInGroupAndExceptionExpected() {
-        List<Applicant> mockApplicants = new ArrayList<>();
-        when(applicantDao.getApplicantsByGroupID("2")).thenReturn(mockApplicants);
-        applicants = applicantService.getApplicantsByGroupID("2");
-        verify(applicantDao, times(1)).getApplicantsByGroupID("2");
-        assertEquals(applicants, mockApplicants);
-    }
 }

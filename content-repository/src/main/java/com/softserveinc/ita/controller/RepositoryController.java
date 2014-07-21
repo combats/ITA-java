@@ -2,6 +2,7 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Base64DataTransferFile;
 import com.softserveinc.ita.entity.DataTransferFile;
+import com.softserveinc.ita.entity.OperationStatusJSONInfo;
 import com.softserveinc.ita.exception.*;
 import com.softserveinc.ita.service.DocumentService;
 import com.softserveinc.ita.service.ImageService;
@@ -48,16 +49,16 @@ public class RepositoryController {
 
     @RequestMapping(value = "imgfile/{client}/{ID}", method= {RequestMethod.POST, RequestMethod.PUT},
                                                       consumes = "multipart/form-data")
-    public ResponseEntity<String> postImage(@PathVariable("client") String client,
+    public ResponseEntity<OperationStatusJSONInfo> postImage(@PathVariable("client") String client,
                                             @PathVariable("ID") String ID,
                                             @RequestParam("file") MultipartFile file) throws Exception {
 
         checkImageFile(file, ID);
-        String requestedNODE = detectClient(ID, client);
-        DataTransferFile dataTransferFile = new DataTransferFile(requestedNODE, file.getOriginalFilename(),
+        String requestedNode = detectClient(ID, client);
+        DataTransferFile dataTransferFile = new DataTransferFile(requestedNode, file.getOriginalFilename(),
                                                                  file.getContentType(), file.getBytes());
 
-        String response = imageService.postImage(dataTransferFile);
+        OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage(dataTransferFile));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -97,12 +98,12 @@ public class RepositoryController {
                                            @PathVariable("ID") String ID,
                                            @PathVariable("client") String client) throws Exception {
 
-        String requestedNODE = detectClient(ID, client);
+        String requestedNode = detectClient(ID, client);
         DataTransferFile imageResponse;
         if (height != null && width != null) {
-            imageResponse = imageService.getImage(requestedNODE, width, height);
+            imageResponse = imageService.getImage(requestedNode, width, height);
         } else {
-            imageResponse = imageService.getImage(requestedNODE);
+            imageResponse = imageService.getImage(requestedNode);
         }
         final HttpHeaders headers = new HttpHeaders();
         String responseMediaType = imageResponse.getMimeType();
@@ -124,11 +125,11 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      */
     @RequestMapping(value = "imgfile/{client}/{ID}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteImage(@PathVariable("client") String client,
+    public ResponseEntity<OperationStatusJSONInfo> deleteImage(@PathVariable("client") String client,
                                               @PathVariable("ID") String ID) throws Exception {
 
-        String requestedNODE = detectClient(ID, client);
-        String response = imageService.deleteImage(requestedNODE);
+        String requestedNode = detectClient(ID, client);
+        OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.deleteImage(requestedNode));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -141,14 +142,15 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      */
     @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.POST)
-    public ResponseEntity<String> postImage64(@PathVariable("ID") String ID,
+    public ResponseEntity<OperationStatusJSONInfo> postImage64(@PathVariable("ID") String ID,
                                               @PathVariable("client") String client,
                                               @RequestHeader("Content-Type") String contentType,
                                               @RequestParam("string64image") String string64image) throws Exception {
 
         checkBase64ImageFile(string64image, ID, contentType);
-        String requestedNODE = detectClient(ID, client);
-        String response = imageService.postImage64(requestedNODE, string64image, contentType);
+        String requestedNode = detectClient(ID, client);
+        OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
+                                                                            string64image, contentType));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -185,12 +187,12 @@ public class RepositoryController {
                                              @RequestParam(value = "width", required = false) Integer width)
                                              throws Exception {
 
-        String requestedNODE = detectClient(ID, client);
+        String requestedNode = detectClient(ID, client);
         Base64DataTransferFile responseInBase64;
         if(height != null && width != null) {
-            responseInBase64 = imageService.getImage64(requestedNODE, width, height);
+            responseInBase64 = imageService.getImage64(requestedNode, width, height);
         } else {
-            responseInBase64 = imageService.getImage64(requestedNODE);
+            responseInBase64 = imageService.getImage64(requestedNode);
         }
         final HttpHeaders headers = new HttpHeaders();
 
@@ -212,14 +214,14 @@ public class RepositoryController {
      * @throws com.softserveinc.ita.exception.JcrException
      */
     @RequestMapping(value = "doc/{ID}", method= {RequestMethod.POST}, consumes = "multipart/form-data")
-    public ResponseEntity<String> postDocument(@PathVariable("ID") String ID,
+    public ResponseEntity<OperationStatusJSONInfo> postDocument(@PathVariable("ID") String ID,
                                                @RequestParam("file") MultipartFile file) throws Exception {
 
         checkDocumentFile(file, ID);
-        nodeName = ID + APPLICANT_SUFFIX;
-        DataTransferFile dataTransferFile = new DataTransferFile(nodeName, file.getOriginalFilename(),
+        String requestedNode = ID + APPLICANT_SUFFIX;
+        DataTransferFile dataTransferFile = new DataTransferFile(requestedNode, file.getOriginalFilename(),
                                                                  file.getContentType(), file.getBytes());
-        String response = documentService.postDocument(dataTransferFile);
+        OperationStatusJSONInfo response = new OperationStatusJSONInfo(documentService.postDocument(dataTransferFile));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -247,8 +249,8 @@ public class RepositoryController {
     public ResponseEntity<byte[]> getDocument(@PathVariable("ID") String ID) throws JcrException, IOException {
 
         DataTransferFile documentResponse;
-        nodeName = ID + APPLICANT_SUFFIX;
-        documentResponse = documentService.getDocument(nodeName);
+        String requestedNode = ID + APPLICANT_SUFFIX;
+        documentResponse = documentService.getDocument(requestedNode);
         final HttpHeaders headers = new HttpHeaders();
         String responseMediaType = documentResponse.getMimeType();
         if(isSupportedFormatForDocument(responseMediaType)){
@@ -259,68 +261,8 @@ public class RepositoryController {
     }
 
     @RequestMapping(value = "doc/{ID}", method = RequestMethod.DELETE)
-    public ResponseEntity<String> deleteDocument(@PathVariable("ID") String ID) throws JcrException {
-        String response = documentService.deleteDocument(ID + APPLICANT_SUFFIX);
+    public ResponseEntity<OperationStatusJSONInfo> deleteDocument(@PathVariable("ID") String ID) throws JcrException {
+        OperationStatusJSONInfo response = new OperationStatusJSONInfo(documentService.deleteDocument(ID + APPLICANT_SUFFIX));
         return new ResponseEntity<>(response, HttpStatus.OK);
-    }
-
-    /**
-     * Custom exceptions handler
-     * @param ex - exception
-     * @return - (JSON) String with exception info
-     */
-    @ExceptionHandler(NotExistingNodeJcrException.class)
-    public ResponseEntity<String> handleException(NotExistingNodeJcrException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(JcrException.class)
-    public ResponseEntity<String> handleException(JcrException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    @ExceptionHandler(RoutingException.class)
-    public ResponseEntity<String> handleException(RoutingException ex) {
-        return new ResponseEntity<>("You failed to upload because of invalid path: must contain %applicant% " +
-                                    "or %user% in it." + " " + ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(EmptyFileException.class)
-    public ResponseEntity<String> handleException(EmptyFileException ex) {
-        return new ResponseEntity<>("You failed to upload " +ex.getMessage() + " because the file was empty.",
-                                    HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(UnsupportedFileContentTypeException.class)
-    public ResponseEntity<String> handleException(UnsupportedFileContentTypeException ex) {
-        return new ResponseEntity<>("You failed to upload because the file has incorrect type: " + ex.getMessage(),
-                                    HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(Base64ValidationException.class)
-    public ResponseEntity<String> handleException(Base64ValidationException ex) {
-        return new ResponseEntity<>("You failed to upload because the file was empty." + ex.getMessage(),
-                                    HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Exceptions handler in case of IOExceptions (witch could never be)
-     * @param ex - exception
-     * @return - (JSON) String with exception info
-     */
-    @ExceptionHandler(IOException.class)
-    public ResponseEntity<String> handleException(IOException ex) {
-        return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
-    /**
-     * Exceptions handler in case of unexpected Exceptions
-     * @param ex - exception
-     * @return - (JSON) String with exception info
-     */
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleException(Exception ex) {
-        return new ResponseEntity<>("Something really bad happened [" + ex.getMessage() + "]",
-                                    HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

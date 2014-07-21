@@ -1,8 +1,10 @@
 package com.softserveinc.ita.controller;
 
+import com.softserveinc.ita.entity.Role;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.*;
+import com.softserveinc.ita.service.RoleService;
 import com.softserveinc.ita.service.UserService;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +22,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/")
 public class UserController {
+
+
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private UserService userService;
+
+    @RequestMapping(method = RequestMethod.GET , value = "/roles")
+    public @ResponseBody List<Role> getAllRoles() {
+        return roleService.getAllRoles();
+    }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{userID}")
     public ResponseEntity<String> deleteUserByID(@PathVariable String userID) throws UserDoesNotExistException {
@@ -54,7 +66,7 @@ public class UserController {
         User createdUser = userService.postNewUser(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
-                builder.path("/users/{userID}").buildAndExpand(createdUser.getId().toString()).toUri());
+                builder.path("/{userID}").buildAndExpand(createdUser.getId().toString()).toUri());
         return new ResponseEntity<>(createdUser, headers, HttpStatus.CREATED);
     }
 

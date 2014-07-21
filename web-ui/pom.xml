@@ -39,7 +39,7 @@
     </dependencies>
 
     <build>
-        <finalName>web-ui</finalName>
+        <finalName>ROOT</finalName>
 
     </build>
 </project>
