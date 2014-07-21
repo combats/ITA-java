@@ -16,6 +16,12 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.31</version>
+        </dependency>
+
         <!--Common-->
         <dependency>
             <groupId>com.softserveinc.ita</groupId>
@@ -108,7 +114,7 @@
     </dependencies>
 
     <build>
-        <finalName>content-repository</finalName>
+        <finalName>repository</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>

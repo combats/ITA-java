@@ -25,8 +25,9 @@
         Custom session creator
     -->
     <bean id="jcrSession" class="com.softserveinc.ita.jcr.jackrabbit.JcrSessionCreator">
-        <property name="homeDir" value="../../work/repository"/>
-        <property name="config" value="../../work/repository/repository.xml"/>
+        <property name="homeDir" value="/usr/local/apache-tomcat/work/repository"/>
+        <property name="config" value="/usr/local/apache-tomcat/work/repository/repository.xml"/>
+        <!--<property name="config" value="file:/WEB-INF/repository_config/repository.xml"/>-->
         <property name="userRole" value="admin"/>
     </bean>
 
