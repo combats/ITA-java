@@ -4,7 +4,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
 
 @Entity
 @Table(name = "Roles")
@@ -18,23 +17,12 @@ public class Role implements Serializable {
     @Column(name = "Id", unique = true)
     private String id;
 
-    @Column(name = "Role")
-    private String role;
-
-    @ManyToMany(mappedBy = "securityRoleCollection")
-    private Collection<User> userCollection;
+    @Column(name = "Name")
+    private String name;
 
     public Role() {}
 
-    public Role(String role) {this.role = role;}
-
-    public Collection<User> getUserCollection() {
-        return userCollection;
-    }
-
-    public void setUserCollection(Collection<User> userCollection) {
-        this.userCollection = userCollection;
-    }
+    public Role(String name) {this.name = name;}
 
     public String getId() {
         return id;
@@ -44,24 +32,23 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getRole() {
-        return role;
+    public String getName() {
+        return name;
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setName(String name) {
+        this.name = name;
     }
-
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Role)) return false;
 
-        Role role1 = (Role) o;
+        Role role = (Role) o;
 
-        if (id != null ? !id.equals(role1.id) : role1.id != null) return false;
-        if (role != null ? !role.equals(role1.role) : role1.role != null) return false;
+        if (id != null ? !id.equals(role.id) : role.id != null) return false;
+        if (name != null ? !name.equals(role.name) : role.name != null) return false;
 
         return true;
     }
@@ -69,7 +56,7 @@ public class Role implements Serializable {
     @Override
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
-        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         return result;
     }
 
@@ -77,7 +64,7 @@ public class Role implements Serializable {
     public String toString() {
         return "Role{" +
                 "id='" + id + '\'' +
-                ", role='" + role + '\'' +
+                ", name='" + name + '\'' +
                 '}';
     }
 }

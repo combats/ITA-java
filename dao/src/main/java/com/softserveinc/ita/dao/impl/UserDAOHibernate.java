@@ -37,14 +37,18 @@ public class UserDAOHibernate implements UserDAO {
     }
 
     @Override
-    public String addUser(User user) {
-        return (String) sessionFactory.getCurrentSession().save(user);
+    public User addUser(User user) {
+        Session session = sessionFactory.getCurrentSession();
+        String userId = (String) session.save(user);
+        return (User) session.load(User.class, userId);
     }
 
     @Override
-    public String updateUser(User user) {
-        sessionFactory.getCurrentSession().update(user);
-        return user.getId();
+    public User updateUser(User user) {
+        String userId = user.getId();
+        Session session = sessionFactory.getCurrentSession();
+        session.update(user);
+        return (User) session.load(User.class, userId);
     }
 
     @SuppressWarnings("unchecked")
