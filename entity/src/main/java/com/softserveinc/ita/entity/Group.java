@@ -56,9 +56,6 @@ public class Group implements Serializable{
         this.groupID = groupID;
         this.course = course;
         this.groupName = groupName;
-        this.startBoardingTime = startBoardingTime;
-        this.startTime = startTime;
-        this.endTime = endTime;
     }
 
     public long getStartBoardingTime() {

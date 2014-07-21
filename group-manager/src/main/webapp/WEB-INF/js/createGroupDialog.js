@@ -46,12 +46,10 @@ $(function () {
         course.name = $("#gCourse").val();
         var group =  {};
         group.groupID = "1";
-        group.groupStatus = "PLANNED";
         group.groupName = $("#gName").val();
         group.address = $("#gAddress").val();
         group.capacity = $("#gCapacity").val();
         group.startBoardingTime = new Date($("#gStartBoardingDate").val()).getTime();
-        alert(group.startBoardingTime);
         group.startTime = new Date($("#gStartDate").val()).getTime() + $("#gStartTime").timepicker('getSecondsFromMidnight') * 60;
         group.endTime = new Date($("#gEndDate").val()).getTime();
         group.course = course;
@@ -70,9 +68,11 @@ $(function () {
             type: "POST",
             data: jsonGroup,
             success: function (data) {
+                alert("isOk");
                 viewGroups();
             },
             error: function (data) {
+                alert(jsonGroup);
                 console.log("" + data);
             }
         });
