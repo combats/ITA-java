@@ -12,9 +12,9 @@ public interface UserDAO {
 
     String deleteUserById(String userId);
 
-    String addUser(User user);
+    User addUser(User user);
 
-    String updateUser(User user);
+    User updateUser(User user);
 
     List<User> getAllUsers();
 }
