@@ -18,12 +18,14 @@ public class User implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
+    @Expose
     private String id;
 
     @Column(name = "Name")
     private String name = DEFAULT_USER_NAME;
 
     @Column(name = "Surname")
+    @Expose
     private String surname;
 
     @Column(name = "Phone")
@@ -40,8 +42,11 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_questions", referencedColumnName="Id")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "UserQuestions", joinColumns = {
+            @JoinColumn(name = "UserId", referencedColumnName = "Id") }, inverseJoinColumns = {
+            @JoinColumn(name = "QuestionId", referencedColumnName = "Id") })
+
     private List<Question> questions;
 
     public User() {

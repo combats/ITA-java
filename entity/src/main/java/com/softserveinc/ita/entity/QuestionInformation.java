@@ -1,37 +1,24 @@
 package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.*;
-import java.io.Serializable;
+public class QuestionInformation {
 
-@Entity
-@Table(name = "QuestionInformation")
-public class QuestionInformation implements Serializable {
-
-    @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "questionInformation_id", unique = true)
-    private String Id;
-
-    @Column(name = "Interview_id")
-    private String interviewId = "";
-
-    @Column(name = "Question")
+    @Expose
+    private String questionInformationID;
+    @Expose
+    private String questionsBlockId;
+    @Expose
+    private String interviewId;
+    @Expose
     private String question = "";
-
-    @Column(name = "Answer")
+    @Expose
     private String answer = "";
-
-    @Column(name = "Mark")
+    @Expose
     private int mark;
-
-    @Column(name = "Comment")
+    @Expose
     private String comment = "";
 
-    @Column(name = "Weight")
     private int weight; //weight for each question
 
     public QuestionInformation() {
@@ -48,14 +35,6 @@ public class QuestionInformation implements Serializable {
         this.mark = mark;
         this.comment = comment;
         this.weight = weight;
-    }
-
-    public String getId() {
-        return Id;
-    }
-
-    public String getInterviewId() {
-        return interviewId;
     }
 
     public String getQuestion() {
@@ -78,14 +57,6 @@ public class QuestionInformation implements Serializable {
         return weight;
     }
 
-    public void setId(String id) {
-        Id = id;
-    }
-
-    public void setInterviewId(String interviewId) {
-        this.interviewId = interviewId;
-    }
-
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -106,6 +77,31 @@ public class QuestionInformation implements Serializable {
         this.weight = weight;
     }
 
+    public String getQuestionInformationID() {
+        return questionInformationID;
+    }
+
+    public void setQuestionInformationID(String questionInformationID) {
+        this.questionInformationID = questionInformationID;
+    }
+
+
+    public String getInterviewId() {
+        return interviewId;
+    }
+
+    public void setInterviewId(String interviewId) {
+        this.interviewId = interviewId;
+    }
+
+    public String getQuestionsBlockId() {
+        return questionsBlockId;
+    }
+
+    public void setQuestionsBlockId(String questionsBlockId) {
+        this.questionsBlockId = questionsBlockId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -115,10 +111,10 @@ public class QuestionInformation implements Serializable {
 
         if (mark != that.mark) return false;
         if (weight != that.weight) return false;
-        if (Id != null ? !Id.equals(that.Id) : that.Id != null) return false;
+        if (questionInformationID != null ? !questionInformationID.equals(that.questionInformationID) : that.questionInformationID != null)
+            return false;
         if (answer != null ? !answer.equals(that.answer) : that.answer != null) return false;
         if (comment != null ? !comment.equals(that.comment) : that.comment != null) return false;
-        if (interviewId != null ? !interviewId.equals(that.interviewId) : that.interviewId != null) return false;
         if (question != null ? !question.equals(that.question) : that.question != null) return false;
 
         return true;
@@ -126,8 +122,7 @@ public class QuestionInformation implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = Id != null ? Id.hashCode() : 0;
-        result = 31 * result + (interviewId != null ? interviewId.hashCode() : 0);
+        int result = questionInformationID != null ? questionInformationID.hashCode() : 0;
         result = 31 * result + (question != null ? question.hashCode() : 0);
         result = 31 * result + (answer != null ? answer.hashCode() : 0);
         result = 31 * result + mark;
@@ -139,8 +134,7 @@ public class QuestionInformation implements Serializable {
     @Override
     public String toString() {
         return "QuestionInformation{" +
-                "Id='" + Id + '\'' +
-                ", interviewId='" + interviewId + '\'' +
+                "QuestionInformationID='" + questionInformationID + '\'' +
                 ", question='" + question + '\'' +
                 ", answer='" + answer + '\'' +
                 ", mark=" + mark +

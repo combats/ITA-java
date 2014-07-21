@@ -1,114 +1,109 @@
 {
-    "InterviewId": "2",
-    "QuestionsBlocks": [
+    "InterviewId": "1",
+    "AnswerBlocks": [
         {
-            "Id": null,
-            "UserId": null,
-            "InterviewId": "2",
+            "QuestionsBlockID": "Hz, standart vopros",
             "Questions": [
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "Hz, standart vopros",
                     "Question": "What is your name?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 0
+                    "Comment": ""
                 },
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "Hz, standart vopros",
                     "Question": "How are you?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 0
+                    "Comment": ""
                 }
             ],
             "FinalComment": "",
             "BonusPoints": 0
         },
         {
-            "Id": null,
-            "UserId": "1",
-            "InterviewId": "2",
+            "User": {
+                "Id": "1",
+                "Surname": "IT Project Manager"
+            },
+            "QuestionsBlockID": "1",
             "Questions": [
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "1",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 2
+                    "Comment": ""
                 },
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "1",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 3
+                    "Comment": ""
                 }
             ],
             "FinalComment": "",
             "BonusPoints": 0
         },
         {
-            "Id": null,
-            "UserId": "3",
-            "InterviewId": "2",
+            "User": {
+                "Id": "2",
+                "Surname": "Software Developer"
+            },
+            "QuestionsBlockID": "2",
             "Questions": [
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "2",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 2
+                    "Comment": ""
                 },
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "2",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 3
+                    "Comment": ""
                 }
             ],
             "FinalComment": "",
             "BonusPoints": 0
         },
         {
-            "Id": null,
-            "UserId": "2",
-            "InterviewId": "2",
+            "User": {
+                "Id": "3",
+                "Surname": "HR Manager"
+            },
+            "QuestionsBlockID": "3",
             "Questions": [
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "0",
+                    "QuestionsBlockId": "3",
                     "Question": "Have you ever were connected with quality assurance engineering?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 2
+                    "Comment": ""
                 },
                 {
-                    "Id": null,
-                    "InterviewId": "2",
+                    "QuestionInformationID": "1",
+                    "QuestionsBlockId": "3",
                     "Question": "Have you ever were connected with database developing?",
                     "Answer": "",
                     "Mark": 0,
-                    "Comment": "",
-                    "Weight": 3
+                    "Comment": ""
                 }
             ],
             "FinalComment": "",
             "BonusPoints": 0
         }
-    ],
-    "Type": "INTERVIEW_WITH_USER_AND_STANDARD_QUESTIONS"
+    ]
 }

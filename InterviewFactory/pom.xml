@@ -34,13 +34,6 @@
             <artifactId>http-request-service</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
-        <dependency>
-            <groupId>com.softserveinc.ita</groupId>
-            <artifactId>dao</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
@@ -67,7 +60,7 @@
 
 
     <build>
-        <finalName>interview</finalName>
+        <finalName>InterviewFactory</finalName>
 
     </build>
 
