@@ -46,7 +46,11 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
         int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
         String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
         ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
-        exceptionInfo.setReason(exceptionReason);
+        if(exception.getMessage() == null) {
+            exceptionInfo.setReason(exceptionReason);
+        } else {
+            exceptionInfo.setReason(exceptionReason + " " + exception.getMessage());
+        }
         try {
             response.sendError(responseStatus);   //send http status code
         }

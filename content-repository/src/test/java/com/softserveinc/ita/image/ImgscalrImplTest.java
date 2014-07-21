@@ -19,16 +19,12 @@ import java.io.IOException;
 public class ImgscalrImplTest extends BaseImageScalTest {
     private ImgscalrImpl imgscalrImpl = new ImgscalrImpl();
     private  BufferedImage src; // was static
-    private  byte[] bytesrc;
     private DataTransferFile source;
-
-    private int height = 200;
-    private int width = 200;
 
     @Before
     public void setup() throws IOException {
         src = load("test-files/time-square.png");
-        bytesrc = loadByte("test-files/time-square.png");
+        byte[] bytesrc = loadByte("test-files/time-square.png");
         source = new DataTransferFile("nodeName", "originalName", "image/png", bytesrc);
     }
 
@@ -73,6 +69,8 @@ public class ImgscalrImplTest extends BaseImageScalTest {
 
     @Test
     public void testResizeWHExact() throws IOException {
+        int height = 200;
+        int width = 200;
         DataTransferFile tmpFile = imgscalrImpl.resize(source, source.getMimeType(), width, height);
         BufferedImage img = ImageIO.read(new ByteArrayInputStream(tmpFile.getContent()));
         assertEquals(load("test-files/time-square-imgscarl-resize-QUALITY-AUTO-200x200.png"), img);

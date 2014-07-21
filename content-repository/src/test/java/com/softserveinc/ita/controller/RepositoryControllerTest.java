@@ -47,7 +47,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("File added successfully " + name + USER_SUFFIX + IMAGE_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File added successfully " + name + USER_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -62,12 +62,12 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("File added successfully " + name + APPLICANT_SUFFIX + IMAGE_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File added successfully " + name + APPLICANT_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testPOSTUserImageAndExpectedIsNotOk() throws Exception {
+    public void testPOSTUserImageAndExpectedIsException() throws Exception {
         String name = "testController101";
         String endpoint = "/imgfile/user/" + name;
 
@@ -75,12 +75,13 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("You failed to upload because the file has incorrect type: " + name + ". Caused by: " + multipartFile.getContentType()))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because the file has incorrect type: "
+                                                + name + ". Caused by: " + multipartFile.getContentType() + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void testPOSTApplicantImageAndExpectedIsNotOk() throws Exception {
+    public void testPOSTApplicantImageAndExpectedIsException() throws Exception {
         String name = "testController101";
         String endpoint = "/imgfile/applicant/" + name;
 
@@ -88,20 +89,23 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("You failed to upload because the file has incorrect type: " + name + ". Caused by: " + multipartFile.getContentType()))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because the file has incorrect type: "
+                                                + name + ". Caused by: " + multipartFile.getContentType() + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    public void testPOSTUFOImageAndExpectedIsNotOk() throws Exception {
+    public void testPOSTUFOImageAndExpectedIsException() throws Exception {
         String name = "testController101";
-        String endpoint = "/imgfile/ufo/" + name;
+        String ufo = "alf";
+        String endpoint = "/imgfile/" + ufo + "/" + name;
 
         MockMultipartFile multipartFile = new MockMultipartFile("file", "iWantToBelieve.png", "image/png", "Hello World".getBytes());
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
+                                            + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -164,12 +168,14 @@ public class RepositoryControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void testGETUFOImageAndExpectedIsOk() throws Exception {
+    public void testGETUFOImageAndExpectedIsException() throws Exception {
         String name = "testController102";
-        String endpointGet = "/imgfile/ufo/" + name + "?height=200&width=200";
+        String ufo = "ufo";
+        String endpointGet = "/imgfile/" + ufo + "/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
-                .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
+                        + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -179,7 +185,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpointGet = "/imgfile/applicant/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: "
+                                                + name + APPLICANT_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -197,7 +204,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("File successfully deleted " + name + APPLICANT_SUFFIX + IMAGE_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File successfully deleted " + name + APPLICANT_SUFFIX
+                                                + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -215,17 +223,20 @@ public class RepositoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("File successfully deleted " + name + USER_SUFFIX + IMAGE_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File successfully deleted " + name + USER_SUFFIX
+                                                + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testDeleteUFOImageAndExpectedIsOk() throws Exception {
+    public void testDeleteUFOImageAndExpectedIsException() throws Exception {
         String name = "testController103";
-        String endpoint = "/imgfile/ufo/" + name;
+        String ufo = "ufo";
+        String endpoint = "/imgfile/" + ufo + "/" + name;
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
+                                                + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -235,7 +246,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpoint = "/imgfile/applicant/" + name;
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: "
+                                               + name + APPLICANT_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -276,6 +288,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/jpeg"))
+                .andExpect(content().string("{\"status\":\"File added successfully " + name + USER_SUFFIX
+                                                    + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -297,10 +311,11 @@ public class RepositoryControllerTest extends BaseControllerTest {
     }
 
     @Test
-    public void TestPostUfoImage64AndExpectedIsOk() throws Exception {
+    public void TestPostUfoImage64AndExpectedIsException() throws Exception {
         String name = "testController105";
+        String ufo = "ufo";
         String fileNameFromResources = "test-files/input-1024x768.jpg";
-        String endpointPost = "/img/ufo/" + name;
+        String endpointPost = "/img/" + ufo + "/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -310,7 +325,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         mockMvc.perform(post(endpointPost)
                 .param("string64image", imageInString)
                 .header("Content-Type", "image/jpeg"))
-                .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
+                                                     + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -375,9 +391,10 @@ public class RepositoryControllerTest extends BaseControllerTest {
     @Test
     public void testGetUfoImage64OriginalSizeAndExpectedIsOk() throws Exception {
         String name = "testController107";
+        String ufo = "ufo";
         String fileNameFromResources = "test-files/time-square-imgscarl-resize-QUALITY-AUTO-10x10.png";
         String endpointPost = "/img/user/" + name;
-        String endpointGet = "/img/ufo/" + name;
+        String endpointGet = "/img/" + ufo + "/" + name;
 
         byte[] imageInByte = IOUtils.toByteArray(this.getClass()
                 .getResourceAsStream("/" + fileNameFromResources));
@@ -392,7 +409,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(status().isBadRequest())
-                .andExpect(content().string("You failed to upload because of invalid path: must contain %applicant% or %user% in it. Caused by: ufo"));
+                .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
+                                                  + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"));
     }
 
     @Test
@@ -401,7 +419,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpointGet = "/img/user/" + name + "?height=200&width=200";
 
         mockMvc.perform(get(endpointGet))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: " + name
+                                                    + USER_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -411,7 +430,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpointGet = "/img/applicant/" + name;
 
         mockMvc.perform(get(endpointGet))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: "
+                                                + name + APPLICANT_SUFFIX + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -426,7 +446,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("File added successfully " + name + APPLICANT_SUFFIX + DOCUMENT_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File added successfully " + name + APPLICANT_SUFFIX
+                                                + DOCUMENT_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -441,7 +462,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
 
         mockMvc.perform(fileUpload(endpoint)
                 .file(multipartFile))
-                .andExpect(content().string("You failed to upload because the file has incorrect type: " + name + ". Caused by: image/png"))
+                .andExpect(content().string("{\"reason\":\"You failed to upload because the file has incorrect type: "
+                                                    + name + ". Caused by: image/png" + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -472,7 +494,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpointGet = "/doc/" + name;
 
         mockMvc.perform(get(endpointGet))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: " + name
+                                                + APPLICANT_SUFFIX + DOCUMENT_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 
@@ -490,7 +513,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
                 .andExpect(status().isOk());
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("File successfully deleted " + name  + APPLICANT_SUFFIX + DOCUMENT_SUFFIX))
+                .andExpect(content().string("{\"status\":\"File successfully deleted " + name  + APPLICANT_SUFFIX
+                                                    + DOCUMENT_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -500,7 +524,8 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String endpoint = "/doc/" + name;
 
         mockMvc.perform(delete(endpoint))
-                .andExpect(content().string("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete - such node doesn't exist"))
+                .andExpect(content().string("{\"reason\":\"Bad request - Such node doesn't exist: " + name
+                                                + APPLICANT_SUFFIX + DOCUMENT_SUFFIX + "\"}"))
                 .andExpect(status().isBadRequest());
     }
 }

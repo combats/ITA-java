@@ -57,7 +57,7 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
             response = "File added successfully " + dataTransferFile.getNodeName();
 
         } catch (RepositoryException e) {
-            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method post ["
+            throw new JcrException("In JcrJackrabbitDataAccessImpl: method post ["
                     + e.getMessage() + "]");
         } finally {
             if(binary != null) {
@@ -115,15 +115,14 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
                 originalFileName = nodeName;
                 stream = bin.getStream();
 
-                responseDataTransferFile = new DataTransferFile(nodeName, originalFileName, mimeType, IOUtils.toByteArray(stream));
+                responseDataTransferFile = new DataTransferFile(nodeName, originalFileName, mimeType,
+                                                                IOUtils.toByteArray(stream));
             } else {
-                throw new NotExistingNodeJcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get" +
-                                                                         " - such node doesn't exist");
+                throw new NotExistingNodeJcrException(nodeName);
             }
 
         } catch (RepositoryException | IOException e) {
-            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method get ["
-                                                                            + e.getMessage() + "]");
+            throw new JcrException("In JcrJackrabbitDataAccessImpl: method get [" + e.getMessage() + "]");
         } finally {
             session.logout();
         }
@@ -150,12 +149,10 @@ public class JcrJackrabbitDataAccessImpl implements JcrDataAccess {
 
                 delStatus = "File successfully deleted " + nodeName;
             } else {
-                throw new NotExistingNodeJcrException("Some jcr trouble in JcrJackrabbitDataAccessImpl: method delete" +
-                                                                            " - such node doesn't exist");
+                throw new NotExistingNodeJcrException(nodeName);
             }
         } catch (RepositoryException e) {
-            throw new JcrException("Some jcr trouble in JcrJackrabbitDataAccessImp: method delete ["
-                                                                              + e.getMessage() + "]");
+            throw new JcrException("In JcrJackrabbitDataAccessImp: method delete [" + e.getMessage() + "]");
         } finally {
             session.logout();
         }
