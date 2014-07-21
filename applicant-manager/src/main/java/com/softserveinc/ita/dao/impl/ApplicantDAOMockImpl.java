@@ -41,16 +41,6 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     }
 
     @Override
-    public List<Applicant> getApplicantsByGroupID(String groupID) {
-
-        if (db.containsKey(groupID)) {
-            return (db.get(groupID)).getApplicantsInGroup();
-        } else {
-            return new ArrayList<>();
-        }
-    }
-
-    @Override
     public Applicant getApplicantById(String applicantId) {
         return applicants.get(applicantId);
     }

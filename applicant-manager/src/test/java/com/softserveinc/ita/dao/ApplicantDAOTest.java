@@ -2,7 +2,6 @@ package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.dao.impl.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.exception.GroupNotFoundException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,23 +15,6 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
 
     @Autowired
     private ApplicantDAO applicantDao;
-
-    @Test
-    public void testGetApplicantsListAndExpectedIsOk() throws GroupNotFoundException {
-        List<Applicant> applicants = new ArrayList<>();
-        applicants.add(new Applicant("123"));
-        applicants.add(new Applicant("124"));
-        applicants.add(new Applicant("125"));
-//        assertTrue(applicantDao.getApplicants().containsAll(applicants));
-        assertEquals(applicants, applicantDao.getApplicantsByGroupID("1"));
-    }
-
-    @Test()
-    public void testGetApplicantsInGroupAndExceptionExpected() {
-        List<Applicant> emptyList = new ArrayList<>();
-        List<Applicant> applicantList = applicantDao.getApplicantsByGroupID("2");
-        assertEquals(emptyList, applicantList);
-    }
 
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
