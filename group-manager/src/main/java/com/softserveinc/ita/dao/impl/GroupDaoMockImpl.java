@@ -4,7 +4,9 @@ import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class GroupDaoMockImpl implements GroupDao {
@@ -13,8 +15,8 @@ public class GroupDaoMockImpl implements GroupDao {
     }
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(String groupStatus) {
-        ArrayList<Group> groups = new ArrayList<Group>();
+    public List<Group> getGroupsByStatus(String groupStatus) {
+        List<Group> groups = new ArrayList<Group>();
         groups.add(new Group(Group.Status.IN_PROCESS, "id1", new Course("Java", "pen-java.png"), "kv001"));
         groups.add(new Group(Group.Status.OFFERING, "id2", new Course("Sharp", "pen-net.png"), "kv041"));
         groups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
