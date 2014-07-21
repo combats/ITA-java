@@ -35,7 +35,7 @@ public class Group implements Serializable{
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")
-    private Map<String, Applicant.Status> applicants = new HashMap<>();
+    private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
     @Column(name = "GroupName")
     private String groupName;
     @Column(name = "GroupStatus")
@@ -114,11 +114,11 @@ public class Group implements Serializable{
         this.applicantsInGroup = applicantsInGroup;
     }
 
-    public Map<String, Applicant.Status> getApplicants() {
+    public Map<String, ApplicantBenchmark> getApplicants() {
         return applicants;
     }
 
-    public void setApplicants(Map<String, Applicant.Status> applicants) {
+    public void setApplicants(Map<String, ApplicantBenchmark> applicants) {
         this.applicants = applicants;
     }
 

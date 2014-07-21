@@ -76,7 +76,7 @@ public class MailServiceImpl implements MailService {
             group = httpRequestExecutor.getObjectByID(groupId, Group.class);
             responsibleHr = httpRequestExecutor.getObjectByID(responsibleHrId, User.class);
 
-            Applicant.Status status = group.getApplicants().get(applicantId);
+            Applicant.Status status = group.getApplicants().get(applicantId).getStatus();
             switch (status) {
                 case NOT_SCHEDULED:
                     sendNotScheduledLetterModel(applicant, group, responsibleHr);
@@ -107,7 +107,7 @@ public class MailServiceImpl implements MailService {
         model.put(HR_PHONE, responsibleHr.getPhone());
         model.put(HR_EMAIL, responsibleHr.getEmail());
         model.put(APPLICANT_EMAIL, applicant.getEmail());
-        sendLetter(group.getApplicants().get(applicant.getId()), model);
+        sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
     private void sendPassedLetter(Applicant applicant, Group group, User responsibleHr) {
@@ -122,7 +122,7 @@ public class MailServiceImpl implements MailService {
         model.put(HR_PHONE, responsibleHr.getPhone());
         model.put(HR_EMAIL, responsibleHr.getEmail());
         model.put(APPLICANT_EMAIL, applicant.getEmail());
-        sendLetter(group.getApplicants().get(applicant.getId()), model);
+        sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
     private void sendNotPassedLetter(Applicant applicant, Group group) {
@@ -130,7 +130,7 @@ public class MailServiceImpl implements MailService {
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());
         model.put(APPLICANT_EMAIL, applicant.getEmail());
-        sendLetter(group.getApplicants().get(applicant.getId()), model);
+        sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
 
@@ -156,7 +156,7 @@ public class MailServiceImpl implements MailService {
         model.put(HR_PHONE, responsibleHr.getPhone());
         model.put(HR_EMAIL, responsibleHr.getEmail());
         model.put(APPLICANT_EMAIL, applicant.getEmail());
-        sendLetter(group.getApplicants().get(applicant.getId()), model);
+        sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
 

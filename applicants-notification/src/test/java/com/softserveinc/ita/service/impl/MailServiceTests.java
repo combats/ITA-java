@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
+
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
@@ -50,15 +51,23 @@ public class MailServiceTests extends MailServiceBaseTests {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
         group1 = new Group("id1", new Course("Java Script", "pen-net.png"), "street1", 111111111);
-        Map<String, Applicant.Status> groupApplicants1 = new HashMap<>();
-        groupApplicants1.put(applicant1.getId(), Applicant.Status.PASSED);
-        groupApplicants1.put(applicant2.getId(), Applicant.Status.NOT_PASSED);
+        Map<String, ApplicantBenchmark> groupApplicants1 = new HashMap<>();
+        ApplicantBenchmark applicantBenchmarkPassed = new ApplicantBenchmark();
+        applicantBenchmarkPassed.setStatus(Applicant.Status.PASSED);
+        ApplicantBenchmark applicantBenchmarkNotPassed = new ApplicantBenchmark();
+        applicantBenchmarkNotPassed.setStatus(Applicant.Status.NOT_PASSED);
+        groupApplicants1.put(applicant1.getId(), applicantBenchmarkPassed);
+        groupApplicants1.put(applicant2.getId(), applicantBenchmarkNotPassed);
         group1.setApplicants(groupApplicants1);
         responsibleHr1 = new User("id1", "Svetlana", "Ivanova", 24, "sveta@gmail.com", "555-11-22");
         group2 = new Group("id2", new Course("C#", "pen-net.png"), "street23", 232322323);
-        Map<String, Applicant.Status> groupApplicants2 = new HashMap<>();
-        groupApplicants2.put(applicant2.getId(), Applicant.Status.NOT_SCHEDULED);
-        groupApplicants2.put(applicant3.getId(), Applicant.Status.SCHEDULED);
+        Map<String, ApplicantBenchmark> groupApplicants2 = new HashMap<>();
+        ApplicantBenchmark applicantBenchmarkNot_Scheduled = new ApplicantBenchmark();
+        applicantBenchmarkNot_Scheduled.setStatus(Applicant.Status.NOT_SCHEDULED);
+        ApplicantBenchmark applicantBenchmarkScheduled = new ApplicantBenchmark();
+        applicantBenchmarkScheduled.setStatus(Applicant.Status.SCHEDULED);
+        groupApplicants2.put(applicant2.getId(), applicantBenchmarkNot_Scheduled);
+        groupApplicants2.put(applicant3.getId(), applicantBenchmarkScheduled);
         group2.setApplicants(groupApplicants2);
         responsibleHr2 = new User("id2", "Bogdan", "Bogdanov", 25, "bogdanov@gmail.com", "555-11-33");
         appointment1 = new Appointment(users, applicant1.getId(), 1401866602L + TOMORROW, group1.getGroupID());
@@ -189,12 +198,12 @@ public class MailServiceTests extends MailServiceBaseTests {
     private void checkReceivedLetter(Map<String, Object> letterModel, Applicant applicant, Group group)
             throws MessagingException, IOException {
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
-                group.getApplicants().get(applicant.getId()).getTemplateRef(), MailServiceImpl.ENCODING, letterModel);
+                group.getApplicants().get(applicant.getId()).getStatus().getTemplateRef(), MailServiceImpl.ENCODING, letterModel);
         assertTrue(wiser.getMessages().size() == 1);
         WiserMessage wiserMessage = wiser.getMessages().get(0);
         assertEquals(wiserMessage.getEnvelopeReceiver(), applicant.getEmail());
         assertEquals(wiserMessage.getEnvelopeSender(), SENDER_EMAIL);
-        assertEquals(wiserMessage.getMimeMessage().getSubject(), group.getApplicants().get(applicant.getId()).
+        assertEquals(wiserMessage.getMimeMessage().getSubject(), group.getApplicants().get(applicant.getId()).getStatus().
                 getSubject());
         Object obj = wiserMessage.getMimeMessage().getContent();
         assertTrue(obj instanceof MimeMultipart);
