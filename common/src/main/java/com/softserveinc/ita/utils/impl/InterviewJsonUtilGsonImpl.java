@@ -8,10 +8,9 @@ import com.softserveinc.ita.utils.JsonUtil;
 import java.text.DateFormat;
 
 public class InterviewJsonUtilGsonImpl implements JsonUtil {
-    private Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+    private Gson gson = new GsonBuilder().serializeNulls().setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
             .setDateFormat(DateFormat.DEFAULT)
             .setPrettyPrinting()
-            .excludeFieldsWithoutExposeAnnotation()
             .create();
 
     @Override
@@ -23,5 +22,6 @@ public class InterviewJsonUtilGsonImpl implements JsonUtil {
     public String toJson(Object o) {
         return gson.toJson(o);
     }
+
 }
 

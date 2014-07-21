@@ -26,12 +26,14 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
     Appointment appointment1;
     Appointment appointment2;
     Appointment appointment3;
+    Appointment appointment4;
 
     private User user1 = new User("1", "IT Project Manager");
     private User user2 = new User("2", "Software Developer");
     private User user3 = new User("3", "HR Manager");
 
     private Applicant applicant1 = new Applicant("1", "Gena");
+
     private Applicant applicant2 = new Applicant("2", "Gesha");
 
     List<String> usersIdList = new ArrayList<String>(); {
@@ -85,14 +87,23 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
         applicant2.setId("2");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment2 = new Appointment(usersIdList, applicant1.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
         appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment3.setAppointmentId("3");
+        appointment4 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        appointment4.setAppointmentId("4");
         appointmentList.add(appointment1);
         appointmentList.add(appointment2);
         appointmentList.add(appointment3);
+        appointmentList.add(appointment4);
     }
+
+    List<String> appointmentIdList1 = new ArrayList<>();{
+        appointmentIdList1.add(appointment1.getAppointmentId());
+        appointmentIdList1.add(appointment2.getAppointmentId());
+    }
+
     //-------------VadimNaumenko mock from tests
 
     private final RestTemplate restTemplate;
@@ -134,12 +145,8 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-
-
-    public RestTemplate getRestTemplate(){ return restTemplate;}
-
-    public String getBaseUrl() {
-        return baseUrl;
+    @Override
+    public List<String> getListObjectsIdByPrams(Class objectClass, Map<Class, String> urlValues) throws HttpRequestException {
+        return appointmentIdList1;
     }
-
 }
