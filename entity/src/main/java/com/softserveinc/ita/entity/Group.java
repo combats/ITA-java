@@ -30,7 +30,6 @@ public class Group implements Serializable{
     @ElementCollection
     @CollectionTable(name = "ApplicantsInGroup", joinColumns = @JoinColumn(name = "Id"))
     private List<Applicant> applicantsInGroup = new ArrayList<>();
-    @Enumerated(EnumType.STRING)
     @ElementCollection
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")
