@@ -241,7 +241,7 @@ $(function() {
 
         $.ajax({
             async: false,
-            url: '/roles',
+            url: '/users/roles',
             dataType: "json",
             type: "GET",
             success: function (roleList) {
@@ -265,7 +265,9 @@ $(function() {
                 if (userList) {
                     $.each( userList, function(index, user) {
                         userMap[user.id] = user;
-                        roleMap[user.role.id].users.push(user);
+                        if(user.role){
+                            roleMap[user.role.id].users.push(user);
+                        }
                     });
                 }
 
