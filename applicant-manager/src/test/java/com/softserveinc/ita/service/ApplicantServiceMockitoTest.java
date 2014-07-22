@@ -49,26 +49,4 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
         assertEquals(standartList, applicantService.getApplicants());
         verify(applicantDao, times(1)).getApplicants();
     }
-
-    @Test
-    public void testGetApplicantsInGroupAndExpectediIsOk() {
-        List<Applicant> mockApplicants = new ArrayList<>();
-        mockApplicants.add(new Applicant("123"));
-        mockApplicants.add(new Applicant("124"));
-        mockApplicants.add(new Applicant("125"));
-
-        when(applicantDao.getApplicantsByGroupID("1")).thenReturn(mockApplicants);
-        applicants = applicantService.getApplicantsByGroupID("1");
-        verify(applicantDao, times(1)).getApplicantsByGroupID("1");
-        assertEquals(applicants, mockApplicants);
-    }
-
-    @Test
-    public void testGetApplicantsInGroupAndExceptionExpected() {
-        List<Applicant> mockApplicants = new ArrayList<>();
-        when(applicantDao.getApplicantsByGroupID("2")).thenReturn(mockApplicants);
-        applicants = applicantService.getApplicantsByGroupID("2");
-        verify(applicantDao, times(1)).getApplicantsByGroupID("2");
-        assertEquals(applicants, mockApplicants);
-    }
 }

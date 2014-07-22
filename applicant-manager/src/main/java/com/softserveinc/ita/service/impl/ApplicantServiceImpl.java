@@ -25,12 +25,6 @@ public class ApplicantServiceImpl implements ApplicantService {
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public List<Applicant> getApplicantsByGroupID(String groupID) {
-        return applicantDao.getApplicantsByGroupID(groupID);
-    }
-
-    @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
     public Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException {
         Applicant searchedApplicant = applicantDao.getApplicantById(applicantId);
         if (searchedApplicant == null) {
