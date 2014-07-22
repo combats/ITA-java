@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/")
 public class UserController {
     @Autowired
     private JsonUtil jsonUtil;
@@ -56,7 +56,7 @@ public class UserController {
         User createdUser = userService.postNewUser(user);
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(
-                builder.path("/users/{userID}").buildAndExpand(createdUser.getUserID().toString()).toUri());
+                builder.path("/users/{userID}").buildAndExpand(createdUser.getID().toString()).toUri());
         return new ResponseEntity<>(createdUser, headers, HttpStatus.CREATED);
     }
 

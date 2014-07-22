@@ -99,13 +99,13 @@ public class UserMockDAOTest extends BaseDAOTest {
 
     @Test
     public void testExistingUserEditingAndExpectTrue(){
-        User user = new User("id1","name",43);
+        User user = new User("id1","name","lastname");
         assertEquals(userDAO.changeUser(user), user);
     }
 
     @Test
     public void testNotExistingUserAndExpectFalse(){
-        User user = new User("id4","name",43);
+        User user = new User("id4","name","lastname");
         assertNull(userDAO.changeUser(user));
     }
 

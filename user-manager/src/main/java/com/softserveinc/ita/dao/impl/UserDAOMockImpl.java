@@ -2,9 +2,9 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.springframework.stereotype.Repository;
-import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
 import java.util.*;
 
@@ -21,8 +21,10 @@ public class UserDAOMockImpl implements UserDAO {
 
     @Override
     public List<User> getUsers() {
-        List<User> users = new ArrayList<>();
-        Collections.addAll(users, new User("id3"), new User("idY"), new User("id09z"));
+        List<User> users = new ArrayList<User>();
+        Collections.addAll(users, new User("1", "Pupkin", "Vasiliy"),
+                new User("2", "Ivanov", "Ivan"),
+                new User("3", "Fedorov", "Fedor"));
         return users;
     }
 
@@ -35,7 +37,7 @@ public class UserDAOMockImpl implements UserDAO {
         }};
 
         for (User u : users) {
-            if (u.getUserID().equals(UserID)) {
+            if (u.getID().equals(UserID)) {
                 user = u;
             }
         }
@@ -51,7 +53,8 @@ public class UserDAOMockImpl implements UserDAO {
         }};
         return usersID;
     }
-    public User postNewUser(User user) throws UserAlreadyExistsException{
+
+    public User postNewUser(User user) throws UserAlreadyExistsException {
         ArrayList<User> users = new ArrayList<User>() {{
             add(new User("1"));
             add(new User("2"));
@@ -62,10 +65,10 @@ public class UserDAOMockImpl implements UserDAO {
         }
         return user;
     }
-    
+
     @Override
     public String deleteUser(String userID) throws UserDoesNotExistException {
-        if(!dbOfUsers.containsKey(userID)){
+        if (!dbOfUsers.containsKey(userID)) {
             throw new UserDoesNotExistException();
         }
         dbOfUsers.remove(userID);
@@ -73,11 +76,11 @@ public class UserDAOMockImpl implements UserDAO {
     }
 
     @Override
-    public User changeUser(User changingUser){
-        if(changingUser==null){
+    public User changeUser(User changingUser) {
+        if (changingUser == null) {
             return null;
         }
-        List<User> users = new ArrayList<User>(){
+        List<User> users = new ArrayList<User>() {
             {
                 add(new User("id1"));
                 add(new User("id2"));
@@ -85,7 +88,7 @@ public class UserDAOMockImpl implements UserDAO {
             }
         };
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getUserID().equals(changingUser.getUserID())) {
+            if (users.get(i).getID().equals(changingUser.getID())) {
                 users.set(i, changingUser);
                 return users.get(i);
             }

@@ -34,4 +34,5 @@
     <!--external services-->
     <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
     <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
 </beans>

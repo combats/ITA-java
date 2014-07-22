@@ -12,15 +12,15 @@ import java.util.List;
 @Table(name = "Appointments")
 public class Appointment {
 
-    private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
+    private static final long DEFAULT_DURATION = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
 
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "AppointmentId", unique = true)
-    private String appointmentId;
+    @Column(name = "ID", unique = true)
+    private String ID;
 
     @ElementCollection
     @CollectionTable(name = "Users", joinColumns = @JoinColumn(name = "UserId"))
@@ -33,16 +33,16 @@ public class Appointment {
     @Column(name = "StartTime")
 	private long startTime = System.currentTimeMillis() + TOMORROW;
 
-    @Column(name = "DurationTime")
-	private long durationTime = DEFAULT_DURATION_TIME;
+    @Column(name = "Duration")
+	private long duration = DEFAULT_DURATION;
 
 	public Appointment() {}
 
-	public Appointment(List<String> userIdList, String applicantId, long startTime, long durationTime) {
+	public Appointment(List<String> userIdList, String applicantId, long startTime, long duration) {
 		this.userIdList = userIdList;
 		this.applicantId = applicantId;
 		this.startTime = startTime;
-		this.durationTime = durationTime;
+		this.duration = duration;
 	}
 
 	public Appointment(List<String> userIdList, String applicantId, long startTime) {
@@ -75,20 +75,20 @@ public class Appointment {
 		this.startTime = startTime;
 	}
 
-	public long getDurationTime() {
-		return durationTime;
+	public long getDuration() {
+		return duration;
 	}
 
-	public void setDurationTime(long durationTime) {
-		this.durationTime = durationTime;
+	public void setDuration(long duration) {
+		this.duration = duration;
 	}
 
-    public String getAppointmentId() {
-        return appointmentId;
+    public String getID() {
+        return ID;
     }
 
-    public void setAppointmentId(String appointmentId) {
-        this.appointmentId = appointmentId;
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
 	@Override
@@ -97,7 +97,7 @@ public class Appointment {
 				"userIdList=" + userIdList +
 				", applicantId=" + applicantId +
 				", startTime=" + startTime +
-				", durationTime=" + durationTime +
+				", duration=" + duration +
 				'}';
 	}
 
@@ -108,7 +108,7 @@ public class Appointment {
 
 		Appointment that = (Appointment) o;
 
-		if (durationTime != that.durationTime) return false;
+		if (duration != that.duration) return false;
 		if (startTime != that.startTime) return false;
 		if (!applicantId.equals(that.applicantId)) return false;
 		if (!userIdList.equals(that.userIdList)) return false;
@@ -121,7 +121,7 @@ public class Appointment {
 		int result = userIdList.hashCode();
 		result = 31 * result + applicantId.hashCode();
 		result = 31 * result + (int) (startTime ^ (startTime >>> 32));
-		result = 31 * result + (int) (durationTime ^ (durationTime >>> 32));
+		result = 31 * result + (int) (duration ^ (duration >>> 32));
 		return result;
 	}
 

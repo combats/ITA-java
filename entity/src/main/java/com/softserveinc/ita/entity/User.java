@@ -2,32 +2,37 @@ package com.softserveinc.ita.entity;
 
 public class User {
 
-    public static final int DEFAULT_USER_AGE = 0;
-    public static final String DEFAULT_USER_NAME = "";
-    public static final String DEFAULT_USER_ID = "";
-    private String userID = DEFAULT_USER_ID;
-    private String name = DEFAULT_USER_NAME;
-    private int age = DEFAULT_USER_AGE;
+    private String ID = "";
+    private String name = "";
+    private String lastName = "";
 
     public User() {
     }
 
-    public User(String userID) {
-        this.userID = userID;
+    public String getLastName() {
+        return lastName;
     }
 
-    public User(String userID, String name, int age) {
-        this.userID = userID;
+    public void setLastName(String LastName) {
+        this.lastName = lastName;
+    }
+
+    public User(String ID, String lastName, String name) {
+        this.ID = ID;
         this.name = name;
-        this.age = age;
+        this.lastName = lastName;
     }
 
-    public String getUserID() {
-        return userID;
+    public User(String ID) {
+        this.ID = ID;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getName() {
@@ -38,23 +43,6 @@ public class User {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "userID='" + userID + '\'' +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,19 +50,28 @@ public class User {
 
         User user = (User) o;
 
-        if (age != user.age) return false;
-        if (name != null ? !name.equals(user.name) : user.name != null) return false;
-        if (userID != null ? !userID.equals(user.userID) : user.userID != null) return false;
+        if (!ID.equals(user.ID)) return false;
+        if (!lastName.equals(user.lastName)) return false;
+        if (!name.equals(user.name)) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = userID != null ? userID.hashCode() : 0;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + age;
+        int result = ID.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + lastName.hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "ID='" + ID + '\'' +
+                ", name='" + name + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }
 

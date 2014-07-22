@@ -24,21 +24,21 @@ public class AppointmentServiceMock implements AppointmentService {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
         Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
-        appointment1.setAppointmentId(appointmentId);
+        appointment1.setID(appointmentId);
 
         List<String> users2 = new ArrayList<>();
         Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
-        appointment2.setAppointmentId(appointmentId);
+        appointment2.setID(appointmentId);
 
         List<String> users3 = new ArrayList<>();
         Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
-        appointment3.setAppointmentId(appointmentId);
+        appointment3.setID(appointmentId);
 
 
         Appointment todayFirstAppointment = new Appointment(users, applicantId, currentTime);
-        todayFirstAppointment.setAppointmentId(appointmentId);
+        todayFirstAppointment.setID(appointmentId);
         Appointment todaySecondAppointment = new Appointment(users, applicantId, currentTime);
-        todaySecondAppointment.setAppointmentId(appointmentId);
+        todaySecondAppointment.setID(appointmentId);
 
         appointmentsList = new LinkedList<>();
         Collections.addAll(appointmentsList, appointment1, appointment2, appointment3, todayFirstAppointment

@@ -41,7 +41,7 @@ public class UserServiceTest extends BaseServiceTest {
 
     @Test(expected = UserDoesNotExistException.class)
     public void testEditUserWithNotExistingIdAndExpectException() throws UserDoesNotExistException, EmptyUserException {
-        User user = new User("id4", "name", 2);
+        User user = new User("id4", "name", "lastname");
         userService.editUser(user);
     }
 
@@ -53,7 +53,7 @@ public class UserServiceTest extends BaseServiceTest {
 
     @Test
     public void testEditUserWithExistingUser() throws UserDoesNotExistException, EmptyUserException {
-        User user = new User("id2", "name", 2);
+        User user = new User("id2", "name", "lastname");
         userService.editUser(user);
     }
     @Test(expected = UserAlreadyExistsException.class)

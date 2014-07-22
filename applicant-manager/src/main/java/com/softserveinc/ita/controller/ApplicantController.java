@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
-@RequestMapping("/applicants")
+@RequestMapping("/")
 public class ApplicantController {
 
     @Autowired
@@ -25,31 +25,20 @@ public class ApplicantController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Applicant>> getApplicants() {
+        System.out.println("GET");
         List<Applicant> resultList = applicantService.getApplicants();
-        if(resultList.isEmpty() || resultList == null){
+        if (resultList.isEmpty() || resultList == null) {
             return new ResponseEntity<>(resultList, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(resultList, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
-    public ResponseEntity<List<Applicant>> getApplicantsByGroupID(@PathVariable String groupID) {
-        List<Applicant> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
-        if(resultBYGroupID.isEmpty() || resultBYGroupID == null){
-            return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(resultBYGroupID, HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Applicant getApplicantById(@PathVariable String applicantId)
-            throws ApplicantDoesNotExistException {
-        Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
-        return searchedApplicant;
-    }
-
+    /**
+     * check if applicant already exists
+     */
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<Applicant> addNewApplicant(@RequestBody Applicant applicant) {
+    public ResponseEntity<Applicant> addNewApplicant(@RequestBody Applicant applicant) {//
+        System.out.println("POST");
         Applicant newApplicant = applicantService.addNewApplicant(applicant);
         return new ResponseEntity<Applicant>(newApplicant, HttpStatus.OK);
     }
@@ -58,6 +47,24 @@ public class ApplicantController {
     public ResponseEntity<Applicant> editApplicant(@RequestBody Applicant applicant) {
         Applicant editedApplicant = applicantService.editApplicant(applicant);
         return new ResponseEntity<Applicant>(editedApplicant, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
+    public ResponseEntity<List<Integer>> getApplicantsByGroupID(@PathVariable String groupID) {
+        List<Integer> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
+        if (resultBYGroupID.isEmpty() || resultBYGroupID == null) {
+            return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(resultBYGroupID, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{applicantId}", method = RequestMethod.GET, produces = "application/json")
+    public
+    @ResponseBody
+    Applicant getApplicantById(@PathVariable String applicantId)
+            throws ApplicantDoesNotExistException {
+        Applicant searchedApplicant = applicantService.getApplicantById(applicantId);
+        return searchedApplicant;
     }
 
     @RequestMapping(value = "/applicantID", method = RequestMethod.GET, produces = "application/json")
@@ -70,15 +77,16 @@ public class ApplicantController {
     }
 
     @ExceptionHandler(ApplicantException.class)
-    public @ResponseBody ExceptionJSONInfo handleApplicantException(ApplicantException exception, HttpServletResponse response){
+    public
+    @ResponseBody
+    ExceptionJSONInfo handleApplicantException(ApplicantException exception, HttpServletResponse response) {
         int responseStatus = exception.getClass().getAnnotation(ResponseStatus.class).value().value(); //get response status of the exception class
         String exceptionReason = exception.getClass().getAnnotation(ResponseStatus.class).reason();  // get reason of the exception class
         ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
         exceptionInfo.setReason(exceptionReason);
         try {
             response.sendError(responseStatus);   //send http status code
-        }
-        catch (Exception e){
+        } catch (Exception e) {
 
         }
         return exceptionInfo;

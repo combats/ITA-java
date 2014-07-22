@@ -87,7 +87,7 @@ public class AppointmentTests extends BaseMVCTest {
         List<String> users = new ArrayList();
         users.add("testUserId");
         Appointment app = new Appointment(users, applicantId, Long.valueOf(11), Long.valueOf(2));
-        app.dateValidation(app.getStartTime(), app.getDurationTime());
+        app.dateValidation(app.getStartTime(), app.getDuration());
     }
 
     @Test
@@ -99,7 +99,7 @@ public class AppointmentTests extends BaseMVCTest {
         List<String> users = new ArrayList();
         users.add("testUserId");
         Appointment app = new Appointment(users, applicantId, Long.valueOf(11), Long.valueOf(-2));
-        app.dateValidation(app.getStartTime(), app.getDurationTime());
+        app.dateValidation(app.getStartTime(), app.getDuration());
     }
 
     @Test
@@ -113,7 +113,7 @@ public class AppointmentTests extends BaseMVCTest {
         long currentDate = new Date().getTime() + 1;
         long bigDurationTime = 1000 * 60 * 60 * 12 + 1;
         Appointment app = new Appointment(users, applicantId, currentDate, bigDurationTime);
-        app.dateValidation(app.getStartTime(), app.getDurationTime());
+        app.dateValidation(app.getStartTime(), app.getDuration());
     }
 
     @Test
@@ -125,7 +125,7 @@ public class AppointmentTests extends BaseMVCTest {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
         Appointment appointment = new Appointment(users, applicantId, 1401866602L + TOMORROW);
-        appointment.setAppointmentId(appointmentId);
+        appointment.setID(appointmentId);
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(

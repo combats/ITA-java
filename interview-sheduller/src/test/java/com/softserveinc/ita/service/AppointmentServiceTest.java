@@ -29,10 +29,10 @@ public class AppointmentServiceTest extends BaseMVCTest {
         users.add("testUserId");
 
         expectedOne = new Appointment(users, "testApplicantId", 1401866602L + TOMORROW);
-        expectedOne.setAppointmentId(appointmentId);
+        expectedOne.setID(appointmentId);
 
         expectedTwo = new Appointment(users, "testApplicantId", 1401866604L + TOMORROW);
-        expectedTwo.setAppointmentId(appointmentId);
+        expectedTwo.setID(appointmentId);
     }
 
     @Test

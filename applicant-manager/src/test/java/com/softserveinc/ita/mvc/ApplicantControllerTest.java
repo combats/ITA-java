@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,9 +45,27 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetApplicantsListAngExpectedValid() throws Exception {
         List<Applicant> standart = new ArrayList<>();
-        standart.add(new Applicant("123"));
-        standart.add(new Applicant("124"));
-        standart.add(new Applicant("125"));
+        Applicant app1 = new Applicant("1", "Alexander", "Druz", "9379992",
+                "druz@gmail.com", 16843654863L);
+        Applicant app2 =
+                new Applicant("2", "Andrey", "Makarevich", "0671233215",
+                        "makarevich@gmail.com", 4368413654L);
+        Applicant app3 =
+                new Applicant("3", "Anatoliy", "Vasserman", "111111",
+                        "vasserman@gmail.com", 123643968L);
+        Applicant app4 =
+                new Applicant("4", "Nikita", "Dzhigurda", "1319758",
+                        "dzhigurda@gmail.com", 439873156L);
+        Applicant app5 =
+                new Applicant("5", "Alexandr", "Maslyakov", "368413",
+                        "kvn@gmail.com", 498789635L);
+        Applicant app6 =
+                new Applicant("6", "Michael", "Jackson", "7894395",
+                        "MJ@gmail.com", 123635486L);
+        Applicant app7 =
+                new Applicant("7", "Tim", "Howard", "16357453",
+                        "Howard@gmail.com", 3338415446L);
+        Collections.addAll(standart, app1, app2, app3, app4, app5);
 
         String standardJson = jsonUtil.toJson(standart);
 
@@ -65,14 +84,31 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetAllApplicantsByGroupIdAndExpectedValidList() throws Exception {
         List<Applicant> dbStandart = new ArrayList<>();
-        dbStandart.add(new Applicant("123"));
-        dbStandart.add(new Applicant("124"));
-        dbStandart.add(new Applicant("125"));
-
+        Applicant app1 = new Applicant("1", "Alexander", "Druz", "9379992",
+                "druz@gmail.com", 16843654863L);
+        Applicant app2 =
+                new Applicant("2", "Andrey", "Makarevich", "0671233215",
+                        "makarevich@gmail.com", 4368413654L);
+        Applicant app3 =
+                new Applicant("3", "Anatoliy", "Vasserman", "111111",
+                        "vasserman@gmail.com", 123643968L);
+        Applicant app4 =
+                new Applicant("4", "Nikita", "Dzhigurda", "1319758",
+                        "dzhigurda@gmail.com", 439873156L);
+        Applicant app5 =
+                new Applicant("5", "Alexandr", "Maslyakov", "368413",
+                        "kvn@gmail.com", 498789635L);
+        Applicant app6 =
+                new Applicant("6", "Michael", "Jackson", "7894395",
+                        "MJ@gmail.com", 123635486L);
+        Applicant app7 =
+                new Applicant("7", "Tim", "Howard", "16357453",
+                        "Howard@gmail.com", 3338415446L);
+        Collections.addAll(dbStandart, app1, app2, app3, app4, app5);
         String dbJson = jsonUtil.toJson(dbStandart);
         String groupID = "1";
         mockMvc.perform(get("/applicants/groups/" + groupID))
-               .andExpect(content().string(dbJson));
+                .andExpect(content().string(dbJson));
     }
 
     @Test
@@ -80,7 +116,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         String groupID = "2";
         String response = jsonUtil.toJson(new ArrayList<Applicant>());
         mockMvc.perform(get("/applicants/groups/" + groupID))
-               .andExpect(content().string(response));
+                .andExpect(content().string(response));
     }
 
     @Test
@@ -106,7 +142,9 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantWithExistingIdAndExpectCorrectApplicant() throws Exception {
-        Applicant applicant = new Applicant("id2");
+        Applicant applicant =
+                new Applicant("2", "Andrey", "Makarevich", "0671233215",
+                        "makarevich@gmail.com", 4368413654L);
         String jsonApplicant = jsonUtil.toJson(applicant);
         mockMvc.perform(
                 get("/applicants/id2")).andExpect(content().string(jsonApplicant));
@@ -139,7 +177,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         Applicant newApplicant = jsonUtil.fromJson(newApplicantJson, Applicant.class);
 
         String applicantFromServerJson = mockMvc.perform(
-                get("/applicants/" + newApplicant.getApplicantID())
+                get("/applicants/" + newApplicant.getID())
         )
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -161,7 +199,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
     }
 
     @Test
-    public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception{
+    public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception {
         mockMvc.perform(
                 get("/applicants/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Applicant does not exist"))));

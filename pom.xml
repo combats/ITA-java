@@ -19,6 +19,8 @@
         <module>interview-sheduller</module>
         <module>user-manager</module>
         <module>applicant-manager</module>
+        <module>web-ui</module>
+        <module>group-manager</module>
     </modules>
 
     <dependencies>

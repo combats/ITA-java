@@ -59,8 +59,8 @@ public class UserServiceImpl implements UserService {
 
     private boolean isEmpty(User changingUser) {
         if (changingUser == null
-                || changingUser.getAge() == User.DEFAULT_USER_AGE
-                || changingUser.getName().equals(User.DEFAULT_USER_NAME)) {
+//                || changingUser.get() == User.DEFAULT_USER_AGE
+                || changingUser.getName().isEmpty()) {
             return true;
         }
         return false;

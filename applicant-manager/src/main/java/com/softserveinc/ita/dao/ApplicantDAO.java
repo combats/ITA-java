@@ -9,7 +9,7 @@ import java.util.List;
 public interface ApplicantDAO {
     List<Applicant> getApplicants();
 
-    List<Applicant> getApplicantsByGroupID(String groupID);
+    List<Integer> getApplicantsByGroupID(String groupID);
 
     Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException;
 
