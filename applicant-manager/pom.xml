@@ -37,8 +37,7 @@
     </dependencies>
 
     <build>
-        <finalName>applicant-manager</finalName>
-
+        <finalName>applicants</finalName>
     </build>
 
 </project>

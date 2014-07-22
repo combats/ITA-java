@@ -37,7 +37,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantsListAngExpectedIsOk() throws Exception {
-        mockMvc.perform(get("/applicants"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 
@@ -50,57 +50,28 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
         String standardJson = jsonUtil.toJson(standart);
 
-        mockMvc.perform(get("/applicants"))
+        mockMvc.perform(get("/"))
                 .andExpect(content().string(standardJson));
-    }
-
-
-    @Test
-    public void testGetAllApplicantsByGroupId() throws Exception {
-        String groupID = "1";
-        mockMvc.perform(get("/applicants/groups/" + groupID))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetAllApplicantsByGroupIdAndExpectedValidList() throws Exception {
-        List<Applicant> dbStandart = new ArrayList<>();
-        dbStandart.add(new Applicant("123"));
-        dbStandart.add(new Applicant("124"));
-        dbStandart.add(new Applicant("125"));
-
-        String dbJson = jsonUtil.toJson(dbStandart);
-        String groupID = "1";
-        mockMvc.perform(get("/applicants/groups/" + groupID))
-               .andExpect(content().string(dbJson));
-    }
-
-    @Test
-    public void testGetAllApplicantsByGroupIdAndExceptionExpected() throws Exception {
-        String groupID = "2";
-        String response = jsonUtil.toJson(new ArrayList<Applicant>());
-        mockMvc.perform(get("/applicants/groups/" + groupID))
-               .andExpect(content().string(response));
     }
 
     @Test
     public void testGetApplicantAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/applicants/id1"))
+                get("/id1"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testGetApplicantWithNotExistingIdAndExpectException() throws Exception {
         mockMvc.perform(
-                get("/applicants/id4"))
+                get("/id4"))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testGetApplicantAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/applicants/id2"))
+                get("/id2"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -109,7 +80,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         Applicant applicant = new Applicant("id2");
         String jsonApplicant = jsonUtil.toJson(applicant);
         mockMvc.perform(
-                get("/applicants/id2")).andExpect(content().string(jsonApplicant));
+                get("/id2")).andExpect(content().string(jsonApplicant));
     }
 
     @Test
@@ -119,7 +90,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         String applicantJson = jsonUtil.toJson(applicant);
 
         mockMvc.perform(
-                post("/applicants").content(applicantJson).contentType(MediaType.APPLICATION_JSON)
+                post("/").content(applicantJson).contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk());
     }
@@ -130,7 +101,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         String applicantJson = jsonUtil.toJson(new Applicant());
 
         String newApplicantJson = mockMvc.perform(
-                post("/applicants")
+                post("/")
                         .content(applicantJson).contentType(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk())
@@ -139,7 +110,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
         Applicant newApplicant = jsonUtil.fromJson(newApplicantJson, Applicant.class);
 
         String applicantFromServerJson = mockMvc.perform(
-                get("/applicants/" + newApplicant.getId())
+                get("/" + newApplicant.getId())
         )
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
@@ -150,20 +121,20 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantIDListAndExpectIsOk() throws Exception {
-        mockMvc.perform(get("/applicants/applicantID"))
+        mockMvc.perform(get("/applicantID"))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testGetApplicantIDListAndExpectJson() throws Exception {
-        mockMvc.perform(get("/applicants/applicantID"))
+        mockMvc.perform(get("/applicantID"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception{
         mockMvc.perform(
-                get("/applicants/-1").accept(MediaType.APPLICATION_JSON))
+                get("/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Applicant does not exist"))));
     }
 }

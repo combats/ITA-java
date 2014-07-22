@@ -31,15 +31,12 @@ public class Appointment implements Serializable {
     private List <String> userIdList = new ArrayList<>();
 
     @Column(name = "ApplicantId")
-    @Expose
     private String applicantId;
 
     @Column(name = "StartTime")
-    @Expose
     private long startTime = System.currentTimeMillis() + TOMORROW;
 
     @Column(name = "DurationTime")
-    @Expose
     private long durationTime = DEFAULT_DURATION_TIME;
 
     @Column(name = "ActualStartTime")

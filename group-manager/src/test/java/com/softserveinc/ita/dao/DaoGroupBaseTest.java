@@ -5,6 +5,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:mvc-dispatcher-servlet.xml"})
+@ContextConfiguration(locations = {"classpath:group-manager-test-context.xml"})
 public abstract class DaoGroupBaseTest {
 }

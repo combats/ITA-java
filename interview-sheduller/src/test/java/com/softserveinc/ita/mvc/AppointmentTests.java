@@ -52,7 +52,7 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment appointment = new Appointment(users, applicantId, System.currentTimeMillis() + TOMORROW);
         String appointmentJson = jsonUtil.toJson(appointment);
 
-        mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
                 .andExpect(status().isAccepted());
     }
 
@@ -66,7 +66,7 @@ public class AppointmentTests extends BaseMVCTest {
         String appointmentJson = jsonUtil.toJson(appointment);
 
         MvcResult objectTest = mockMvc.perform(
-                get("/appointments/2/")
+                get("/2/")
         )
                 .andExpect(content().contentType("application/json;charset=UTF-8"))
                 .andExpect(status().isOk())
@@ -131,7 +131,7 @@ public class AppointmentTests extends BaseMVCTest {
         String appointmentJson = jsonUtil.toJson(result);
 
         mockMvc.perform(
-                get("/appointments/applicants/testApplicantId")
+                get("/applicants/testApplicantId")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(appointmentJson));
@@ -146,14 +146,14 @@ public class AppointmentTests extends BaseMVCTest {
         Appointment appointment = new Appointment(users, applicantId, System.currentTimeMillis() + TOMORROW);
         String appointmentJson = jsonUtil.toJson(appointment);
 
-        mockMvc.perform(post("/appointments").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
+        mockMvc.perform(post("/").contentType(MediaType.APPLICATION_JSON).content(appointmentJson))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
     public void testGetAppointmentByApplicantIdAndExpectIsOkWithJsonMediaType() throws Exception {
         mockMvc.perform(
-                get("/appointments/applicants/2")
+                get("/applicants/2")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
@@ -163,7 +163,7 @@ public class AppointmentTests extends BaseMVCTest {
     public void testRemoveAppointmentByIdAndExpectIsOk() throws Exception {
         String appointmentId = "1";
         mockMvc.perform(
-                delete("/appointments/{appointmentId}", appointmentId)
+                delete("/{appointmentId}", appointmentId)
         )
                 .andExpect(status().isOk());
     }
@@ -179,7 +179,7 @@ public class AppointmentTests extends BaseMVCTest {
         String appointmentJson = jsonUtil.toJson(appointment);
 
         mockMvc.perform(
-                post("/appointments")
+                post("/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
@@ -201,7 +201,7 @@ public class AppointmentTests extends BaseMVCTest {
         String exptectedIdJson = "testAppointmentId";
 
         MvcResult ExpectingObject = mockMvc.perform(
-                post("/appointments")
+                post("/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
@@ -219,7 +219,7 @@ public class AppointmentTests extends BaseMVCTest {
 
         long currentTime = System.currentTimeMillis();
 
-        mockMvc.perform(get("/appointments/date/" + currentTime))
+        mockMvc.perform(get("/date/" + currentTime))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[0].startTime", notNullValue()))
@@ -233,7 +233,7 @@ public class AppointmentTests extends BaseMVCTest {
 
         LinkedList<Appointment> expectedAppointmentsList = new LinkedList<>();
 
-        mockMvc.perform(get("/appointments/date/" + futureTime.getMillis()))
+        mockMvc.perform(get("/date/" + futureTime.getMillis()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(expectedAppointmentsList)));
@@ -244,7 +244,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentsByDateAndExpectStatusCodeBadRequest() throws Exception {
 
-        mockMvc.perform(get("/appointments/date/" + "nonexistent_URL"))
+        mockMvc.perform(get("/date/" + "nonexistent_URL"))
                 .andExpect(status().isBadRequest());
 
     }
@@ -259,9 +259,9 @@ public class AppointmentTests extends BaseMVCTest {
 
         String appointmentJson = jsonUtil.toJson(appointment);
         mockMvc.perform(
-                put("/appointments")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(appointmentJson)
+                put("/")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(appointmentJson)
         )
                 .andExpect(status().is(204));
     }
@@ -269,7 +269,7 @@ public class AppointmentTests extends BaseMVCTest {
     @Test
     public void testGetAppointmentIdByGroupIdAndApplicantIdAndExpectOkWithActualResponse() throws Exception {
         String expectedId = "TestAppointmentId";
-        mockMvc.perform(get("/appointments/groups/TestGroupId/applicants/TestApplicantId"))
+        mockMvc.perform(get("/").param("group","TestGroupId").param("applicant","TestApplicantId"))
                 .andExpect(status().isOk())
                 .andExpect(content().string(expectedId));
     }

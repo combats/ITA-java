@@ -12,4 +12,14 @@ public class OtherPagesController {
     public String getGroups() {
         return "groupsList";
     }
+
+    @RequestMapping(value = "/interview", method = RequestMethod.GET)
+    public String showPage() {
+        return "interview/pages/app";
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public String showUsers() {
+        return "users";
+    }
 }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/applicants")
+@RequestMapping("/")
 public class ApplicantController {
 
     @Autowired
@@ -25,15 +25,6 @@ public class ApplicantController {
             return new ResponseEntity<>(resultList, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(resultList, HttpStatus.OK);
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = "/groups/{groupID}")
-    public ResponseEntity<List<Applicant>> getApplicantsByGroupID(@PathVariable String groupID) {
-        List<Applicant> resultBYGroupID = applicantService.getApplicantsByGroupID(groupID);
-        if(resultBYGroupID.isEmpty() || resultBYGroupID == null){
-            return new ResponseEntity<>(resultBYGroupID, HttpStatus.BAD_REQUEST);
-        }
-        return new ResponseEntity<>(resultBYGroupID, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{applicantId}", method = RequestMethod.GET, produces = "application/json")
