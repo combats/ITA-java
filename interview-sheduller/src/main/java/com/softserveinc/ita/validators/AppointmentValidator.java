@@ -1,8 +1,8 @@
 package com.softserveinc.ita.validators;
 
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.service.ApplicantService;
-import com.softserveinc.ita.service.UserService;
+import com.softserveinc.ita.service.ApplicantValidation;
+import com.softserveinc.ita.service.UserValidation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -11,9 +11,9 @@ import java.util.List;
 
 public class AppointmentValidator implements Validator {
     @Autowired
-    UserService userService;
+    UserValidation userService;
     @Autowired
-    ApplicantService applicantService;
+    ApplicantValidation applicantValidation;
 
     @Override
     public boolean supports(Class<?> aClass) {
@@ -38,7 +38,7 @@ public class AppointmentValidator implements Validator {
     }
 
     private void validateApplicant(Appointment appointment, Errors errors) {
-        if (!applicantService.applicantExists(appointment.getApplicantId())) {
+        if (!applicantValidation.applicantExists(appointment.getApplicantId())) {
             errors.reject("400", "There is no applicant with id " + appointment.getApplicantId());
         }
     }

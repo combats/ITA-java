@@ -7,7 +7,7 @@ $(function() {
 
     $.ajax({
         async: false,
-        url: '/user/mst/users_template.mst',
+        url: '/ui/user/mst/users_template.mst',
         type: "GET",
         success: function (data) {
             pageTemplate = data;

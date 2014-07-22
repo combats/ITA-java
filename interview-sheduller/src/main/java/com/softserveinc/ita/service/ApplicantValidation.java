@@ -1,5 +1,5 @@
 package com.softserveinc.ita.service;
 
-public interface ApplicantService {
+public interface ApplicantValidation {
     public boolean applicantExists(String applicantId);
 }
