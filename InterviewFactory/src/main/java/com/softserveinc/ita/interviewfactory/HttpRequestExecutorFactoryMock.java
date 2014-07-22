@@ -1,10 +1,8 @@
 package com.softserveinc.ita.interviewfactory;
 
 import com.softserveinc.ita.entity.*;
-import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.service.impl.AbstractHttpRequestExecutorRestImpl;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -19,24 +17,20 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
 
     private static final int TOMORROW = 24 * 60 * 60 * 1000;
 
-    private Appointment appointment1;
-    private Appointment appointment2;
-    private Appointment appointment3;
-    private Appointment appointment4;
-    private Appointment appointment5;
+    private final Appointment appointment5;
 
-    private User user1 = new User();
-    private User user2 = new User();
-    private User user3 = new User();
-    private Role role1= new Role();
-    private Role role2= new Role();
-    private Role role3= new Role();
+    private final User user1 = new User();
+    private final User user2 = new User();
+    private final User user3 = new User();
+    private final Role role1= new Role();
+    private final Role role2= new Role();
+    private final Role role3= new Role();
 
-    private Applicant applicant1 = new Applicant();
-    private Applicant applicant2 = new Applicant();
-    private Applicant applicant3 = new Applicant();
+    private final Applicant applicant1 = new Applicant();
+    private final Applicant applicant2 = new Applicant();
+    private final Applicant applicant3 = new Applicant();
 
-    List<User> usersList = new ArrayList<User>(); {
+    private final List<User> usersList = new ArrayList<>(); {
 
         Question question1 = new Question("Have you ever were connected with quality assurance engineering?", 2);
         Question question2 = new Question("Have you ever were connected with database developing?", 3);
@@ -65,45 +59,42 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         Collections.addAll(usersList, user1, user2, user3);
     }
 
-    List<String> usersIdList = new ArrayList<String>(); {
+    private final List<String> usersIdList = new ArrayList<>(); {
         Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
-    List<String> usersIdList2 = new ArrayList<String>(); {
+    private final List<String> usersIdList2 = new ArrayList<>(); {
         Collections.addAll(usersIdList2, user1.getId());
     }
 
-    private List<Appointment> appointmentList = new ArrayList<>();{
+    private final List<Appointment> appointmentList = new ArrayList<>();{
         applicant1.setId("1");
         long startTime = 1403308782454L;
-        appointment1 = new Appointment(usersIdList2, applicant1.getId(), startTime);
+        Appointment appointment1 = new Appointment(usersIdList2, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
         applicant2.setId("2");
         applicant3.setId("3");
-        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        Appointment appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
-        appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        Appointment appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment3.setAppointmentId("3");
-        appointment4 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
+        Appointment appointment4 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment4.setAppointmentId("4");
         appointment5 = new Appointment(usersIdList2, applicant3.getId(), startTime + TOMORROW);
         appointment5.setAppointmentId("5");
         Collections.addAll(appointmentList, appointment1, appointment2, appointment3, appointment4, appointment5);
     }
 
-    List<String> appointmentIdList1 = new ArrayList<>();{
+    private final List<String> appointmentIdList1 = new ArrayList<>();{
         Collections.addAll(appointmentIdList1, appointment5.getAppointmentId());
     }
 
     //-------------VadimNaumenko mock from tests
 
-    private final RestTemplate restTemplate;
-    private final String baseUrl;
-
     public HttpRequestExecutorFactoryMock (String baseUrl) {
         super(baseUrl);
-        this.baseUrl = baseUrl;
-        this.restTemplate  = new RestTemplate();
+        String baseUrl1 = baseUrl;
+        RestTemplate restTemplate = new RestTemplate();
     }
 
 

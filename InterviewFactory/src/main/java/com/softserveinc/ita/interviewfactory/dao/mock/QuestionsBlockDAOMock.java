@@ -2,7 +2,6 @@ package com.softserveinc.ita.interviewfactory.dao.mock;
 
 import com.softserveinc.ita.dao.InterviewDAO;
 import com.softserveinc.ita.dao.QuestionsBlockDAO;
-import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.Set;
 
 public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
-    public static List<QuestionsBlock> allQuestionsBlocks = new ArrayList();
+    private static final List<QuestionsBlock> allQuestionsBlocks = new ArrayList();
 
     @Autowired
     InterviewDAO interviewDAO;
@@ -129,7 +128,6 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
     @Override
     public void deleteQuestionsBlockById(String questionsBlockId) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

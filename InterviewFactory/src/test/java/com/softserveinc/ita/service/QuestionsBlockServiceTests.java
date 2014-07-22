@@ -1,7 +1,6 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.InterviewType;
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.factory.InterviewFactory;
@@ -9,15 +8,10 @@ import com.softserveinc.ita.interviewfactory.service.interviewServices.Interview
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;

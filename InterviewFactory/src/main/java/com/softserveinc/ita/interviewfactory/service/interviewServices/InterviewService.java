@@ -15,9 +15,9 @@ public interface InterviewService {
 
     Interview getInterviewByAppointmentID(String interviewId) throws HttpRequestException, WrongCriteriaException;
 
-    void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException;
-    void updateInterview(Interview interview) throws HttpRequestException;
-    List<String> getAllInterviewsId() throws HttpRequestException;
+    void removeInterviewByAppointmentId(String interviewId);
+    void updateInterview(Interview interview);
+    List<String> getAllInterviewsId();
     List<Interview> getAllInterviews() throws HttpRequestException;
     InterviewResults getInterviewResultsByInterviewId(String InterviewId) throws WrongCriteriaException, HttpRequestException;
 }

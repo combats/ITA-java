@@ -7,12 +7,10 @@ import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.service.interviewServices.InterviewService;
 import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.QuestionsBlockServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
-import com.softserveinc.ita.utils.JsonUtil;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;

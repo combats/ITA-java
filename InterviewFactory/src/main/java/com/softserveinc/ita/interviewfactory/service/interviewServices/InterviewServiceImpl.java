@@ -10,7 +10,6 @@ import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
@@ -78,17 +77,17 @@ public class InterviewServiceImpl implements InterviewService {
     }
 
     @Override
-    public void removeInterviewByAppointmentId(String interviewId) throws HttpRequestException {
+    public void removeInterviewByAppointmentId(String interviewId) {
         interviewDAO.removeInterviewByAppointmentId(interviewId);
     }
 
     @Override
-    public void updateInterview(Interview interview) throws HttpRequestException {
+    public void updateInterview(Interview interview) {
         interviewDAO.updateInterview(interview);
     }
 
     @Override
-    public List<String> getAllInterviewsId() throws HttpRequestException {
+    public List<String> getAllInterviewsId() {
         return interviewDAO.getAllInterviewsId();
     }
 

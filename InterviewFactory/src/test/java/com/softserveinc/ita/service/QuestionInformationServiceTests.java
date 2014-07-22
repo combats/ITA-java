@@ -4,7 +4,6 @@ import com.softserveinc.ita.entity.Interview;
 import com.softserveinc.ita.entity.QuestionInformation;
 import com.softserveinc.ita.entity.QuestionsBlock;
 import com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock;
-import com.softserveinc.ita.interviewfactory.dao.mock.QuestionsBlockDAOMock;
 import com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServices;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;

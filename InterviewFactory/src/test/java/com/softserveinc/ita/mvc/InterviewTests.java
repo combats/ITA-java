@@ -19,7 +19,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import javax.servlet.http.Cookie;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -151,7 +150,7 @@ public class InterviewTests extends BaseMVCTest {
         assertEquals(expected, actual.get(0));
     }
 
-    private Cookie[] cookies = new Cookie[] { new Cookie("userId", "1"), new Cookie("appointmentId", "1") };
+    private final Cookie[] cookies = new Cookie[] { new Cookie("userId", "1"), new Cookie("appointmentId", "1") };
 
     @Test
     public void testAddQuestionInformationAndExpectOk() throws Exception {

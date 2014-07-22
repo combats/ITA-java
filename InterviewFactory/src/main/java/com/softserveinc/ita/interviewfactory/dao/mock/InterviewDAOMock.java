@@ -15,7 +15,7 @@ public class InterviewDAOMock implements InterviewDAO {
     @Autowired
     InterviewFactory interviewFactory;
 
-    public static List<Interview> interviewsList = new ArrayList<>();
+    public static final List<Interview> interviewsList = new ArrayList<>();
 
     @Override
     public Interview getInterviewByAppointmentId(String appointmentId) {
@@ -24,13 +24,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
@@ -49,13 +49,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
@@ -71,13 +71,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
@@ -94,13 +94,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
@@ -121,13 +121,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
@@ -146,13 +146,13 @@ public class InterviewDAOMock implements InterviewDAO {
         try {
             interview1 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         Interview interview2 = null;
         try {
             interview2 = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("2");
         } catch (HttpRequestException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
         interviewsList.add(interview1);
         interviewsList.add(interview2);
