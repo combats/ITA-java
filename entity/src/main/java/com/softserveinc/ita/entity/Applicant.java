@@ -22,6 +22,7 @@ public class Applicant implements Serializable {
     private static final String NOT_PASSED_SUBJECT = "Interview failed";
     private static final String EMPLOYED_SUBJECT = "Employed";
 
+
     public enum Status {
         NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF,NOT_SCHEDULED_SUBJECT),
         SCHEDULED(SCHEDULED_TEMPLATE_REF, SCHEDULED_SUBJECT),

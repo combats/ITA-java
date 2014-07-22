@@ -60,6 +60,8 @@ public class MailServiceTests extends MailServiceBaseTests {
         groupApplicants1.put(applicant2.getId(), applicantBenchmarkNotPassed);
         group1.setApplicants(groupApplicants1);
         responsibleHr1 = new User("Svetlana", "Ivanova");
+        responsibleHr1.setPhone("777-777-777");
+        responsibleHr1.setEmail("hr1@gmail.com");
         group2 = new Group("id2", new Course("C#", "pen-net.png"), "street23", 232322323);
         Map<String, ApplicantBenchmark> groupApplicants2 = new HashMap<>();
         ApplicantBenchmark applicantBenchmarkNot_Scheduled = new ApplicantBenchmark();
@@ -73,6 +75,8 @@ public class MailServiceTests extends MailServiceBaseTests {
         groupApplicants2.put(applicant1.getId(), applicantBenchmarkEmployed);
         group2.setApplicants(groupApplicants2);
         responsibleHr2 = new User("Bogdan", "Bogdanov");
+        responsibleHr2.setPhone("555-555-555");
+        responsibleHr2.setEmail("hr2@gmail.com");
         appointment1 = new Appointment(users, applicant1.getId(), 1401866602L + TOMORROW, group1.getGroupID());
         appointment1.setAppointmentId("appointmentId1");
         appointment2 = new Appointment(users, applicant2.getId(), 1401866603L + TOMORROW, group1.getGroupID());
