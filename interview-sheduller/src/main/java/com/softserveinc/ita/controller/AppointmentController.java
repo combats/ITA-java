@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-@RequestMapping("/appointments")
+@RequestMapping("/")
 public class AppointmentController {
     @Autowired
     @Qualifier("validator")

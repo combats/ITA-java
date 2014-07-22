@@ -10,9 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,7 +30,7 @@ public class GroupController {
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(@PathVariable String status) {
+    List<Group> getGroupsByStatus(@PathVariable String status) {
         return groupService.getGroupsByStatus(status);
     }
 

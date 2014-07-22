@@ -25,15 +25,14 @@ import java.util.List;
 @RequestMapping("/")
 public class UserController {
 
+    @Autowired
+    private UserService userService;
 
 
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private UserService userService;
-
-    @RequestMapping(method = RequestMethod.GET , value = "/roles")
+    @RequestMapping(method = RequestMethod.GET ,value = "/roles")
     public @ResponseBody List<Role> getAllRoles() {
         return roleService.getAllRoles();
     }

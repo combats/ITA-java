@@ -27,8 +27,7 @@
 					<div class="container rightUp">
 						<div class="box-mainslider">
 							<h3>About project</h3>
-							<p>
-								...
+							<p>The project provides a number of features for viewing IT-academy candidate profiles, scheduling their interviews and real-time discussion of their responses.
 							</p>
 						</div>
 					</div>

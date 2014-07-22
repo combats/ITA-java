@@ -4,18 +4,18 @@
 
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css">
     <link rel="stylesheet" href="/common/css/icons/fontello/css/fontello.css">
-    <link rel="stylesheet" type="text/css" href="/user/css/users.css">
+    <link rel="stylesheet" type="text/css" href="user/css/users.css">
 
     <script src="/common/js/jquery.min.js"></script>
-    <script src="/user/js/bootstrap.min.js"></script>
+    <script src="user/js/bootstrap.min.js"></script>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="/user/js/mustache.js"></script>
+    <script src="user/js/mustache.js"></script>
     <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
-    <script src="/user/js/jquery.form.js"></script>
-    <script src="/user/js/jquery.validate.js"></script>
-    <script src="/user/js/users.js"></script>
+    <script src="user/js/jquery.form.js"></script>
+    <script src="user/js/jquery.validate.js"></script>
+    <script src="user/js/users.js"></script>
 
     <div class="container">
         <div class="row-fluid">

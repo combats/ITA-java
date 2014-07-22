@@ -8,12 +8,15 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
-    <context:annotation-config />
+
+
+
+
+
+    <context:annotation-config/>
     <context:component-scan base-package="com.softserveinc.ita.interviewfactory"/>
 
-    <context:component-scan base-package="com.softserveinc.ita.interviewfactory.*" />
     <mvc:annotation-driven/>
-
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -26,20 +29,19 @@
 
     <!--aux/utils-->
 
-    <bean id="jsonUtilJaxson" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="interviewUtilJson" class="com.softserveinc.ita.utils.impl.InterviewJsonUtilGsonImpl"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <!--external services-->
-    <bean id="interviewService" class="com.softserveinc.ita.interviewfactory.service.mainServices.InterviewServiceMock"/>
 
-    <bean id="questionsBlockService" class="com.softserveinc.ita.interviewfactory.service.questionsBlocksServices.QuestionsBlockServicesMock"/>
-    <bean id="questionsInformationService" class="com.softserveinc.ita.interviewfactory.service.questionInformationServices.QuestionsInformationServicesMock"/>
+    <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock"/>
+    <bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionInformationDOAMock"/>
+    <bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionsBlockDAOMock"/>
+
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
 
-    <alias name="InterviewWithoutQuestions" alias="InterviewWithoutQuestions" />
-    <alias name="InterviewWithStandardQuestions" alias="InterviewWithStandardQuestions" />
-    <alias name="InterviewWithUserAndStandardQuestions" alias="InterviewWithUserAndStandardQuestions" />
+    <!--<import resource="dao-test-context.xml"/>-->
 
 </beans>

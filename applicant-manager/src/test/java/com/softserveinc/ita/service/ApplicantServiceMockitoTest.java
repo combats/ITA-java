@@ -20,8 +20,8 @@ import static junit.framework.Assert.assertEquals;
 
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
-
     private List<Applicant> standartList;
+    private List<Applicant> applicants;
 
     @Autowired
     @InjectMocks
@@ -49,5 +49,4 @@ public class ApplicantServiceMockitoTest extends BaseApplicantServiceTest {
         assertEquals(standartList, applicantService.getApplicants());
         verify(applicantDao, times(1)).getApplicants();
     }
-
 }

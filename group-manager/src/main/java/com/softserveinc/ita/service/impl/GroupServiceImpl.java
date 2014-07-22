@@ -7,7 +7,7 @@ import com.softserveinc.ita.exception.impl.WrongGroupStatusException;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.ArrayList;
+
 import java.util.List;
 
 @Service
@@ -17,7 +17,7 @@ public class GroupServiceImpl implements GroupService {
     private GroupDao groupDao;
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(String groupStatus) {
+    public List<Group> getGroupsByStatus(String groupStatus) {
         if(isWrongStatus(groupStatus)){
             throw new WrongGroupStatusException();
         }
@@ -28,7 +28,6 @@ public class GroupServiceImpl implements GroupService {
     public List<Applicant> getApplicantsByGroupID(String groupID) {
         return groupDao.getApplicantsByGroupID(groupID);
     }
-
     private boolean isWrongStatus(String groupStatus){
         for(Group.Status status : Group.Status.values()){
             if(status.getName().equals(groupStatus)){
