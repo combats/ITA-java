@@ -1,15 +1,15 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
-import com.softserveinc.ita.exception.impl.WrongGroupStatusException;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.List;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -18,7 +18,7 @@ public class GroupServiceImpl implements GroupService {
     private GroupDao groupDao;
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus) {
+    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus){
         ArrayList<Group> groups = groupDao.getAllGroups();
         ArrayList<Group> choosenGroups = new ArrayList<>();
         long currentTime = System.currentTimeMillis();
@@ -44,6 +44,7 @@ public class GroupServiceImpl implements GroupService {
                         choosenGroups.add(group);
                     }
                     break;
+
             }
         }
         return choosenGroups;
@@ -71,5 +72,10 @@ public class GroupServiceImpl implements GroupService {
             }
         }
         return true;
+    }
+
+    @Override
+    public List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException {
+        return groupDao.getApplicantsByGroupID(groupID);
     }
 }

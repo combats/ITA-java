@@ -66,8 +66,11 @@ public class MailServiceTests extends MailServiceBaseTests {
         applicantBenchmarkNot_Scheduled.setStatus(Applicant.Status.NOT_SCHEDULED);
         ApplicantBenchmark applicantBenchmarkScheduled = new ApplicantBenchmark();
         applicantBenchmarkScheduled.setStatus(Applicant.Status.SCHEDULED);
+        ApplicantBenchmark applicantBenchmarkEmployed = new ApplicantBenchmark();
+        applicantBenchmarkEmployed.setStatus(Applicant.Status.EMPLOYED);
         groupApplicants2.put(applicant2.getId(), applicantBenchmarkNot_Scheduled);
         groupApplicants2.put(applicant3.getId(), applicantBenchmarkScheduled);
+        groupApplicants2.put(applicant1.getId(), applicantBenchmarkEmployed);
         group2.setApplicants(groupApplicants2);
         responsibleHr2 = new User("Bogdan", "Bogdanov");
         appointment1 = new Appointment(users, applicant1.getId(), 1401866602L + TOMORROW, group1.getGroupID());
@@ -193,6 +196,26 @@ public class MailServiceTests extends MailServiceBaseTests {
         letterModel.put(MailServiceImpl.HR_PHONE, responsibleHr2.getPhone());
         letterModel.put(MailServiceImpl.HR_EMAIL, responsibleHr2.getEmail());
         checkReceivedLetter(letterModel, applicant2, group2);
+    }
+
+    @Test
+    public void notifyEmployedApplicant() throws Exception {
+        when(httpRequestExecutor.getObjectByID(applicant1.getId(), Applicant.class)).thenReturn(applicant1);
+        when(httpRequestExecutor.getObjectByID(group2.getGroupID(), Group.class)).thenReturn(group2);
+        when(httpRequestExecutor.getObjectByID(responsibleHr2.getId(), User.class)).thenReturn(responsibleHr2);
+        NotificationJSONInfo notificationInfo = new NotificationJSONInfo(applicant1.getId(), group2.getGroupID(),
+                responsibleHr2.getId());
+        String notificationJsonInfo = jsonUtil.toJson(notificationInfo);
+        mailServiceImpl.notifyApplicant(notificationJsonInfo);
+        Map<String, Object> letterModel = new HashMap<>();
+        letterModel.put(MailServiceImpl.NAME, applicant1.getName());
+        letterModel.put(MailServiceImpl.SURNAME, applicant1.getSurname());
+        letterModel.put(MailServiceImpl.HR_NAME, responsibleHr2.getName());
+        letterModel.put(MailServiceImpl.HR_SURNAME, responsibleHr2.getSurname());
+        letterModel.put(MailServiceImpl.HR_PHONE, responsibleHr2.getPhone());
+        letterModel.put(MailServiceImpl.HR_EMAIL, responsibleHr2.getEmail());
+        letterModel.put(MailServiceImpl.APPLICANT_EMAIL, applicant1.getEmail());
+        checkReceivedLetter(letterModel, applicant1, group2);
     }
 
     private void checkReceivedLetter(Map<String, Object> letterModel, Applicant applicant, Group group)

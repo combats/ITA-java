@@ -2,8 +2,10 @@ package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.dao.impl.GroupDaoMockImpl;
+import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.service.GroupService;
 import com.softserveinc.ita.service.ServiceGroupBaseTest;
 import org.joda.time.DateTime;
@@ -15,6 +17,8 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -67,6 +71,12 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         assertEquals("id100", groupService.createGroup(group).getGroupID());
     }
 
+    @Test(expected = GroupDoesntExistException.class)
+    public void getApplicantsByNotExistingIdAndExpectException() throws GroupDoesntExistException {
+        when(groupDao.getApplicantsByGroupID("wrong")).thenThrow(GroupDoesntExistException.class);
+        groupService.getApplicantsByGroupID("wrong");
+    }
+
     @Test
     public void getAllGroupsAndExpectCorrectList(){
         ArrayList<Group> expectedList = new ArrayList<Group>();
@@ -76,5 +86,19 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         when(groupDao.getAllGroups()).thenReturn(expectedList);
         assertEquals(expectedList, groupService.getAllGroups());
         verify(groupDao, atLeastOnce()).getAllGroups();
+    }
+
+    @Test
+    public void testGetApplicantsByGroupIDAndExpectValidList() throws Exception {
+        List<Applicant> expected = new ArrayList<>();
+        Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
+        Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
+        Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
+        Collections.addAll(expected, applicantOne, applicantTwo, applicantThree);
+        when(groupDao.getApplicantsByGroupID("TestGroupID")).thenReturn(expected);
+
+        List<Applicant> actual = groupService.getApplicantsByGroupID("TestGroupID");
+        assertEquals(expected, actual);
+        verify(groupDao, atLeastOnce()).getApplicantsByGroupID("TestGroupID");
     }
 }

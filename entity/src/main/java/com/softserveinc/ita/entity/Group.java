@@ -19,7 +19,6 @@ public class Group implements Serializable{
     @Column(name = "Id", unique = true)
     private String groupID;
 
-    @Enumerated(EnumType.STRING)
     @ElementCollection
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")

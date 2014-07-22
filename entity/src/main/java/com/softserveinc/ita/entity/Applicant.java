@@ -15,16 +15,19 @@ public class Applicant implements Serializable {
     private static final String SCHEDULED_TEMPLATE_REF ="mailTemplaits/scheduledLetter.vm";
     private static final String PASSED_TEMPLATE_REF ="mailTemplaits/passedLetter.vm";
     private static final String NOT_PASSED_TEMPLATE_REF ="mailTemplaits/notPassedLetter.vm";
+    private static final String EMPLOYED_TEMPLATE_REF = "mailTemplaits/employedLetter.vm";
     private static final String NOT_SCHEDULED_SUBJECT = "Application accepted";
     private static final String SCHEDULED_SUBJECT = "Interview invitation";
     private static final String PASSED_SUBJECT = "Interview passed";
     private static final String NOT_PASSED_SUBJECT = "Interview failed";
+    private static final String EMPLOYED_SUBJECT = "Employed";
 
     public enum Status {
         NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF,NOT_SCHEDULED_SUBJECT),
         SCHEDULED(SCHEDULED_TEMPLATE_REF, SCHEDULED_SUBJECT),
         PASSED(PASSED_TEMPLATE_REF, PASSED_SUBJECT),
-        NOT_PASSED(NOT_PASSED_TEMPLATE_REF, NOT_PASSED_SUBJECT);
+        NOT_PASSED(NOT_PASSED_TEMPLATE_REF, NOT_PASSED_SUBJECT),
+        EMPLOYED(EMPLOYED_TEMPLATE_REF,EMPLOYED_SUBJECT);
 
         private String templateRef;
         private String subject;

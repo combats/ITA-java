@@ -1,12 +1,16 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Repository
 public class GroupDaoMockImpl implements GroupDao {
@@ -97,5 +101,20 @@ public class GroupDaoMockImpl implements GroupDao {
     @Override
     public ArrayList<Group> getAllGroups() {
         return groups;
+    }
+
+    @Override
+    public List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException {
+        List<Applicant> applicants = new ArrayList<>();
+        if (groupID.equals("TestGroupID")) {
+            Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
+            Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
+            Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
+            Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
+            return applicants;
+        }
+        else{
+            throw new GroupDoesntExistException();
+        }
     }
 }

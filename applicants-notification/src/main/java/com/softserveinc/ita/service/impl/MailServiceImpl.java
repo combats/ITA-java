@@ -90,10 +90,24 @@ public class MailServiceImpl implements MailService {
                 case PASSED:
                     sendPassedLetter(applicant, group, responsibleHr);
                     break;
+                case EMPLOYED:
+                    sendEmployedLetter(applicant, group, responsibleHr);
             }
         } catch (HttpRequestException e) {
             e.printStackTrace();
         }
+    }
+
+    private void sendEmployedLetter(Applicant applicant, Group group, User responsibleHr) {
+        Map<String, Object> model = new HashMap<>();
+        model.put(NAME, applicant.getName());
+        model.put(SURNAME, applicant.getSurname());
+        model.put(HR_NAME, responsibleHr.getName());
+        model.put(HR_SURNAME, responsibleHr.getSurname());
+        model.put(HR_PHONE, responsibleHr.getPhone());
+        model.put(HR_EMAIL, responsibleHr.getEmail());
+        model.put(APPLICANT_EMAIL, applicant.getEmail());
+        sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
     private void sendNotScheduledLetterModel(Applicant applicant, Group group, User responsibleHr) {
