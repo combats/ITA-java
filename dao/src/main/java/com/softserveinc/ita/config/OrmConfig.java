@@ -20,7 +20,7 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @PropertySource({"classpath:persistence.properties"})
-@ComponentScan({"com.softserveinc.ita.dao"})
+@ComponentScan({"com.softserveinc.ita.dao","com.softserveinc.ita.entity","com.softserveinc.ita.aspect"})
 public class OrmConfig {
 
     @Autowired
@@ -30,7 +30,7 @@ public class OrmConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(restDataSource());
-        sessionFactory.setPackagesToScan("com.softserveinc.ita.dao");
+        sessionFactory.setPackagesToScan("com.softserveinc.ita.entity");
         sessionFactory.setHibernateProperties(hibernateProperties());
 
         return sessionFactory;

@@ -8,7 +8,7 @@ mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant' ,
 
     $scope.isWebCamAsk=false;
     $scope.applicant = Applicant;
-    $scope.defPhoto = 'img/maestro-joda.jpg';
+    $scope.defPhoto = 'interview/img/maestro-joda.jpg';
     $scope.MEDIA_HOLDER = "IMG";
     $scope.sys = {video:"",localMediaStream:""};
 

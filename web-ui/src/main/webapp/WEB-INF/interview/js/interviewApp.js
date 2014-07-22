@@ -37,7 +37,7 @@
             }
 
             var Appointment = {};
-            $http.get("api/appointment.json")
+            $http.get("interview/api/appointment.json")
             .then(function (response) {
                 app.value('Appointment', response.data);
                 Appointment = response.data;
@@ -48,11 +48,11 @@
             .then(function(){
                 var initRequests = [
                     //$http.get('api/user.json')
-                    $http.get('/user-manager/users/'+userId)
+                    $http.get('/users/'+userId)
                     .then(function (response) {
                         app.value('User', response.data);
                     }),
-                    $http.get('api/applicant.json')
+                    $http.get('interview/api/applicant.json')
                     .then(function (response) {
                         app.value('Applicant', response.data);
                     })
@@ -73,13 +73,13 @@
 
         $scope.openAppPop = function () {
 
-             $modal.open({templateUrl: 'components/header-menu/applicant/applicantPopup.html',
+             $modal.open({templateUrl: 'interview/components/header-menu/applicant/applicantPopup.html',
                           controller: 'applicantPopupCtrl'});
 
         };
         $scope.openFCPop = function () {
 
-            $modal.open({templateUrl: 'components/header-menu/final-comment/finalCommentPopup.html',
+            $modal.open({templateUrl: 'interview/components/header-menu/final-comment/finalCommentPopup.html',
                 controller: 'finalComCtrl'});
 
         };

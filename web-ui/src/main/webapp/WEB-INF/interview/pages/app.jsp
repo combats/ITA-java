@@ -4,13 +4,13 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Interview</title>
-    <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/bootstrap-3.2.0-dist/css/bootstrap.css">
-    <link rel="stylesheet" href="css/common.css">
-    <link rel="stylesheet" href="css/interview.css">
-    <link rel="stylesheet" href="css/chat.css">
-    <link rel="stylesheet" href="css/applicantPopup.css">
-    <link rel="stylesheet" href="css/timer.css">
+    <link rel="stylesheet" href="interview/css/reset.css">
+    <link rel="stylesheet" href="interview/css/bootstrap-3.2.0-dist/css/bootstrap.css">
+    <link rel="stylesheet" href="interview/css/common.css">
+    <link rel="stylesheet" href="interview/css/interview.css">
+    <link rel="stylesheet" href="interview/css/chat.css">
+    <link rel="stylesheet" href="interview/css/applicantPopup.css">
+    <link rel="stylesheet" href="interview/css/timer.css">
 
 </head>
 <body>
@@ -37,7 +37,7 @@
             </div>
 
 
-            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" href="#"><span> <img class="img-rounded" src="img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
+            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" href="#"><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
         </div>
     </header>
     <div ng-controller="QuestionsController" id="main-panel">
@@ -113,17 +113,17 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="js/angular.js"></script>
+    <script type="text/javascript" src="interview/js/angular.js"></script>
    <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>
-    <script type="text/javascript" src="js/interviewApp.js"></script>
-    <script type="text/javascript" src="js/ngActivityIndicator.js"></script>
-    <script type="text/javascript" src="js/ui-bootstrap-tpls-0.11.0.js"></script>
-    <script type="text/javascript" src="components/header-menu/applicant/applicantHeaderCtrl.js" ></script>
-    <script type="text/javascript" src="components/questions/questionsCtrl.js"></script>
-    <script type="text/javascript" src="components/chat/chatCtrl.js"></script>
-    <script type="text/javascript" src="components/questions/questionSvc.js"></script>
-    <script type="text/javascript" src="components/header-menu/timer/timerCtrl.js" ></script>
-    <script type="text/javascript" src="components/header-menu/user/userHeaderCtrl.js" ></script>
-    <script type="text/javascript" src="components/header-menu/final-comment/finalComCtrl.js"></script>
+    <script type="text/javascript" src="interview/js/interviewApp.js"></script>
+    <script type="text/javascript" src="interview/js/ngActivityIndicator.js"></script>
+    <script type="text/javascript" src="interview/js/ui-bootstrap-tpls-0.11.0.js"></script>
+    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantHeaderCtrl.js" ></script>
+    <script type="text/javascript" src="interview/components/questions/questionsCtrl.js"></script>
+    <script type="text/javascript" src="interview/components/chat/chatCtrl.js"></script>
+    <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
+    <script type="text/javascript" src="interview/components/header-menu/timer/timerCtrl.js" ></script>
+    <script type="text/javascript" src="interview/components/header-menu/user/userHeaderCtrl.js" ></script>
+    <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>
 </body>
 </html>
