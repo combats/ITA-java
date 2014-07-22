@@ -15,7 +15,7 @@
     <!--Logging -->
     <aop:aspectj-autoproxy />
     <bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>
-    <context:component-scan base-package="com.softserveinc.ita"/>
+    <context:component-scan base-package="com.softserveinc.ita.logging"/>
     <mvc:annotation-driven/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -24,12 +24,14 @@
     <context:annotation-config/>
 
     <!-- For bean-components (@Component, @Service)  -->
+    <context:component-scan base-package="com.softserveinc.ita.dao"/>
+    <context:component-scan base-package="com.softserveinc.ita.aspect"/>
+    <context:component-scan base-package="com.softserveinc.ita.config"/>
     <context:component-scan base-package="com.softserveinc.ita.mvc"/>
     <context:component-scan base-package="com.softserveinc.ita.service.impl"/>
     <context:component-scan base-package="com.softserveinc.ita.utils.error"/>
     <context:component-scan base-package="com.softserveinc.ita.validators"/>
     <context:component-scan base-package="com.softserveinc.ita.controller"/>
-
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
@@ -37,6 +39,7 @@
     </bean>
 
     <!--aux/utils-->
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>

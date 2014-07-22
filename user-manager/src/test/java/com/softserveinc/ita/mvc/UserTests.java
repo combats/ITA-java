@@ -43,7 +43,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testDeleteUserByIDAndExpectedIsOK() throws Exception {
         String userID = "121";
-        mockMvc.perform(delete("/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isOk());
     }
 
@@ -52,14 +52,14 @@ public class UserTests extends BaseMVCTest {
         String userID = "122";
 
 //        String goodResponse = jsonUtil.toJson(userID);
-        mockMvc.perform(delete("/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                .andExpect(content().string(userID));
     }
 
     @Test
     public void testDeleteUserByIdAndExpectedDeleteException() throws Exception {
         String userID = "124";
-        mockMvc.perform(delete("/users" + "/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isNotFound());
     }
 
