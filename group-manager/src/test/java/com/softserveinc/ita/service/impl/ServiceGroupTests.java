@@ -68,7 +68,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-    public void getAllGroupsAndExpectIsOk(){
+    public void getAllGroupsAndExpectCorrectList(){
         ArrayList<Group> expectedList = new ArrayList<Group>();
         expectedList.add(new Group("id3", new Course("Java", "pen-java.png"), "kv021"));
         expectedList.add(new Group("id6", new Course("Java Script", "pen-net.png"), "kv061"));
@@ -77,5 +77,4 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         assertEquals(expectedList, groupService.getAllGroups());
         verify(groupDao, atLeastOnce()).getAllGroups();
     }
-
 }
