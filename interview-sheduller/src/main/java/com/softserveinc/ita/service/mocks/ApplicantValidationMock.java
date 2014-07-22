@@ -1,10 +1,10 @@
 package com.softserveinc.ita.service.mocks;
 
-import com.softserveinc.ita.service.ApplicantService;
+import com.softserveinc.ita.service.ApplicantValidation;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ApplicantServiceMock implements ApplicantService {
+public class ApplicantValidationMock implements ApplicantValidation {
     public boolean applicantExists(String applicantId) {
         return applicantId.equals("testApplicantId");
     }
