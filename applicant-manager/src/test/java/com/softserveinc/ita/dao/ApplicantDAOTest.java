@@ -1,6 +1,5 @@
 package com.softserveinc.ita.dao;
 
-import com.softserveinc.ita.dao.impl.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
