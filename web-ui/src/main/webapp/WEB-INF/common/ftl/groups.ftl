@@ -9,7 +9,7 @@
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="groups/css/users.css">
+<link rel="stylesheet" type="text/css" href="groups/css/group.css">
 <link rel="stylesheet" type="text/css" href="groups/css/jquery.timepicker.css">
 <script src="groups/js/jquery.validate.js"></script>
 <script src="groups/js/jquery.timepicker.js"></script>
@@ -64,7 +64,7 @@
                             </label>
                         </div>
                         <div class="fields">
-                                <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
+                            <input name="groupCapacity" id="gCapacity" class="inputDLP"/>
                         </div>
                     </div>
 
@@ -81,7 +81,7 @@
 
                     <div class="fieldgroup">
                         <div class="headline startDate">
-                        <label for="gStartDate">
+                            <label for="gStartDate">
                                 Start date:
                             </label>
                         </div>

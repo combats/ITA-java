@@ -10,7 +10,7 @@ public class OtherPagesController {
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String getGroups() {
-        return "/WEB-INF/common/ftl/groupsList.ftl";
+        return "groups";
     }
 
     @RequestMapping(value = "/interview", method = RequestMethod.GET)
