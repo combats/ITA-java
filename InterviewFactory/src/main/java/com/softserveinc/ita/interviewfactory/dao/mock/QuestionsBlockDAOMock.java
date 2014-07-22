@@ -65,6 +65,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
 
         for (QuestionsBlock questionsBlock1 : allQuestionsBlocks){
             if (questionsBlock1.getInterviewId().equals(appointmentId) && questionsBlock1.getUserId().equals(userID))
+                allQuestionsBlocks.clear();
                 return questionsBlock1;
         }
         return null;

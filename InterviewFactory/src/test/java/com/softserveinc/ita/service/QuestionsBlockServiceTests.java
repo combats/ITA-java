@@ -64,8 +64,7 @@ public class QuestionsBlockServiceTests extends BaseServiceTests{
         questionsBlock.setInterviewId("1");
         questionsBlock.setUserId("1");
         questionsBlock.setId("1");
-        questionsBlock.setFinalComment("final comment");
-        questionsBlock.setBonusPoints(3);
+
         QuestionsBlock questionsBlockActual = questionsBlockServices.getQuestionsBlockFromInterviewByUserId("1", "1");
 
         assertEquals(questionsBlockActual, questionsBlock);

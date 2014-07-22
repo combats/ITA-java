@@ -24,6 +24,7 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
     Appointment appointment2;
     Appointment appointment3;
     Appointment appointment4;
+    Appointment appointment5;
 
     private User user1 = new User();
     private User user2 = new User();
@@ -34,6 +35,7 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
 
     private Applicant applicant1 = new Applicant();
     private Applicant applicant2 = new Applicant();
+    private Applicant applicant3 = new Applicant();
 
     List<User> usersList = new ArrayList<User>(); {
 
@@ -68,22 +70,29 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
+    List<String> usersIdList2 = new ArrayList<String>(); {
+        Collections.addAll(usersIdList2, user1.getId());
+    }
+
     List<Appointment> appointmentList = new ArrayList<>();{
         applicant1.setId("1");
-        appointment1 = new Appointment(usersIdList, applicant1.getId(), startTime);
+        appointment1 = new Appointment(usersIdList2, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
         applicant2.setId("2");
-        appointment2 = new Appointment(usersIdList, applicant1.getId(), startTime + TOMORROW);
+        applicant3.setId("3");
+        appointment2 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment2.setAppointmentId("2");
         appointment3 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment3.setAppointmentId("3");
         appointment4 = new Appointment(usersIdList, applicant2.getId(), startTime + TOMORROW);
         appointment4.setAppointmentId("4");
-        Collections.addAll(appointmentList, appointment1, appointment2, appointment3, appointment4);
+        appointment5 = new Appointment(usersIdList2, applicant3.getId(), startTime + TOMORROW);
+        appointment5.setAppointmentId("5");
+        Collections.addAll(appointmentList, appointment1, appointment2, appointment3, appointment4, appointment5);
     }
 
     List<String> appointmentIdList1 = new ArrayList<>();{
-        Collections.addAll(appointmentIdList1, appointment1.getAppointmentId(), appointment2.getAppointmentId());
+        Collections.addAll(appointmentIdList1, appointment5.getAppointmentId());
     }
 
     //-------------VadimNaumenko mock from tests

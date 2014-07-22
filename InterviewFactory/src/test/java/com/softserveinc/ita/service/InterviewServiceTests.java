@@ -28,7 +28,7 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Test
     public void testGetInterviewByIdAndExpectEqual() throws HttpRequestException, WrongCriteriaException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("5");
         Interview interviewExpected = interviewService.getInterviewByAppointmentID(interviewActual.getInterviewId());
         assertEquals(interviewActual, interviewExpected);
 
@@ -72,8 +72,8 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Test
     public void testGetInterviewByApplicantIdAndExpectOk() throws HttpRequestException, WrongCriteriaException {
 
-        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("1");
-        List<Interview> interviewExpectedList = interviewService.getInterviewByApplicantID("1");
+        Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("5");
+        List<Interview> interviewExpectedList = interviewService.getInterviewByApplicantID("5");
         assertEquals(interviewActual, interviewExpectedList.get(0));
 
     }
