@@ -1,7 +1,7 @@
 package exceptions;
 
-public class InterviewException extends Exception {
-    public InterviewException(String message) {
+class InterviewException extends Exception {
+    InterviewException(String message) {
         super(message);
     }
 }

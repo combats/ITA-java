@@ -36,7 +36,7 @@ public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
         QuestionInformation questionInformation2 = new QuestionInformation();
         questionInformation2.setQuestion("How are you?");
 
-        Set<QuestionInformation> QuestionInformationList = new HashSet<QuestionInformation>();{
+        Set<QuestionInformation> QuestionInformationList = new HashSet<>();{
             QuestionInformationList.add(questionInformation1);
             QuestionInformationList.add(questionInformation2);
         }

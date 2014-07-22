@@ -25,8 +25,8 @@ public class InterviewWithoutQuestions implements CreateInterviewStrategy {
 
         List<String> Users = appointment.getUserIdList();
 
-        for (int i = 0; i < Users.size(); i++){
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+        for (String User : Users) {
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(User);
             Set<QuestionInformation> questionInformationSet = new HashSet<>();
             userQuestionsBlock.setQuestions(questionInformationSet);
             userQuestionsBlock.setInterviewId(interviewId);

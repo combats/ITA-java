@@ -67,10 +67,8 @@ public class QuestionsInformationServiceImpl implements QuestionsInformationServ
         QuestionsBlock questionsBlock = questionsBlockService.getQuestionsBlockFromInterviewByUserId(userId, questionInformation.getInterviewId());
 
         Set<QuestionInformation> questionInformationSet = questionsBlock.getQuestions();
-        Iterator<QuestionInformation> it3 = questionInformationSet.iterator();
 
-        while(it3.hasNext()){
-            QuestionInformation questionInformation1 = it3.next();
+        for (QuestionInformation questionInformation1 : questionInformationSet) {
             if (questionInformation1.getQuestion().equals(questionInformation.getQuestion())) {
                 return questionInformation1.getId();
             }

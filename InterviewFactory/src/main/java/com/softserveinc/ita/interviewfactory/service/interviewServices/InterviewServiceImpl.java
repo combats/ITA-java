@@ -109,19 +109,15 @@ public class InterviewServiceImpl implements InterviewService {
         int totalPoints = 0;
 
         Set<QuestionsBlock> questionsBlocksSet = getInterviewByAppointmentID(InterviewId).getQuestionsBlocks();
-        Iterator<QuestionsBlock> it = questionsBlocksSet.iterator();
-        while(it.hasNext()){
-            QuestionsBlock questionsBlock = it.next();
+        for (QuestionsBlock questionsBlock : questionsBlocksSet) {
             Set<QuestionInformation> questionInformationSet = questionsBlock.getQuestions();
-            Iterator<QuestionInformation> it2 = questionInformationSet.iterator();
-            while(it2.hasNext()){
-                QuestionInformation questionInformation = it2.next();
+            for (QuestionInformation questionInformation : questionInformationSet) {
                 totalPoints = totalPoints + questionInformation.getMark() * questionInformation.getWeight();
 
             }
             User user = httpRequestExecutor.getObjectByID(questionsBlock.getUserId(), User.class);
             String role = user.getRole().getName();
-            finalComment = finalComment + role + ": " +  questionsBlock.getFinalComment() + ";\n";
+            finalComment = finalComment + role + ": " + questionsBlock.getFinalComment() + ";\n";
             totalPoints = totalPoints + questionsBlock.getBonusPoints();
         }
 

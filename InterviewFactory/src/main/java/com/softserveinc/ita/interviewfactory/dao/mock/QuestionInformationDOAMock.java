@@ -42,9 +42,9 @@ public class QuestionInformationDOAMock implements QuestionInformationDAO {
         questionInformation.setId("1");
         questionInformationsList.add(questionInformation);
 
-        for (int i = 0; i < questionInformationsList.size(); i++){
-            if (questionInformationsList.get(i).getId().equals(newQuestionInformation.getId()))
-                return questionInformationsList.get(i).getId();
+        for (QuestionInformation aQuestionInformationsList : questionInformationsList) {
+            if (aQuestionInformationsList.getId().equals(newQuestionInformation.getId()))
+                return aQuestionInformationsList.getId();
         }
         return null;
     }

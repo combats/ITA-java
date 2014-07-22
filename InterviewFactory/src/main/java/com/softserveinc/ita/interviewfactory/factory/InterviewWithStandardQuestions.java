@@ -30,9 +30,8 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
         standardQuestionsBlock.setInterviewId(interviewId);
 
         Set<QuestionInformation> questionInformationSet2 = standardQuestionsBlock.getQuestions();
-        Iterator<QuestionInformation> it = questionInformationSet2.iterator();
-        while(it.hasNext()){
-            it.next().setInterviewId(interviewId);
+        for (QuestionInformation aQuestionInformationSet2 : questionInformationSet2) {
+            aQuestionInformationSet2.setInterviewId(interviewId);
         }
         standardQuestionsBlock.setQuestions(questionInformationSet2);
 
@@ -41,8 +40,8 @@ public class InterviewWithStandardQuestions implements CreateInterviewStrategy {
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
         List<String> Users = appointment.getUserIdList();
 
-        for (int i = 0; i < Users.size(); i++){
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+        for (String User : Users) {
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(User);
             Set<QuestionInformation> questionInformationSet = new HashSet<>();
             userQuestionsBlock.setQuestions(questionInformationSet);
             userQuestionsBlock.setInterviewId(interviewId);

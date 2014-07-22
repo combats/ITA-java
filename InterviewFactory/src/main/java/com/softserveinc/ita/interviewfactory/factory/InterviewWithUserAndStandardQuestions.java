@@ -35,9 +35,8 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
         standardQuestionsBlock.setInterviewId(interviewId);
 
         Set<QuestionInformation> questionInformationSet2 = standardQuestionsBlock.getQuestions();
-        Iterator<QuestionInformation> it = questionInformationSet2.iterator();
-        while(it.hasNext()){
-            it.next().setInterviewId(interviewId);
+        for (QuestionInformation aQuestionInformationSet2 : questionInformationSet2) {
+            aQuestionInformationSet2.setInterviewId(interviewId);
         }
         standardQuestionsBlock.setQuestions(questionInformationSet2);
 
@@ -46,18 +45,18 @@ public class InterviewWithUserAndStandardQuestions implements CreateInterviewStr
         Appointment appointment = httpRequestExecutor.getObjectByID(interviewId, Appointment.class);
         List<String> Users = appointment.getUserIdList();
 
-        for (int i = 0; i < Users.size(); i++){
-            User user = httpRequestExecutor.getObjectByID(Users.get(i), User.class);
-            QuestionsBlock userQuestionsBlock = new QuestionsBlock(Users.get(i));
+        for (String User : Users) {
+            User user = httpRequestExecutor.getObjectByID(User, User.class);
+            QuestionsBlock userQuestionsBlock = new QuestionsBlock(User);
             userQuestionsBlock.setInterviewId(interviewId);
             Set<QuestionInformation> userQuestionInformationList = new HashSet<>();
             List<Question> Questions = user.getQuestions();
 
-            for (int j = 0; j < Questions.size(); j++){
+            for (Question question : Questions) {
                 QuestionInformation questionInformation = new QuestionInformation();
                 questionInformation.setInterviewId(interviewId);
-                questionInformation.setQuestion(Questions.get(j).getQuestionBody());
-                questionInformation.setWeight(Questions.get(j).getWeight());
+                questionInformation.setQuestion(question.getQuestionBody());
+                questionInformation.setWeight(question.getWeight());
                 userQuestionInformationList.add(questionInformation);
             }
             userQuestionsBlock.setQuestions(userQuestionInformationList);

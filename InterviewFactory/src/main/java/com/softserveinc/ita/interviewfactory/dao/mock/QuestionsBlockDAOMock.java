@@ -33,7 +33,7 @@ public class QuestionsBlockDAOMock implements QuestionsBlockDAO {
         questionInformation2.setId("1");
         questionInformation2.setId("Hz, standart vopros");
 
-        Set<QuestionInformation> QuestionInformationList = new HashSet<QuestionInformation>();{
+        Set<QuestionInformation> QuestionInformationList = new HashSet<>();{
             QuestionInformationList.add(questionInformation1);
             QuestionInformationList.add(questionInformation2);
         }

@@ -17,14 +17,13 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
 
     //-------------VadimNaumenko mock for tests------------------------------------
 
-    private long startTime = 1403308782454L;
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private static final int TOMORROW = 24 * 60 * 60 * 1000;
 
-    Appointment appointment1;
-    Appointment appointment2;
-    Appointment appointment3;
-    Appointment appointment4;
-    Appointment appointment5;
+    private Appointment appointment1;
+    private Appointment appointment2;
+    private Appointment appointment3;
+    private Appointment appointment4;
+    private Appointment appointment5;
 
     private User user1 = new User();
     private User user2 = new User();
@@ -74,8 +73,9 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         Collections.addAll(usersIdList2, user1.getId());
     }
 
-    List<Appointment> appointmentList = new ArrayList<>();{
+    private List<Appointment> appointmentList = new ArrayList<>();{
         applicant1.setId("1");
+        long startTime = 1403308782454L;
         appointment1 = new Appointment(usersIdList2, applicant1.getId(), startTime);
         appointment1.setAppointmentId("1");
         applicant2.setId("2");

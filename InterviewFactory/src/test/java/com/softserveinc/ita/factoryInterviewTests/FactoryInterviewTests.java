@@ -24,7 +24,7 @@ public class FactoryInterviewTests extends BaseFactoryInterviewTests {
     @Autowired
     private JsonUtil interviewUtilJson;
 
-    JSONParser parser = new JSONParser();
+    private JSONParser parser = new JSONParser();
 
     @Test
     public void testCreateInterviewWithoutQuestions() throws IOException, ParseException, JSONException, HttpRequestException, org.json.simple.parser.ParseException, WrongCriteriaException {
