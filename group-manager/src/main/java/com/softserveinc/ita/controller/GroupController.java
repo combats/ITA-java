@@ -2,27 +2,17 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
-import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
-import com.softserveinc.ita.exception.GroupException;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
 
 @Controller
-@RequestMapping("/groups")
+@RequestMapping("/")
 public class GroupController {
     @Autowired
     private GroupService groupService;
-
-    @RequestMapping(method = RequestMethod.GET)
-      public String getGroups() {
-        return "groupsList";
-    }
 
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public

@@ -68,11 +68,9 @@ $(function () {
             type: "POST",
             data: jsonGroup,
             success: function (data) {
-                alert("isOk");
                 viewGroups();
             },
             error: function (data) {
-                alert(jsonGroup);
                 console.log("" + data);
             }
         });
@@ -197,7 +195,7 @@ $(function () {
 
 function createCourseMenu(position, value) {
     $.ajax({
-        url: "/groups/courses",
+        url: location.origin + "/groups/courses",
         dataType: "json",
         type: "GET",
         async: false,

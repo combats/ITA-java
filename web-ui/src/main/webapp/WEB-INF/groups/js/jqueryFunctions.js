@@ -7,7 +7,7 @@ function viewGroups() {
         createCourseMenu("#courses", "All courses");
     }
     var template;
-    jQuery.get("template/iconTemplate", function (data) {
+    jQuery.get("groups/template/iconTemplate", function (data) {
         template = data;
     });
     var output = "";
@@ -22,12 +22,12 @@ function viewGroups() {
         getGroupsUrl = "/groups/" + selectedStatus;
     }
     if (selectedStatus == "PLANNED") {
-        jQuery.get("template/createGroupHtml", function (data) {
+        jQuery.get("groups/template/createGroupHtml", function (data) {
             createGroupHtml = data;
         });
     }
     $.ajax({
-        url: getGroupsUrl,
+        url: location.origin + getGroupsUrl,
         dataType: "json",
         type: "GET",
         success: function (data) {

@@ -50,8 +50,7 @@
     </dependencies>
 
     <build>
-        <finalName>group-manager</finalName>
-
+        <finalName>groups</finalName>
     </build>
 
 </project>

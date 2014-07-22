@@ -36,24 +36,15 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/BOARDING")
+                get("/BOARDING")
         )
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetGroupsAndExpectIsOk() throws Exception {
-        mockMvc.perform(
-                get("/groups")
-        )
-                .andExpect(status().isOk())
-                .andExpect(view().name("groupsList"));
-    }
-
-    @Test
     public void testGetGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/groups/BOARDING")
+                get("/BOARDING")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -61,7 +52,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetCoursesAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/courses")
+                get("/courses")
         )
                 .andExpect(status().isOk());
     }
@@ -69,7 +60,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetCoursesAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/groups/courses")
+                get("/courses")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -79,7 +70,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
         Group group = new Group("3");
         group.setCourse(new Course("Java"));
         String jsonGroup = jsonUtil.toJson(group);
-        mockMvc.perform(post("/groups/addGroup")
+        mockMvc.perform(post("/addGroup")
                 .content(jsonGroup)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -89,7 +80,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetAllGroupsAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/allGroups")
+                get("/allGroups")
         )
                 .andExpect(status().isOk());
     }
@@ -97,7 +88,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetAllGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/groups/allGroups")
+                get("/allGroups")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }

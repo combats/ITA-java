@@ -1,7 +1,7 @@
 <li data-id={{groupId}}>
             <div class='easyBox'>
             <a href='{{ref}}'>
-            <img src='images/{{image}}' alt=''></a>
+            <img src='groups/images/{{image}}' alt=''></a>
              <div class='inner'>
             <h3 class='light'><a href='{{ref}}'>{{groupName}}</a></h3>
             <p>{{courseName}}</p>
