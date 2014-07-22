@@ -60,4 +60,10 @@ public class AppointmentServiceImpl implements AppointmentService {
     public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
         return appointmentDAO.getAppointmentIdByGroupIdAndApplicantId(groupId,applicantId);
     }
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public Appointment addAppointment(Appointment appointment) {
+        return appointmentDAO..getAppointmentIdByGroupIdAndApplicantId(appointment);
+    }
 }

@@ -4,48 +4,107 @@ import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
+import org.joda.time.DateTime;
 import org.springframework.stereotype.Repository;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Repository
 public class GroupDaoMockImpl implements GroupDao {
+    private ArrayList<Group> groups = new ArrayList<Group>();
+    private ArrayList<Course> courses = new ArrayList<Course>();
 
     public GroupDaoMockImpl() {
+        //Planned
+        Group group1 = new Group("id1", new Course("Java", "pen-java.png"), "kv001");
+        group1 = setTime(group1, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groups.add(group1);
+        Group group2 = new Group("id3", new Course("Java", "pen-java.png"), "kv021");
+        group2 = setTime(group2, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groups.add(group2);
+        //Boarding
+        Group group3 = new Group("id4", new Course("Sharp", "pen-net.png"), "kv012");
+        group3 = setTime(group3, new DateTime(2014, 7, 17, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groups.add(group3);
+        Group group4 = new Group("id6", new Course("JavaScript", "pen-jsui.png"), "kv061");
+        group4 = setTime(group4, new DateTime(2014, 7, 17, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groups.add(group4);
+        //InProcess
+        Group group5 = new Group("id9", new Course("Java", "pen-java.png"), "kv041");
+        group5 = setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+                new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
+        groups.add(group5);
+        Group group6 = new Group("id10", new Course("Sharp", "pen-net.png"), "kv064");
+        group6 = setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+                new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
+        groups.add(group6);
+        //Finished
+        Group group7 = new Group("id12", new Course("JavaScript", "pen-jsui.png"), "kv532");
+        group7 = setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+                new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
+        groups.add(group7);
+        Group group8 = new Group("id13", new Course("DevOps", "pen-devops.png"), "kv0753");
+        group8 = setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+                new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
+        groups.add(group8);
+        Group group9 = new Group("id15", new Course("JavaScript", "pen-jsui.png"), "kv532");
+        group9 = setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+                new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
+        groups.add(group9);
+    }
+
+    public static Group setTime(Group group, long boardingTime, long startTime, long endTime) {
+        group.setStartBoardingTime(boardingTime);
+        group.setStartTime(startTime);
+        group.setEndTime(endTime);
+        return group;
     }
 
     @Override
-    public ArrayList<Group> getGroupsByStatus(String groupStatus) {
-        ArrayList<Group> groups = new ArrayList<>();
-        groups.add(new Group(Group.Status.IN_PROCESS, "id1", new Course("Java", "pen-java.png"), "kv001"));
-        groups.add(new Group(Group.Status.OFFERING, "id2", new Course("Sharp", "pen-net.png"), "kv041"));
-        groups.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
-        groups.add(new Group(Group.Status.IN_PROCESS, "id4", new Course("Sharp", "pen-net.png"), "kv012"));
-        groups.add(new Group(Group.Status.OFFERING, "id5", new Course("Java Script", "pen-net.png"), "kv054"));
-        groups.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
-        groups.add(new Group(Group.Status.OFFERING, "id7", new Course("DevOps", "pen-devops.png"), "kv068"));
-        groups.add(new Group(Group.Status.OFFERING, "id8", new Course("DevOps", "pen-devops.png"), "kv075"));
-        groups.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));
-        groups.add(new Group(Group.Status.IN_PROCESS, "id10", new Course("Sharp", "pen-net.png"), "kv064"));
-        groups.add(new Group(Group.Status.OFFERING, "id11", new Course("Java Script", "pen-net.png"), "kv123"));
-        groups.add(new Group(Group.Status.IN_PROCESS, "id12", new Course("Java Script", "pen-net.png"), "kv532"));
-        groups.add(new Group(Group.Status.BOARDING, "id13", new Course("DevOps", "pen-devops.png"), "kv0753"));
-        groups.add(new Group(Group.Status.OFFERING, "id14", new Course("DevOps", "pen-devops.png"), "kv112"));
-        groups.add(new Group(Group.Status.FINISHED, "id15", new Course("Java Script", "pen-net.png"), "kv532"));
-        groups.add(new Group(Group.Status.FINISHED, "id16", new Course("DevOps", "pen-devops.png"), "kv0753"));
-        groups.add(new Group(Group.Status.FINISHED, "id17", new Course("DevOps", "pen-devops.png"), "kv112"));
-        ArrayList<Group> chosenByStatusGroups = new ArrayList<>();
-        for (Group group : groups) {
-            if (groupStatus.equals(group.getGroupStatus().getName())) {
-                chosenByStatusGroups.add(group);
-            }
+    public ArrayList<Course> getCourses() {
+        courses.clear();
+        courses.add(new Course("DevOps", "pen-devops.png"));
+        courses.add(new Course("JavaScript", "pen-jsui.png"));
+        courses.add(new Course("Java", "pen-java.png"));
+        courses.add(new Course("Sharp", "pen-net.png"));
+        return courses;
+    }
+
+    @Override
+    public Group addGroup(Group group) {
+        groups.add(group);
+        group.setGroupID("id100");
+        switch (group.getCourse().getName()) {
+            case "DevOps":
+                group.getCourse().setImageRef("pen-devops.png");
+                break;
+            case "JavaScript":
+                group.getCourse().setImageRef("pen-jsui.png");
+                break;
+            case "Java":
+                group.getCourse().setImageRef("pen-java.png");
+                break;
+            case "Sharp":
+                group.getCourse().setImageRef("pen-net.png");
+                break;
         }
-        return chosenByStatusGroups;
+        return group;
     }
 
     @Override
-    public List<Applicant> getApplicantsByGroupID(String groupID) {
+    public ArrayList<Group> getAllGroups() {
+        return groups;
+    }
+
+    @Override
+    public List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException {
         List<Applicant> applicants = new ArrayList<>();
         if (groupID.equals("TestGroupID")) {
             Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
@@ -53,12 +112,18 @@ public class GroupDaoMockImpl implements GroupDao {
             Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
             Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
             return applicants;
+        } else {
+            throw new GroupDoesntExistException();
         }
-        return applicants;
     }
 
     @Override
     public Group getGroupById(String groupId) {
+        for (Group group : groups) {
+            if (groupId.equals(group.getGroupID())) {
+                return group;
+            }
+        }
         return null;
     }
 }

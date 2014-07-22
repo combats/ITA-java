@@ -151,7 +151,7 @@ public class InterviewTests extends BaseMVCTest {
         assertEquals(expected, actual.get(0));
     }
 
-    Cookie[] cookies = new Cookie[] { new Cookie("userId", "1") };
+    Cookie[] cookies = new Cookie[] { new Cookie("userId", "1"), new Cookie("appointmentId", "1") };
 
     @Test
     public void testAddQuestionInformationAndExpectOk() throws Exception {
@@ -244,6 +244,7 @@ public class InterviewTests extends BaseMVCTest {
                 put("/interviewing/answer")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(questionInformationJson)
+                        .cookie(cookies)
         )
                 .andExpect(status().isAccepted())
                 .andReturn();
