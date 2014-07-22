@@ -26,7 +26,7 @@
     <!-- For bean-components (@Component, @Service)  -->
     <context:component-scan base-package="com.softserveinc.ita.mvc"/>
     <context:component-scan base-package="com.softserveinc.ita.service.impl"/>
-    <context:component-scan base-package="com.softserveinc.ita.utils.error"/>
+    <context:component-scan base-package="com.softserveinc.ita.error"/>
     <context:component-scan base-package="com.softserveinc.ita.validators"/>
     <context:component-scan base-package="com.softserveinc.ita.controller"/>
 

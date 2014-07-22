@@ -50,10 +50,12 @@ public class AopControllerLogging {
         }
         logMessage.append(" ********START SNIPPET********\n");
         logMessage.append(requestMappingMethod + " request to the URL: " + controllerURL + methodURL + "\n");
-        if (realParameters.length != 0) {
-            logMessage.append(" Passed parameter is: ");
+        if (realParameters != null) { // was: .length !=0;
+            logMessage.append(" Passed parameter is (are): ");
             for (Object o : realParameters) {
-                logMessage.append(o.toString() + " \n");
+                if(o != null) {
+                    logMessage.append(o.toString() + " \n");
+                }
             }
         } else {
             logMessage.append(" no parameters have been passed\n");
