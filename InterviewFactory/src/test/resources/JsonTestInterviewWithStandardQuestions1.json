@@ -1,18 +1,10 @@
 {
-    "InterviewId": "1",
+    "InterviewId": "5",
     "QuestionsBlocks": [
         {
             "Id": null,
-            "UserId": "3",
-            "InterviewId": "1",
-            "Questions": [],
-            "FinalComment": "",
-            "BonusPoints": 0
-        },
-        {
-            "Id": null,
             "UserId": "1",
-            "InterviewId": "1",
+            "InterviewId": "5",
             "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0
@@ -20,11 +12,11 @@
         {
             "Id": null,
             "UserId": null,
-            "InterviewId": "2",
+            "InterviewId": "5",
             "Questions": [
                 {
                     "Id": null,
-                    "InterviewId": "2",
+                    "InterviewId": "5",
                     "Question": "How are you?",
                     "Answer": "",
                     "Mark": 1,
@@ -33,7 +25,7 @@
                 },
                 {
                     "Id": null,
-                    "InterviewId": "2",
+                    "InterviewId": "5",
                     "Question": "What is your name?",
                     "Answer": "",
                     "Mark": 1,
@@ -41,14 +33,6 @@
                     "Weight": 1
                 }
             ],
-            "FinalComment": "",
-            "BonusPoints": 0
-        },
-        {
-            "Id": null,
-            "UserId": "2",
-            "InterviewId": "1",
-            "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0
         }

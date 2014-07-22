@@ -33,15 +33,15 @@
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <!--external services-->
 
-    <bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock"/>
-    <bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionInformationDOAMock"/>
-    <bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionsBlockDAOMock"/>
+    <!--<bean id="interviewDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.InterviewDAOMock"/>-->
+    <!--<bean id="questionInformationDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionInformationDOAMock"/>-->
+    <!--<bean id="questionsBlockDAO" class="com.softserveinc.ita.interviewfactory.dao.mock.QuestionsBlockDAOMock"/>-->
 
 
     <bean id="interviewFactory" class="org.springframework.beans.factory.config.ServiceLocatorFactoryBean">
         <property name="serviceLocatorInterface" value="com.softserveinc.ita.interviewfactory.factory.InterviewFactory" />
     </bean>
 
-    <!--<import resource="dao-test-context.xml"/>-->
+    <import resource="dao-test-context.xml"/>
 
 </beans>

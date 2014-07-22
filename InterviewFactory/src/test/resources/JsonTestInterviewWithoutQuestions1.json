@@ -1,26 +1,10 @@
 {
-    "InterviewId": "1",
+    "InterviewId": "5",
     "QuestionsBlocks": [
         {
             "Id": null,
-            "UserId": "3",
-            "InterviewId": "1",
-            "Questions": [],
-            "FinalComment": "",
-            "BonusPoints": 0
-        },
-        {
-            "Id": null,
             "UserId": "1",
-            "InterviewId": "1",
-            "Questions": [],
-            "FinalComment": "",
-            "BonusPoints": 0
-        },
-        {
-            "Id": null,
-            "UserId": "2",
-            "InterviewId": "1",
+            "InterviewId": "5",
             "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0
