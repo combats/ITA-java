@@ -1,6 +1,7 @@
 package com.softserveinc.ita.exception;
 
-import com.softserveinc.ita.utils.error.EntityException;
+
+import com.softserveinc.ita.error.EntityException;
 
 public class GroupException extends EntityException {
 
