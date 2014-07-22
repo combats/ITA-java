@@ -20,6 +20,7 @@
     });
 </script>
 
+
 <div id="dialog-form-add-group" class="dialog" style="padding: 0px;">
     <div class="inner">
         <div id="user-box">
