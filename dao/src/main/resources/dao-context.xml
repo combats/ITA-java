@@ -10,14 +10,14 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd ">
 
-    <aop:aspectj-autoproxy />
+    <!--<aop:aspectj-autoproxy />-->
     <!-- Scans within the base package of the application for @Components to
         configure as beans -->
     <context:annotation-config/>
     <tx:annotation-driven/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
 
-    <!-- Aspect -->
-    <bean id="logAspect" class="com.softserveinc.ita.aspect.AspectLoggingDAO" />
+    <!--&lt;!&ndash; Aspect &ndash;&gt;-->
+    <!--<bean id="logAspect" class="com.softserveinc.ita.aspect.AspectLoggingDAO" />-->
 
 </beans>

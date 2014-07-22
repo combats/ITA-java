@@ -35,7 +35,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     }
 
     @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
     public Appointment getAppointmentByAppointmentId(String appointmentId) {
         return appointmentDAO.getAppointmentByAppointmentId(appointmentId);
     }

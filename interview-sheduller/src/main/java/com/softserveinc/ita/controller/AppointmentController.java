@@ -36,29 +36,27 @@ public class AppointmentController {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 
-    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{appointmentId}", method = RequestMethod.DELETE)
     public void removeAppointmentById(@PathVariable String appointmentId) {
         appointmentService.removeAppointmentById(appointmentId);
     }
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public
     @ResponseBody
-    String addNewAppointment(@RequestBody @Valid Appointment appointment) {
-
+    public String addNewAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
         return appointmentService.putAppointment(appointment);
     }
 
-    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
-    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "{appointmentId}", method = RequestMethod.GET)
+//    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
-
+//        if (appointmentId.equals("1")) {return new Appointment();}
         return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 
-    @RequestMapping(value = "/date/{date}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "date/{date}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Appointment> getAppointmentsByDate(@PathVariable long date) {
 

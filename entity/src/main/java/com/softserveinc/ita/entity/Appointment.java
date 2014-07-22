@@ -2,6 +2,8 @@ package com.softserveinc.ita.entity;
 
 import com.google.gson.annotations.Expose;
 import com.softserveinc.ita.entity.exceptions.DateException;
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Appointments")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Appointment implements Serializable {
 
     private static final long serialVersionUID = 1L;

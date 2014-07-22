@@ -6,8 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(name = "QuestionInformation")
+//@Entity
+//@Table(name = "QuestionInformation")
 public class QuestionInformation implements Serializable {
 
     public static final String DEFAULT_COMMENT = "";
