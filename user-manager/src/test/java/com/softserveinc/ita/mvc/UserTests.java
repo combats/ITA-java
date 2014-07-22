@@ -6,7 +6,6 @@ import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
-import com.softserveinc.ita.exception.UserException;
 import com.softserveinc.ita.utils.JsonUtil;
 
 import org.junit.Assert;
@@ -41,6 +40,7 @@ public class UserTests extends BaseMVCTest {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     protected WebApplicationContext wac;
+
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(wac).build();
@@ -48,24 +48,24 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testDeleteUserByIDAndExpectedIsOK() throws Exception {
-        String userID = new String("121");
-        mockMvc.perform(delete("/users" + "/" + userID))
+        String userID = "121";
+        mockMvc.perform(delete("/" + userID))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteUserByIDAndExpectedDeletedSuccessfully() throws Exception {
-        String userID = new String("122");
+        String userID = "122";
 
 //        String goodResponse = jsonUtil.toJson(userID);
-        mockMvc.perform(delete("/users" + "/" + userID))
-               .andExpect(content().string(userID));
+        mockMvc.perform(delete("/" + userID))
+                .andExpect(content().string(userID));
     }
 
     @Test
     public void testDeleteUserByIdAndExpectedDeleteException() throws Exception {
-        String userID = new String("124");
-        mockMvc.perform(delete("/users" + "/" + userID))
+        String userID = "124";
+        mockMvc.perform(delete("/" + userID))
                 .andExpect(status().isNotFound());
     }
 
@@ -75,7 +75,7 @@ public class UserTests extends BaseMVCTest {
         User testUser = new User(userID);
         String expectedJsonUser = jsonUtil.toJson(testUser);
         MvcResult result = mockMvc.perform(
-                get("/users/{userID}", userID).accept(MediaType.APPLICATION_JSON))
+                get("/{userID}", userID).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         assertEquals(expectedJsonUser, result.getResponse().getContentAsString());         //compare expected test User and actual.
@@ -85,13 +85,19 @@ public class UserTests extends BaseMVCTest {
     public void testGetNonExistentUserAndGetInternalServerError() throws Exception {
         String userID = "-1";
         mockMvc.perform(
-                get("/users/{userID}", userID))
+                get("/{userID}", userID))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testGetAllUsersIDAndExpectIsOK() throws Exception {
-        mockMvc.perform(get("/users/userId")).
+        mockMvc.perform(get("/userId")).
+                andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllRolesIDAndExpectIsOK() throws Exception {
+        mockMvc.perform(get("/roles")).
                 andExpect(status().isOk());
     }
 
@@ -100,7 +106,7 @@ public class UserTests extends BaseMVCTest {
         User user = new User("id1");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
@@ -108,10 +114,10 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithNotExistingIdAndExpectNotFound() throws Exception {
-        User user = new User("id4","Andrey","lastname");
+        User user = new User("Andrey", "lastname");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isNotFound());
@@ -119,30 +125,33 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithExistingIdAndExpectIsoK() throws Exception {
-        User user = new User("id3","Andrey","lastname");
+        User user = new User("Andrey", "lastname");
+        user.setId("id4");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
     }
 
     @Test
-    public void testEditUserWithExistingIdAndExpectEqualsWithResult() throws Exception{
-        User user = new User("id3","Andrey","lastname");
+    public void testEditUserWithExistingIdAndExpectEqualsWithResult() throws Exception {
+        User user = new User("Andrey", "lastname");
+        user.setId("id4");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(content().string(jsonUser));
     }
+
     @Test
     public void testPostNewUserAndExpectIsCreated() throws Exception {
         User testUser = new User("3");
         String jsonUser = jsonUtil.toJson(testUser);
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/")
                 .content(jsonUser)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -153,7 +162,7 @@ public class UserTests extends BaseMVCTest {
     public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
         User testUser = new User("1");
         String jsonUser = jsonUtil.toJson(testUser);
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/")
                 .content(jsonUser)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -163,7 +172,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/users")
+                get("/")
         )
                 .andExpect(status().isOk());
     }
@@ -171,23 +180,26 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectJson() throws Exception {
         mockMvc.perform(
-                get("/users"))
+                get("/"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     public void testGetUserListAndExpectPreDefinedList() throws Exception {
         List<User> sampleUserList = new ArrayList<>();
-        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
+        Collections.addAll(sampleUserList, new User("Pupkin", "Vasiliy"),
+                new User("Ivanov", "Ivan"),
+                new User("Fedorov", "Fedor"));
         String expectedResult = jsonUtil.toJson(sampleUserList);
         mockMvc.perform(
-                get("/users"))
+                get("/"))
                 .andExpect(content().string(expectedResult));
     }
+
     @Test
-    public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception{
+    public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception {
         mockMvc.perform(
-                get("/users/-1").accept(MediaType.APPLICATION_JSON))
+                get("/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Invalid user ID"))));
     }
 }

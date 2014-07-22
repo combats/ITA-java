@@ -5,13 +5,19 @@ import com.softserveinc.ita.entity.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
-    String addAppointment(Appointment appointment);
+    String putAppointment(Appointment appointment);
 
-    Appointment getAppointmentByApplicantId(String applicantId);
+    List<Appointment> getAppointmentByApplicantId(String applicantId);
 
     void removeAppointmentById(String appointmentId);
 
     Appointment getAppointmentByAppointmentId(String appointmentId);
 
     List<Appointment> getAppointmentsByDate(long date);
+
+    void updateAppointment(Appointment appointment);
+
+    String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId);
+
+    Appointment addAppointment(Appointment appointment);
 }

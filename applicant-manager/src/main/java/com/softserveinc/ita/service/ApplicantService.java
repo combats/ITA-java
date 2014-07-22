@@ -9,8 +9,6 @@ import com.softserveinc.ita.exception.GroupNotFoundException;
 public interface ApplicantService {
     List<Applicant> getApplicants();
 
-    List<Integer> getApplicantsByGroupID(String groupID);
-
     Applicant getApplicantById(String applicantId) throws ApplicantDoesNotExistException;
 
     Applicant addNewApplicant(Applicant applicant);

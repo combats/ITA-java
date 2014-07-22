@@ -1,6 +1,7 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.GroupDAO;
+import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Group;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class GroupDAOImpl implements GroupDAO {
+public class GroupDAOImpl implements GroupDao {
     Group group = new Group("31", "KV-004", 2);
 
     {
@@ -34,8 +35,18 @@ public class GroupDAOImpl implements GroupDAO {
         group.addOrUpdateApplicantIDListByStatus(employed, new ApplicantBenchmark(Applicant.Status.EMPLOYED, -1));
     }
 
+//    @Override
+//    public Group getGroupById(String groupId) {
+//        return group;
+//    }
+
     @Override
-    public Group getGroupById(String groupId) {
-        return group;
+    public List<Group> getGroupsByStatus(String groupStatus) {
+        return null;
+    }
+
+    @Override
+    public List<Applicant> getApplicantsByGroupID(String groupID) {
+        return null;
     }
 }

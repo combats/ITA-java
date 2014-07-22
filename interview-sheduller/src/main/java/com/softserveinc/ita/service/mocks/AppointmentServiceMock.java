@@ -4,12 +4,13 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
 import org.joda.time.DateTime;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-
+@Service
 public class AppointmentServiceMock implements AppointmentService {
 
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -45,14 +46,15 @@ public class AppointmentServiceMock implements AppointmentService {
                 , todaySecondAppointment);
     }
 
-
     @Override
-    public Appointment getAppointmentByApplicantId(String applicantId) {
+    public List<Appointment> getAppointmentByApplicantId(String applicantId) {
+        List<Appointment> result = new ArrayList<>();
         if (applicantId.equals("testApplicantId")) {
-            return appointmentsList.get(0);
+            result.add(appointmentsList.get(0));
         } else {
-            return appointmentsList.get(2);
+            result.add(appointmentsList.get(2));
         }
+        return result;
     }
 
     @Override
@@ -70,7 +72,7 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public String addAppointment(Appointment appointment) {
+    public String putAppointment(Appointment appointment) {
         return "testAppointmentId";
     }
 
@@ -99,4 +101,31 @@ public class AppointmentServiceMock implements AppointmentService {
 
     }
 
+    @Override
+    public void updateAppointment(Appointment appointment) {
+        List<Appointment> appointments = new ArrayList<>();
+        int TOMORROW = 24 * 60 * 60 * 1000;
+        List<String> users = new ArrayList<>();
+        users.add("testUserId");
+        appointments.add(new Appointment(users, "testApplicantId", 1401866602L + TOMORROW));
+        Appointment appointment1 = appointment;
+        appointments.remove(0);
+        appointments.add(appointment1);
+        if (!appointment1.equals(appointments.get(0))) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
+    public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
+        Appointment appointment = new Appointment();
+        appointment.setAppointmentId("TestAppointmentId");
+        appointment.setGroupId("TestGroupId");
+        appointment.setApplicantId("TestApplicantId");
+        if (appointment.getGroupId().equals(groupId) && appointment.getApplicantId().equals(applicantId)) {
+            return appointment.getAppointmentId();
+        } else {
+            return "NotSuchAppointment";
+        }
+    }
 }

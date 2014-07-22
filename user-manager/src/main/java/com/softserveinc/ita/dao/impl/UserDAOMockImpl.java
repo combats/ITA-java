@@ -22,9 +22,9 @@ public class UserDAOMockImpl implements UserDAO {
     @Override
     public List<User> getUsers() {
         List<User> users = new ArrayList<User>();
-        Collections.addAll(users, new User("1", "Pupkin", "Vasiliy"),
-                new User("2", "Ivanov", "Ivan"),
-                new User("3", "Fedorov", "Fedor"));
+        Collections.addAll(users, new User("Pupkin", "Vasiliy"),
+                new User("Ivanov", "Ivan"),
+                new User("Fedorov", "Fedor"));
         return users;
     }
 
@@ -37,7 +37,7 @@ public class UserDAOMockImpl implements UserDAO {
         }};
 
         for (User u : users) {
-            if (u.getID().equals(UserID)) {
+            if (u.getId().equals(UserID)) {
                 user = u;
             }
         }
@@ -59,9 +59,10 @@ public class UserDAOMockImpl implements UserDAO {
             add(new User("1"));
             add(new User("2"));
         }};
-        for (User u : users) {
-            if (user.equals(u))
+        for (User item : users) {
+            if (item.getId().equals(user.getId())) {
                 throw new UserAlreadyExistsException();
+            }
         }
         return user;
     }
@@ -82,13 +83,16 @@ public class UserDAOMockImpl implements UserDAO {
         }
         List<User> users = new ArrayList<User>() {
             {
+                User tmpUser = new User("Andrey", "lastname");
+                tmpUser.setId("id4");
+                add(tmpUser);
                 add(new User("id1"));
                 add(new User("id2"));
                 add(new User("id3"));
             }
         };
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getID().equals(changingUser.getID())) {
+            if (users.get(i).getId().equals(changingUser.getId())) {
                 users.set(i, changingUser);
                 return users.get(i);
             }

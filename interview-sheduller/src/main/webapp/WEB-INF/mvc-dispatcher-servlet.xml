@@ -3,14 +3,19 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:tx="http://www.springframework.org/schema/tx"
-
+       xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-    <context:component-scan base-package="com.softserveinc.ita"/>
+    <!--Logging -->
+    <aop:aspectj-autoproxy />
+    <bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>
+    <context:component-scan base-package="com.softserveinc.ita.logging"/>
     <mvc:annotation-driven/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -20,19 +25,25 @@
 
     <!-- For bean-components (@Component, @Service)  -->
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
-    <context:component-scan base-package="com.softserveinc.ita.service"/>
-
+    <context:component-scan base-package="com.softserveinc.ita.aspect"/>
+    <context:component-scan base-package="com.softserveinc.ita.config"/>
+    <context:component-scan base-package="com.softserveinc.ita.mvc"/>
+    <context:component-scan base-package="com.softserveinc.ita.service.impl"/>
+    <context:component-scan base-package="com.softserveinc.ita.utils.error"/>
+    <context:component-scan base-package="com.softserveinc.ita.validators"/>
+    <context:component-scan base-package="com.softserveinc.ita.controller"/>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <bean id="appointmentService" class="com.softserveinc.ita.service.mocks.AppointmentServiceMock"/>
     <!--aux/utils-->
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
-    <!--external services-->
-    <bean id="userService" class="com.softserveinc.ita.service.mocks.UserServiceMock"/>
-    <bean id="applicantService" class="com.softserveinc.ita.service.mocks.ApplicantServiceMock"/>
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
+    <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
+        <constructor-arg name="baseUrl" value="http://localhost:8080"/>
+    </bean>
+    <!--dao-->
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
 </beans>
