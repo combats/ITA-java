@@ -70,6 +70,7 @@ public class HttpRequestExecutorFactoryMock extends AbstractHttpRequestExecutorR
         Collections.addAll(usersIdList, user1.getId(), user2.getId(), user3.getId());
     }
 
+
     List<String> usersIdList2 = new ArrayList<String>(); {
         Collections.addAll(usersIdList2, user1.getId());
     }
