@@ -25,6 +25,7 @@ public class InterviewServiceTests extends BaseServiceTests {
     @Autowired
     InterviewFactory interviewFactory;
 
+
     @Test
     public void testGetInterviewByIdAndExpectEqual() throws HttpRequestException, WrongCriteriaException {
 

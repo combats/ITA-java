@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class Question implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final int DEFAULT_WEIGHT = 1;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -23,7 +24,7 @@ public class Question implements Serializable {
     private String QuestionBody;
 
     @Column(name = "Weight")
-    private int weight = 1;
+    private int weight = DEFAULT_WEIGHT;
 
     public Question() {
     }
