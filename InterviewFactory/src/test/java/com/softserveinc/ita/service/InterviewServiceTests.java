@@ -32,7 +32,6 @@ public class InterviewServiceTests extends BaseServiceTests {
         Interview interviewActual = interviewFactory.getInterviewWithType(InterviewType.INTERVIEW_WITHOUT_QUESTIONS).create("5");
         Interview interviewExpected = interviewService.getInterviewByAppointmentID(interviewActual.getInterviewId());
         assertEquals(interviewActual, interviewExpected);
-
     }
 
     @Test
