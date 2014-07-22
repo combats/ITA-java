@@ -37,7 +37,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantsListAngExpectedIsOk() throws Exception {
-        mockMvc.perform(get("/applicants"))
+        mockMvc.perform(get("/"))
                 .andExpect(status().isOk());
     }
 
