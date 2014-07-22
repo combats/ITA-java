@@ -43,7 +43,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testDeleteUserByIDAndExpectedIsOK() throws Exception {
         String userID = "121";
-        mockMvc.perform(delete("/users" + "/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isOk());
     }
 
@@ -52,14 +52,14 @@ public class UserTests extends BaseMVCTest {
         String userID = "122";
 
 //        String goodResponse = jsonUtil.toJson(userID);
-        mockMvc.perform(delete("/users" + "/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                .andExpect(content().string(userID));
     }
 
     @Test
     public void testDeleteUserByIdAndExpectedDeleteException() throws Exception {
         String userID = "124";
-        mockMvc.perform(delete("/users" + "/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isNotFound());
     }
 
@@ -69,7 +69,7 @@ public class UserTests extends BaseMVCTest {
         User testUser = new User(userID);
         String expectedJsonUser = jsonUtil.toJson(testUser);
         MvcResult result = mockMvc.perform(
-                get("/users/{userID}", userID).accept(MediaType.APPLICATION_JSON))
+                get("/{userID}", userID).accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
         assertEquals(expectedJsonUser, result.getResponse().getContentAsString());         //compare expected test User and actual.
@@ -79,13 +79,13 @@ public class UserTests extends BaseMVCTest {
     public void testGetNonExistentUserAndGetInternalServerError() throws Exception {
         String userID = "-1";
         mockMvc.perform(
-                get("/users/{userID}", userID))
+                get("/{userID}", userID))
                 .andExpect(status().isInternalServerError());
     }
 
     @Test
     public void testGetAllUsersIDAndExpectIsOK() throws Exception {
-        mockMvc.perform(get("/users/userId")).
+        mockMvc.perform(get("/userId")).
                 andExpect(status().isOk());
     }
 
@@ -94,7 +94,7 @@ public class UserTests extends BaseMVCTest {
         User user = new User("id1");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isBadRequest());
@@ -106,7 +106,7 @@ public class UserTests extends BaseMVCTest {
         user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isNotFound());
@@ -118,7 +118,7 @@ public class UserTests extends BaseMVCTest {
         user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(status().isOk());
@@ -130,7 +130,7 @@ public class UserTests extends BaseMVCTest {
         user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
-                put("/users").
+                put("/").
                         content(jsonUser).
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(content().string(jsonUser));
@@ -139,7 +139,7 @@ public class UserTests extends BaseMVCTest {
     public void testPostNewUserAndExpectIsCreated() throws Exception {
         User testUser = new User("3");
         String jsonUser = jsonUtil.toJson(testUser);
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/")
                 .content(jsonUser)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -150,7 +150,7 @@ public class UserTests extends BaseMVCTest {
     public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
         User testUser = new User("1");
         String jsonUser = jsonUtil.toJson(testUser);
-        mockMvc.perform(post("/users")
+        mockMvc.perform(post("/")
                 .content(jsonUser)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -160,7 +160,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/users")
+                get("/")
         )
                 .andExpect(status().isOk());
     }
@@ -168,7 +168,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectJson() throws Exception {
         mockMvc.perform(
-                get("/users"))
+                get("/"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
@@ -178,13 +178,13 @@ public class UserTests extends BaseMVCTest {
         Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
         String expectedResult = jsonUtil.toJson(sampleUserList);
         mockMvc.perform(
-                get("/users"))
+                get("/"))
                 .andExpect(content().string(expectedResult));
     }
     @Test
     public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception{
         mockMvc.perform(
-                get("/users/-1").accept(MediaType.APPLICATION_JSON))
+                get("/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Invalid user ID"))));
     }
 }
