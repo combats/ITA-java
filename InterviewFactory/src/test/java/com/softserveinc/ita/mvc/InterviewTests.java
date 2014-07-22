@@ -250,6 +250,7 @@ public class InterviewTests extends BaseMVCTest {
                 .andReturn();
 
         assertEquals(questionInformation.getId(), ExpectingObject.getResponse().getContentAsString());
+
     }
 
     @Test
