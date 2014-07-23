@@ -40,6 +40,8 @@ public class QuestionInformation implements Serializable {
     public QuestionInformation() {
     }
 
+
+
     public QuestionInformation(String question, int weight) {
         this.question = question;
         this.weight = weight;
