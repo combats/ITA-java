@@ -154,13 +154,14 @@ public class RepositoryController {
     }
 
     private String getContentType64(String string64image) throws UnsupportedFileContentTypeException {
-        if(string64image.matches("(gif)")) {
+        String sub64 = string64image.substring(0, 30);
+        if(sub64.matches("(gif)")) {
             return "image/gif";
         }
-        if(string64image.matches("(p?jpeg)")) {
+        if(sub64.matches("(jpeg)")) {
             return "image/jpeg";
         }
-        if(string64image.matches("((x-)?png)")) {
+        if(sub64.matches("(png)")) {
             return "image/png";
         }
         throw new UnsupportedFileContentTypeException("Caused by: unsupported media type (actually we don't know what it is)");
