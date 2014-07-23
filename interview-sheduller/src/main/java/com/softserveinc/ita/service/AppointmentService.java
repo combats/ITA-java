@@ -18,6 +18,4 @@ public interface AppointmentService {
     void updateAppointment(Appointment appointment);
 
     String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId);
-
-    Appointment addAppointment(Appointment appointment);
 }

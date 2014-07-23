@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+
 @Service
 public class AppointmentServiceMock implements AppointmentService {
 
@@ -25,21 +26,21 @@ public class AppointmentServiceMock implements AppointmentService {
         List<String> users = new ArrayList<>();
         users.add("testUserId");
         Appointment appointment1 = new Appointment(users, applicantId, 1401866602L + TOMORROW);
-        appointment1.setID(appointmentId);
+        appointment1.setAppointmentId(appointmentId);
 
         List<String> users2 = new ArrayList<>();
         Appointment appointment2 = new Appointment(users, applicantId, 1401866603L + TOMORROW);
-        appointment2.setID(appointmentId);
+        appointment2.setAppointmentId(appointmentId);
 
         List<String> users3 = new ArrayList<>();
         Appointment appointment3 = new Appointment(users, applicantId, 1401866604L + TOMORROW);
-        appointment3.setID(appointmentId);
+        appointment3.setAppointmentId(appointmentId);
 
 
         Appointment todayFirstAppointment = new Appointment(users, applicantId, currentTime);
-        todayFirstAppointment.setID(appointmentId);
+        todayFirstAppointment.setAppointmentId(appointmentId);
         Appointment todaySecondAppointment = new Appointment(users, applicantId, currentTime);
-        todaySecondAppointment.setID(appointmentId);
+        todaySecondAppointment.setAppointmentId(appointmentId);
 
         appointmentsList = new LinkedList<>();
         Collections.addAll(appointmentsList, appointment1, appointment2, appointment3, todayFirstAppointment

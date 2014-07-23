@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
 
@@ -58,12 +59,6 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
-        return appointmentDAO.getAppointmentIdByGroupIdAndApplicantId(groupId,applicantId);
-    }
-
-    @Override
-    @Transactional(isolation = Isolation.READ_COMMITTED)
-    public Appointment addAppointment(Appointment appointment) {
-        return appointmentDAO..getAppointmentIdByGroupIdAndApplicantId(appointment);
+        return appointmentDAO.getAppointmentIdByGroupIdAndApplicantId(groupId, applicantId);
     }
 }

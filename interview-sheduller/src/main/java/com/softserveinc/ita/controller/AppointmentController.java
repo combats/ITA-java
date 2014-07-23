@@ -1,7 +1,6 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.entity.InterviewResult;
 import com.softserveinc.ita.service.AppointmentService;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,18 +43,11 @@ public class AppointmentController {
 
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
+    public
     @ResponseBody
-    public Appointment addNewAppointment(@RequestBody @Valid Appointment appointment) {
-        return appointmentService.addAppointment(appointment);
-    }
+    String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
-
-    @RequestMapping(method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    @ResponseBody
-    public Appointment editAppointment(@RequestBody Appointment appointment) {//@Valid Appointment
-        return appointment;
-        //return appointmentService.addAppointment(appointment);
+        return appointmentService.putAppointment(appointment);
     }
 
     @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
@@ -83,24 +75,4 @@ public class AppointmentController {
     public String getAppointmentIdByGroupIdAndApplicantId(@RequestParam(value = "group") String groupId, @RequestParam(value="applicant") String applicantId) {
         return appointmentService.getAppointmentIdByGroupIdAndApplicantId(groupId, applicantId);
     }
-
-    @RequestMapping(value = "/interview/{interviewID}", method = RequestMethod.GET, produces = "application/json")
-    @ResponseBody
-    public InterviewResult getInterviewResultByID(@PathVariable String interviewID) {
-        if (Integer.valueOf(interviewID) >= 5) {
-            return new InterviewResult("Very good", Integer.parseInt(interviewID) * 10);
-        }
-        return null;
-//        return appointmentService.getAppointmentsByDate(date);
-    }
-//
-//    @RequestMapping(value = "/groups/{groupId}/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
-//    @ResponseBody
-//    public String getAppointmentIdByGroupIdAndApplicantId(@PathVariable String groupId, @PathVariable String applicantId) {
-//        //return appointmentService.getAppointmentIdByGroupIdAndApplicantId(groupId, applicantId);
-//        if (Integer.valueOf(applicantId) >= 3) {
-//            return applicantId.toString();
-//        }
-//        return "";
-//    }
 }
