@@ -236,6 +236,7 @@ public class MailServiceTests extends MailServiceBaseTests {
                 getSubject());
         Object obj = wiserMessage.getMimeMessage().getContent();
         assertTrue(obj instanceof MimeMultipart);
+
         MimeMultipart multi = (MimeMultipart) obj;
         BodyPart bp = multi.getBodyPart(0);
         Object innerContent = bp.getContent();
