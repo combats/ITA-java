@@ -2,7 +2,6 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -42,7 +40,7 @@ public class AppointmentController {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public String addNewAppointment(@RequestBody @Valid Appointment appointment) {
+    public String addNewAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
         return appointmentService.putAppointment(appointment);
     }
 
@@ -61,7 +59,7 @@ public class AppointmentController {
     }
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAppointment(@RequestBody @Valid Appointment appointment) {
+    public void updateAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
         appointmentService.updateAppointment(appointment);
     }
 

@@ -1,13 +1,9 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
 import com.softserveinc.ita.entity.exceptions.DateException;
-import org.codehaus.jackson.annotate.JsonAutoDetect;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

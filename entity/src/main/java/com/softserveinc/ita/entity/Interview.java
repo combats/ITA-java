@@ -1,12 +1,8 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,12 +13,11 @@ public class Interview implements Serializable {
     @Column(name = "interview_id", unique = true)
     private String interviewId;
 
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=QuestionsBlock.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "interview_questionsBlockId", referencedColumnName="interview_id")
+    @ElementCollection(fetch = FetchType.EAGER, targetClass = QuestionsBlock.class)
+    @Column(name = "InterviewQuestionBlocks")
     private Set<QuestionsBlock> questionsBlocks = new HashSet<>();
 
     @Column(name = "InterviewType")
-    @Enumerated(EnumType.STRING)
     private InterviewType type;
 
     public Interview() {

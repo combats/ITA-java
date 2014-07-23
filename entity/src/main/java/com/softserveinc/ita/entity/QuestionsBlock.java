@@ -1,13 +1,10 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -29,8 +26,8 @@ public class QuestionsBlock implements Serializable {
     @Column(name = "InterviewId")
     String interviewId = "";
 
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=QuestionInformation.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "questionsBlock_questionInformationId", referencedColumnName="questionsBlock_id")
+    @ElementCollection(fetch=FetchType.EAGER, targetClass=QuestionInformation.class)
+    @Column(name = "QuestionsBlockQuestionInformation")
     private Set<QuestionInformation> questions = new HashSet<>();
 
     @Column(name = "Final_comment")

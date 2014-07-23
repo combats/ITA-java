@@ -42,15 +42,15 @@ public class AppointmentDAOTests extends BaseDAOTest {
         assertThat(expected, equalTo(actual));
     }
 
-//    @Test
-//    public void testGetAppointmentByApplicantId() {
-//        List<String> userIdList = new ArrayList<>();
-//        Collections.addAll(userIdList, "1", "2", "3");
-//        Appointment expected = new Appointment(userIdList, "1", 100L);
-//        sessionFactory.getCurrentSession().save(expected);
-//        List<Appointment> actual = appointmentDAO.getAppointmentByApplicantId("1");
-//        assertThat(1, equalTo(actual.size()));
-//    }
+    @Test
+    public void testGetAppointmentByApplicantId() {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2", "3");
+        Appointment expected = new Appointment(userIdList, "1", 100L);
+        sessionFactory.getCurrentSession().save(expected);
+        List<Appointment> actual = appointmentDAO.getAppointmentByApplicantId("1");
+        assertThat(1, equalTo(actual.size()));
+    }
 
     @Test(expected = ObjectNotFoundException.class)
     public void testRemoveAppointmentById() {
@@ -88,16 +88,19 @@ public class AppointmentDAOTests extends BaseDAOTest {
         assertThat(expectedId, equalTo(actualId));
     }
 
-//    @Test
-//    public void testGetAppointmentByDate() {
-//        List<String> userIdList = new ArrayList<>();
-//        Collections.addAll(userIdList, "1", "2", "3");
-//        Appointment appointmentOne = new Appointment(userIdList, "TestApplicantId", 2000L);
-//        Appointment appointmentTwo = new Appointment(userIdList, "TestApplicantId", 3000L);
-//        Session session = sessionFactory.getCurrentSession();
-//        session.save(appointmentOne);
-//        session.save(appointmentTwo);
-//        List<Appointment> appointments = appointmentDAO.getAppointmentsByDate(1000L, 4000L);
-//        assertEquals(2, appointments.size());
-//    }
+    @Test
+    public void testGetAppointmentByDate() {
+        List<String> userIdList = new ArrayList<>();
+        Collections.addAll(userIdList, "1", "2", "3");
+        Appointment appointmentOne = new Appointment(userIdList, "TestApplicantId", 2000L);
+        Appointment appointmentTwo = new Appointment(userIdList, "TestApplicantId", 3000L);
+        Session session = sessionFactory.getCurrentSession();
+        session.save(appointmentOne);
+        session.save(appointmentTwo);
+        List<Appointment> appointments = appointmentDAO.getAppointmentsByDate(1000L, 4000L);
+        for (Appointment appointment : appointments) {
+            System.err.println(appointment);
+        }
+        assertEquals(2, appointments.size());
+    }
 }
