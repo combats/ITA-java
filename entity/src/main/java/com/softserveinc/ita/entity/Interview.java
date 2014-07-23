@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-//@Entity
-//@Table(name = "Interview")
+@Entity
+@Table(name = "Interview")
 public class Interview implements Serializable {
 
     @Id
@@ -22,6 +22,7 @@ public class Interview implements Serializable {
     private Set<QuestionsBlock> questionsBlocks = new HashSet<>();
 
     @Column(name = "InterviewType")
+    @Enumerated(EnumType.STRING)
     private InterviewType type;
 
     public Interview() {

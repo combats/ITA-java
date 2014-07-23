@@ -40,9 +40,9 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-//    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
-//    @JoinColumn(name = "user_questions", referencedColumnName="Id")
-//    private List<Question> questions;
+    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
+    @JoinColumn(name = "user_questions", referencedColumnName="Id")
+    private List<Question> questions;
 
     public User() {
     }
@@ -63,7 +63,7 @@ public class User implements Serializable {
         this.email = email;
         this.password = password;
         this.active = active;
-//        this.questions = questions;
+        this.questions = questions;
     }
 
     public Role getRole() {
@@ -130,13 +130,13 @@ public class User implements Serializable {
         this.surname = surname;
     }
 
-//    public List<Question> getQuestions() {
-//        return questions;
-//    }
-//
-//    public void setQuestions(List<Question> questions) {
-//        this.questions = questions;
-//    }
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -151,7 +151,7 @@ public class User implements Serializable {
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (phone != null ? !phone.equals(user.phone) : user.phone != null) return false;
-//        if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
+        if (questions != null ? !questions.equals(user.questions) : user.questions != null) return false;
         if (surname != null ? !surname.equals(user.surname) : user.surname != null) return false;
 
         return true;
@@ -166,7 +166,7 @@ public class User implements Serializable {
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
         result = 31 * result + (active ? 1 : 0);
-//        result = 31 * result + (questions != null ? questions.hashCode() : 0);
+        result = 31 * result + (questions != null ? questions.hashCode() : 0);
         return result;
     }
 
@@ -180,7 +180,7 @@ public class User implements Serializable {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", active=" + active +
-//                ", questions=" + questions +
+                ", questions=" + questions +
                 '}';
     }
 }

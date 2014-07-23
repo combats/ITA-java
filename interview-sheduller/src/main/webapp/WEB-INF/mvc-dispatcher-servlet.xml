@@ -12,10 +12,10 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
-    <!--&lt;!&ndash;Logging &ndash;&gt;-->
-    <!--<aop:aspectj-autoproxy />-->
-    <!--<bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>-->
-    <!--<context:component-scan base-package="com.softserveinc.ita.logging"/>-->
+    <!--Logging -->
+    <aop:aspectj-autoproxy />
+    <bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>
+    <context:component-scan base-package="com.softserveinc.ita.logging"/>
     <mvc:annotation-driven/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
@@ -39,11 +39,9 @@
     </bean>
 
     <!--aux/utils-->
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
-    <!--dao-->
-    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
+
 </beans>

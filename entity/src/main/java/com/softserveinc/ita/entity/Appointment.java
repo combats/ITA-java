@@ -14,10 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "Appointments")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public class Appointment implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Appointment {
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
     public static final int TOMORROW = 24 * 60 * 60 * 1000;
@@ -29,7 +26,7 @@ public class Appointment implements Serializable {
     @Column(name = "Id", unique = true)
     private String appointmentId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "UserIdList")
     private List <String> userIdList = new ArrayList<>();
 

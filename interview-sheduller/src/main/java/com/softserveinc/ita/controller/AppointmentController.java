@@ -22,15 +22,13 @@ public class AppointmentController {
     private Validator appointmentValidator;
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private JsonUtil jsonUtil;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(appointmentValidator);
     }
 
-    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
@@ -44,15 +42,14 @@ public class AppointmentController {
     @RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public String addNewAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
+    public String addNewAppointment(@RequestBody @Valid Appointment appointment) {
         return appointmentService.putAppointment(appointment);
     }
 
     @RequestMapping(value = "{appointmentId}", method = RequestMethod.GET)
-//    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
-//        if (appointmentId.equals("1")) {return new Appointment();}
         return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 
