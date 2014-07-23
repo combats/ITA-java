@@ -40,8 +40,8 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_questions", referencedColumnName="Id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "UserQuestions")
     private List<Question> questions;
 
     public User() {

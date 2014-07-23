@@ -49,7 +49,7 @@ public class UserController {
     }
     
     @RequestMapping(method = RequestMethod.GET, value = "/userId")
-    public @ResponseBody ArrayList<String> getAllUsersID() {
+    public @ResponseBody List<String> getAllUsersID() {
         return userService.getAllUsersID();
     }
 

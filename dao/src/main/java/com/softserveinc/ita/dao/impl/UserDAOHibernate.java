@@ -19,7 +19,7 @@ public class UserDAOHibernate implements UserDAO {
 
     @Override
     public User getUserById(String userId) {
-        return (User) sessionFactory.getCurrentSession().load(User.class, userId);
+        return (User) sessionFactory.getCurrentSession().get(User.class, userId);
     }
 
     @SuppressWarnings("unchecked")
