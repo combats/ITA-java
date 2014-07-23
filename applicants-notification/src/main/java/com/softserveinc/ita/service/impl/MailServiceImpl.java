@@ -38,7 +38,7 @@ public class MailServiceImpl implements MailService {
     public static final String COURSE_ADDRESS = "courseAddress";
     public static final String APPLICANT_EMAIL = "applicantEmail";
     public static final String GROUP_NAME = "groupName";
-    public static final String IMAGE_REF = "cid:ItAcademyLogo";
+    public static final String IMAGE_REF = "cid:ItAcademyLogo]";
 
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
