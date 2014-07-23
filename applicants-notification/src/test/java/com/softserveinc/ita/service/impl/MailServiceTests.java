@@ -3,6 +3,7 @@ package com.softserveinc.ita.service.impl;
 import com.softserveinc.ita.entity.*;
 import com.softserveinc.ita.service.MailServiceBaseTests;
 import com.softserveinc.ita.utils.JsonUtil;
+import junit.framework.Assert;
 import org.apache.velocity.app.VelocityEngine;
 import org.junit.After;
 import org.junit.Before;
@@ -244,6 +245,7 @@ public class MailServiceTests extends MailServiceBaseTests {
        // emailText = emailText.replace("\n", "").replace("\r", "");
         String content = (String)innerMulti.getBodyPart(0).getContent();
        // content = content.replace("\n", "").replace("\r", "");
-        assertEquals(emailText, content);
+
+        assertTrue(emailText.equals(content));
     }
 }

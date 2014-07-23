@@ -147,6 +147,7 @@
     <build>
         <plugins>
 
+
             <!-- Allows the example to be run via 'mvn camel:run' -->
             <plugin>
                 <groupId>org.apache.camel</groupId>
