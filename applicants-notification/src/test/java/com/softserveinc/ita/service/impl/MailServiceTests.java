@@ -16,10 +16,14 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import org.subethamail.wiser.Wiser;
 import org.subethamail.wiser.WiserMessage;
 
+import javax.activation.DataHandler;
 import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.*;
 
 import static org.junit.Assert.assertArrayEquals;
@@ -242,16 +246,22 @@ public class MailServiceTests extends MailServiceBaseTests {
         Object innerContent = bp.getContent();
         MimeMultipart innerMulti = (MimeMultipart) innerContent;
        // emailText = emailText.replace("\n", "").replace("\r", "");
-        String content = (String)innerMulti.getBodyPart(0).getContent();
-       // content = content.replace("\n", "").replace("\r", "");
+         DataHandler dataHandler = innerMulti.getBodyPart(0).getDataHandler();
+         InputStream is =  dataHandler.getInputStream();
 
-        char [] expected = emailText.toCharArray();
-        char [] actual = content.toCharArray();
 
-        System.err.println(Arrays.toString(expected));
-        System.err.println(Arrays.toString(actual));
+        StringBuilder inputStringBuilder = new StringBuilder();
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
+        String line = bufferedReader.readLine();
+        while(line != null){
+            inputStringBuilder.append(line);inputStringBuilder.append('\n');
+            line = bufferedReader.readLine();
+        }
 
-        assertArrayEquals(expected,actual);
+
+
+
+        assertEquals(emailText, inputStringBuilder.toString());
 
 
     }
