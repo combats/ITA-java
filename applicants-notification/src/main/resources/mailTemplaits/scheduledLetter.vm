@@ -3,7 +3,7 @@
 <img src='cid:ItAcademyLogo'>
 
 
-<h1>Dear ${name} ${surname} ! </h1>
+<h1>Dear ${name} ${lastName} ! </h1>
 
 <h3>We are pleased to invite You for an Interview with expert.</h3>
 <br>

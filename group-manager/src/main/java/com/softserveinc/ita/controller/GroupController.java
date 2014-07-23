@@ -29,9 +29,9 @@ public class GroupController {
                                                                                           @RequestParam Applicant.Status status) {
         Map<String, ApplicantBenchmark> applicants = groupService.getApplicantsByStatus(groupId, status);
         if (applicants == null) {
-            return new ResponseEntity<Map<String, ApplicantBenchmark>>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<Map<String, ApplicantBenchmark>>(applicants, HttpStatus.OK);
+        return new ResponseEntity(applicants, HttpStatus.OK);
     }
 
     @RequestMapping(value = "{groupId}/applicants", method = RequestMethod.PUT, produces = "application/json")

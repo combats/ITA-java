@@ -1,13 +1,14 @@
-var applicantsIDList = {}, pageTemplate = {};
+var applicantsIDList = {};
+var pageTemplate = {};
 var applicants = [];
 var groupCapacity;
 var userList = [];
-var groupID = 31;
+var groupID = 1;
 $(function () {
     //load page template
     $.ajax({
         async: false,
-        url: location.origin + '/hr/resources/template.mst',
+        url: location.origin + '/ui/hr/mst/template.mst',
         type: "GET",
         success: function (data) {
             pageTemplate = data;

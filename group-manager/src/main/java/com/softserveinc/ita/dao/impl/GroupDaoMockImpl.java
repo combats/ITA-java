@@ -2,6 +2,7 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
@@ -23,6 +24,14 @@ public class GroupDaoMockImpl implements GroupDao {
         group1 = setTime(group1, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group1);
+        group1.getApplicants().put("id1", new ApplicantBenchmark(Applicant.Status.NOT_SCHEDULED, -1));
+        group1.getApplicants().put("id2", new ApplicantBenchmark(Applicant.Status.NOT_SCHEDULED, -1));
+        group1.getApplicants().put("id3", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
+        group1.getApplicants().put("id4", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
+        group1.getApplicants().put("id5", new ApplicantBenchmark(Applicant.Status.NOT_PASSED, 3));
+        group1.getApplicants().put("id6", new ApplicantBenchmark(Applicant.Status.PASSED, 1));
+        group1.getApplicants().put("id7", new ApplicantBenchmark(Applicant.Status.PASSED, 2));
+        group1.getApplicants().put("id8", new ApplicantBenchmark(Applicant.Status.EMPLOYED, 3));
         Group group2 = new Group("id3", new Course("Java", "pen-java.png"), "kv021");
         group2 = setTime(group2, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());

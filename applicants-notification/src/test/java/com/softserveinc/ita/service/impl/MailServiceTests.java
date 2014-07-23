@@ -120,7 +120,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         mailServiceImpl.notifyApplicant(notificationJsonInfo);
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailServiceImpl.NAME, applicant1.getName());
-        letterModel.put(MailServiceImpl.SURNAME, applicant1.getSurname());
+        letterModel.put(MailServiceImpl.SURNAME, applicant1.getLastName());
         letterModel.put(MailServiceImpl.COURSE, group1.getCourse().getName());
         letterModel.put(MailServiceImpl.COURSE_ADDRESS, group1.getAddress());
         letterModel.put(MailServiceImpl.GROUP_START_TIME, MailServiceImpl.convertTimeToDate(group1.getStartTime()));
@@ -142,7 +142,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         mailServiceImpl.notifyApplicant(notificationJsonInfo);
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailServiceImpl.NAME, applicant2.getName());
-        letterModel.put(MailServiceImpl.SURNAME, applicant2.getSurname());
+        letterModel.put(MailServiceImpl.SURNAME, applicant2.getLastName());
         checkReceivedLetter(letterModel, applicant2, group1);
     }
 
@@ -167,7 +167,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         mailServiceImpl.notifyApplicant(notificationJsonInfo);
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailServiceImpl.NAME, applicant3.getName());
-        letterModel.put(MailServiceImpl.SURNAME, applicant3.getSurname());
+        letterModel.put(MailServiceImpl.SURNAME, applicant3.getLastName());
         letterModel.put(MailServiceImpl.COURSE_ADDRESS, group2.getAddress());
         letterModel.put(MailServiceImpl.TIME, MailServiceImpl.convertTimeToDate(appointment3.getStartTime()));
         letterModel.put(MailServiceImpl.HR_NAME, responsibleHr2.getName());
@@ -188,7 +188,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         mailServiceImpl.notifyApplicant(notificationJsonInfo);
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailServiceImpl.NAME, applicant2.getName());
-        letterModel.put(MailServiceImpl.SURNAME, applicant2.getSurname());
+        letterModel.put(MailServiceImpl.SURNAME, applicant2.getLastName());
         letterModel.put(MailServiceImpl.COURSE, group2.getCourse().getName());
         letterModel.put(MailServiceImpl.GROUP_NAME, group2.getGroupName());
         letterModel.put(MailServiceImpl.HR_NAME, responsibleHr2.getName());
@@ -209,7 +209,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         mailServiceImpl.notifyApplicant(notificationJsonInfo);
         Map<String, Object> letterModel = new HashMap<>();
         letterModel.put(MailServiceImpl.NAME, applicant1.getName());
-        letterModel.put(MailServiceImpl.SURNAME, applicant1.getSurname());
+        letterModel.put(MailServiceImpl.SURNAME, applicant1.getLastName());
         letterModel.put(MailServiceImpl.HR_NAME, responsibleHr2.getName());
         letterModel.put(MailServiceImpl.HR_SURNAME, responsibleHr2.getSurname());
         letterModel.put(MailServiceImpl.HR_PHONE, responsibleHr2.getPhone());

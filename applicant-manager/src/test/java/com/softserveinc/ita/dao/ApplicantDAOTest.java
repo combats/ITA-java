@@ -19,13 +19,14 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
         String applicantId = "id1";
-        Applicant expectedApplicant = new Applicant("id1");
+        Applicant expectedApplicant = new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L);
+        expectedApplicant.setId(applicantId);
         assertEquals(expectedApplicant, applicantDao.getApplicantById(applicantId));
     }
 
     @Test
     public void testGetApplicantByNotExistingIdAndExpectNull() throws Exception {
-        String applicantId = "id4";
+        String applicantId = "id44";
         assertEquals(null, applicantDao.getApplicantById(applicantId));
     }
 
@@ -50,7 +51,13 @@ public class ApplicantDAOTest extends BaseApplicantDAOTest {
     @Test
     public void testGetApplicantListAndExpectDefinedValues() throws Exception {
         List<Applicant> expectedApplicantList = new ArrayList<>();
-        Collections.addAll(expectedApplicantList, new Applicant("123"), new Applicant("124"), new Applicant("125"));
+        Applicant app1 = new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L);
+        app1.setId("id1");
+        Applicant app2 = new Applicant("Andrey", "Makarevich", "email@mail.com", "1234567894568", 98736513843543L);
+        app2.setId("id2");
+        Applicant app3 = new Applicant("Alexandr", "Drux", "email@mail.com", "1234567894568", 98736513843543L);
+        app3.setId("id3");
+        Collections.addAll(expectedApplicantList, app1, app2, app3);
         assertEquals(expectedApplicantList, applicantDao.getApplicants());
     }
 }

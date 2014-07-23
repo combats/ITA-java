@@ -3,7 +3,7 @@
 <img src='cid:ItAcademyLogo'>
 
 
-<h1>Dear ${name} ${surname} ! </h1>
+<h1>Dear ${name} ${lastName} ! </h1>
 
 SoftServe, Inc. is pleased to inform that you have successfully passed all entrance interviews and exams.
 We would like to invite you to study at our IT Academy for ${course} direction.<br>

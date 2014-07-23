@@ -101,7 +101,7 @@ public class MailServiceImpl implements MailService {
     private void sendEmployedLetter(Applicant applicant, Group group, User responsibleHr) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
+        model.put(SURNAME, applicant.getLastName());
         model.put(HR_NAME, responsibleHr.getName());
         model.put(HR_SURNAME, responsibleHr.getSurname());
         model.put(HR_PHONE, responsibleHr.getPhone());
@@ -113,7 +113,7 @@ public class MailServiceImpl implements MailService {
     private void sendNotScheduledLetterModel(Applicant applicant, Group group, User responsibleHr) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
+        model.put(SURNAME, applicant.getLastName());
         model.put(COURSE, group.getCourse().getName());
         model.put(GROUP_NAME, group.getGroupName());
         model.put(HR_NAME, responsibleHr.getName());
@@ -127,7 +127,7 @@ public class MailServiceImpl implements MailService {
     private void sendPassedLetter(Applicant applicant, Group group, User responsibleHr) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
+        model.put(SURNAME, applicant.getLastName());
         model.put(COURSE, group.getCourse().getName());
         model.put(COURSE_ADDRESS, group.getAddress());
         model.put(GROUP_START_TIME, convertTimeToDate(group.getStartTime()));
@@ -142,7 +142,7 @@ public class MailServiceImpl implements MailService {
     private void sendNotPassedLetter(Applicant applicant, Group group) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
+        model.put(SURNAME, applicant.getLastName());
         model.put(APPLICANT_EMAIL, applicant.getEmail());
         sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
@@ -162,7 +162,7 @@ public class MailServiceImpl implements MailService {
         }
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
-        model.put(SURNAME, applicant.getSurname());
+        model.put(SURNAME, applicant.getLastName());
         model.put(COURSE_ADDRESS, group.getAddress());
         model.put(TIME, convertTimeToDate(appointment.getStartTime()));
         model.put(HR_NAME, responsibleHr.getName());
