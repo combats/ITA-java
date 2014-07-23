@@ -153,7 +153,7 @@
                                 if (this.error) {
                                     alert("Data: " + data + "\nStatus: " + status);
                                 } else {
-                                    $("#image").attr('src', 'data:image/jpeg;base64,' + data);
+                                    $("#image").attr('src', data);
                                     $('#hidden_div').css('display','block');
                                 }
                 });
