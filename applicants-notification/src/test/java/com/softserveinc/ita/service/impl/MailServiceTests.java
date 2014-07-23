@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
@@ -246,6 +247,11 @@ public class MailServiceTests extends MailServiceBaseTests {
         String content = (String)innerMulti.getBodyPart(0).getContent();
        // content = content.replace("\n", "").replace("\r", "");
 
-        assertTrue(emailText.equals(content));
+        char [] expected = emailText.toCharArray();
+        char [] actual = content.toCharArray();
+
+        assertArrayEquals(expected,actual);
+
+
     }
 }
