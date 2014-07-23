@@ -1,4 +1,5 @@
 <body>
+<img src='cid:ItAcademyLogo'>
 <h1>Dear ${name} ${surname} ! </h1>
 Your application for ${course} course was reviewed, please wait until we contact you.
 <br>
