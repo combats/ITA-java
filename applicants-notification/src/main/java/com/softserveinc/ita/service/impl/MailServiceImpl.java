@@ -173,7 +173,6 @@ public class MailServiceImpl implements MailService {
         sendLetter(group.getApplicants().get(applicant.getId()).getStatus(), model);
     }
 
-
     private void sendLetter(Applicant.Status applicantStatus, Map<String, Object> letterModel) {
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 applicantStatus.getTemplateRef(), ENCODING, letterModel);
