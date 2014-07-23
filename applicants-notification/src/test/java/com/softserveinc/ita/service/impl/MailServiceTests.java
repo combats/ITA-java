@@ -20,10 +20,7 @@ import javax.mail.BodyPart;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
@@ -249,6 +246,9 @@ public class MailServiceTests extends MailServiceBaseTests {
 
         char [] expected = emailText.toCharArray();
         char [] actual = content.toCharArray();
+
+        System.err.println(Arrays.toString(expected));
+        System.err.println(Arrays.toString(actual));
 
         assertArrayEquals(expected,actual);
 
