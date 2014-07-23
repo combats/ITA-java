@@ -38,6 +38,7 @@ public class MailServiceImpl implements MailService {
     public static final String COURSE_ADDRESS = "courseAddress";
     public static final String APPLICANT_EMAIL = "applicantEmail";
     public static final String GROUP_NAME = "groupName";
+    public static final String IMAGE_REF = "cid:ItAcademyLogo";
 
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
@@ -101,6 +102,7 @@ public class MailServiceImpl implements MailService {
     private void sendEmployedLetter(Applicant applicant, Group group, User responsibleHr) {
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
+        model.put("image",IMAGE_REF);
         model.put(SURNAME, applicant.getSurname());
         model.put(HR_NAME, responsibleHr.getName());
         model.put(HR_SURNAME, responsibleHr.getSurname());

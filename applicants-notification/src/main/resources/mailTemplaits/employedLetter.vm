@@ -1,5 +1,5 @@
 <body>
-<img src='cid:ItAcademyLogo'>
+<img src=#{image}>
 <h1>Dear ${name} ${surname} ! </h1>
 We are pleased to inform you that you have qualified for the trainee position.<br>
 For detailed information please contact with ${HRSurname} ${HRName}.
