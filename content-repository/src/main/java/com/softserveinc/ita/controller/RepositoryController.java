@@ -145,8 +145,8 @@ public class RepositoryController {
                                               @RequestBody String string64image) throws Exception {
 
         String contentType = getContentType64(string64image);
-        String pure64 = getPure64String(string64image);
-        checkBase64ImageFile(pure64, ID);
+        String pure64 = getPure64String(string64image, contentType);
+        checkBase64ImageFile(pure64, ID, contentType);
         String requestedNode = detectClient(ID, client);
         OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
                                                                             string64image, contentType));
@@ -155,30 +155,40 @@ public class RepositoryController {
 
     private String getContentType64(String string64image) throws UnsupportedFileContentTypeException {
         String sub64 = string64image.substring(0, 30);
-        if(sub64.matches("(gif)")) {
+        if(sub64.contains("gif")) {
             return "image/gif";
         }
-        if(sub64.matches("(jpeg)")) {
+        if(sub64.contains("jpeg")) {
             return "image/jpeg";
         }
-        if(sub64.matches("(png)")) {
+        if(sub64.contains("png")) {
             return "image/png";
         }
         throw new UnsupportedFileContentTypeException("Caused by: unsupported media type (actually we don't know what it is)");
     }
 
-    private void checkBase64ImageFile(String string64image, String ID) throws EmptyFileException,
+    private void checkBase64ImageFile(String string64image, String ID, String contentType) throws EmptyFileException,
             Base64ValidationException {
         if (string64image == null) {
             throw new EmptyFileException(ID);
         }
-        if(!isValidBase64String(getPure64String(string64image))) {
+        if(!isValidBase64String(getPure64String(string64image, contentType))) {
             throw new Base64ValidationException(ID);
         }
     }
 
-    private String getPure64String(String string64image) {
-        return string64image.replaceAll("(data:image/(gif|p?jpeg|(x-)?png);base64,)", "");
+//    private String getPure64String(String string64image, String contentType) {
+//        String regexp = "data:" + contentType + ";base64,";
+//        return string64image.replaceAll(regexp, "");
+//    }
+
+    private String getPure64String(String string64image, String contentType) {
+        String regexp = "data:" + contentType + ";base64,";
+        int index = regexp.length();
+        StringBuilder str = new StringBuilder(string64image);
+        str.delete(0, index);
+        String res = str.toString();
+        return res;
     }
 
     private boolean isValidBase64String(String image) {
@@ -195,7 +205,8 @@ public class RepositoryController {
      * @throws java.io.IOException
      */
     @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<String> getImage64(@PathVariable("client") String client,
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody String getImage64(@PathVariable("client") String client,
                                              @PathVariable("ID") String ID,
                                              @RequestParam(value = "height", required = false) Integer height,
                                              @RequestParam(value = "width", required = false) Integer width)
@@ -208,15 +219,16 @@ public class RepositoryController {
         } else {
             responseInBase64 = imageService.getImage64(requestedNode);
         }
-        final HttpHeaders headers = new HttpHeaders();
-
-        String responseMediaType = responseInBase64.getContentType();
-        if(isSupportedFormatForImage(responseMediaType)) {
-            headers.setContentType(MediaType.parseMediaType(responseMediaType));
-        }
-        headers.setContentLength(responseInBase64.getContent().length());
-        headers.set("Content-Transfer-Encoding", "base64");
-        return new ResponseEntity<>(responseInBase64.getContent(), headers, HttpStatus.OK);
+//        final HttpHeaders headers = new HttpHeaders();
+//
+//        String responseMediaType = responseInBase64.getContentType();
+//        if(isSupportedFormatForImage(responseMediaType)) {
+//            headers.setContentType(MediaType.parseMediaType(responseMediaType));
+//        }
+//        headers.setContentLength(responseInBase64.getContent().length());
+//        headers.set("Content-Transfer-Encoding", "base64");
+//        return new ResponseEntity<>(responseInBase64.getContent(), headers, HttpStatus.OK);
+        return responseInBase64.getContent();
     }
 
     /**
