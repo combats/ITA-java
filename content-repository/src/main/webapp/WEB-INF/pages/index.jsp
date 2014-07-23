@@ -86,6 +86,10 @@
                         var status = msg.status;
                         alert(status)
                     },
+                    error: function (msg) {
+                        var op_status = msg.status;
+                        alert(op_status)
+                    },
                     cache: false,
                     contentType: false,
                     processData: false
