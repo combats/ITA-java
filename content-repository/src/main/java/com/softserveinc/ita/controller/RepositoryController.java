@@ -145,8 +145,8 @@ public class RepositoryController {
                                               @RequestBody String string64image) throws Exception {
 
         String contentType = getContentType64(string64image);
-        String pure64 = getPure64String(string64image);
-        checkBase64ImageFile(pure64, ID);
+        String pure64 = getPure64String(string64image, contentType);
+        checkBase64ImageFile(pure64, ID, contentType);
         String requestedNode = detectClient(ID, client);
         OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
                                                                             string64image, contentType));
@@ -155,30 +155,31 @@ public class RepositoryController {
 
     private String getContentType64(String string64image) throws UnsupportedFileContentTypeException {
         String sub64 = string64image.substring(0, 30);
-        if(sub64.matches("(gif)")) {
+        if(sub64.contains("gif")) {
             return "image/gif";
         }
-        if(sub64.matches("(jpeg)")) {
+        if(sub64.contains("jpeg")) {
             return "image/jpeg";
         }
-        if(sub64.matches("(png)")) {
+        if(sub64.contains("png")) {
             return "image/png";
         }
         throw new UnsupportedFileContentTypeException("Caused by: unsupported media type (actually we don't know what it is)");
     }
 
-    private void checkBase64ImageFile(String string64image, String ID) throws EmptyFileException,
+    private void checkBase64ImageFile(String string64image, String ID, String contentType) throws EmptyFileException,
             Base64ValidationException {
         if (string64image == null) {
             throw new EmptyFileException(ID);
         }
-        if(!isValidBase64String(getPure64String(string64image))) {
+        if(!isValidBase64String(getPure64String(string64image, contentType))) {
             throw new Base64ValidationException(ID);
         }
     }
 
-    private String getPure64String(String string64image) {
-        return string64image.replaceAll("(data:image/(gif|p?jpeg|(x-)?png);base64,)", "");
+    private String getPure64String(String string64image, String contentType) {
+        String regexp = "data:" + contentType + ";base64,";
+        return string64image.replaceAll(regexp, "");
     }
 
     private boolean isValidBase64String(String image) {
