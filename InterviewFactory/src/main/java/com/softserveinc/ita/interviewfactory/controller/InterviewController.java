@@ -65,9 +65,10 @@ public class InterviewController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
-                                         @CookieValue("userId") String userId)
+                                         @CookieValue("userId") String userId,
+                                         @CookieValue("appointmentId") String appointmentId)
             throws WrongCriteriaException, HttpRequestException {
-
+        questionInformation.setInterviewId(appointmentId);
         questionsInformationServices.addQuestionInformation(questionInformation, userId);
         return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
     }
@@ -75,16 +76,18 @@ public class InterviewController {
     @RequestMapping(value = "/interviewing/final_comment", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateFinalCommentInQuestionsBlock(@RequestBody FinalComment finalComment,
-                                                   @CookieValue("userId") String userId) throws WrongCriteriaException, HttpRequestException {
-
+                                                   @CookieValue("userId") String userId,
+                                                   @CookieValue("appointmentId") String appointmentId) throws WrongCriteriaException, HttpRequestException {
+        finalComment.setInterviewId(appointmentId);
         questionsBlockServices.updateFinalCommentInQuestionsBlock(finalComment, userId);
     }
 
     @RequestMapping(value = "/interviewing/answer", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public String updateQuestionInformation(@RequestBody QuestionInformation questionInformation) {
-
+    public String updateQuestionInformation(@RequestBody QuestionInformation questionInformation,
+                                            @CookieValue("appointmentId") String appointmentId){
+        questionInformation.setInterviewId(appointmentId);
         return questionsInformationServices.updateQuestionInformation(questionInformation);
     }
 
