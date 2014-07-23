@@ -39,6 +39,7 @@ public class MailServiceImpl implements MailService {
     public static final String APPLICANT_EMAIL = "applicantEmail";
     public static final String GROUP_NAME = "groupName";
 
+
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private VelocityEngine velocityEngine;
