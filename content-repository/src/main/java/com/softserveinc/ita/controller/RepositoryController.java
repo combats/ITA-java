@@ -149,7 +149,7 @@ public class RepositoryController {
         checkBase64ImageFile(pure64, ID, contentType);
         String requestedNode = detectClient(ID, client);
         OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
-                                                                            string64image, contentType));
+                pure64, contentType));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -172,7 +172,7 @@ public class RepositoryController {
         if (string64image == null) {
             throw new EmptyFileException(ID);
         }
-        if(!isValidBase64String(getPure64String(string64image, contentType))) {
+        if(!isValidBase64String(string64image)) {
             throw new Base64ValidationException(ID);
         }
     }
@@ -186,7 +186,7 @@ public class RepositoryController {
         String regexp = "data:" + contentType + ";base64,";
         int index = regexp.length();
         StringBuilder str = new StringBuilder(string64image);
-        str.delete(0, index);
+        str = str.delete(0, index);
         String res = str.toString();
         return res;
     }

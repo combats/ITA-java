@@ -48,8 +48,8 @@
 
 
                 <div ng-switch-when="CANVAS">
-            <img result-holder class="media-holder" ng-src="{{tmpPhoto}}" alt="..."/>
-                    <a href="#"  ng-click="selectDiv('IMG') " class="panel-btn photoBtn glyphicon glyphicon-ok"></a>
+            <img result-holder class="media-holder" ng-src="{{sys.tmpPhoto}}" alt="..."/>
+                    <a href="#"  ng-click="postPhoto(); selectDiv('IMG') " class="panel-btn photoBtn glyphicon glyphicon-ok"></a>
                     <a href="#" ng-click=" selectDiv('VIDEO')" class="panel-btn photoBtn glyphicon glyphicon-camera"></a>
                 </div>
 

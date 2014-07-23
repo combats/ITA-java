@@ -35,8 +35,8 @@
     <bean id="jcrSession" class="com.softserveinc.ita.jcr.jackrabbit.JcrSessionCreator">
         <!--<property name="homeDir" value="/usr/local/apache-tomcat/work/repository"/>-->
         <!--<property name="config" value="/usr/local/apache-tomcat/work/repository/repository.xml"/>-->
-        <property name="homeDir" value="C:\apache-tomcat\apache-tomcat-8.0.8\work\repository"/>
-        <property name="config" value="C:\apache-tomcat\apache-tomcat-8.0.8\work\repository\repository.xml"/>
+        <property name="homeDir" value="C:\installs\apache-tomcat-8.0.9\work\repository"/>
+        <property name="config" value="C:\installs\apache-tomcat-8.0.9\work\repository\repository.xml"/>
         <property name="userRole" value="admin"/>
     </bean>
 
