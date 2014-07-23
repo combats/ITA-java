@@ -22,3 +22,4 @@
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
     <bean id="userDAO" class="com.softserveinc.ita.dao.impl.UserDAOMockImpl"/>
 </beans>
+        
