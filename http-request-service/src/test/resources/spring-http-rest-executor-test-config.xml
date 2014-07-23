@@ -11,6 +11,4 @@
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
 
-
-
 </beans>
