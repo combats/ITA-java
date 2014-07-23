@@ -83,6 +83,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         appointment2.setAppointmentId("appointmentId2");
         appointment3 = new Appointment(users, applicant3.getId(), 1401866604L + TOMORROW, group2.getGroupID());
         appointment3.setAppointmentId("appointmentId4");
+        
     }
 
     @Autowired
@@ -158,7 +159,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         HashMap<Class, String> groupAndApplicantIDs = new HashMap<>();
         groupAndApplicantIDs.put(Applicant.class, applicant3.getId());
         groupAndApplicantIDs.put(Group.class, group2.getGroupID());
-        ArrayList<String> appointmetIdList = new ArrayList<String>();
+        ArrayList<String> appointmetIdList = new ArrayList<>();
         appointmetIdList.add(appointment3.getAppointmentId());
         when(httpRequestExecutor.getListObjectsIdByPrams(Appointment.class,groupAndApplicantIDs))
                 .thenReturn(appointmetIdList);
