@@ -22,7 +22,6 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value="/")
 public class RepositoryController {
-    String nodeName;
     private static final String APPLICANT_SUFFIX = "-applicant";
     private static final String USER_SUFFIX = "-user";
 
