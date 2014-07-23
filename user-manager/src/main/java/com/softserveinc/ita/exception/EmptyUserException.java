@@ -1,6 +1,6 @@
 package com.softserveinc.ita.exception;
 
-import com.softserveinc.ita.utils.error.EntityException;
+import com.softserveinc.ita.error.EntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

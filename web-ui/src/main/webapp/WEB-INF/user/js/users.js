@@ -7,7 +7,7 @@ $(function() {
 
     $.ajax({
         async: false,
-        url: '/user/mst/users_template.mst',
+        url: '/ui/user/mst/users_template.mst',
         type: "GET",
         success: function (data) {
             pageTemplate = data;
@@ -34,7 +34,7 @@ $(function() {
         var userInJson = JSON.stringify(user);
         var success = true;
         $.ajax({
-            url: '/users',
+            url: '/users/',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,
