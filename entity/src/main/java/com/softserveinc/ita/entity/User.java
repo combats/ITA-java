@@ -41,6 +41,9 @@ public class User implements Serializable {
 
     @ElementCollection(fetch = FetchType.EAGER, targetClass = Question.class)
     @Column(name = "UserQuestions")
+
+//    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
+//    @JoinColumn(name = "user_questions", referencedColumnName="Id")
     private List<Question> questions;
 
     public User() {
