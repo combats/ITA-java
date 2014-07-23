@@ -14,3 +14,5 @@ public class GroupDoesntExistException extends GroupException {
         super(message);
     }
 }
+
+
