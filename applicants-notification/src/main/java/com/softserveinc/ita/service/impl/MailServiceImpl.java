@@ -177,8 +177,7 @@ public class MailServiceImpl implements MailService {
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine,
                 applicantStatus.getTemplateRef(), ENCODING, letterModel);
         System.out.println(emailText);
-        
-        emailText = emailText.replaceAll("(\\\\r)?\\\\n", System.getProperty("line.separator"));
+        emailText = emailText.replaceAll("(\\\\r)?\\\\n","<br>");
         System.out.println(emailText);
         try {
             helper.setFrom(FROM);
