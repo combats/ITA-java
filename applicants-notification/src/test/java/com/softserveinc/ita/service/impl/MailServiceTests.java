@@ -101,6 +101,8 @@ public class MailServiceTests extends MailServiceBaseTests {
     @Autowired
     private JsonUtil jsonUtil;
 
+
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
@@ -239,6 +241,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         BodyPart bp = multi.getBodyPart(0);
         Object innerContent = bp.getContent();
         MimeMultipart innerMulti = (MimeMultipart) innerContent;
+        System.out.println(innerMulti.getBodyPart(0).getContent());
         assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
     }
 
