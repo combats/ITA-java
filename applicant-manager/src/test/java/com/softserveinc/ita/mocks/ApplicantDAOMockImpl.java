@@ -1,5 +1,6 @@
-package com.softserveinc.ita.dao.impl;
+package com.softserveinc.ita.mocks;
 
+import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Group;
 import org.springframework.stereotype.Repository;

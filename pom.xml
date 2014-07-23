@@ -122,7 +122,7 @@
     </dependencies>
     <build>
         <plugins>
-          <plugin>
+            <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
@@ -152,24 +152,27 @@
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
                     </includes>
+                    <excludes>
+                    <exclude>**/*DAOTests.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>
     </build>
-  
+
     <distributionManagement>
 
-  <repository>
-    <id>deployment</id>
-    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-release</url>
-  </repository>
+        <repository>
+            <id>deployment</id>
+            <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-release</url>
+        </repository>
 
-  <snapshotRepository>
-    <id>deployment</id>
-    <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-snapshot</url>
-  </snapshotRepository>
-  
-</distributionManagement>
+        <snapshotRepository>
+            <id>deployment</id>
+            <url>http://176.36.11.25:8081/nexus/content/repositories/ita-java-snapshot</url>
+        </snapshotRepository>
+
+    </distributionManagement>
 
 
 </project>

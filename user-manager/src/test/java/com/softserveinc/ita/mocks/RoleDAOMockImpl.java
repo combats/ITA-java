@@ -1,4 +1,4 @@
-package com.softserveinc.ita.dao.impl;
+package com.softserveinc.ita.mocks;
 
 import com.softserveinc.ita.dao.RoleDAO;
 import com.softserveinc.ita.entity.Role;
@@ -22,6 +22,11 @@ public class RoleDAOMockImpl implements RoleDAO {
         dbDaoMock.put("2",role);
     }
 
+    @Override
+    public String addRole(Role role) {
+        return null;
+    }
+
     public List<Role> getAllRoles(){
         List<Role> roles = new ArrayList<Role>(dbDaoMock.values());
         Collections.sort(roles, new Comparator<Role>() {
@@ -31,5 +36,15 @@ public class RoleDAOMockImpl implements RoleDAO {
             }
         });
         return roles;
+    }
+
+    @Override
+    public Role getRoleById(String roleId) {
+        return null;
+    }
+
+    @Override
+    public void removeRoleById(String roleId) {
+
     }
 }

@@ -1,6 +1,6 @@
 package com.softserveinc.ita.dao;
 
-import com.softserveinc.ita.dao.impl.UserDAOMockImpl;
+import com.softserveinc.ita.mocks.UserDAOMockImpl;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
@@ -32,17 +32,17 @@ public class UserMockDAOTest extends BaseDAOTest {
     @Test
     public void testGetUserByIDReturnsCorrectUser() throws Exception {
         User testUser = new User("1");
-        assertEquals(testUser, userDAO.getUserByID("1"));
+        assertEquals(testUser, userDAO.getUserById("1"));
     }
 
     @Test
     public void testGetUserByIDReturnsNullForInvalidUserID() throws Exception {
-        assertNull(userDAO.getUserByID(invalidID));
+        assertNull(userDAO.getUserById(invalidID));
     }
 
     @Test
     public void testGetUserByIDReturnsNotNullForValidUserID() throws Exception {
-        assertNotNull(userDAO.getUserByID(validID));
+        assertNotNull(userDAO.getUserById(validID));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class UserMockDAOTest extends BaseDAOTest {
             add("2");
             add("3");
         }};
-        Assert.assertEquals(userDAO.getAllUsersID(), testUsersIDList);
+        Assert.assertEquals(userDAO.getAllUsersId(), testUsersIDList);
     }
 
     /**
@@ -70,7 +70,7 @@ public class UserMockDAOTest extends BaseDAOTest {
         expected.add("121");
         expected.add("122");
 
-        userDAO.deleteUser(muserID);
+        userDAO.deleteUserById(muserID);
 
         userDAO.getClass().getDeclaredField("dbOfUsers");
 
@@ -90,49 +90,37 @@ public class UserMockDAOTest extends BaseDAOTest {
         assertEquals(expected, keySet);
     }
 
-    @Test(expected = UserDoesNotExistException.class)
-    public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException {
-        String muserID = "124";
-
-        userDAO.deleteUser(muserID);
-    }
-
     @Test
     public void testExistingUserEditingAndExpectTrue(){
         User user = new User("id1");
         user.setName("name");
-        assertEquals(userDAO.changeUser(user), user);
+        assertEquals(userDAO.updateUser(user), user);
     }
 
     @Test
     public void testNotExistingUserAndExpectFalse(){
         User user = new User("id4");
         user.setName("name");
-        assertNull(userDAO.changeUser(user));
+        assertNull(userDAO.updateUser(user));
     }
 
     @Test
     public void testNullUserParameterAndExpectFalse(){
         User user = null;
-        assertNull(userDAO.changeUser(user));
-    }
-    @Test(expected = UserAlreadyExistsException.class)
-    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception {
-        User testUser = new User("1");
-        userDAO.postNewUser(testUser);
+        assertNull(userDAO.updateUser(user));
     }
 
     @Test
     public void testAddNewUserWithOkIDReturnsThatUser() throws Exception {
         User testUser = new User("42");
-        Assert.assertEquals(testUser, userDAO.postNewUser(testUser));
+        Assert.assertEquals(testUser, userDAO.addUser(testUser));
     }
 
     @Test
     public void testGetUsersAndExpectDefinedList() {
         List<User> sampleUserList = new ArrayList<>();
         Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
-        Assert.assertEquals(sampleUserList, userDAO.getUsers());
+        Assert.assertEquals(sampleUserList, userDAO.getAllUsers());
     }
 
 }
