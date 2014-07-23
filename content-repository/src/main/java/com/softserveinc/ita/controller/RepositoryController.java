@@ -144,7 +144,7 @@ public class RepositoryController {
     public ResponseEntity<OperationStatusJSONInfo> postImage64(@PathVariable("ID") String ID,
                                               @PathVariable("client") String client,
                                               @RequestHeader("Content-Type") String contentType,
-                                              @RequestParam("string64image") String string64image) throws Exception {
+                                              @RequestBody String string64image) throws Exception {
 
         checkBase64ImageFile(string64image, ID, contentType);
         String requestedNode = detectClient(ID, client);
