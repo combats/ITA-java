@@ -1,4 +1,3 @@
-<body>
 <img src='cid:ItAcademyLogo'>
 
 
@@ -15,5 +14,3 @@ On the reception please call ${HRSurname} ${HRName}. The number is ${HRPhone}. T
 <br>
 With best regards,<br>
 SoftServe ItAcademy.
-
-</body>
