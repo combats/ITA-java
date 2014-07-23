@@ -3,8 +3,10 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/aop
@@ -20,7 +22,7 @@
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
     <context:component-scan base-package="com.softserveinc.ita.service.impl"/>
     <context:component-scan base-package="com.softserveinc.ita.controller"/>
-    <context:component-scan base-package="com.softserveinc.ita.utils.error"/>
+    <context:component-scan base-package="com.softserveinc.ita.error"/>
     <context:component-scan base-package="com.softserveinc.ita.config"/>
 
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
