@@ -254,7 +254,7 @@ public class MailServiceTests extends MailServiceBaseTests {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is, "UTF-8"));
         String line = bufferedReader.readLine();
         while(line != null){
-            inputStringBuilder.append(line);inputStringBuilder.append('\n');
+            inputStringBuilder.append(line);
             line = bufferedReader.readLine();
         }
 
@@ -266,3 +266,4 @@ public class MailServiceTests extends MailServiceBaseTests {
 
     }
 }
+
