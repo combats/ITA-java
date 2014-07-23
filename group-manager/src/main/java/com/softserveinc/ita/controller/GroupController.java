@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/")
 public class GroupController {
     @Autowired
-    private GroupService groupService;
+    private GroupService groupService; 
 
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public
