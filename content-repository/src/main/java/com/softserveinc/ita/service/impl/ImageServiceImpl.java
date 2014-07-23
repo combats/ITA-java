@@ -101,7 +101,7 @@ public class ImageServiceImpl implements ImageService {
         String contentType = tempFile.getMimeType();
 
         //
-        String contourChart = "data:" + contentType + ";base64," +
+        String contourChart =
                 StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
         //
 
