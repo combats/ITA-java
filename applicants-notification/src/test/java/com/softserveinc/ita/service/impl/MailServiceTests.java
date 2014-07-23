@@ -241,6 +241,9 @@ public class MailServiceTests extends MailServiceBaseTests {
         BodyPart bp = multi.getBodyPart(0);
         Object innerContent = bp.getContent();
         MimeMultipart innerMulti = (MimeMultipart) innerContent;
-        assertEquals(emailText, innerMulti.getBodyPart(0).getContent());
+        emailText = emailText.replace("\n", "").replace("\r", "");
+        String content = (String)innerMulti.getBodyPart(0).getContent();
+        content = content.replace("\n", "").replace("\r", "");
+        assertEquals(emailText, content);
     }
 }

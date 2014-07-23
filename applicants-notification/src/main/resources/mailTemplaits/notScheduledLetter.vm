@@ -6,4 +6,5 @@ Your application for ${course} course was reviewed, please wait until we contact
 If you have any questions, please feel free to contact with responsible HR ${HRName} ${HRSurname} by phone ${HRPhone} or email ${HRemail}.
 <br>
 With best regards,<br>
-SoftServe ItAcademy.</body>
+SoftServe ItAcademy.
+</body>
