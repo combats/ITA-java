@@ -154,25 +154,7 @@
                 <artifactId>camel-maven-plugin</artifactId>
                 <version>${camel.version}</version>
             </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-
-
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <configuration>
-                    <includes>
-                        <include>**/*Tests.java</include>
-                        <include>**/*Test.java</include>
-                    </includes>
-                </configuration>
-            </plugin>
+          
         </plugins>
 
     </build>
