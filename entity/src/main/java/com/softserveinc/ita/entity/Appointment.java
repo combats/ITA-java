@@ -26,7 +26,7 @@ public class Appointment implements Serializable {
     @Column(name = "Id", unique = true)
     private String appointmentId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(name = "UserIdList")
     private List <String> userIdList = new ArrayList<>();
 
