@@ -24,7 +24,7 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
 
     @Override
     public Applicant getApplicantById(String applicantId) {
-        return (Applicant) sessionFactory.getCurrentSession().load(Applicant.class, applicantId);
+        return (Applicant) sessionFactory.getCurrentSession().get(Applicant.class, applicantId);
     }
 
     @Override

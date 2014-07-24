@@ -1,13 +1,20 @@
 package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface GroupDao {
 
-    List<Group> getGroupsByStatus(String groupStatus);
+    ArrayList<Course> getCourses();
 
-    List<Applicant> getApplicantsByGroupID(String groupID);
+    Group addGroup(Group group);
+
+    ArrayList<Group> getAllGroups();
+
+    List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
 }

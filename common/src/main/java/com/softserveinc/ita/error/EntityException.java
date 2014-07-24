@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 @ResponseStatus(value = HttpStatus.FAILED_DEPENDENCY, reason = "test")
 public class EntityException extends Exception {
-
     public EntityException(){}
-
     public EntityException(String message){
         super(message);
     }

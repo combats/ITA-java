@@ -1,19 +1,20 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.dao.impl.GroupDaoMockImpl;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
-import com.softserveinc.ita.exception.impl.WrongGroupStatusException;
+import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.service.GroupService;
 import com.softserveinc.ita.service.ServiceGroupBaseTest;
+import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,7 +23,6 @@ import java.util.List;
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ServiceGroupTests extends ServiceGroupBaseTest {
 
     @Autowired
@@ -39,19 +39,53 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-      public void testGetGroupsByCorrectStatusAndExpectCorrectList() throws Exception {
-        ArrayList<Group> expectedList = new ArrayList<>();
-        expectedList.add(new Group(Group.Status.BOARDING, "id3", new Course("Java", "pen-java.png"), "kv021"));
-        expectedList.add(new Group(Group.Status.BOARDING, "id6", new Course("Java Script", "pen-net.png"), "kv061"));
-        expectedList.add(new Group(Group.Status.BOARDING, "id9", new Course("Java", "pen-java.png"), "kv041"));
-        when(groupDao.getGroupsByStatus(Group.Status.BOARDING.getName())).thenReturn(expectedList);
-        assertEquals(expectedList, groupService.getGroupsByStatus(Group.Status.BOARDING.getName()));
-        verify(groupDao, atLeastOnce()).getGroupsByStatus(Group.Status.BOARDING.getName());
+      public void testGetGroupsByCorrectStatusAndExpectCorrectList() throws Exception{
+        ArrayList<Group> expectedList = new ArrayList<Group>();
+        ArrayList<Group> groupList = new ArrayList<Group>();
+        //Planned
+        Group group1 = new Group("id1", new Course("Java", "pen-java.png"), "kv001");
+        group1 = GroupDaoMockImpl.setTime(group1, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groupList.add(group1);
+        expectedList.add(group1);
+        Group group2 = new Group("id3", new Course("Java", "pen-java.png"), "kv021");
+        group2 = GroupDaoMockImpl.setTime(group2, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groupList.add(group2);
+        expectedList.add(group2);
+        //Boarding
+        Group group3 = new Group("id4", new Course("Sharp", "pen-net.png"), "kv012");
+        group3 = GroupDaoMockImpl.setTime(group3, new DateTime(2014, 7, 17, 0, 0, 0).getMillis(),
+                new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
+        groupList.add(group3);
+
+        when(groupDao.getAllGroups()).thenReturn(groupList);
+        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED);
+        assertEquals(groupsByStatus,expectedList);
     }
 
-    @Test(expected=WrongGroupStatusException.class)
-    public void testGetGroupByWrongStatusAndExpectException() throws Exception{
-        groupService.getGroupsByStatus("wrongStatus");
+    @Test
+    public void testAddNewGroupAndExpectIsOk(){
+        Group group = new Group();
+        when(groupDao.addGroup(group)).thenReturn(new Group("id100"));
+        assertEquals("id100", groupService.createGroup(group).getGroupID());
+    }
+
+    @Test(expected = GroupDoesntExistException.class)
+    public void getApplicantsByNotExistingIdAndExpectException() throws GroupDoesntExistException {
+        when(groupDao.getApplicantsByGroupID("wrong")).thenThrow(GroupDoesntExistException.class);
+        groupService.getApplicantsByGroupID("wrong");
+    }
+
+    @Test
+    public void getAllGroupsAndExpectCorrectList(){
+        ArrayList<Group> expectedList = new ArrayList<Group>();
+        expectedList.add(new Group("id3", new Course("Java", "pen-java.png"), "kv021"));
+        expectedList.add(new Group("id6", new Course("Java Script", "pen-net.png"), "kv061"));
+        expectedList.add(new Group("id9", new Course("Java", "pen-java.png"), "kv041"));
+        when(groupDao.getAllGroups()).thenReturn(expectedList);
+        assertEquals(expectedList, groupService.getAllGroups());
+        verify(groupDao, atLeastOnce()).getAllGroups();
     }
 
     @Test

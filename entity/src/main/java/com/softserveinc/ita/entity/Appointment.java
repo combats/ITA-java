@@ -6,17 +6,20 @@ import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "Appointments")
-public class Appointment {
+public class Appointment implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     private static final long DEFAULT_DURATION_TIME = 30 * 60 * 1000;
-    public static final int TOMORROW = 24 * 60 * 60 * 1000;
-    public static final long DEFAULT_ACTUAL_START_TIME = 0L;
+    private static final int TOMORROW = 24 * 60 * 60 * 1000;
+    private static final long DEFAULT_ACTUAL_START_TIME = 0L;
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -25,7 +28,7 @@ public class Appointment {
     private String appointmentId;
 
     @ElementCollection(fetch = FetchType.EAGER)
-    @Fetch(value = FetchMode.SUBSELECT)
+    @Fetch(FetchMode.SUBSELECT)
     @Column(name = "UserIdList")
     private List <String> userIdList = new ArrayList<>();
 
@@ -57,6 +60,13 @@ public class Appointment {
         this.userIdList = userIdList;
         this.applicantId = applicantId;
         this.startTime = startTime;
+    }
+
+    public Appointment(List<String> userIdList, String applicantId, long startTime, String groupId) {
+        this.userIdList = userIdList;
+        this.applicantId = applicantId;
+        this.startTime = startTime;
+        this.groupId = groupId;
     }
 
     public List<String> getUserIdList() {
