@@ -34,7 +34,7 @@ $(function() {
         var userInJson = JSON.stringify(user);
         var success = true;
         $.ajax({
-            url: '/users',
+            url: '/users/',
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             async: false,

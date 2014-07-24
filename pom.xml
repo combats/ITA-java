@@ -27,6 +27,7 @@
         <module>web-ui</module>
         <module>group-manager</module>
         <module>content-repository</module>
+        <module>applicants-notification</module>
     </modules>
 
     <dependencies>
@@ -152,6 +153,9 @@
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
                     </includes>
+                    <excludes>
+                    <exclude>**/*DAOTests.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

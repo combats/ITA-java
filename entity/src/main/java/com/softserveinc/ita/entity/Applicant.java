@@ -11,6 +11,49 @@ import java.io.Serializable;
 public class Applicant implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static final String NOT_SCHEDULED_TEMPLATE_REF = "mailTemplaits/notScheduledLetter.vm";
+    private static final String SCHEDULED_TEMPLATE_REF ="mailTemplaits/scheduledLetter.vm";
+    private static final String PASSED_TEMPLATE_REF ="mailTemplaits/passedLetter.vm";
+    private static final String NOT_PASSED_TEMPLATE_REF ="mailTemplaits/notPassedLetter.vm";
+    private static final String EMPLOYED_TEMPLATE_REF = "mailTemplaits/employedLetter.vm";
+    private static final String NOT_SCHEDULED_SUBJECT = "Application accepted";
+    private static final String SCHEDULED_SUBJECT = "Interview invitation";
+    private static final String PASSED_SUBJECT = "Interview passed";
+    private static final String NOT_PASSED_SUBJECT = "Interview failed";
+    private static final String EMPLOYED_SUBJECT = "Employed";
+
+
+    public enum Status {
+        NOT_SCHEDULED(NOT_SCHEDULED_TEMPLATE_REF,NOT_SCHEDULED_SUBJECT),
+        SCHEDULED(SCHEDULED_TEMPLATE_REF, SCHEDULED_SUBJECT),
+        PASSED(PASSED_TEMPLATE_REF, PASSED_SUBJECT),
+        NOT_PASSED(NOT_PASSED_TEMPLATE_REF, NOT_PASSED_SUBJECT),
+        EMPLOYED(EMPLOYED_TEMPLATE_REF,EMPLOYED_SUBJECT);
+
+        private String templateRef;
+        private String subject;
+
+        Status(String templateRef, String subject) {
+            this.templateRef=templateRef;
+            this.subject=subject;
+        }
+
+        public String getTemplateRef() {
+            return templateRef;
+        }
+
+        public void setTemplateRef(String templateRef) {
+            this.templateRef = templateRef;
+        }
+
+        public String getSubject() {
+            return subject;
+        }
+
+        public void setSubject(String subject) {
+            this.subject = subject;
+        }
+    };
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -24,6 +67,9 @@ public class Applicant implements Serializable {
     private String surname;
     @Column(name = "Email")
     private String email;
+    @Column(name = "GroupId")
+    private String groupId;
+
 
     public Applicant() {}
 
@@ -33,6 +79,13 @@ public class Applicant implements Serializable {
     public Applicant(String name, String surname) {
         this.name = name;
         this.surname = surname;
+    }
+
+    public Applicant (String id, String name, String surname,String email){
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.email=email;
     }
 
 
@@ -68,6 +121,15 @@ public class Applicant implements Serializable {
         this.email = email;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,6 +140,7 @@ public class Applicant implements Serializable {
         if (id != null ? !id.equals(applicant.id) : applicant.id != null)
             return false;
         if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
+        if (groupId != null ? !groupId.equals(applicant.groupId) : applicant.groupId != null) return false;
         if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
         if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
@@ -90,6 +153,7 @@ public class Applicant implements Serializable {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (surname != null ? surname.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (groupId != null ? groupId.hashCode() : 0);
         return result;
     }
 
@@ -101,6 +165,7 @@ public class Applicant implements Serializable {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", email='" + email + '\'' +
+                ", groupId='" + groupId + '\'' +
                 '}';
     }
 }

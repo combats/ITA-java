@@ -1,6 +1,6 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.dao.impl.ApplicantDAO;
+import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import org.junit.Before;
 import org.junit.Test;

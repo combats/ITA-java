@@ -1,7 +1,8 @@
 package com.softserveinc.ita.mvc.impl;
 
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
+import com.softserveinc.ita.entity.Course;
+import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -16,7 +17,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public class MvcGroupTests extends MvcGroupBaseTest {
@@ -38,39 +42,67 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/Boarding")
+                get("/BOARDING")
         )
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetGroupsAndExpectIsOk() throws Exception {
-        mockMvc.perform(
-                get("/groups")
-        )
-                .andExpect(status().isOk())
-                .andExpect(view().name("groupsList"));
-    }
-
-    @Test
     public void testGetGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/groups/status")
+                get("/BOARDING")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void testGetGroupsByStatusAndExpectReasonWasConvertedToJson() throws Exception {
+    public void testGetCoursesAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/groups/wrong").accept(MediaType.APPLICATION_JSON))
-                .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Group status does not exist"))));
+                get("/courses")
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetCoursesAndExpectJsonType() throws Exception {
+        mockMvc.perform(
+                get("/courses")
+        )
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPostGroupAndExpectJsonType() throws Exception {
+        Group group = new Group("3");
+        group.setCourse(new Course("Java"));
+        String jsonGroup = jsonUtil.toJson(group);
+        mockMvc.perform(post("/addGroup")
+                .content(jsonGroup)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllGroupsAndExpectIsOk() throws Exception {
+        mockMvc.perform(
+                get("/allGroups")
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetAllGroupsAndExpectJsonType() throws Exception {
+        mockMvc.perform(
+                get("/allGroups")
+        )
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
     public void testGetApplicantsByGroupIDAndExpectOk() throws Exception {
         mockMvc.perform(
-                get("/groups/applicants/TestGroupID")
+                get("/applicants/TestGroupID")
         )
                 .andExpect(status().isOk());
     }
@@ -85,7 +117,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
         String expected = jsonUtil.toJson(applicants);
 
         mockMvc.perform(
-                get("/groups/applicants/TestGroupID")
+                get("/applicants/TestGroupID")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().string(expected));
@@ -101,9 +133,18 @@ public class MvcGroupTests extends MvcGroupBaseTest {
         String expected = jsonUtil.toJson(applicants);
 
         mockMvc.perform(
-                get("/groups/applicants/TestGroupID")
+                get("/applicants/TestGroupID")
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    public void testGetApplicantsByWrongGroupIdAndExpectInternalServerError() throws Exception{
+        mockMvc.perform(
+                get("/applicants/wrongId")
+        ).andExpect(status().isInternalServerError());
+
+    }
 }
+
