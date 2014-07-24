@@ -5,16 +5,17 @@ import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface GroupDao {
 
-    ArrayList<Course> getCourses();
+    List<Course> getCourses();
+
+    Group getGroupById(String groupId);
 
     Group addGroup(Group group);
 
-    ArrayList<Group> getAllGroups();
+    List<Group> getAllGroups();
 
     List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
 }

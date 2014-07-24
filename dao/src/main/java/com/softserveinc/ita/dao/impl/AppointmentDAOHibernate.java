@@ -3,6 +3,7 @@ package com.softserveinc.ita.dao.impl;
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -58,7 +59,8 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
     @SuppressWarnings("unchecked")
     @Override
     public List<Appointment> getAppointmentsByDate(long startOfDay, long endOfDay) {
-        return (List<Appointment>)sessionFactory.getCurrentSession().createCriteria(Appointment.class)
-                .add(Restrictions.between("startTime", startOfDay, endOfDay)).list();
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Appointment.class).add(Restrictions.between("startTime", startOfDay, endOfDay));
+        return (List<Appointment>)criteria.list();
     }
 }

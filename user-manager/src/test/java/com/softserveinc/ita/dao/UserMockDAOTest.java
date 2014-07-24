@@ -91,15 +91,15 @@ public class UserMockDAOTest extends BaseDAOTest {
     }
 
     @Test
-    public void testExistingUserEditingAndExpectTrue(){
-        User user = new User("id1");
-        user.setName("name");
+    public void testExistingUserEditingAndExpectTrue() {
+        User user = new User("name", "lastname");
+        user.setId("id1");
         assertEquals(userDAO.updateUser(user), user);
     }
 
     @Test
     public void testNotExistingUserAndExpectFalse(){
-        User user = new User("id4");
+        User user = new User("id44");
         user.setName("name");
         assertNull(userDAO.updateUser(user));
     }
@@ -119,7 +119,9 @@ public class UserMockDAOTest extends BaseDAOTest {
     @Test
     public void testGetUsersAndExpectDefinedList() {
         List<User> sampleUserList = new ArrayList<>();
-        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
+        Collections.addAll(sampleUserList, new User("Pupkin", "Vasiliy"),
+                new User("Ivanov", "Ivan"),
+                new User("Fedorov", "Fedor"));
         Assert.assertEquals(sampleUserList, userDAO.getAllUsers());
     }
 

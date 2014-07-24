@@ -1,21 +1,30 @@
 package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public interface GroupService {
-    ArrayList<Group> getGroupsByStatus(Group.Status groupStatus);
+    public Group getGroupById(String groupId);
 
-    ArrayList<Course> getCourses();
+    List<Group> getGroupsByStatus(Group.Status groupStatus);
+
+    List<Course> getCourses();
 
     Group createGroup(Group group);
 
-    ArrayList<Group> getAllGroups();
+    List<Group> getAllGroups();
 
     List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
+
+    int getGroupCapacity(String groupId);
+
+    Map<String, ApplicantBenchmark> getApplicantsByStatus(String groupId, Applicant.Status status);
+
+    void addOrUpdateApplicantIDListByStatus(String groupId, Map<String, ApplicantBenchmark> applicants);
 }

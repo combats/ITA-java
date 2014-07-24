@@ -18,10 +18,10 @@
     <mvc:resources location="/WEB-INF/common/" mapping="/common/**"/>
     <mvc:resources location="/WEB-INF/login/" mapping="/login/**"/>
     <mvc:resources location="/WEB-INF/interview/" mapping="/ui/interview/**"/>
+    <mvc:resources location="/WEB-INF/applicants/" mapping="/ui/hr/**"/>
     <mvc:resources location="/WEB-INF/groups/" mapping="/ui/groups/**"/>
     <mvc:resources location="/WEB-INF/user/" mapping="/ui/user/**"/>
     <mvc:resources location="/WEB-INF/main/" mapping="/**"/>
-
 
     <!--Logging-->
     <aop:aspectj-autoproxy/>

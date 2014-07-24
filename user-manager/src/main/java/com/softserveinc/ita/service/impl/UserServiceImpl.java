@@ -31,7 +31,6 @@ public class UserServiceImpl implements UserService {
         if (userDao.getUserById(UserID) == null) throw new InvalidUserIDException();
         return userDao.getUserById(UserID);
     }
-
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public String deleteUser(String userID){
@@ -65,7 +64,12 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isEmpty(User changingUser) {
-        return (changingUser == null || changingUser.getName().equals(User.DEFAULT_USER_NAME));
+        if (changingUser == null
+//                || changingUser.get() == User.DEFAULT_USER_AGE
+                || changingUser.getName().isEmpty()) {
+            return true;
+        }
+        return false;
     }
 
 }
