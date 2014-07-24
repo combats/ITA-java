@@ -1,5 +1,5 @@
 var  mediapp = angular.module('applicantPopupModule',['ngActivityIndicator']);
-mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant' ,'$activityIndicator', '$timeout', function($scope,$modalInstance,Applicant,$activityIndicator,$timeout){
+mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant','Photo' ,'$activityIndicator', '$timeout', function($scope,$modalInstance,Applicant,Photo, $activityIndicator,$timeout){
 
 
 
