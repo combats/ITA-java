@@ -37,6 +37,7 @@ public class AppointmentValidator implements Validator {
         }
     }
 
+
     private void validateApplicant(Appointment appointment, Errors errors) {
         if (!applicantValidation.applicantExists(appointment.getApplicantId())) {
             errors.reject("400", "There is no applicant with id " + appointment.getApplicantId());
