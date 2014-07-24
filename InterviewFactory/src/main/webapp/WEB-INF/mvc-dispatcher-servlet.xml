@@ -28,6 +28,6 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
-    <import resource="classpath:spring-config.xml"/>
+    <!--<import resource="classpath:spring-config-factory.xml"/>-->
 
 </beans>

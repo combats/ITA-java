@@ -121,7 +121,7 @@ public class InterviewServiceImpl implements InterviewService {
             }
             User user = httpRequestExecutor.getObjectByID(questionsBlock.getUserId(), User.class);
             String role = user.getRole().getName();
-            finalComment = finalComment + role + ": " +  questionsBlock.getFinalComment() + ";\n";
+            finalComment = finalComment + role + ": " +  questionsBlock.getFinalComment() + ";";
             totalPoints = totalPoints + questionsBlock.getBonusPoints();
         }
 
