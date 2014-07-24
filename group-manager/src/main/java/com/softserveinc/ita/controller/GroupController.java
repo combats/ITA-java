@@ -52,7 +52,7 @@ public class GroupController {
     @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(@PathVariable Group.Status status) {
+    List<Group> getGroupsByStatus(@PathVariable Group.Status status) {
         return groupService.getGroupsByStatus(status);
     }
 
@@ -66,7 +66,7 @@ public class GroupController {
     }
 
     @RequestMapping(value ="/courses", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody ArrayList<Course> getCourses(){
+    public @ResponseBody List<Course> getCourses(){
         return groupService.getCourses();
     }
 
@@ -76,7 +76,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/allGroups", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody ArrayList<Group> getAllGroups(){
+    public @ResponseBody List<Group> getAllGroups(){
         return groupService.getAllGroups();
     }
 }

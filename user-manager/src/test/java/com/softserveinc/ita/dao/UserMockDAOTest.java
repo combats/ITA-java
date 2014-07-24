@@ -32,17 +32,17 @@ public class UserMockDAOTest extends BaseDAOTest {
     @Test
     public void testGetUserByIDReturnsCorrectUser() throws Exception {
         User testUser = new User("1");
-        assertEquals(testUser, userDAO.getUserByID("1"));
+        assertEquals(testUser, userDAO.getUserById("1"));
     }
 
     @Test
     public void testGetUserByIDReturnsNullForInvalidUserID() throws Exception {
-        assertNull(userDAO.getUserByID(invalidID));
+        assertNull(userDAO.getUserById(invalidID));
     }
 
     @Test
     public void testGetUserByIDReturnsNotNullForValidUserID() throws Exception {
-        assertNotNull(userDAO.getUserByID(validID));
+        assertNotNull(userDAO.getUserById(validID));
     }
 
     @Test
@@ -94,7 +94,7 @@ public class UserMockDAOTest extends BaseDAOTest {
     public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException {
         String muserID = "124";
 
-        userDAO.deleteUser(muserID);
+        userDAO.deleteUserById(muserID);
     }
 
     @Test
@@ -119,7 +119,7 @@ public class UserMockDAOTest extends BaseDAOTest {
     @Test(expected = UserAlreadyExistsException.class)
     public void testAddNewUserWithDuplicateIDThrowsException() throws Exception {
         User testUser = new User("1");
-        userDAO.postNewUser(testUser);
+        userDAO.addUser(testUser);
     }
 
     @Test
@@ -134,7 +134,7 @@ public class UserMockDAOTest extends BaseDAOTest {
         Collections.addAll(sampleUserList, new User("Pupkin", "Vasiliy"),
                 new User("Ivanov", "Ivan"),
                 new User("Fedorov", "Fedor"));
-        Assert.assertEquals(sampleUserList, userDAO.getUsers());
+        Assert.assertEquals(sampleUserList, userDAO.getAllUsers());
     }
 
 }

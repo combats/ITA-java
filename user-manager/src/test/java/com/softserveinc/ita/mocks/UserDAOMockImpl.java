@@ -20,7 +20,7 @@ public class UserDAOMockImpl implements UserDAO {
     }
 
     @Override
-    public List<User> getUsers() {
+    public List<User> getAllUsers() {
         List<User> users = new ArrayList<User>();
         Collections.addAll(users, new User("Pupkin", "Vasiliy"),
                 new User("Ivanov", "Ivan"),
@@ -53,23 +53,24 @@ public class UserDAOMockImpl implements UserDAO {
         }};
         return usersID;
     }
-    public User addUser(User user){
+
+    public User addUser(User user) {
         ArrayList<User> users = new ArrayList<User>() {{
             add(new User("1"));
             add(new User("2"));
         }};
         return user;
     }
-    
+
     @Override
-    public String deleteUserById(String userID){
+    public String deleteUserById(String userID) {
         dbOfUsers.remove(userID);
         return userID;
     }
 
     @Override
-    public User changeUser(User changingUser){
-        if(changingUser==null){
+    public User updateUser(User changingUser) {
+        if (changingUser == null) {
             return null;
         }
         List<User> users = new ArrayList<User>() {
