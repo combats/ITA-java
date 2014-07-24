@@ -10,7 +10,7 @@ $(function () {
             if (element['applicant']['status'] == 'SCHEDULED') {
                 $.ajax({
                     async: false,
-                    url: location.origin + '/appointments/' + element.appointmentID,
+                    url: 'http://176.36.11.25:8080' + '/appointments/' + element.appointmentID,
                     dataType: 'json',
                     type: "GET",
                     success: function (appointment) {
@@ -51,6 +51,14 @@ $(function () {
         });
     }, 1000 * 60 * 2);
 });
+beginInterview = function (target) {
+    var appointmentID = $(target).closest('div.schedule').attr('appointmentID');
+    $.ajax({
+        async: false,
+        url: location.origin + '/ui/interview/?appointmentId=' + appointmentID,
+        type: "GET"
+    });
+};
 postAppointment = function (event) {
     var requestType = "POST";
     var id = "";
@@ -82,7 +90,7 @@ postAppointment = function (event) {
                 startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
-                    url: location.origin + '/appointments/',
+                    url: 'http://176.36.11.25:8080' + '/appointments/',
                     contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify(appointment),
@@ -308,7 +316,7 @@ userIDByName = function (names) {
     var result = [];
     $(names).each(function (index, name) {
         $(userList).each(function (index, user) {
-            if (name == user.name + ' ' + user.lastName) {
+            if (name == user.name + ' ' + user.surname) {
                 result.push(user.id);
             }
         });

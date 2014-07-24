@@ -105,7 +105,7 @@
                 <select class="users {{^newApp}}schedulable{{/newApp}}">
                     {{#appointment.availableUsers}}
                     <option value="{{id}}"
-                    {{#disabled}}disabled{{/disabled}}>{{name}} {{lastName}}</option>
+                    {{#disabled}}disabled{{/disabled}}>{{name}} {{surname}}</option>
                     {{/appointment.availableUsers}}
                 </select>
                 <button class="addUser {{^newApp}}schedulable{{/newApp}}"
@@ -115,7 +115,7 @@
                 </button>
                 <select class="scheduled {{^newApp}}schedulable{{/newApp}}">
                     {{#appointment.scheduledUsers}}
-                    <option value="{{id}}">{{name}} {{lastName}}</option>
+                    <option value="{{id}}">{{name}} {{surname}}</option>
                     {{/appointment.scheduledUsers}}
                 </select>
                 <button class="removeUser {{^newApp}}schedulable{{/newApp}}"

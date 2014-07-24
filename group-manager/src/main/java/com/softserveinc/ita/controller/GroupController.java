@@ -37,8 +37,9 @@ public class GroupController {
     @RequestMapping(value = "{groupId}/applicants", method = RequestMethod.PUT, produces = "application/json")
     public
     @ResponseBody
-    void changeApplicantsStatus(@PathVariable String groupId, @RequestBody Map<String, ApplicantBenchmark> applicants) {
+    boolean changeApplicantsStatus(@PathVariable String groupId, @RequestBody Map<String, ApplicantBenchmark> applicants) {
         groupService.addOrUpdateApplicantIDListByStatus(groupId, applicants);
+        return true;
     }
 
     @RequestMapping(value = "{groupId}/capacity", method = RequestMethod.GET, produces = "application/json")

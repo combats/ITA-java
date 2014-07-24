@@ -24,7 +24,7 @@ $(function () {
 loadInterviewResult = function (element) {
     $.ajax({
         async: false,
-        url: location.origin + '/appointments/interview/' + element.appointmentID,
+        url: location.origin + '/interviews/' + element.appointmentID + '/result',
         dataType: 'json',
         type: 'GET',
         success: function (interview) {

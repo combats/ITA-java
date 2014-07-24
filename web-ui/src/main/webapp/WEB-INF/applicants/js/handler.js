@@ -3,7 +3,7 @@ var pageTemplate = {};
 var applicants = [];
 var groupCapacity;
 var userList = [];
-var groupID = 1;
+var groupID = "id1";
 $(function () {
     //load page template
     $.ajax({
@@ -149,6 +149,9 @@ submitList = function () {
     });
 };
 setEventListeners = function () {
+    $('.interview').click(function (event) {
+        beginInterview(event.target);
+    });
     $("input[type=file]").nicefileinput();
     //Event listener for dialog
     $("#dialog").dialog({
@@ -284,7 +287,7 @@ loadAppointmentID = function (applicantID) {
     var result = -1;
     $.ajax({
         async: false,
-        url: location.origin + '/appointments/groups/' + groupID + '/applicants/' + applicantID,
+        url: 'http://176.36.11.25:8080' + '/appointments/?group=' + groupID + '&applicant=' + applicantID,
         dataType: "json",
         type: "GET",
         success: function (appointmentID) {
@@ -322,5 +325,5 @@ getCookie = function (cname) {
     return "";
 };
 getHRID = function () {
-    return "hrid";
+    return getCookie("userId");
 };

@@ -46,7 +46,6 @@ public class AppointmentController {
     public
     @ResponseBody
     String addNewAppointment(@RequestBody @Valid Appointment appointment) {
-
         return appointmentService.putAppointment(appointment);
     }
 
