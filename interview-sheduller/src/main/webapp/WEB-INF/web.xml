@@ -3,6 +3,15 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
 	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
+    <filter>
+        <filter-name>corsFilter</filter-name>
+        <filter-class>com.softserveinc.ita.utils.filters.SimpleCORSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>corsFilter</filter-name>
+        <url-pattern>*</url-pattern>
+    </filter-mapping>
+
     <display-name>Spring MVC Application</display-name>
 
     <servlet>
