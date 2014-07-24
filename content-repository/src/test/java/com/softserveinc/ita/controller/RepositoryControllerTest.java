@@ -287,10 +287,10 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/jpeg"))
                 .andExpect(content().string("{\"status\":\"File added successfully " + name + USER_SUFFIX
-                                                    + IMAGE_SUFFIX + "\"}"))
+                        + IMAGE_SUFFIX + "\"}"))
                 .andExpect(status().isOk());
     }
 
@@ -306,7 +306,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/jpeg"))
                 .andExpect(status().isOk());
     }
@@ -324,7 +324,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/jpeg"))
                 .andExpect(content().string("{\"reason\":\"You failed to upload because of invalid path: must contain"
                                                      + " %applicant% or %user% in it. Caused by: " + ufo + "\"}"))
@@ -344,7 +344,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/jpeg"))
                 .andExpect(status().isOk());
 
@@ -359,11 +359,9 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String image64After = Base64.encodeBase64String(imageAfter);
 
 
-        mockMvc.perform(get(endpointGet)
-                .param("string64image", imageInString)
-                .header("Content-Type", "image/jpeg"))
+        mockMvc.perform(get(endpointGet))
                 .andExpect(status().isOk())
-                .andExpect(content().string(image64After));
+                .andExpect(content().string("data:image/jpeg;base64," + image64After));
     }
 
     @Test
@@ -379,14 +377,14 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/png"))
                 .andExpect(status().isOk());
 
 
         mockMvc.perform(get(endpointGet))
                 .andExpect(status().isOk())
-                .andExpect(content().string(imageInString));
+                .andExpect(content().string("data:image/jpeg;base64," + imageInString));
     }
 
     @Test
@@ -403,7 +401,7 @@ public class RepositoryControllerTest extends BaseControllerTest {
         String imageInString = Base64.encodeBase64String(imageInByte);
 
         mockMvc.perform(post(endpointPost)
-                .param("string64image", imageInString)
+                .content("data:image/jpeg;base64," + imageInString)
                 .header("Content-Type", "image/png"))
                 .andExpect(status().isOk());
 

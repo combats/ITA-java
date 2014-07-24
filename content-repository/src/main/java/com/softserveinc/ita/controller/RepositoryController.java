@@ -22,7 +22,6 @@ import java.io.IOException;
 @Controller
 @RequestMapping(value="/")
 public class RepositoryController {
-    String nodeName;
     private static final String APPLICANT_SUFFIX = "-applicant";
     private static final String USER_SUFFIX = "-user";
 
@@ -136,7 +135,6 @@ public class RepositoryController {
     /**
      * Adds Image encoded in Base64 String into repository
      * @param ID - ID of applicant
-     * @param contentType - image type
      * @param string64image - encoded image
      * @return (JSON) String with operation status
      * @throws com.softserveinc.ita.exception.JcrException
@@ -144,27 +142,63 @@ public class RepositoryController {
     @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.POST)
     public ResponseEntity<OperationStatusJSONInfo> postImage64(@PathVariable("ID") String ID,
                                               @PathVariable("client") String client,
-                                              @RequestHeader("Content-Type") String contentType,
                                               @RequestBody String string64image) throws Exception {
 
-        checkBase64ImageFile(string64image, ID, contentType);
+        checkBase64ImageFile(string64image, ID);
+        String contentType = getContentType64(string64image);
+        String pure64 = getPure64String(string64image, contentType, ID);
         String requestedNode = detectClient(ID, client);
         OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
-                                                                            string64image, contentType));
+                pure64, contentType));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    private void checkBase64ImageFile(String string64image, String ID, String contentType) throws EmptyFileException,
-            UnsupportedFileContentTypeException, Base64ValidationException {
+    /**
+     * Check that string64image is not null
+     */
+    private void checkBase64ImageFile(String string64image, String ID) throws EmptyFileException {
         if (string64image == null) {
             throw new EmptyFileException(ID);
         }
-        if(!isValidBase64String(string64image)) {
+    }
+
+    /**
+     * Getting mime-type from posted string
+     */
+    private String getContentType64(String string64image) throws UnsupportedFileContentTypeException {
+        String sub64 = string64image.substring(0, 30);
+        if(sub64.contains("gif")) {
+            return "image/gif";
+        }
+        if(sub64.contains("jpeg")) {
+            return "image/jpeg";
+        }
+        if(sub64.contains("png")) {
+            return "image/png";
+        }
+        throw new UnsupportedFileContentTypeException("Caused by: unsupported media type (actually we don't know what it is)");
+    }
+
+
+    /**
+     * Getting string that contains only image without data:URL and validating that string
+     */
+    private String getPure64String(String string64image, String contentType, String ID) throws Base64ValidationException {
+        String regexp = "data:" + contentType + ";base64,";
+        //
+            int index = regexp.length();
+            StringBuilder str = new StringBuilder(string64image);
+            str.delete(0, index);
+        //
+
+        //
+//            return string64image.replaceAll(regexp, "");
+        //
+        String response = str.toString();
+        if(!isValidBase64String(response)) {
             throw new Base64ValidationException(ID);
         }
-        if(!isSupportedFormatForImage(contentType)) {
-            throw new UnsupportedFileContentTypeException(ID +". " + "Caused by: " + contentType);
-        }
+        return response;
     }
 
     private boolean isValidBase64String(String image) {
@@ -181,7 +215,8 @@ public class RepositoryController {
      * @throws java.io.IOException
      */
     @RequestMapping(value = "img/{client}/{ID}", method = RequestMethod.GET)
-    public ResponseEntity<String> getImage64(@PathVariable("client") String client,
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody String getImage64(@PathVariable("client") String client,
                                              @PathVariable("ID") String ID,
                                              @RequestParam(value = "height", required = false) Integer height,
                                              @RequestParam(value = "width", required = false) Integer width)
@@ -194,15 +229,16 @@ public class RepositoryController {
         } else {
             responseInBase64 = imageService.getImage64(requestedNode);
         }
-        final HttpHeaders headers = new HttpHeaders();
-
-        String responseMediaType = responseInBase64.getContentType();
-        if(isSupportedFormatForImage(responseMediaType)) {
-            headers.setContentType(MediaType.parseMediaType(responseMediaType));
-        }
-        headers.setContentLength(responseInBase64.getContent().length());
-        headers.set("Content-Transfer-Encoding", "base64");
-        return new ResponseEntity<>(responseInBase64.getContent(), headers, HttpStatus.OK);
+//        final HttpHeaders headers = new HttpHeaders();
+//
+//        String responseMediaType = responseInBase64.getContentType();
+//        if(isSupportedFormatForImage(responseMediaType)) {
+//            headers.setContentType(MediaType.parseMediaType(responseMediaType));
+//        }
+//        headers.setContentLength(responseInBase64.getContent().length());
+//        headers.set("Content-Transfer-Encoding", "base64");
+//        return new ResponseEntity<>(responseInBase64.getContent(), headers, HttpStatus.OK);
+        return responseInBase64.getContent();
     }
 
     /**

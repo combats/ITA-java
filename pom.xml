@@ -154,7 +154,9 @@
                         <include>**/*Test.java</include>
                     </includes>
                     <excludes>
-                    <exclude>**/*DAOTests.java</exclude>
+                        <exclude>**/InterviewDAOTests.java</exclude>
+                        <exclude>**/QuestionInformationDAOTests.java</exclude>
+                        <exclude>**/QuestionsBlockDAOTests.java</exclude>
                     </excludes>
                 </configuration>
             </plugin>

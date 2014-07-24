@@ -17,6 +17,14 @@ public class ImgscalrImpl extends AbstractImageProcessor {
 
     /**
      * Makes resize of image
+     * MODES: AUTOMATIC, FIT_EXACT, FIT_TO_WIDTH, FIT_TO_HEIGHT.
+     *
+     * FIT_EXACT is used to fit the image to the exact dimensions given regardless of the image's proportions. If the dimensions are
+     * not proportionally correct, this will introduce vertical or horizontal stretching to the image.
+     * It is recommended that you use one of the other FIT_TO modes or AUTOMATIC if you want the image to look correct,
+     * but if dimension-fitting is the #1 priority regardless of how it makes the image look, that is what this mode is
+     * for.
+     *
      * @param source - ImageFile that need to be resized
      * @param mimeType - mime-type of image
      * @param height - required height
