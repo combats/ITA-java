@@ -41,6 +41,7 @@
         </property>
         <property name="annotatedClasses">
             <list>
+                <value>com.softserveinc.ita.entity.Course</value>
                 <value>com.softserveinc.ita.entity.Group</value>
                 <value>com.softserveinc.ita.entity.Question</value>
                 <value>com.softserveinc.ita.entity.Role</value>
