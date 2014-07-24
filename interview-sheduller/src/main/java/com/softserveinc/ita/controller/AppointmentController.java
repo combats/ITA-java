@@ -60,7 +60,7 @@ public class AppointmentController {
     }
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
+    public void updateAppointment(@RequestBody @Valid Appointment appointment) {
         appointmentService.updateAppointment(appointment);
     }
 
