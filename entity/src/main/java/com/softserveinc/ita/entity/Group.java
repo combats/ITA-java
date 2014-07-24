@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "Groups")
-public class Group implements Serializable{
+public class Group implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -40,7 +40,8 @@ public class Group implements Serializable{
         IN_PROCESS, PLANNED, BOARDING, FINISHED;
     }
 
-    public Group() {}
+    public Group() {
+    }
 
     public Group(String groupID) {
         this.groupID = groupID;
@@ -74,6 +75,7 @@ public class Group implements Serializable{
     public void setStartTime(long startTime) {
         this.startTime = startTime;
     }
+
     public String getAddress() {
         return address;
     }
@@ -105,7 +107,6 @@ public class Group implements Serializable{
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
-
 
     public Map<String, ApplicantBenchmark> getApplicants() {
         return applicants;

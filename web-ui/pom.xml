@@ -24,6 +24,12 @@
             <version>2.3.20</version>
         </dependency>
 
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
+
         <!--Common-->
         <dependency>
             <groupId>com.softserveinc.ita</groupId>

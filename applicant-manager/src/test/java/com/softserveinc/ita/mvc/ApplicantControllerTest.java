@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -44,10 +45,13 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetApplicantsListAngExpectedValid() throws Exception {
         List<Applicant> standart = new ArrayList<>();
-        standart.add(new Applicant("123"));
-        standart.add(new Applicant("124"));
-        standart.add(new Applicant("125"));
-
+        Applicant app1 = new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L);
+        app1.setId("id1");
+        Applicant app2 = new Applicant("Andrey", "Makarevich", "email@mail.com", "1234567894568", 98736513843543L);
+        app2.setId("id2");
+        Applicant app3 = new Applicant("Alexandr", "Drux", "email@mail.com", "1234567894568", 98736513843543L);
+        app3.setId("id3");
+        Collections.addAll(standart, app1, app2, app3);
         String standardJson = jsonUtil.toJson(standart);
 
         mockMvc.perform(get("/"))
@@ -64,7 +68,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testGetApplicantWithNotExistingIdAndExpectException() throws Exception {
         mockMvc.perform(
-                get("/id4"))
+                get("/id44"))
                 .andExpect(status().isInternalServerError());
     }
 
@@ -77,7 +81,8 @@ public class ApplicantControllerTest extends BaseMVCTest {
 
     @Test
     public void testGetApplicantWithExistingIdAndExpectCorrectApplicant() throws Exception {
-        Applicant applicant = new Applicant("id2");
+        Applicant applicant = new Applicant("Andrey", "Makarevich", "email@mail.com", "1234567894568", 98736513843543L);
+        applicant.setId("id2");
         String jsonApplicant = jsonUtil.toJson(applicant);
         mockMvc.perform(
                 get("/id2")).andExpect(content().string(jsonApplicant));
@@ -98,7 +103,8 @@ public class ApplicantControllerTest extends BaseMVCTest {
     @Test
     public void testPostNewApplicantAndGetTheSameApplicant() throws Exception {
 
-        String applicantJson = jsonUtil.toJson(new Applicant());
+        String applicantJson = jsonUtil.toJson(
+                new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L));
 
         String newApplicantJson = mockMvc.perform(
                 post("/")
@@ -132,7 +138,7 @@ public class ApplicantControllerTest extends BaseMVCTest {
     }
 
     @Test
-    public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception{
+    public void testGetApplicantByIDAndExpectReasonWasConvertedToJson() throws Exception {
         mockMvc.perform(
                 get("/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Applicant does not exist"))));

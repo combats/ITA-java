@@ -105,7 +105,7 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public InterviewResults getInterviewResultsByInterviewId(String InterviewId) throws WrongCriteriaException, HttpRequestException {
         InterviewResults interviewResults = new InterviewResults();
-        String finalComment = "";
+        String finalComment = "He is great!";
         int totalPoints = 0;
 
         Set<QuestionsBlock> questionsBlocksSet = getInterviewByAppointmentID(InterviewId).getQuestionsBlocks();

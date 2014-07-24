@@ -2,7 +2,7 @@ package com.softserveinc.ita.entity;
 
 import java.io.Serializable;
 
-public class ApplicantBenchmark implements Serializable{
+public class ApplicantBenchmark implements Serializable {
     private Applicant.Status status = Applicant.Status.NOT_SCHEDULED;
     private int rank = -1;
 

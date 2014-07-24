@@ -1,6 +1,7 @@
 package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import com.softserveinc.ita.service.ApplicantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @Controller
@@ -21,7 +23,7 @@ public class ApplicantController {
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Applicant>> getApplicants() {
         List<Applicant> resultList = applicantService.getApplicants();
-        if(resultList.isEmpty() || resultList == null){
+        if (resultList.isEmpty() || resultList == null) {
             return new ResponseEntity<>(resultList, HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(resultList, HttpStatus.OK);

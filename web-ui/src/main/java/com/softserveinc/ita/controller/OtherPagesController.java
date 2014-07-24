@@ -1,6 +1,7 @@
 package com.softserveinc.ita.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,5 +22,10 @@ public class OtherPagesController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String showUsers() {
         return "users";
+    }
+
+    @RequestMapping(value = "/hr/{page}", method = RequestMethod.GET)
+    public String goToPage(@PathVariable String page) {
+        return page;
     }
 }
