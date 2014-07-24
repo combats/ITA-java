@@ -28,14 +28,14 @@ public class InterviewController {
     @Autowired
     QuestionsInformationServices questionsInformationServices;
 
-    @RequestMapping(value = "applicants/{applicantId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
     public List<Interview> getInterviewByApplicantId(@PathVariable("applicantId") String applicantId) throws WrongCriteriaException, HttpRequestException {
         return interviewService.getInterviewByApplicantID(applicantId);
     }
 
-    @RequestMapping(value = "{interviewId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{interviewId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.FOUND)
     @ResponseBody
     public Interview getInterviewByAppointmentId(@PathVariable("interviewId") String interviewId)
@@ -43,7 +43,7 @@ public class InterviewController {
         return interviewService.getInterviewByAppointmentID(interviewId);
     }
 
-    @RequestMapping(value = "{interviewId}/result", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "{interviewId}/result", method = RequestMethod.GET, produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public InterviewResults getInterviewResultsByInterviewId(@PathVariable("interviewId") String interviewId)
@@ -57,13 +57,13 @@ public class InterviewController {
         interviewService.removeInterviewByAppointmentId(interviewId);
     }
 
-    @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "update", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateInterviewByAppointmentId(@RequestBody Interview interview) throws HttpRequestException {
         interviewService.updateInterview(interview);
     }
 
-    @RequestMapping(value = "interviewing/answer", method = RequestMethod.POST,  consumes = MediaType.APPLICATION_JSON_VALUE,  produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "interviewing/answer", method = RequestMethod.POST,  consumes = "application/json",  produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
@@ -75,7 +75,7 @@ public class InterviewController {
         return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
     }
 
-    @RequestMapping(value = "interviewing/final_comment", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "interviewing/final_comment", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateFinalCommentInQuestionsBlock(@RequestBody FinalComment finalComment,
                                                    @CookieValue(value = "userId", defaultValue = "1") String userId,
@@ -84,7 +84,7 @@ public class InterviewController {
         questionsBlockServices.updateFinalCommentInQuestionsBlock(finalComment, userId);
     }
 
-    @RequestMapping(value = "interviewing/answer", method = RequestMethod.PUT, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "interviewing/answer", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String updateQuestionInformation(@RequestBody QuestionInformation questionInformation,
