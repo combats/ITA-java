@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc;
 
-import com.softserveinc.ita.controller.UserController;
 import com.softserveinc.ita.entity.User;
 
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
@@ -40,7 +39,6 @@ public class UserTests extends BaseMVCTest {
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     protected WebApplicationContext wac;
-
     @Before
     public void setup() {
         mockMvc = webAppContextSetup(wac).build();
@@ -65,7 +63,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testDeleteUserByIdAndExpectedDeleteException() throws Exception {
         String userID = "124";
-        mockMvc.perform(delete("/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isNotFound());
     }
 
@@ -146,7 +144,6 @@ public class UserTests extends BaseMVCTest {
                         contentType(MediaType.APPLICATION_JSON)
         ).andExpect(content().string(jsonUser));
     }
-
     @Test
     public void testPostNewUserAndExpectIsCreated() throws Exception {
         User testUser = new User("3");
@@ -195,9 +192,8 @@ public class UserTests extends BaseMVCTest {
                 get("/"))
                 .andExpect(content().string(expectedResult));
     }
-
     @Test
-    public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception {
+    public void testGetUserByIDAndExpectReasonWasConvertedToJson() throws Exception{
         mockMvc.perform(
                 get("/-1").accept(MediaType.APPLICATION_JSON))
                 .andExpect(content().string(jsonUtil.toJson(new ExceptionJSONInfo("Invalid user ID"))));

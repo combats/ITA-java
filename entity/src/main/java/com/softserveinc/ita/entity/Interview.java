@@ -17,8 +17,8 @@ public class Interview implements Serializable {
     @Column(name = "interview_id", unique = true)
     private String interviewId;
 
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=QuestionsBlock.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "interview_questionsBlockId", referencedColumnName="interview_id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "InterviewQuestionBlocks")
     private Set<QuestionsBlock> questionsBlocks = new HashSet<>();
 
     @Column(name = "InterviewType")

@@ -218,7 +218,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
 
         verify(jcrDataAccess, times(1)).get(requestedNodeName);
         verify(imageProcessor, times(1)).resize(dataTransferFile, dataTransferFile.getMimeType(), width, height);
-        assertEquals(image64, response64.getContent());
+        assertEquals("data:image/jpeg;base64," + image64, response64.getContent());
         assertEquals("image/jpeg", response64.getContentType());
 
         IOUtils.closeQuietly(is);
@@ -240,7 +240,7 @@ public class ImageServiceImplMockitoTest extends BaseServiceTest {
         Base64DataTransferFile response64 = imageService.getImage64(nodeName);
 
         verify(jcrDataAccess, times(1)).get(requestedNodeName);
-        assertEquals(image64, response64.getContent());
+        assertEquals("data:image/jpeg;base64," + image64, response64.getContent());
         assertEquals("image/jpeg", response64.getContentType());
 
         IOUtils.closeQuietly(is);

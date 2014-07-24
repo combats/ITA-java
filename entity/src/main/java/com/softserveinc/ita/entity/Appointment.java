@@ -1,7 +1,8 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
 import com.softserveinc.ita.entity.exceptions.DateException;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,7 +27,8 @@ public class Appointment implements Serializable {
     @Column(name = "Id", unique = true)
     private String appointmentId;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @Column(name = "UserIdList")
     private List <String> userIdList = new ArrayList<>();
 

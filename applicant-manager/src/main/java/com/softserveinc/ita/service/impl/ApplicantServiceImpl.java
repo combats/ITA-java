@@ -1,6 +1,6 @@
 package com.softserveinc.ita.service.impl;
 
-import com.softserveinc.ita.dao.impl.ApplicantDAO;
+import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import com.softserveinc.ita.service.ApplicantService;

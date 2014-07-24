@@ -1,10 +1,10 @@
-package com.softserveinc.ita.dao.impl;
+package com.softserveinc.ita.mocks;
 
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.springframework.stereotype.Repository;
+import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public class UserDAOMockImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByID(String UserID) {
+    public User getUserById(String UserID) {
         User user = null;
         ArrayList<User> users = new ArrayList<User>() {{
             add(new User("1"));
@@ -45,7 +45,7 @@ public class UserDAOMockImpl implements UserDAO {
     }
 
     @Override
-    public ArrayList<String> getAllUsersID() {
+    public ArrayList<String> getAllUsersId() {
         ArrayList<String> usersID = new ArrayList<String>() {{
             add("1");
             add("2");
@@ -53,32 +53,23 @@ public class UserDAOMockImpl implements UserDAO {
         }};
         return usersID;
     }
-
-    public User postNewUser(User user) throws UserAlreadyExistsException {
+    public User addUser(User user){
         ArrayList<User> users = new ArrayList<User>() {{
             add(new User("1"));
             add(new User("2"));
         }};
-        for (User item : users) {
-            if (item.getId().equals(user.getId())) {
-                throw new UserAlreadyExistsException();
-            }
-        }
         return user;
     }
-
+    
     @Override
-    public String deleteUser(String userID) throws UserDoesNotExistException {
-        if (!dbOfUsers.containsKey(userID)) {
-            throw new UserDoesNotExistException();
-        }
+    public String deleteUserById(String userID){
         dbOfUsers.remove(userID);
         return userID;
     }
 
     @Override
-    public User changeUser(User changingUser) {
-        if (changingUser == null) {
+    public User changeUser(User changingUser){
+        if(changingUser==null){
             return null;
         }
         List<User> users = new ArrayList<User>() {

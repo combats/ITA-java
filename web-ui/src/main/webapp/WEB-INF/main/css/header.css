@@ -1,0 +1,11 @@
+.header .dropdown{
+    width: 196px;
+}
+.header .navbar .dropdown-toggle{
+    text-align: center;
+    font-size: 13px;
+}
+.header .navbar .brand{
+    padding-left: 60px;
+    font-size: 24px;
+}

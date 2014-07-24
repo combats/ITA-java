@@ -22,6 +22,8 @@ public class ApplicantBenchmark implements Serializable {
         this.rank = rank;
     }
 
+
+
     @Override
     public String toString() {
         return "ApplicantBenchmark{" +

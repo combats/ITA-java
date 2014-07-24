@@ -20,7 +20,7 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
 
     @Override
     public Appointment getAppointmentByAppointmentId(String appointmentId) {
-        return (Appointment) sessionFactory.getCurrentSession().load(Appointment.class, appointmentId);
+        return (Appointment) sessionFactory.getCurrentSession().get(Appointment.class, appointmentId);
     }
 
     @Override
