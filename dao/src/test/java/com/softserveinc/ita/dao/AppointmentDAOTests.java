@@ -98,6 +98,9 @@ public class AppointmentDAOTests extends BaseDAOTest {
         session.save(appointmentOne);
         session.save(appointmentTwo);
         List<Appointment> appointments = appointmentDAO.getAppointmentsByDate(1000L, 4000L);
-        assertThat(2, equalTo(appointments.size()));
+        for (Appointment appointment : appointments) {
+            System.err.println(appointment);
+        }
+        assertEquals(2, appointments.size());
     }
 }
