@@ -80,38 +80,49 @@
         </a>
     </div>
     </div>
-    <div id="right-panel" ng-controller="ChatController">
-        <div class="panel-title">Chat/Notifications</div>
-        <div id="panel-notifications">
-            <div class="dm-chat">
-                <div ng-repeat="message in messages" class="dm" ng-class="{'sent':message.sent}">
-                    <img class="avatar" ng-src="{{message.avatar}}">
-                    <div class="dm-content">
-                        <small class="time">
+   <div id="right-panel" ng-controller="ChatController">
+
+       <div class="panel-title">Chat/Notifications</div>
+       <div class="join-panel">
+           <a class="panel-btn" id="join-chat-btn" ng-click="connect()">
+               <span class="glyphicon glyphicon-play"></span> Join to conversation
+           </a>
+
+           <div ng-switch="ONLINE">
+               <div ng-switch-when="true" style="width: 16px; color: green; text-align: center;">ONLINE</div>
+               <div ng-switch-default style="width: 16px; color: red; text-align: center;">OFFLINE</div>
+           </div>
+       </div>
+
+       <div id="panel-notifications">
+           <div class="dm-chat">
+               <div ng-repeat="message in messages" class="dm" ng-class="{'sent':message.sent}">
+                   <img class="avatar" ng-src="https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png">
+                   <div class="dm-content">
+                       <small class="time">
                             <span class="_timestamp">
                                 {{message.time | date:'HH:mm:ss'}}
                             </span>
-                        </small>
-                        <div class="dm-message" ng-class="{'sent':message.sent}">
-                            <p class="js-tweet-text tweet-text">{{message.message}}</p>
-                            <div class="dm-caret">
-                                <div class="dm-caret-outer"></div>
-                                <div class="dm-caret-inner"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="panel-chat">
-            <div id="message-content">
-                <textarea placeholder="What's up?" required></textarea>
-            </div>
-            <a class="panel-btn" id="send-msg-btn">
-                <span class="glyphicon glyphicon-envelope"></span> Send message
-            </a>
-        </div>
-    </div>
+                       </small>
+                       <div class="dm-message" ng-class="{'sent':message.sent}">
+                           <p class="js-tweet-text tweet-text">{{message.nickname}} : {{message.text}}</p>
+                           <div class="dm-caret">
+                               <div class="dm-caret-outer"></div>/
+                               <div class="dm-caret-inner"></div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <div id="panel-chat">
+           <div id="message-content">
+               <textarea  ng-model="message.text" placeholder="What's up?" required></textarea>
+           </div>
+           <a class="panel-btn" id="send-msg-btn" ng-click="send()">
+               <span class="glyphicon glyphicon-envelope"></span> Send message
+           </a>
+       </div>
 
     <script type="text/javascript" src="interview/js/angular.js"></script>
    <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>

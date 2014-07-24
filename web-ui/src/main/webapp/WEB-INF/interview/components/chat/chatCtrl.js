@@ -1,35 +1,33 @@
-(function () {
-    var app = angular.module('chatMod', []);
+var myapp = angular.module('chatMod', ['ngAnimate', 'userHeadeMod']);
 
-    app.controller('ChatController', function ($scope) {
-        $scope.messages = messages;
+myapp.controller('ChatController', ['$scope','ChatService', 'User',  function ($scope,ChatService,User) {
+
+    $scope.message = {};
+    $scope.message.nickname = User.name + ' ' + User.lastname;
+    $scope.messages = [];
+
+    ChatService.subscribe(function(message) {
+
+        console.log("Hi from Subscribe - controller" + message.toJson);
+        if (!$scope.ONLINE) {if (message.data = true) $scope.ONLINE = true;}
+        else {
+            console.log("Push message" + message.nickname + message.text);
+            $scope.messages.push(message);
+            $scope.$apply();}
     });
 
-    var messages = [{
-        from: "Syperia",
-        message: "Lorem ipsum dolor sit amet, consectgue",
-        time: "1288323623006",
-        avatar:"https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png",
-        sent: true
-    },
-                    {
-        from: "UserHR",
-        message: "Lorem ipsum dolor sit amet, consectgue",
-        time: "1288323623006",
-        avatar: "https://pbs.twimg.com/profile_images/2373016559/image_normal.jpg"
-    },
-                    {
-        from: "Syperia",
-        message: "Lorem ipsum dolor sit amet, consectgue",
-        time: "1288323623006",
-        avatar:"https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png",
-        sent: true
-    },
-                    {
-        from: "UserHR",
-        message: "Lorem ipsum dolor sit amet, consectgue",
-        time: "1288323623006",
-        avatar: "https://pbs.twimg.com/profile_images/2373016559/image_normal.jpg"
+    $scope.connect = function() {
+        console.log("Connect() function from Controller");
+        ChatService.connect();
     }
-    ];
-})();
+
+    $scope.send = function() {
+
+        console.log("Send() function from Controller" );
+//        console.log($scope.message);
+        ChatService.send(JSON.stringify($scope.message));
+
+        console.log($scope.message);
+    }
+}]);
+

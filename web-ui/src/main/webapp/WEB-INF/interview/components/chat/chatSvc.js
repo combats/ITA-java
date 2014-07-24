@@ -1,27 +1,46 @@
-angular.module('interview').factory('Questions',function() {
-    return {
-        get: function(){
-            return [{
-            question: "When did WWII start?",
-            comment: "lol, this guy is so stupid",
-            mark: 8,
-            weight: 4,
-            active: true
-    },
-        {
-            question: "When did WWI start?",
-            comment: "lol, this guy is not stupid",
-            mark: 7,
-            weight: 3,
-            answered: true
-    },
-        {
-            question: "When did we start?",
-            comment: "lol, this guy is very stupid",
-            mark: 6,
-            weight: 1
+angular.module('chatMod').factory('ChatService',function() {
+
+    var service = {};
+
+    service.connect = function() {
+        if(service.websocket) { return; }
+
+        var websocket = new WebSocket("ws://http://localhost:8080/chat-1/chat");
+
+        var ONLINE;
+
+        websocket.onopen = function(event) {
+            console.log("Connection succesful function from Controller");
+            ONLINE = true;
+            service.callback(ONLINE);
+        };
+
+        websocket.onerror = function(event) {
+            service.callback('Error');
         }
-                   ];
-        }
+
+        websocket.onmessage = function(event) {
+
+            console.log("OnMessage function from Service" + event.data);
+
+            service.callback(JSON.parse(event.data));
+        };
+
+        service.websocket = websocket;
     }
+
+    service.send = function(message) {
+        console.log("Send() function from Service");
+        console.log("Nickname is:"+ message.nickname + "Content is:"+message.text);
+        service.websocket.send(message);
+    }
+
+    service.subscribe = function(callback) {
+        console.log("Hi from Subscribe - Service" + callback.nickname + callback.text
+            + callback.time );
+        console.log("Send() function from Service");
+        service.callback = callback;
+    }
+
+    return service;
 })

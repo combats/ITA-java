@@ -17,6 +17,7 @@
 
     <modules>
         <module>entity</module>
+        <module>chat</module>
         <module>dao</module>
         <module>common</module>
         <module>http-request-service</module>
@@ -28,6 +29,7 @@
         <module>group-manager</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
+
     </modules>
 
     <dependencies>

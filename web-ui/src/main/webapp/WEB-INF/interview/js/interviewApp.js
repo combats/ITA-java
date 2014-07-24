@@ -47,8 +47,8 @@
             })
             .then(function(){
                 var initRequests = [
-                    //$http.get('api/user.json')
-                    $http.get('/users/'+userId)
+                    $http.get('interview/api/user.json')
+//                    $http.get('/users/'+userId)
                     .then(function (response) {
                         app.value('User', response.data);
                     }),
