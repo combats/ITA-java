@@ -144,15 +144,27 @@ public class RepositoryController {
                                               @PathVariable("client") String client,
                                               @RequestBody String string64image) throws Exception {
 
+        checkBase64ImageFile(string64image, ID);
         String contentType = getContentType64(string64image);
-        String pure64 = getPure64String(string64image, contentType);
-        checkBase64ImageFile(pure64, ID, contentType);
+        String pure64 = getPure64String(string64image, contentType, ID);
         String requestedNode = detectClient(ID, client);
         OperationStatusJSONInfo response = new OperationStatusJSONInfo(imageService.postImage64(requestedNode,
-                                                                            string64image, contentType));
+                pure64, contentType));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    /**
+     * Check that string64image is not null
+     */
+    private void checkBase64ImageFile(String string64image, String ID) throws EmptyFileException {
+        if (string64image == null) {
+            throw new EmptyFileException(ID);
+        }
+    }
+
+    /**
+     * Getting mime-type from posted string
+     */
     private String getContentType64(String string64image) throws UnsupportedFileContentTypeException {
         String sub64 = string64image.substring(0, 30);
         if(sub64.contains("gif")) {
@@ -167,28 +179,26 @@ public class RepositoryController {
         throw new UnsupportedFileContentTypeException("Caused by: unsupported media type (actually we don't know what it is)");
     }
 
-    private void checkBase64ImageFile(String string64image, String ID, String contentType) throws EmptyFileException,
-            Base64ValidationException {
-        if (string64image == null) {
-            throw new EmptyFileException(ID);
-        }
-        if(!isValidBase64String(getPure64String(string64image, contentType))) {
+
+    /**
+     * Getting string that contains only image without data:URL and validating that string
+     */
+    private String getPure64String(String string64image, String contentType, String ID) throws Base64ValidationException {
+        String regexp = "data:" + contentType + ";base64,";
+        //
+            int index = regexp.length();
+            StringBuilder str = new StringBuilder(string64image);
+            str.delete(0, index);
+        //
+
+        //
+//            return string64image.replaceAll(regexp, "");
+        //
+        String response = str.toString();
+        if(!isValidBase64String(response)) {
             throw new Base64ValidationException(ID);
         }
-    }
-
-//    private String getPure64String(String string64image, String contentType) {
-//        String regexp = "data:" + contentType + ";base64,";
-//        return string64image.replaceAll(regexp, "");
-//    }
-
-    private String getPure64String(String string64image, String contentType) {
-        String regexp = "data:" + contentType + ";base64,";
-        int index = regexp.length();
-        StringBuilder str = new StringBuilder(string64image);
-        str.delete(0, index);
-        String res = str.toString();
-        return res;
+        return response;
     }
 
     private boolean isValidBase64String(String image) {
