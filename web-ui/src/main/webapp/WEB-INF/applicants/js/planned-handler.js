@@ -91,8 +91,7 @@ postAppointment = function (event) {
             $.ajax({
                     async: false,
                     url: 'http://176.36.11.25:8080' + '/appointments/',
-//                    contentType: "application/json",
-                    accept:"application/json",
+                    contentType: "application/json",
                     dataType: "json",
                     data: JSON.stringify(appointment),
                     type: requestType,
