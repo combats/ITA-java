@@ -30,6 +30,9 @@ body {
 .error{
     color: red;
 }
+.msg{
+     color: #0f00e6;
+}
 .login-card {
 
   width: 374px;

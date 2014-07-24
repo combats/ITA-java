@@ -17,35 +17,25 @@ import java.util.Properties;
 @RequestMapping("/")
 public class MainPageController {
 
-    public static final String J_USERNAME = "j_username";
-    public static final String J_PASSWORD = "j_password";
-    public static final String FRONTPAGE = "main";
-
-//    public ModelAndView handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
-//        String user = httpServletRequest.getParameter(J_USERNAME);
-//        String password = httpServletRequest.getParameter(J_PASSWORD);
-//        return new ModelAndView("login/login");
-//    }
-
 	@RequestMapping(method = RequestMethod.GET)
 	public String showMainPage() {
         return "main";
 	}
 
-    @RequestMapping(value="/login", method = RequestMethod.POST)
-    public ModelAndView postLoginPage(@RequestParam(value = "error", required = false) Integer height,
-                                      @RequestParam(value = "width", required = false) Integer width) {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login/login");
-        mav.addObject("error", "Wrong username/password combination!");
-        return mav;
-    }
+    //Spring Security see this :
+    @RequestMapping(value = "login", method = RequestMethod.GET)
+    public ModelAndView login(
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout) {
 
-    @RequestMapping(value="/login", method = RequestMethod.GET)
-    public ModelAndView showLoginPage() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("login/login");
-        mav.addObject("error", "Wrong username/password combination!");
-        return mav;
+        ModelAndView model = new ModelAndView();
+        if (error != null) {
+            model.addObject("error", "Invalid username and/or password!");
+        }
+        if (logout != null) {
+            model.addObject("msg", "You've been logged out successfully.");
+        }
+        model.setViewName("login/login");
+        return model;
     }
 }

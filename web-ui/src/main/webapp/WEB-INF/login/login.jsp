@@ -18,13 +18,10 @@
   <div class="login-card">
    <div class="login-header">IT Interviewer</div>
    <div class="login-body">
-       <%--<% if(model.error != null) { %>--%>
-       <div class="error">${error}</div>
-       <%--<% } else { %>--%>
-       <!-- No errors -->
-       <%--<% } %>--%>
+   <div class="error">${error}</div>
+   <div class="msg">${msg}</div>
    <h1>Log-in</h1><br>
-  <form action="/login" method='POST'>
+  <form action="j_spring_security_check" method='POST'>
     <input type="text" name="username" placeholder="Username">
     <input type="password" name="password" placeholder="Password">
     <input type="submit" name="login" class="login login-submit" value="login">

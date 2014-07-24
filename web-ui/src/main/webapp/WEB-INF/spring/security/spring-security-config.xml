@@ -25,13 +25,21 @@
                 password-parameter="password" />
         <security:logout logout-success-url="/login?logout" />
     </security:http>
+    <!--Hardcoded-->
+    <!--<security:authentication-manager>-->
+        <!--<security:authentication-provider>-->
+            <!--<security:user-service>-->
+                <!--<security:user name="admin" password="admin" authorities="ROLE_ADMIN" />-->
+                <!--<security:user name="user" password="user" authorities="ROLE_USER" />-->
+            <!--</security:user-service>-->
+        <!--</security:authentication-provider>-->
+    <!--</security:authentication-manager>-->
+    <!--service-based-->
+    <bean id="userDetailsService" class="com.softserveinc.ita.service.mocks.UserDetailsServiceMock"/>
 
     <security:authentication-manager>
-        <security:authentication-provider>
-            <security:user-service>
-                <security:user name="admin" password="admin" authorities="ROLE_ADMIN" />
-                <security:user name="user" password="user" authorities="ROLE_USER" />
-            </security:user-service>
+        <security:authentication-provider user-service-ref="userDetailsService">
+            <security:password-encoder hash="md5"/>
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
