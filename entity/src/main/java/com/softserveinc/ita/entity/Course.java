@@ -10,8 +10,12 @@ public class Course implements Serializable {
     private String courseId = DEFAULT_ID_VALUE;
     private String imageRef = "";
 
-    public Course(String courseId) {
-        this.courseId = courseId;
+    public Course(){
+
+    }
+
+    public Course(String name) {
+        this.name = name;
     }
 
     public Course(String name, String imageRef) {
