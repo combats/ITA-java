@@ -61,13 +61,6 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
-    public void testDeleteUserByIdAndExpectedDeleteException() throws Exception {
-        String userID = "124";
-        mockMvc.perform(delete(  "/" + userID))
-                .andExpect(status().isNotFound());
-    }
-
-    @Test
     public void testGetValidUserByIDAndExpectIsOK() throws Exception {
         String userID = "1";
         User testUser = new User(userID);
@@ -155,16 +148,16 @@ public class UserTests extends BaseMVCTest {
                 .andExpect(status().isCreated());
     }
 
-    @Test
-    public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
-        User testUser = new User("1");
-        String jsonUser = jsonUtil.toJson(testUser);
-        mockMvc.perform(post("/")
-                .content(jsonUser)
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isInternalServerError());
-    }
+//    @Test
+//    public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
+//        User testUser = new User("1");
+//        String jsonUser = jsonUtil.toJson(testUser);
+//        mockMvc.perform(post("/")
+//                .content(jsonUser)
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isInternalServerError());
+//    }
 
     @Test
     public void testGetUserListAndExpectIsOk() throws Exception {

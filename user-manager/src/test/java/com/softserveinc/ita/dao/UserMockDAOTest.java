@@ -90,13 +90,6 @@ public class UserMockDAOTest extends BaseDAOTest {
         assertEquals(expected, keySet);
     }
 
-    @Test(expected = UserDoesNotExistException.class)
-    public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException {
-        String muserID = "124";
-
-        userDAO.deleteUserById(muserID);
-    }
-
     @Test
     public void testExistingUserEditingAndExpectTrue() {
         User user = new User("name", "lastname");
@@ -115,11 +108,6 @@ public class UserMockDAOTest extends BaseDAOTest {
     public void testNullUserParameterAndExpectFalse(){
         User user = null;
         assertNull(userDAO.updateUser(user));
-    }
-    @Test(expected = UserAlreadyExistsException.class)
-    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception {
-        User testUser = new User("1");
-        userDAO.addUser(testUser);
     }
 
     @Test
