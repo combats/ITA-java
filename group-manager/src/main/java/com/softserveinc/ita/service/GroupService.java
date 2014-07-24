@@ -18,4 +18,6 @@ public interface GroupService {
     ArrayList<Group> getAllGroups();
 
     List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
+
+    Group getGroupById(String id) throws GroupDoesntExistException;
 }

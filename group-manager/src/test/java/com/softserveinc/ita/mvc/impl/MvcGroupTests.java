@@ -42,7 +42,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/BOARDING")
+                get("/status/BOARDING")
         )
                 .andExpect(status().isOk());
     }
@@ -50,7 +50,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/BOARDING")
+                get("/status/BOARDING")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -144,7 +144,29 @@ public class MvcGroupTests extends MvcGroupBaseTest {
         mockMvc.perform(
                 get("/applicants/wrongId")
         ).andExpect(status().isInternalServerError());
+    }
 
+    @Test
+    public void testGetGroupByExistingIdAndExpectIsOk() throws Exception {
+        mockMvc.perform(
+                get("/id1")
+        )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testGetGroupByExistingIdAndExpectJsonType() throws Exception{
+        mockMvc.perform(
+                get("/id1")
+        )
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void getGroupByNotExistingIdAndExpectInternalServerError() throws Exception{
+        mockMvc.perform(
+                get("/notExistingId")
+        ).andExpect(status().isInternalServerError());
     }
 }
 

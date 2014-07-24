@@ -13,13 +13,11 @@ public class Group implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
-
-
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    private String groupID;
+    private String groupID= "";
 
     @ElementCollection
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
@@ -27,14 +25,14 @@ public class Group implements Serializable{
     @Column(name = "ApplicantsStatus")
     private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
     @Column(name = "GroupName")
-    private String groupName;
+    private String groupName = "";
     @Column(name = "GroupStatus")
-    private long startBoardingTime;
-    private long startTime;
-    private long endTime;
-    private int capacity;
-    private String address;
-    private Course course;
+    private long startBoardingTime = 0;
+    private long startTime = 0;
+    private long endTime = 0;
+    private int capacity = 0;
+    private String address = "";
+    private Course course = new Course();
 
     public enum Status implements Serializable {
         IN_PROCESS, PLANNED, BOARDING, FINISHED;

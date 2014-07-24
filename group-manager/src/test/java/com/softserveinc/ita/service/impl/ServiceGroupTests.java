@@ -75,6 +75,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     public void getApplicantsByNotExistingIdAndExpectException() throws GroupDoesntExistException {
         when(groupDao.getApplicantsByGroupID("wrong")).thenThrow(GroupDoesntExistException.class);
         groupService.getApplicantsByGroupID("wrong");
+        verify(groupDao, atLeastOnce()).getApplicantsByGroupID("wrong");
     }
 
     @Test
@@ -100,5 +101,18 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         List<Applicant> actual = groupService.getApplicantsByGroupID("TestGroupID");
         assertEquals(expected, actual);
         verify(groupDao, atLeastOnce()).getApplicantsByGroupID("TestGroupID");
+    }
+
+    @Test
+    public void testGetGroupByExistingIdAndExpectCorrectGroup() throws Exception{
+        Group group = new Group("id1");
+        when(groupDao.getGroupById("id1")).thenReturn(group);
+        assertEquals(group,groupService.getGroupById("id1"));
+    }
+
+    @Test(expected = GroupDoesntExistException.class)
+    public void testGetGroupByNotExistingIdAndExpectException()throws Exception{
+        when(groupDao.getGroupById("notExistingId")).thenThrow(GroupDoesntExistException.class);
+        groupService.getGroupById("notExistingId");
     }
 }

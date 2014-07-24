@@ -19,11 +19,16 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
  
-    @RequestMapping(value = "{status}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "/status/{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
     ArrayList<Group> getGroupsByStatus(@PathVariable Group.Status status) {
         return groupService.getGroupsByStatus(status);
+    }
+
+    @RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "application/json")
+    public @ResponseBody Group getGroupById(@PathVariable String id) throws GroupDoesntExistException {
+        return groupService.getGroupById(id);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/applicants/{groupID}", produces = "application/json")

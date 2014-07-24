@@ -21,7 +21,9 @@
     <mvc:resources location="/WEB-INF/user/" mapping="/ui/user/**"/>
     <mvc:resources location="/WEB-INF/main/" mapping="/**"/>
 
-
+    <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
+        <constructor-arg name="baseUrl" value="http://localhost:8080"/>
+    </bean>
     <!--Logging-->
     <aop:aspectj-autoproxy/>
     <bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>

@@ -5,7 +5,7 @@ $(function () {
     $("#gStartTime").timepicker();
     $('#gStartTime').timepicker({ 'step': 10 });
     $('#gStartTime').timepicker({ 'timeFormat': 'H:i' });
-    $("#dialog-form-add-group").dialog({
+    $("#dialog-form-add-user").dialog({
         modal: true,
         autoOpen: false,
         width: 'auto',
@@ -24,6 +24,15 @@ $(function () {
             $('#gStartBoardingDate').val("");
             $("#gCourse").val("Select group course");
         }
+    });
+    $("#dialog-form-delete-group").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 'auto',
+        resizable: false,
+        dialogClass: 'dialog',
+        show: { effect: "fade", duration: 800 },
+        hide: { effect: "fade", duration: 800 }
     });
 
     $("#cancelUButton").click(function (e) {

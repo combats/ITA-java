@@ -44,7 +44,6 @@ public class GroupServiceImpl implements GroupService {
                         choosenGroups.add(group);
                     }
                     break;
-
             }
         }
         return choosenGroups;
@@ -76,6 +75,19 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException {
-        return groupDao.getApplicantsByGroupID(groupID);
+        List<Applicant> grouplist =  groupDao.getApplicantsByGroupID(groupID);
+        if(grouplist == null){
+            throw new GroupDoesntExistException();
+        }
+        return grouplist;
+    }
+
+    @Override
+    public Group getGroupById(String id) throws GroupDoesntExistException {
+        Group searchedGroup = groupDao.getGroupById(id);
+        if(searchedGroup == null){
+            throw new GroupDoesntExistException();
+        }
+        return searchedGroup;
     }
 }

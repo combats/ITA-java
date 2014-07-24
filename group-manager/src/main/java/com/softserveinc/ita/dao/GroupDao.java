@@ -16,5 +16,7 @@ public interface GroupDao {
 
     ArrayList<Group> getAllGroups();
 
-    List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
+    List<Applicant> getApplicantsByGroupID(String groupID);
+
+    Group getGroupById(String id);
 }

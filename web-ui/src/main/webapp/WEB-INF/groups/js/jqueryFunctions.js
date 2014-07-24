@@ -19,7 +19,7 @@ function viewGroups() {
         getGroupsUrl = "/groups/allGroups";
     }
     else {
-        getGroupsUrl = "/groups/" + selectedStatus;
+        getGroupsUrl = "/groups/status/" + selectedStatus;
     }
     if (selectedStatus == "PLANNED") {
         jQuery.get("groups/template/createGroupHtml", function (data) {
@@ -35,7 +35,7 @@ function viewGroups() {
             for (var index = 0; index < data.length; index++) {
                 if (data[index].course.name == selectedCourse || selectedCourse == "All courses") {
                     var view = {
-                        ref: 'groups/list/' + data[index].groupID,
+                        ref: 'group/' + data[index].groupID,
                         image: data[index].course.imageRef,
                         courseName: "Course : " + data[index].course.name,
                         groupName: "Group : " + data[index].groupName,
@@ -55,7 +55,13 @@ function viewGroups() {
 
 }
 
-function viewDialog() {
-    $("#dialog-form-add-group").data('content', 'Information updated!');
-    $('#dialog-form-add-group').dialog('open');
+function viewAddDialog() {
+    $("#dialog-form-add-user").data('content', 'Group added');
+    $('#dialog-form-add-user').dialog('open');
+}
+
+
+function viewDeleteDialog() {
+    $("#dialog-form-delete-group").data('content', 'Group deleted');
+    $('#dialog-form-delete-group').dialog('open');
 }
