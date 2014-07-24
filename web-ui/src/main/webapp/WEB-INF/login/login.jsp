@@ -9,7 +9,7 @@
 
   <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
 
-    <link rel="stylesheet" href="login/css/style.css" media="screen" type="text/css" />
+    <link rel="stylesheet" href="/login/css/style.css" media="screen" type="text/css" />
 
 </head>
 
@@ -24,9 +24,9 @@
        <!-- No errors -->
        <%--<% } %>--%>
    <h1>Log-in</h1><br>
-  <form>
-    <input type="text" name="user" placeholder="Username">
-    <input type="password" name="pass" placeholder="Password">
+  <form action="/login" method='POST'>
+    <input type="text" name="username" placeholder="Username">
+    <input type="password" name="password" placeholder="Password">
     <input type="submit" name="login" class="login login-submit" value="login">
   </form>
 </div>
