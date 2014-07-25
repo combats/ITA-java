@@ -11,4 +11,8 @@ public interface GroupDAO {
     List<Group> getAllGroups();
 
     Group getGroupBiId(String groupId);
+
+    void removeGroup(String groupId);
+
+    Group updateGroup(Group group);
 }

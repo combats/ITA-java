@@ -2,12 +2,15 @@ package com.softserveinc.ita.dao;
 
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.Serializable;
+import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -66,5 +69,24 @@ public class GroupDAOTests extends BaseDAOTest {
         String groupId = (String) session.save(expected);
         Group actual = groupDAO.getGroupBiId(groupId);
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = ObjectNotFoundException.class)
+    public void testRemoveGroup() {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(courseOne);
+        String groupId =(String) session.save(groupOne);
+        groupDAO.removeGroup(groupId);
+        session.load(Group.class, groupId);
+    }
+
+    @Test
+    public void testUpdateGroup() {
+        Session session = sessionFactory.getCurrentSession();
+        session.save(courseOne);
+        session.save(groupOne);
+        groupOne.setGroupName("UpdateGroupName");
+        Group actual = groupDAO.updateGroup(groupOne);
+        assertEquals(groupOne, actual);
     }
 }

@@ -33,4 +33,18 @@ public class GroupDAOHibernate implements GroupDAO {
     public Group getGroupBiId(String groupId) {
         return (Group) sessionFactory.getCurrentSession().get(Group.class, groupId);
     }
+
+    @Override
+    public void removeGroup(String groupId) {
+        Session session = sessionFactory.getCurrentSession();
+        Group group = (Group) session.get(Group.class, groupId);
+        session.delete(group);
+    }
+
+    @Override
+    public Group updateGroup(Group group) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(group);
+        return (Group) session.get(Group.class, group.getGroupID());
+    }
 }
