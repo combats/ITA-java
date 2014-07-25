@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/chat", encoders = { MessageEncoder.class },
+@ServerEndpoint(value = "/websocket", encoders = { MessageEncoder.class },
                                  decoders = { MessageDecoder.class })
 public class ChatEndpoint {
 

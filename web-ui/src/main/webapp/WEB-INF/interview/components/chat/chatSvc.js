@@ -1,11 +1,11 @@
-angular.module('chatMod').factory('ChatService',function() {
+angular.module('chatMod').factory('ChatService', function() {
 
     var service = {};
 
     service.connect = function() {
         if(service.websocket) { return; }
 
-        var websocket = new WebSocket("ws://http://localhost:8080/chat-1/chat");
+        var websocket = new WebSocket("ws://localhost:8080/ChatSocket/websocket");
 
         var ONLINE;
 
