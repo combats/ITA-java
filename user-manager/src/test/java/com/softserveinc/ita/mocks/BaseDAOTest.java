@@ -1,4 +1,4 @@
-package com.softserveinc.ita.dao;
+package com.softserveinc.ita.mocks;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
