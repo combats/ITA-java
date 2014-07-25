@@ -31,7 +31,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
 
         User user = null;
         try{
-            user = (User) restTemplate.getForObject("/users", User.class, params);
+            user = (User) restTemplate.getForObject("http://localhost:8080/users/param?email="+principal, User.class);
             if(user==null){
                 throw new UsernameNotFoundException("User with such username (email) not found.");
             }

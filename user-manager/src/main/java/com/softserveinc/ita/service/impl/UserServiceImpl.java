@@ -34,6 +34,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public User getUserByEmail(String email) throws UserEmailNotFoundException {
         if (userDao.getUserByEmail(email) == null) throw new UserEmailNotFoundException();
         return userDao.getUserByEmail(email);

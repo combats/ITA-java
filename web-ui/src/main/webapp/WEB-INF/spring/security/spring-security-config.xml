@@ -36,7 +36,7 @@
         <!--</security:authentication-provider>-->
     <!--</security:authentication-manager>-->
     <!--service-based-->
-    <bean id="userDetailsService" class="com.softserveinc.ita.service.mocks.UserDetailsServiceMock"/>
+    <bean id="userDetailsService" class="com.softserveinc.ita.service.impl.UserDetailsServiceImpl"/>
     <bean id="myAuthenticationSuccessHandler" class="com.softserveinc.ita.handlers.SimpleAuthenticationSuccessHandler" />
 
     <security:authentication-manager>

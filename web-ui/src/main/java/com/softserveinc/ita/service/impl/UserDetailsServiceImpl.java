@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         com.softserveinc.ita.entity.User user = null;
         try{
-            user = restTemplate.getForObject("/users", com.softserveinc.ita.entity.User.class,params);
+            user = restTemplate.getForObject("http://localhost:8080/users/param?email="+username, com.softserveinc.ita.entity.User.class);
         }
         catch (Exception ex){
             throw new UsernameNotFoundException("User with such username (email) not found.");

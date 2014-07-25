@@ -43,8 +43,8 @@ public class UserController {
         return new ResponseEntity<>(deleteStatus, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-        public @ResponseBody User getUserByEmail(@RequestParam(value = "email") String email) throws UserEmailNotFoundException{
+    @RequestMapping(method = RequestMethod.GET, value = "/param")
+        public @ResponseBody User getUserByEmail(@RequestParam(value = "email", required = true) String email) throws UserEmailNotFoundException{
         return userService.getUserByEmail(email);
     }
     @RequestMapping(method = RequestMethod.GET, value = "/{userID}")
