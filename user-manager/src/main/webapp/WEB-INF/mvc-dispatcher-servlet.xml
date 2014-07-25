@@ -12,7 +12,6 @@
         http://www.springframework.org/schema/aop
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd ">
 
-    <context:component-scan base-package="com.softserveinc.ita"/>
     <mvc:annotation-driven/>
     <tx:annotation-driven transaction-manager="transactionManager"/>
     <aop:aspectj-autoproxy />
@@ -27,7 +26,4 @@
     <context:component-scan base-package="com.softserveinc.ita.config"/>
 
     <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
-</beans>    <context:component-scan base-package="com.softserveinc.ita.service"/>
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
 </beans>
-        

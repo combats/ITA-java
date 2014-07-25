@@ -19,35 +19,13 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
     private List<Applicant> allApplicants = new ArrayList<>();
 
     public ApplicantDAOMockImpl() {
+        allApplicants.add(new Applicant("123"));
+        allApplicants.add(new Applicant("124"));
+        allApplicants.add(new Applicant("125"));
 
-        Applicant app1 = new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L);
-        app1.setId("id1");
-        applicants.put("id1", app1);
-        Applicant app2 = new Applicant("Andrey", "Makarevich", "email@mail.com", "1234567894568", 98736513843543L);
-        app2.setId("id2");
-        applicants.put("id2", app2);
-        Applicant app3 = new Applicant("Alexandr", "Drux", "email@mail.com", "1234567894568", 98736513843543L);
-        app3.setId("id3");
-        applicants.put("id3", app3);
-        Applicant app4 = new Applicant("Alexandr", "Masliakov", "email@mail.com", "1234567894568", 98736513843543L);
-        app4.setId("id4");
-        applicants.put("id4", app4);
-        Applicant app5 = new Applicant("Michael", "Jackson", "email@mail.com", "1234567894568", 98736513843543L);
-        app5.setId("id5");
-        applicants.put("id5", app5);
-        Applicant app6 = new Applicant("Albert", "Einstein", "email@mail.com", "1234567894568", 98736513843543L);
-        app6.setId("id6");
-        applicants.put("id6", app6);
-        Applicant app7 = new Applicant("Sub", "Zero", "email@mail.com", "1234567894568", 98736513843543L);
-        app7.setId("id7");
-        applicants.put("id7", app7);
-        Applicant app8 = new Applicant("Anatoliy", "Vasserman", "email@mail.com", "1234567894568", 98736513843543L);
-        app8.setId("id8");
-        applicants.put("id8", app8);
-
-        allApplicants.add(app1);
-        allApplicants.add(app2);
-        allApplicants.add(app3);
+        applicants.put("id1", new Applicant("id1"));
+        applicants.put("id2", new Applicant("id2"));
+        applicants.put("id3", new Applicant("id3"));
 
         db = new HashMap<>();
         applicantsInAGroup = new HashMap<String, ApplicantBenchmark>();

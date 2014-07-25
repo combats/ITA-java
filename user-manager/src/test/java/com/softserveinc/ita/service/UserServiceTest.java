@@ -7,7 +7,6 @@ import com.softserveinc.ita.exception.UserDoesNotExistException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,7 +21,7 @@ public class UserServiceTest extends BaseServiceTest {
     public void testGetUserByExistingIdAndExpectEquals() throws Exception {
         String userId = "1";
         User expectedApplicant = new User("1");
-        assertEquals(expectedApplicant, userService.getUserByID(userId));
+        assertEquals(expectedApplicant,userService.getUserByID(userId));
     }
 
     @Test(expected = InvalidUserIDException.class)
@@ -30,7 +29,6 @@ public class UserServiceTest extends BaseServiceTest {
         String userID = "ABC";
         userService.getUserByID(userID);
     }
-
     @Test
     public void testGetAllUsersIDAndExpectListOfUsersID() throws Exception {
         ArrayList<String> usersIDList = new ArrayList<String>() {{
@@ -41,15 +39,9 @@ public class UserServiceTest extends BaseServiceTest {
         assertEquals(userService.getAllUsersID(), usersIDList);
     }
 
-    //    @Test(expected = UserAlreadyExistsException.class)
-//    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception { /TODO: test how hibernate will throw exception
-//        User testUser = new User("1");
-//        userService.postNewUser(testUser);
-//    }
-
     @Test(expected = UserDoesNotExistException.class)
     public void testEditUserWithNotExistingIdAndExpectException() throws UserDoesNotExistException, EmptyUserException {
-        User user = new User("id44");
+        User user = new User("id4");
         user.setName("name");
         userService.editUser(user);
     }
@@ -62,10 +54,15 @@ public class UserServiceTest extends BaseServiceTest {
 
     @Test
     public void testEditUserWithExistingUser() throws UserDoesNotExistException, EmptyUserException {
-        User user = new User("Andrey", "lastname");
-        user.setId("id4");
+        User user = new User("id2");
+        user.setName("name");
         userService.editUser(user);
     }
+//    @Test(expected = UserAlreadyExistsException.class)
+//    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception { /TODO: test how hibernate will throw exception
+//        User testUser = new User("1");
+//        userService.postNewUser(testUser);
+//    }
 
     @Test
     public void testAddNewUserWithOkIDReturnsThatUser() throws Exception {
@@ -76,9 +73,7 @@ public class UserServiceTest extends BaseServiceTest {
     @Test
     public void testGetUsersAndExpectDefinedList() {
         List<User> sampleUserList = new ArrayList<>();
-        Collections.addAll(sampleUserList, new User("Pupkin", "Vasiliy"),
-                new User("Ivanov", "Ivan"),
-                new User("Fedorov", "Fedor"));
+        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
         assertEquals(sampleUserList, userService.getUsers());
     }
 
