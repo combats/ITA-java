@@ -101,12 +101,12 @@ public class ImageServiceImpl implements ImageService {
         String contentType = tempFile.getMimeType();
 
         //
-//        String contourChart = "data:" + contentType + ";base64," +
-//                StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
+        String contourChart = "data:" + contentType + ";base64," +
+                StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
         //
 
         //
-        String contourChart = StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
+//        String contourChart = StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false)); //for pure image string
         //
 
         return new Base64DataTransferFile(contourChart, contentType);
@@ -127,12 +127,12 @@ public class ImageServiceImpl implements ImageService {
         String contentType = tempFile.getMimeType();
 
         //
-//        String contourChart = "data:" + contentType + ";base64," +
-//                StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
+        String contourChart = "data:" + contentType + ";base64," +
+                StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
         //
 
         //
-        String contourChart = StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
+//        String contourChart = StringUtils.newStringUtf8(Base64.encodeBase64(tempFile.getContent(), false));
         //
 
         return new Base64DataTransferFile(contourChart, contentType);

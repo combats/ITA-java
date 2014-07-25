@@ -124,6 +124,7 @@
     <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
     <script type="text/javascript" src="interview/components/header-menu/timer/timerCtrl.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/user/userHeaderCtrl.js" ></script>
+   <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>
 </body>
 </html>
