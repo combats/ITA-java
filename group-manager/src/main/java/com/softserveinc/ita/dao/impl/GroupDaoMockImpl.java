@@ -2,7 +2,6 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Applicant;
-import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
@@ -24,14 +23,6 @@ public class GroupDaoMockImpl implements GroupDao {
         group1 = setTime(group1, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group1);
-        group1.getApplicants().put("id1", new ApplicantBenchmark(Applicant.Status.NOT_SCHEDULED, -1));
-        group1.getApplicants().put("id2", new ApplicantBenchmark(Applicant.Status.NOT_SCHEDULED, -1));
-        group1.getApplicants().put("id3", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
-        group1.getApplicants().put("id4", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
-        group1.getApplicants().put("id5", new ApplicantBenchmark(Applicant.Status.NOT_PASSED, 3));
-        group1.getApplicants().put("id6", new ApplicantBenchmark(Applicant.Status.PASSED, 1));
-        group1.getApplicants().put("id7", new ApplicantBenchmark(Applicant.Status.PASSED, 2));
-        group1.getApplicants().put("id8", new ApplicantBenchmark(Applicant.Status.EMPLOYED, 3));
         Group group2 = new Group("id3", new Course("Java", "pen-java.png"), "kv021");
         group2 = setTime(group2, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
@@ -47,29 +38,29 @@ public class GroupDaoMockImpl implements GroupDao {
         groups.add(group4);
         //InProcess
         Group group5 = new Group("id9", new Course("Java", "pen-java.png"), "kv041");
-        group5 = setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group5 =setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group5);
         Group group6 = new Group("id10", new Course("Sharp", "pen-net.png"), "kv064");
-        group6 = setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group6 =setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group6);
         //Finished
         Group group7 = new Group("id12", new Course("JavaScript", "pen-jsui.png"), "kv532");
-        group7 = setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group7 =setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group7);
         Group group8 = new Group("id13", new Course("DevOps", "pen-devops.png"), "kv0753");
-        group8 = setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group8 =setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group8);
         Group group9 = new Group("id15", new Course("JavaScript", "pen-jsui.png"), "kv532");
-        group9 = setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group9 =setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group9);
     }
 
-    public static Group setTime(Group group, long boardingTime, long startTime, long endTime) {
+        public static Group setTime(Group group, long boardingTime, long startTime, long endTime) {
         group.setStartBoardingTime(boardingTime);
         group.setStartTime(startTime);
         group.setEndTime(endTime);
@@ -90,7 +81,7 @@ public class GroupDaoMockImpl implements GroupDao {
     public Group addGroup(Group group) {
         groups.add(group);
         group.setGroupID("id100");
-        switch (group.getCourse().getName()) {
+        switch(group.getCourse().getName()){
             case "DevOps":
                 group.getCourse().setImageRef("pen-devops.png");
                 break;
@@ -121,18 +112,9 @@ public class GroupDaoMockImpl implements GroupDao {
             Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
             Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
             return applicants;
-        } else {
+        }
+        else{
             throw new GroupDoesntExistException();
         }
-    }
-
-    @Override
-    public Group getGroupById(String groupId) {
-        for (Group group : groups) {
-            if (groupId.equals(group.getGroupID())) {
-                return group;
-            }
-        }
-        return null;
     }
 }

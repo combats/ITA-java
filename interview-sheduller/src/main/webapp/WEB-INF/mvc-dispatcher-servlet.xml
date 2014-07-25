@@ -39,10 +39,11 @@
     </bean>
 
     <!--aux/utils-->
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="validator" class="com.softserveinc.ita.validators.AppointmentValidator"/>
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>
-   
-
+    <!--dao-->
+    <bean id="appointmentDAO" class="com.softserveinc.ita.dao.impl.AppointmentDAOHibernate"/>
 </beans>

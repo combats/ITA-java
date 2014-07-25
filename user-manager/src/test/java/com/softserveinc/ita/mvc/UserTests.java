@@ -3,16 +3,12 @@ package com.softserveinc.ita.mvc;
 import com.softserveinc.ita.entity.User;
 
 import com.softserveinc.ita.entity.exceptions.ExceptionJSONInfo;
-import com.softserveinc.ita.exception.InvalidUserIDException;
-import com.softserveinc.ita.exception.UserDoesNotExistException;
 import com.softserveinc.ita.utils.JsonUtil;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
@@ -47,7 +43,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testDeleteUserByIDAndExpectedIsOK() throws Exception {
         String userID = "121";
-        mockMvc.perform(delete("/" + userID))
+        mockMvc.perform(delete(  "/" + userID))
                 .andExpect(status().isOk());
     }
 
@@ -56,9 +52,16 @@ public class UserTests extends BaseMVCTest {
         String userID = "122";
 
 //        String goodResponse = jsonUtil.toJson(userID);
-        mockMvc.perform(delete("/" + userID))
-                .andExpect(content().string(userID));
+        mockMvc.perform(delete(  "/" + userID))
+               .andExpect(content().string(userID));
     }
+
+//    @Test
+//    public void testDeleteUserByIdAndExpectedDeleteException() throws Exception { //TODO: test how hibernate will throw exception
+//        String userID = "124";
+//        mockMvc.perform(delete(  "/" + userID))
+//                .andExpect(status().isNotFound());
+//    }
 
     @Test
     public void testGetValidUserByIDAndExpectIsOK() throws Exception {
@@ -126,7 +129,8 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithNotExistingIdAndExpectNotFound() throws Exception {
-        User user = new User("Andrey", "lastname");
+        User user = new User("id4");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/").
@@ -137,8 +141,8 @@ public class UserTests extends BaseMVCTest {
 
     @Test
     public void testEditUserWithExistingIdAndExpectIsoK() throws Exception {
-        User user = new User("Andrey", "lastname");
-        user.setId("id4");
+        User user = new User("id3");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/").
@@ -148,9 +152,9 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
-    public void testEditUserWithExistingIdAndExpectEqualsWithResult() throws Exception {
-        User user = new User("Andrey", "lastname");
-        user.setId("id4");
+    public void testEditUserWithExistingIdAndExpectEqualsWithResult() throws Exception{
+        User user = new User("id3");
+        user.setName("Andrey");
         String jsonUser = jsonUtil.toJson(user);
         mockMvc.perform(
                 put("/").
@@ -170,7 +174,7 @@ public class UserTests extends BaseMVCTest {
     }
 
 //    @Test
-//    public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception {
+//    public void testPostNewUserWithDuplicatedIDAndExpectInternalServerError() throws Exception { /TODO: test how hibernate will throw exception
 //        User testUser = new User("1");
 //        String jsonUser = jsonUtil.toJson(testUser);
 //        mockMvc.perform(post("/")
@@ -198,9 +202,7 @@ public class UserTests extends BaseMVCTest {
     @Test
     public void testGetUserListAndExpectPreDefinedList() throws Exception {
         List<User> sampleUserList = new ArrayList<>();
-        Collections.addAll(sampleUserList, new User("Pupkin", "Vasiliy"),
-                new User("Ivanov", "Ivan"),
-                new User("Fedorov", "Fedor"));
+        Collections.addAll(sampleUserList, new User("id3"), new User("idY"), new User("id09z"));
         String expectedResult = jsonUtil.toJson(sampleUserList);
         mockMvc.perform(
                 get("/"))

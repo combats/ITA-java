@@ -2,9 +2,7 @@ package com.softserveinc.ita.mocks;
 
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.springframework.stereotype.Repository;
-import com.softserveinc.ita.exception.UserAlreadyExistsException;
 
 import java.util.*;
 
@@ -21,10 +19,8 @@ public class UserDAOMockImpl implements UserDAO {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> users = new ArrayList<User>();
-        Collections.addAll(users, new User("Pupkin", "Vasiliy"),
-                new User("Ivanov", "Ivan"),
-                new User("Fedorov", "Fedor"));
+        List<User> users = new ArrayList<>();
+        Collections.addAll(users, new User("id3"), new User("idY"), new User("id09z"));
         return users;
     }
 
@@ -63,31 +59,27 @@ public class UserDAOMockImpl implements UserDAO {
         }};
         return usersID;
     }
-
-    public User addUser(User user) {
+    public User addUser(User user){
         ArrayList<User> users = new ArrayList<User>() {{
             add(new User("1"));
             add(new User("2"));
         }};
         return user;
     }
-
+    
     @Override
-    public String deleteUserById(String userID) {
+    public String deleteUserById(String userID){
         dbOfUsers.remove(userID);
         return userID;
     }
 
     @Override
-    public User updateUser(User changingUser) {
-        if (changingUser == null) {
+    public User updateUser(User changingUser){
+        if(changingUser==null){
             return null;
         }
-        List<User> users = new ArrayList<User>() {
+        List<User> users = new ArrayList<User>(){
             {
-                User tmpUser = new User("Andrey", "lastname");
-                tmpUser.setId("id4");
-                add(tmpUser);
                 add(new User("id1"));
                 add(new User("id2"));
                 add(new User("id3"));

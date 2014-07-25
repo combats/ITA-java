@@ -2,7 +2,6 @@ package com.softserveinc.ita.service;
 
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
-import junit.framework.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,14 +20,13 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
     @Test
     public void testGetApplicantByExistingIdAndExpectEquals() throws Exception {
         String applicantId = "id1";
-        Applicant expectedApplicant = new Applicant("Name", "Lastname", "email@mail.com", "1234567894568", 98736513843543L);
-        expectedApplicant.setId(applicantId);
+        Applicant expectedApplicant = new Applicant("id1");
         assertEquals(expectedApplicant,applicantService.getApplicantById(applicantId));
     }
 
     @Test(expected = ApplicantDoesNotExistException.class)
     public void testGetApplicantByNotExistingIdAndExpectException() throws Exception {
-        String applicantId = "id44";
+        String applicantId = "id4";
         applicantService.getApplicantById(applicantId);
     }
 
@@ -49,7 +47,7 @@ public class ApplicantServiceTest extends BaseApplicantServiceTest {
     @Test
     public void testGetApplicantIDListAndExpectDefinedValues() throws Exception {
         List<String> expectedApplicantIDList = new ArrayList<>();
-        Collections.addAll(expectedApplicantIDList, "id1", "id2", "id3");
+        Collections.addAll(expectedApplicantIDList, "123", "124", "125");
         assertEquals(expectedApplicantIDList, applicantService.getApplicantIDList());
     }
 }
