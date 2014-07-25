@@ -36,8 +36,8 @@ public class GroupDAOTests extends BaseDAOTest {
         courseTwo = new Course("TestCourseTwo", "TestRefTwo");
         courseThree = new Course("TestCourseThree", "TestRefThree");
         groupOne = new Group(courseOne, "TestGroupOne");
-        groupTwo = new Group(courseTwo, "TestGroupOne");
-        groupThree = new Group(courseThree, "TestGroupOne");
+        groupTwo = new Group(courseTwo, "TestGroupTwo");
+        groupThree = new Group(courseThree, "TestGroupThree");
     }
 
     @Test

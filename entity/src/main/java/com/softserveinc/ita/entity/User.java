@@ -1,5 +1,7 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -39,10 +41,8 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinTable(name = "user_questions",
-            joinColumns = {@JoinColumn(name = "Id")},
-            inverseJoinColumns = {@JoinColumn(name = "question_id")})
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Question> questions;
 
     public User() {

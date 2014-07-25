@@ -26,7 +26,7 @@ public class Group implements Serializable{
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")
     private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
-    @Column(name = "GroupName")
+    @Column(name = "GroupName", unique = true)
     private String groupName;
     @Column(name = "StartBoardingTime")
     private long startBoardingTime;

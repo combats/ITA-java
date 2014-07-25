@@ -31,7 +31,6 @@ public class UserDAOMockImpl implements UserDAO {
             add(new User("1"));
             add(new User("2"));
         }};
-
         for (User u : users) {
             if (u.getId().equals(UserID)) {
                 user = u;
