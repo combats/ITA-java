@@ -26,14 +26,19 @@ public class Group implements Serializable{
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")
     private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
-    @Column(name = "GroupName")
+    @Column(name = "GroupName", unique = true)
     private String groupName;
-    @Column(name = "GroupStatus")
+    @Column(name = "StartBoardingTime")
     private long startBoardingTime;
+    @Column(name = "StartTime")
     private long startTime;
+    @Column(name = "EndTime")
     private long endTime;
+    @Column(name = "Capacity")
     private int capacity;
+    @Column(name = "Address")
     private String address;
+    @ManyToOne(fetch=FetchType.EAGER, targetEntity = Course.class)
     private Course course;
 
     public enum Status implements Serializable {
@@ -59,6 +64,10 @@ public class Group implements Serializable{
         this.groupName = groupName;
     }
 
+    public Group(Course course, String groupName) {
+        this.course = course;
+        this.groupName = groupName;
+    }
     public long getStartBoardingTime() {
         return startBoardingTime;
     }

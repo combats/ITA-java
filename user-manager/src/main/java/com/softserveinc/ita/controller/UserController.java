@@ -43,6 +43,11 @@ public class UserController {
         return new ResponseEntity<>(deleteStatus, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "/param")
+    public @ResponseBody User getUserByEmail(@RequestParam(value = "email", required = true) String email) throws UserEmailNotFoundException{
+        return userService.getUserByEmail(email);
+    }
+    
     @RequestMapping(method = RequestMethod.GET, value = "/{userID}")
     public @ResponseBody User getUserByID(@PathVariable String userID) throws InvalidUserIDException{
         return userService.getUserByID(userID);

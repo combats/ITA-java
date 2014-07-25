@@ -1,6 +1,7 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -29,7 +30,7 @@ public class User implements Serializable {
     @Column(name = "Phone")
     private String phone;
 
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     private String email;
 
     @Column(name = "Password")
@@ -40,8 +41,8 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Column(name = "UserQuestions")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<Question> questions;
 
     public User() {

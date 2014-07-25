@@ -9,6 +9,8 @@ public interface UserDAO {
 
     User getUserById(String userId);
 
+    User getUserByEmail(String email);
+
     List<String> getAllUsersId();
 
     String deleteUserById(String userId);

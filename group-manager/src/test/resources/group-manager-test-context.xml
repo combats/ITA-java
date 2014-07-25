@@ -14,6 +14,6 @@
     <mvc:resources location="/WEB-INF/template/" mapping="template/**"/>
 
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
-    <!--<bean id="groupDao" class="com.softserveinc.ita.dao.impl.GroupDaoMockImpl" />-->
+    <bean id="groupDao" class="com.softserveinc.ita.dao.impl.GroupDaoMockImpl" />
     <!--<bean id="groupService" class="com.softserveinc.ita.service.impl.GroupServiceImpl" />-->
 </beans>

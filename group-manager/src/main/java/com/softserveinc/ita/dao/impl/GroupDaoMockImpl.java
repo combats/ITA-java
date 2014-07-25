@@ -6,13 +6,11 @@ import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import org.joda.time.DateTime;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Repository
 public class GroupDaoMockImpl implements GroupDao {
     private ArrayList<Group> groups = new ArrayList<Group>();
     private ArrayList<Course> courses = new ArrayList<Course>();

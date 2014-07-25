@@ -2,9 +2,11 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +22,19 @@ public class UserDAOHibernate implements UserDAO {
     @Override
     public User getUserById(String userId) {
         return (User) sessionFactory.getCurrentSession().get(User.class, userId);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria( User.class );
+        criteria = criteria.add( Restrictions.eq("email", email));
+        Object obj = criteria.uniqueResult();
+//        return (User) sessionFactory.getCurrentSession().createCriteria( User.class ).
+//                add( Restrictions.eq("email", email) ).
+//                uniqueResult();
+        User user = (User) obj;
+        return user;
     }
 
     @SuppressWarnings("unchecked")
