@@ -256,8 +256,9 @@ public class InterviewTests extends BaseMVCTest {
     public void testDeleteQuestionInformationByIdAndExpectOk() throws Exception {
 
         mockMvc.perform(
-                delete("/interviewing/answer/1")
-
+                delete("/interviewing/answer")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("1")
         )
                 .andExpect(status().isOk());
     }

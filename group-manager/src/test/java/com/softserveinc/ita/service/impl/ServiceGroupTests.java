@@ -60,7 +60,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         groupList.add(group3);
 
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED);
+        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED);
         assertEquals(groupsByStatus,expectedList);
     }
 

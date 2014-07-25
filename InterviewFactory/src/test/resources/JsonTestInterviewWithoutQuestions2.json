@@ -1,18 +1,18 @@
 {
-    "InterviewId": "1",
+    "InterviewId": "2",
     "QuestionsBlocks": [
         {
             "Id": null,
-            "UserId": "3",
-            "InterviewId": "1",
+            "UserId": "1",
+            "InterviewId": "2",
             "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0
         },
         {
             "Id": null,
-            "UserId": "1",
-            "InterviewId": "1",
+            "UserId": "3",
+            "InterviewId": "2",
             "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0
@@ -20,7 +20,7 @@
         {
             "Id": null,
             "UserId": "2",
-            "InterviewId": "1",
+            "InterviewId": "2",
             "Questions": [],
             "FinalComment": "",
             "BonusPoints": 0

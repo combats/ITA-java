@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -39,8 +40,6 @@ public class QuestionInformation implements Serializable {
 
     public QuestionInformation() {
     }
-
-
 
     public QuestionInformation(String question, int weight) {
         this.question = question;

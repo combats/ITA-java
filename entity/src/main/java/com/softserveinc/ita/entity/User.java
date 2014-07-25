@@ -1,5 +1,6 @@
 package com.softserveinc.ita.entity;
 
+import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -39,11 +40,8 @@ public class User implements Serializable {
     @Column(name = "Active")
     private boolean active;
 
-//    @ElementCollection(fetch = FetchType.EAGER, targetClass = Question.class)
-//    @Column(name = "UserQuestions")
-
-    @OneToMany(fetch=FetchType.EAGER, targetEntity=Question.class, cascade=CascadeType.ALL)
-    @JoinColumn(name = "user_questions", referencedColumnName="Id")
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Column(name = "UserQuestions")
     private List<Question> questions;
 
     public User() {
