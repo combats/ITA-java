@@ -20,7 +20,7 @@
     });
 </script>
 
-<div id="dialog-form-add-user" class="dialog" style="padding: 0px;">
+<div id="dialog-form-add-group" class="dialog" style="padding: 0px;">
     <div class="inner">
         <div id="user-box">
             <form id="userForm" method="POST">
@@ -130,6 +130,17 @@
             <br>
             <button id="okDUButton" class="btn okButton">OK</button>
             <button id="cancelDUButton" class="btn cancelButton">CANCEL</button>
+        </div>
+    </div>
+</div>
+
+<div id="dialog-information" class="dialog" style="padding: 0px;">
+    <div class="inner">
+        <div id="delete-user-box">
+            <div class="headline title" id = "Information" >
+            </div>
+            <br>
+            <button id="okInfButton" class="btn okButton">OK</button>
         </div>
     </div>
 </div>

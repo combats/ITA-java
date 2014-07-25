@@ -56,12 +56,16 @@ function viewGroups() {
 }
 
 function viewAddDialog() {
-    $("#dialog-form-add-user").data('content', 'Group added');
-    $('#dialog-form-add-user').dialog('open');
+    $("#dialog-form-add-group").data('content', 'Group added');
+    $('#dialog-form-add-group').dialog('open');
 }
-
-
-function viewDeleteDialog() {
+var groupId;
+function viewDeleteDialog(id) {
+    groupId = id;
     $("#dialog-form-delete-group").data('content', 'Group deleted');
     $('#dialog-form-delete-group').dialog('open');
+}
+function viewInformationDialog() {
+    $("#dialog-information").data('content', 'Group deleted');
+    $('#dialog-information').dialog('open');
 }

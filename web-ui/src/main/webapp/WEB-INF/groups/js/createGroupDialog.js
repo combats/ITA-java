@@ -1,3 +1,4 @@
+var groupId;
 $(function () {
     $("#gStartDate").datepicker();
     $("#gEndDate").datepicker();
@@ -5,7 +6,7 @@ $(function () {
     $("#gStartTime").timepicker();
     $('#gStartTime').timepicker({ 'step': 10 });
     $('#gStartTime').timepicker({ 'timeFormat': 'H:i' });
-    $("#dialog-form-add-user").dialog({
+    $("#dialog-form-add-group").dialog({
         modal: true,
         autoOpen: false,
         width: 'auto',
@@ -25,6 +26,18 @@ $(function () {
             $("#gCourse").val("Select group course");
         }
     });
+
+
+    $("#dialog-information").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 'auto',
+        resizable: false,
+        dialogClass: 'dialog',
+        show: { effect: "fade", duration: 800 },
+        hide: { effect: "fade", duration: 800 }
+    });
+
     $("#dialog-form-delete-group").dialog({
         modal: true,
         autoOpen: false,
@@ -40,15 +53,49 @@ $(function () {
         $("#dialog-form-add-group").dialog("close");
     });
 
-    $("#saveUButton").click( function(e){
+    $("#okInfButton").click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if($("#userForm").valid()){
+        $("#dialog-information").dialog("close");
+    });
+
+    $("#okDUButton").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        deleteGroup(groupId);
+        $("#dialog-form-delete-group").dialog("close");
+    });
+
+    function deleteGroup(groupId) {
+        $.ajax({
+            url: location.origin + "/groups/" + groupId,
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            dataType: "json",
+            async: false,
+            type: "DELETE",
+            success: function (data) {
+                alert("isOk");
+                viewGroups();
+            },
+            error: function (data) {
+                $('#Information').html(data.responseJSON.reason);
+                viewInformationDialog();
+                console.log("" + data);
+            }
+        });
+    };
+
+    $("#saveUButton").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if ($("#userForm").valid()) {
             var group = getGroupFromForm();
             sendGroup(group);
             $("#dialog-form-add-group").dialog("close");
         }
     });
+
 
     function getGroupFromForm() {
         var course = {};

@@ -14,7 +14,6 @@ import java.util.List;
 @Repository
 public class GroupDaoMockImpl implements GroupDao {
     private ArrayList<Group> groups = new ArrayList<Group>();
-    private ArrayList<Course> courses = new ArrayList<Course>();
 
     public GroupDaoMockImpl() {
         //Planned
@@ -67,16 +66,6 @@ public class GroupDaoMockImpl implements GroupDao {
     }
 
     @Override
-    public ArrayList<Course> getCourses() {
-        courses.clear();
-        courses.add(new Course("DevOps", "pen-devops.png"));
-        courses.add(new Course("JavaScript", "pen-jsui.png"));
-        courses.add(new Course("Java", "pen-java.png"));
-        courses.add(new Course("Sharp", "pen-net.png"));
-        return courses;
-    }
-
-    @Override
     public Group addGroup(Group group) {
         groups.add(group);
         group.setGroupID("id100");
@@ -103,21 +92,6 @@ public class GroupDaoMockImpl implements GroupDao {
     }
 
     @Override
-    public List<Applicant> getApplicantsByGroupID(String groupID) {
-        List<Applicant> applicants = new ArrayList<>();
-        if (groupID.equals("TestGroupID")) {
-            Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
-            Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
-            Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
-            Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
-            return applicants;
-        }
-        else{
-            return null;
-        }
-    }
-
-    @Override
     public Group getGroupById(String id) {
         for (Group group : groups) {
             if (group.getGroupID().equals(id)) {
@@ -125,5 +99,25 @@ public class GroupDaoMockImpl implements GroupDao {
             }
         }
         return null;
+    }
+
+    @Override
+    public void removeGroup(String groupId) {
+        for (int i = 0; i < groups.size(); i++) {
+            if (groupId.equals(groups.get(i).getGroupID())) {
+                groups.remove(i);
+                return;
+            }
+        }
+    }
+
+    @Override
+    public Group updateGroup(Group group) {
+        for (int i = 0; i < groups.size(); i++) {
+            if (groups.get(i).getGroupID().equals(group.getGroupID())) {
+                groups.set(i, group);
+            }
+        }
+        return group;
     }
 }

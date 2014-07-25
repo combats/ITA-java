@@ -28,22 +28,6 @@ public class DaoGroupTests extends DaoGroupBaseTest {
     }
 
     @Test
-    public void testGetApplicantsByNotExistingIdAndExpectException() throws GroupDoesntExistException {
-        assertEquals(groupDao.getApplicantsByGroupID("wrong"), null);
-    }
-
-    @Test
-    public void testGetApplicantsByExistingIdAndExpectCorrectList() throws GroupDoesntExistException {
-        List<Applicant> applicants = new ArrayList<>();
-            Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
-            Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
-            Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
-            Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
-        List<Applicant> expectedList = groupDao.getApplicantsByGroupID("TestGroupID");
-        assertEquals(applicants,expectedList);
-    }
-
-    @Test
     public void testAddNewGroupandExpectGroupWithNewId(){
         Group group = new Group("id1");
         Course groupCourse = new Course("Java");

@@ -1,6 +1,6 @@
 <li data-id={{groupId}}>
             <div class='easyBox'>
-            <a href='#' class = 'deleteButton'> <img src='groups/images/delete.jpg' onclick = 'viewDeleteDialog();' alt=''></a>
+            <a href='#' class = 'deleteButton'> <img src='groups/images/delete.jpg' onclick = 'viewDeleteDialog("{{groupId}}");' alt=''></a>
             <a href='#' class = 'editButton'> <img src='groups/images/edit.jpg' alt=''></a>
             <a href='{{ref}}'>
             <img src='groups/images/{{image}}' alt=''></a>

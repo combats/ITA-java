@@ -8,10 +8,10 @@ public class GroupStatusCalculator {
         if (currentTime < boardingDate) {
             return Group.Status.PLANNED;
         }
-        if (currentTime > boardingDate && currentTime < startTime) {
+        if (currentTime >= boardingDate && currentTime < startTime) {
             return Group.Status.BOARDING;
         }
-        if (currentTime > startTime && currentTime < endTime) {
+        if (currentTime >= startTime && currentTime < endTime) {
             return Group.Status.IN_PROCESS;
         }
         return Group.Status.FINISHED;
