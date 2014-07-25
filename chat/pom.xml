@@ -18,13 +18,6 @@
     </properties>
 
     <dependencies>
-        <!--<dependency>-->
-            <!--<groupId>javax</groupId>-->
-            <!--<artifactId>javaee-api</artifactId>-->
-            <!--<version>7.0</version>-->
-            <!--<scope>provided</scope>-->
-        <!--</dependency>-->
-
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>angularjs</artifactId>
@@ -52,5 +45,9 @@
         </dependency>
 
     </dependencies>
+
+    <build>
+        <finalName>chat</finalName>
+    </build>
 
 </project>
