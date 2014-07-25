@@ -9,12 +9,21 @@ angular.module('chatMod').factory('ChatService', function() {
 
         var ONLINE;
 
+        window.onbeforeunload = function() {
+            websocket.close();
+        }
+
         websocket.onopen = function(event) {
             console.log("Connection succesful function from Controller");
             ONLINE = true;
             service.callback(ONLINE);
         };
 
+        websocket.onclose = function(event){
+
+            console.log("CLOSE!!!!!!!!!!!!!!!!!!!!!!");
+            service.callback('Close');
+        }
         websocket.onerror = function(event) {
             service.callback('Error');
         }

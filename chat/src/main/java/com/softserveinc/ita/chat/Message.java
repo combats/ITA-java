@@ -44,7 +44,6 @@ public class Message {
         this.time = time;
     }
 
-
     public boolean isSent() {
         return sent;
     }

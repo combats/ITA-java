@@ -11,8 +11,6 @@ public class MessageEncoder implements Encoder.Text<Message> {
     @Override
     public String encode(Message message) throws EncodeException {
 
-//		JsonObject jsonObject = Gson.createObjectBuilder()
-
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("nickname", message.getNickname());
         jsonObject.addProperty("text", message.getText());

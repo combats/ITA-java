@@ -83,7 +83,13 @@
     margin-left: 0px;
     margin-right: 60px;
 }
+
+.sent .dm-nickname {
+    padding-left: 270px;
+}
+
 .dm-content .time {
+
     display: block;
     margin-right: 58px;
     margin-bottom: 5px;
@@ -92,11 +98,31 @@
     color: #ccd6dd;
     text-align: center;
 }
+
+
+.dm-content .server {
+    display: block;
+    margin-right: 58px;
+    margin-bottom: 5px;
+    font-size: 11px;
+    line-height: 1;
+    color: #ccd6dd;
+    text-align: center;
+}
+
 .dm .avatar {
     position: absolute;
     top: 20px;
     left: 0;
 }
+
+.dm-info-message{
+    color: dimgray;
+    font-size:10px;
+    font-weight: bold;
+    margin-left: 30%;
+}
+
 .sent .avatar {
     position: absolute;
     top: 20px;
@@ -113,6 +139,8 @@
     right: -10px;
     left: auto;
 }
+
+
 .dm-caret {
     position: absolute;
     top: 12px;

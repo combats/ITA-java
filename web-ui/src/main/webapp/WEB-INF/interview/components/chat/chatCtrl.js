@@ -1,6 +1,25 @@
-var myapp = angular.module('chatMod', ['ngAnimate', 'userHeadeMod']);
+var app = angular.module('chatMod', ['ngAnimate', 'userHeadeMod'])
 
-myapp.controller('ChatController', ['$scope','ChatService', 'User',  function ($scope,ChatService,User) {
+app.directive('ngEnter', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+
+            elem.bind('keydown', function(event) {
+                var code = event.keyCode || event.which;
+
+                if (code === 13) {
+                    if (!event.shiftKey) {
+                        event.preventDefault();
+                        scope.$apply(attrs.ngEnter);
+                    }
+                }
+            });
+        }
+    }
+})
+
+    app.controller('ChatController', ['$scope','ChatService', 'User',  function ($scope,ChatService,User) {
 
     $scope.message = {};
     $scope.message.nickname = User.name + ' ' + User.lastname;
@@ -25,9 +44,11 @@ myapp.controller('ChatController', ['$scope','ChatService', 'User',  function ($
 
         console.log("Send() function from Controller" );
 //        console.log($scope.message);
-        ChatService.send(JSON.stringify($scope.message));
+        if($scope.message.text){
+            ChatService.send(JSON.stringify($scope.message));}
 
-        console.log($scope.message);
+        console.log("I'M HERE" + $scope.message.text);
     }
+
 }]);
 

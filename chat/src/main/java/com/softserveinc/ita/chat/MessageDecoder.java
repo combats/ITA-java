@@ -15,17 +15,6 @@ public class MessageDecoder implements Decoder.Text<Message> {
         Gson gson = gsonBuilder.create();
 
         Message message = gson.fromJson(jsonMessage, Message.class);
-
-//		JsonObject jsonObject = Json
-//				.createReader(new StringReader(jsonMessage)).readObject();
-//
-//        JsonObject jsonObject1 = new JsonObject().getAsJsonObject(jsonMessage);
-//
-//        Message message = new Message();
-//        Message message = new Message();
-//		message.setNickname(jsonObject.getString("nickname"));
-//		message.setText(jsonObject.getString("text"));
-
         return message;
 
     }
@@ -35,9 +24,7 @@ public class MessageDecoder implements Decoder.Text<Message> {
         try {
             // Check if incoming message is valid JSON
 
-            JsonObject object1 = new JsonParser().parse(jsonMessage).getAsJsonObject().getAsJsonObject("object");
-
-//            Json.createReader(new StringReader(jsonMessage)).readObject();
+            JsonObject jsonobject = new JsonParser().parse(jsonMessage).getAsJsonObject().getAsJsonObject("jsonobject");
             return true;
         } catch (Exception e) {
             return false;
