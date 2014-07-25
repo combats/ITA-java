@@ -40,6 +40,16 @@ public class UserDAOMockImpl implements UserDAO {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        if(email.equals("no@such.com")){
+            return null;
+        }
+        User user = new User("1");
+        user.setEmail(email);
+        return user;
+    }
+
+    @Override
     public ArrayList<String> getAllUsersId() {
         ArrayList<String> usersID = new ArrayList<String>() {{
             add("1");

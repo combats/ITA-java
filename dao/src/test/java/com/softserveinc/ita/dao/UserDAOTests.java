@@ -29,6 +29,16 @@ public class UserDAOTests extends BaseDAOTest {
     }
 
     @Test
+    public void testGetUserByEmail() {
+        String testEmail = "test@test.com";
+        User expected = new User("TestUserOne", "Test");
+        expected.setEmail(testEmail);
+        String userID = (String) sessionFactory.getCurrentSession().save(expected);
+        User actual = userDAO.getUserByEmail(testEmail);
+        assertEquals(expected, actual);
+    }
+
+    @Test
     public void testAddUser() {
         User expected = new User("TestUser", "Test");
         User user = userDAO.addUser(expected);
