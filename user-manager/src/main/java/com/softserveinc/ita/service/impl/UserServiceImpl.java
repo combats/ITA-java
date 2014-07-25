@@ -5,6 +5,7 @@ import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
+import com.softserveinc.ita.exception.UserEmailNotFoundException;
 import com.softserveinc.ita.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,14 @@ public class UserServiceImpl implements UserService {
         if (userDao.getUserById(UserID) == null) throw new InvalidUserIDException();
         return userDao.getUserById(UserID);
     }
+
+    @Override
+    public User getUserByEmail(String email) throws UserEmailNotFoundException {
+        if (userDao.getUserByEmail(email) == null) throw new UserEmailNotFoundException();
+        return userDao.getUserByEmail(email);
+    }
+
+
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public String deleteUser(String userID){

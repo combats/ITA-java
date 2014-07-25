@@ -21,14 +21,28 @@ public class UserServiceTest extends BaseServiceTest {
     @Test
     public void testGetUserByExistingIdAndExpectEquals() throws Exception {
         String userId = "1";
-        User expectedApplicant = new User("1");
-        assertEquals(expectedApplicant, userService.getUserByID(userId));
+        User expectedUser = new User("1");
+        assertEquals(expectedUser, userService.getUserByID(userId));
     }
 
     @Test(expected = InvalidUserIDException.class)
     public void testGetUserByNotExistingIdAndExpectException() throws Exception {
         String userID = "ABC";
         userService.getUserByID(userID);
+    }
+
+    @Test
+    public void testGetUserByExistingEmailAndExpectEquals() throws Exception {
+        String testEmail = "test@test.com";
+        User expectedUser = new User("1");
+        expectedUser.setEmail(testEmail);
+        assertEquals(expectedUser, userService.getUserByEmail(testEmail));
+    }
+
+    @Test(expected = InvalidUserIDException.class)
+    public void testGetUserByNotExistingEmailAndExpectException() throws Exception {
+        String testEmail = "no@such.com";
+        userService.getUserByID(testEmail);
     }
 
     @Test

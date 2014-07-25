@@ -81,6 +81,27 @@ public class UserTests extends BaseMVCTest {
     }
 
     @Test
+    public void testGetValidUserByEmailAndExpectIsOK() throws Exception {
+        String testEmail = "test@test.com";
+        User testUser = new User("1");
+        testUser.setEmail(testEmail);
+        String expectedJsonUser = jsonUtil.toJson(testUser);
+        MvcResult result = mockMvc.perform(
+                get("/").param("email",testEmail).accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        assertEquals(expectedJsonUser, result.getResponse().getContentAsString());         //compare expected test User and actual.
+    }
+
+    @Test
+    public void testGetNonExistentUserByEmailAndGetInternalServerError() throws Exception {
+        String testEmail = "no@such.com";
+        mockMvc.perform(
+                get("/").param("email",testEmail))
+                .andExpect(status().isInternalServerError());
+    }
+
+    @Test
     public void testGetAllUsersIDAndExpectIsOK() throws Exception {
         mockMvc.perform(get("/userId")).
                 andExpect(status().isOk());

@@ -21,6 +21,7 @@
                 login-page="/login"
                 default-target-url="/"
                 authentication-failure-url="/login?error"
+                authentication-success-handler-ref="myAuthenticationSuccessHandler"
                 username-parameter="username"
                 password-parameter="password" />
         <security:logout logout-success-url="/login?logout" />
@@ -36,6 +37,7 @@
     <!--</security:authentication-manager>-->
     <!--service-based-->
     <bean id="userDetailsService" class="com.softserveinc.ita.service.mocks.UserDetailsServiceMock"/>
+    <bean id="myAuthenticationSuccessHandler" class="com.softserveinc.ita.handlers.SimpleAuthenticationSuccessHandler" />
 
     <security:authentication-manager>
         <security:authentication-provider user-service-ref="userDetailsService">
