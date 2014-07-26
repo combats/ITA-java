@@ -32,28 +32,28 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @RequestMapping(method = RequestMethod.GET ,value = "/roles")
+    @RequestMapping(method = RequestMethod.GET ,value = "roles")
     public @ResponseBody List<Role> getAllRoles() {
         return roleService.getAllRoles();
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userID}")
+    @RequestMapping(method = RequestMethod.DELETE, value = "{userID}")
     public ResponseEntity<String> deleteUserByID(@PathVariable String userID) throws UserDoesNotExistException {
         String deleteStatus = userService.deleteUser(userID);
         return new ResponseEntity<>(deleteStatus, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/param")
+    @RequestMapping(method = RequestMethod.GET, value = "param")
     public @ResponseBody User getUserByEmail(@RequestParam(value = "email", required = true) String email) throws UserEmailNotFoundException{
         return userService.getUserByEmail(email);
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/{userID}")
+    @RequestMapping(method = RequestMethod.GET, value = "{userID}")
     public @ResponseBody User getUserByID(@PathVariable String userID) throws InvalidUserIDException{
         return userService.getUserByID(userID);
     }
     
-    @RequestMapping(method = RequestMethod.GET, value = "/userId")
+    @RequestMapping(method = RequestMethod.GET, value = "userId")
     public @ResponseBody List<String> getAllUsersID() {
         return userService.getAllUsersID();
     }
