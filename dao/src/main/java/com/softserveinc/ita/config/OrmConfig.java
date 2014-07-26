@@ -27,33 +27,12 @@ public class OrmConfig {
     private Environment env;
 
     @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(restDataSource());
-        sessionFactory.setPackagesToScan("com.softserveinc.ita.entity");
-        sessionFactory.setHibernateProperties(hibernateProperties());
-
-        return sessionFactory;
-    }
-
-//    @Bean
-//    public DataSource restDataSource() {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
-//        dataSource.setUrl(env.getProperty("jdbc.url"));
-//        dataSource.setUsername(env.getProperty("jdbc.username"));
-//        dataSource.setPassword(env.getProperty("jdbc.password"));
-//
-//        return dataSource;
-//    }
-
-    @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/interview");
-        dataSource.setUsername("root");
-        dataSource.setPassword("1111");
+        dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+        dataSource.setUrl(env.getProperty("jdbc.url"));
+        dataSource.setUsername(env.getProperty("jdbc.username"));
+        dataSource.setPassword(env.getProperty("jdbc.password"));
 
         return dataSource;
     }

@@ -8,16 +8,13 @@ import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.Ques
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
-
 @RequestMapping("/")
 public class InterviewController {
 
@@ -67,8 +64,8 @@ public class InterviewController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
-                                         @CookieValue(value = "userId") String userId,
-                                         @CookieValue(value = "appointmentId") String appointmentId)
+                                         @CookieValue("userId") String userId,
+                                         @CookieValue("appointmentId") String appointmentId)
             throws WrongCriteriaException, HttpRequestException {
         questionInformation.setInterviewId(appointmentId);
         interviewService.getInterviewByAppointmentID(appointmentId);
