@@ -1,7 +1,10 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.CourseDao;
+import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
@@ -11,9 +14,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Service
 public class GroupServiceImpl implements GroupService {
+
+    @Autowired
+    private GroupDAO groupDAO;
 
     @Autowired
     private GroupDao groupDao;
@@ -71,7 +80,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group getGroupById(String id) throws GroupDoesntExistException {
         Group searchedGroup = groupDao.getGroupById(id);
-        if(searchedGroup == null){
+        if (searchedGroup == null) {
             throw new GroupDoesntExistException();
         }
         return searchedGroup;
@@ -91,9 +100,39 @@ public class GroupServiceImpl implements GroupService {
         try {
             Group updatedGroup = groupDao.updateGroup(group);
             return updatedGroup;
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             throw new GroupWithThisNameIsAlreadyExists();
         }
     }
+
+    @Override
+    public int getGroupCapacity(String groupID) {
+        return groupDAO.getGroupBiId(groupID).getCapacity();
+    }
+
+    @Override
+    public Group updateApplicantsInGroup(String groupID,
+                                         Map<String, ApplicantBenchmark> applicants) {
+        Group group = groupDAO.getGroupBiId(groupID);
+        Map<String, ApplicantBenchmark> groupApplicants = group.getApplicants();
+        for (Map.Entry<String, ApplicantBenchmark> entry : applicants.entrySet()) {
+            groupApplicants.put(entry.getKey(), entry.getValue());
+        }
+        return groupDAO.updateGroup(group);
+    }
+
+    @Override
+    public Map<String, ApplicantBenchmark> getApplicantsByGroupIdAndStatus(
+            String groupID, Applicant.Status status) {
+        Group group = groupDAO.getGroupBiId(groupID);
+        Map<String, ApplicantBenchmark> groupApplicants = group.getApplicants();
+        Map<String, ApplicantBenchmark> result = new HashMap<>();
+        for (Map.Entry<String, ApplicantBenchmark> entry : groupApplicants.entrySet()) {
+            if (entry.getValue().getStatus().equals(status)) {
+                result.put(entry.getKey(), entry.getValue());
+            }
+        }
+        return result;
+    }
+
 }
