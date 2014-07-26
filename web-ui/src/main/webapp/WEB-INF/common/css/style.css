@@ -10745,3 +10745,7 @@ ul.commentList .oneComment:hover .metaIcon {
 .editButton {
     float: right;
 }
+
+#createGroup {
+    height: 401;
+}

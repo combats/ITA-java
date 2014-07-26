@@ -55,12 +55,14 @@ function viewGroups() {
 
 }
 
+var groupId;
+var editDialog;
 function viewAddDialog() {
+    editDialog = false;
     $("#dialog-form-add-group").data('content', 'Group added');
     $('#dialog-form-add-group').dialog('open');
 }
-var groupId;
-var editDialog;
+
 function viewDeleteDialog(id) {
     groupId = id;
     $("#dialog-form-delete-group").data('content', 'Group deleted');
@@ -73,6 +75,7 @@ function viewInformationDialog() {
 
 function viewEditInformationDialog(id) {
     groupId = id;
+    editDialog = true;
     $("#dialog-form-add-group").data('content', 'Group edited');
     $('#dialog-form-add-group').dialog('open');
 }

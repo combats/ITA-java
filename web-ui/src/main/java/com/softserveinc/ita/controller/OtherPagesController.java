@@ -29,8 +29,8 @@ public class OtherPagesController {
         return "users";
     }
 
-    @RequestMapping(value = "/group/{id}", method = RequestMethod.GET)
-    public String showGroup(@PathVariable String id) {
-        return viewResolverServiceImpl.choosePageByGroupId(id, System.currentTimeMillis());
+    @RequestMapping(value = "/group/{groupID}", method = RequestMethod.GET)
+    public String showGroup(@PathVariable String groupID) {
+        return viewResolverServiceImpl.choosePageByGroupId(groupID, System.currentTimeMillis());
     }
 }

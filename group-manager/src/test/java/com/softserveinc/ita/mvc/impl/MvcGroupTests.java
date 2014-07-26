@@ -121,14 +121,14 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testDeleteGroupByIdAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                delete("/id100")
+                delete("/id4")
         ).andExpect(status().isOk());
     }
 
     @Test
     public void testDeleteGroupByIdAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                delete("/id100")
+                delete("/id3")
         ).andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 

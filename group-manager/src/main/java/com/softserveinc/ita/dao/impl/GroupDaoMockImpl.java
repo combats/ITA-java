@@ -32,29 +32,29 @@ public class GroupDaoMockImpl implements GroupDao {
         groups.add(group4);
         //InProcess
         Group group5 = new Group("id9", new Course("Java", "pen-java.png"), "kv041");
-        group5 =setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group5 = setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group5);
         Group group6 = new Group("id10", new Course("Sharp", "pen-net.png"), "kv064");
-        group6 =setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group6 = setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group6);
         //Finished
         Group group7 = new Group("id12", new Course("JavaScript", "pen-jsui.png"), "kv532");
-        group7 =setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group7 = setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group7);
         Group group8 = new Group("id13", new Course("DevOps", "pen-devops.png"), "kv0753");
-        group8 =setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group8 = setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group8);
         Group group9 = new Group("id15", new Course("JavaScript", "pen-jsui.png"), "kv532");
-        group9 =setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
+        group9 = setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group9);
     }
 
-        public static Group setTime(Group group, long boardingTime, long startTime, long endTime) {
+    public static Group setTime(Group group, long boardingTime, long startTime, long endTime) {
         group.setStartBoardingTime(boardingTime);
         group.setStartTime(startTime);
         group.setEndTime(endTime);
@@ -65,7 +65,12 @@ public class GroupDaoMockImpl implements GroupDao {
     public Group addGroup(Group group) {
         groups.add(group);
         group.setGroupID("id100");
-        switch(group.getCourse().getName()){
+        setCourseRef(group);
+        return group;
+    }
+
+    private void setCourseRef(Group group) {
+        switch (group.getCourse().getName()) {
             case "DevOps":
                 group.getCourse().setImageRef("pen-devops.png");
                 break;
@@ -79,7 +84,6 @@ public class GroupDaoMockImpl implements GroupDao {
                 group.getCourse().setImageRef("pen-net.png");
                 break;
         }
-        return group;
     }
 
     @Override
@@ -110,8 +114,10 @@ public class GroupDaoMockImpl implements GroupDao {
 
     @Override
     public Group updateGroup(Group group) {
+        System.out.println("lol = " + group.getGroupID());
         for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).getGroupID().equals(group.getGroupID())) {
+                setCourseRef(group);
                 groups.set(i, group);
                 return group;
             }
