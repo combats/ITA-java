@@ -1,5 +1,7 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,7 +23,8 @@ public class Group implements Serializable{
     @Column(name = "Id", unique = true)
     private String groupID;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")

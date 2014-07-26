@@ -9,8 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
-import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
