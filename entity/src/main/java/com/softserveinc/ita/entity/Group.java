@@ -37,9 +37,9 @@ public class Group implements Serializable{
     @Column(name = "Capacity")
     private int capacity;
     @Column(name = "Address")
-    private String address;
+    private String address="";
     @ManyToOne(fetch=FetchType.EAGER, targetEntity = Course.class)
-    private Course course;
+    private Course course = new Course();
 
     public enum Status implements Serializable {
         IN_PROCESS, PLANNED, BOARDING, FINISHED;

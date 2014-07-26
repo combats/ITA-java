@@ -1,6 +1,7 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.entity.*;
+import com.softserveinc.ita.service.HttpRequestExecutor;
 import com.softserveinc.ita.service.MailService;
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
@@ -48,7 +49,7 @@ public class MailServiceImpl implements MailService {
     private JavaMailSender mailSender;
 
     @Autowired
-    private HttpRequestExecutorRestImpl httpRequestExecutor;
+    private HttpRequestExecutor httpRequestExecutor;
 
     @Autowired
     private JsonUtil jsonUtil;
@@ -191,9 +192,8 @@ public class MailServiceImpl implements MailService {
 
     public static String convertTimeToDate(long milliseconds) {
         DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        long now = System.currentTimeMillis();
         Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(now);
+        calendar.setTimeInMillis(milliseconds);
         return formatter.format(calendar.getTime());
     }
 }

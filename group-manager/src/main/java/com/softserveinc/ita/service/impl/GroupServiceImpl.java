@@ -1,27 +1,30 @@
 package com.softserveinc.ita.service.impl;
 
+import com.softserveinc.ita.dao.CourseDao;
 import com.softserveinc.ita.dao.GroupDao;
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
+import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 import com.softserveinc.ita.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupDao groupDao;
 
+    @Autowired
+    private CourseDao courseDao;
+
     @Override
-    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus){
-        ArrayList<Group> groups = groupDao.getAllGroups();
+    public List<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime) {
+        List<Group> groups = groupDao.getAllGroups();
         ArrayList<Group> choosenGroups = new ArrayList<>();
-        long currentTime = System.currentTimeMillis();
         for (Group group : groups) {
             switch (groupStatus) {
                 case PLANNED:
@@ -44,15 +47,15 @@ public class GroupServiceImpl implements GroupService {
                         choosenGroups.add(group);
                     }
                     break;
-
             }
         }
         return choosenGroups;
     }
 
     @Override
-    public ArrayList<Course> getCourses() {
-        return groupDao.getCourses();
+    public List<Course> getCourses() {
+        List<Course> courses = courseDao.getAllCourses();
+        return courses;
     }
 
     @Override
@@ -61,21 +64,36 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ArrayList<Group> getAllGroups() {
+    public List<Group> getAllGroups() {
         return groupDao.getAllGroups();
     }
 
-    private boolean isWrongStatus(Group.Status groupStatus) {
-        for(Group.Status status : Group.Status.values()){
-            if (status.equals(groupStatus)) {
-                return false;
-            }
+    @Override
+    public Group getGroupById(String id) throws GroupDoesntExistException {
+        Group searchedGroup = groupDao.getGroupById(id);
+        if(searchedGroup == null){
+            throw new GroupDoesntExistException();
         }
-        return true;
+        return searchedGroup;
     }
 
     @Override
-    public List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException {
-        return groupDao.getApplicantsByGroupID(groupID);
+    public void removeGroup(String groupId) throws GroupDoesntExistException {
+        try {
+            groupDao.removeGroup(groupId);
+        } catch (Exception e) {
+            throw new GroupDoesntExistException();
+        }
+    }
+
+    @Override
+    public Group updateGroup(Group group) throws GroupWithThisNameIsAlreadyExists {
+        try {
+            Group updatedGroup = groupDao.updateGroup(group);
+            return updatedGroup;
+        }
+        catch(Exception e){
+            throw new GroupWithThisNameIsAlreadyExists();
+        }
     }
 }
