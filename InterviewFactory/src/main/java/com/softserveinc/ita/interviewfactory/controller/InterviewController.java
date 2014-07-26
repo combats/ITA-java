@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @Controller
+
 @RequestMapping("/")
 public class InterviewController {
 
@@ -65,10 +67,11 @@ public class InterviewController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
-                                         @CookieValue("userId") String userId,
-                                         @CookieValue("appointmentId") String appointmentId)
+                                         @CookieValue(value = "userId") String userId,
+                                         @CookieValue(value = "appointmentId") String appointmentId)
             throws WrongCriteriaException, HttpRequestException {
         questionInformation.setInterviewId(appointmentId);
+        interviewService.getInterviewByAppointmentID(appointmentId);
         questionsInformationServices.addQuestionInformation(questionInformation, userId);
         return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
     }

@@ -26,7 +26,7 @@ public class QuestionsBlock implements Serializable {
     @Column(name = "InterviewId")
     String interviewId = "";
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "questionsblock_questions",
             joinColumns = {@JoinColumn(name = "questionsBlock_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionInformation_id")})

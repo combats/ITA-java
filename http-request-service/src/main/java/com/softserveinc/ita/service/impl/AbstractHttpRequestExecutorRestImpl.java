@@ -17,6 +17,7 @@ import java.util.Set;
 public abstract class AbstractHttpRequestExecutorRestImpl implements HttpRequestExecutor {
 
     private final int STATUS_CODE_OK = 200;
+    private final int STATUS_SERVER_ERROR = 500;
     private final RestTemplate restTemplate;
     private final String baseUrl;
 
@@ -97,6 +98,25 @@ public abstract class AbstractHttpRequestExecutorRestImpl implements HttpRequest
             throw new HttpRequestException("Cant get URL in "+getClass().getSimpleName(),e);
         }
         return entity;
+    }
+
+    public <T> T postNewObject(String urlPath, Object request, Class<T> clazz) throws HttpRequestException {
+
+        ResponseEntity<T> entity;
+        String urlReq = baseUrl + "/" + urlPath;
+
+        try {
+            entity = restTemplate.postForEntity(urlReq, request, clazz);
+        }catch (HttpServerErrorException httpServError) {
+            throw new HttpRequestException(printException(httpServError), httpServError);
+        }
+
+        if (entity.getStatusCode().value() == STATUS_SERVER_ERROR) {
+            throw new HttpRequestException("\nReason : " + entity.getStatusCode().getReasonPhrase() +
+                    "\nStatus code : " + +entity.getStatusCode().value() +
+                    "\nMessage : " + entity.getStatusCode().getReasonPhrase());
+        }
+        return entity.getBody();
     }
 
 
