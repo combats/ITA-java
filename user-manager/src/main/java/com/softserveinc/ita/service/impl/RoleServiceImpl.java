@@ -17,6 +17,7 @@ public class RoleServiceImpl implements RoleService{
     @Autowired
     private RoleDAO roleDao;
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<Role> getAllRoles() {

@@ -1,3 +1,4 @@
+var editedGroup;
 $(function () {
     $("#gStartDate").datepicker();
     $("#gEndDate").datepicker();
@@ -13,7 +14,24 @@ $(function () {
         dialogClass: 'dialog',
         show: { effect: "fade", duration: 800 },
         hide: { effect: "fade", duration: 800 },
-        open: createCourseMenu("#gCourse", "Select group course"),
+        open: function(){
+            createCourseMenu("#gCourse", "Select group course");
+            if (editDialog) {
+                editedGroup = getGroupById(groupId);
+                var startDate = calculateStringDate(new Date(editedGroup.startTime));
+                var boardingDate = calculateStringDate(new Date(editedGroup.startBoardingTime));
+                var endDate = calculateStringDate(new Date(editedGroup.endTime));
+                var startTime = calculateStringTime(new Date(editedGroup.startTime));
+                $("#gName").val(editedGroup.groupName);
+                $("#gCapacity").val(editedGroup.capacity);
+                $("#gStartDate").val(startDate);
+                $("#gStartTime").val(startTime);
+                $("#gEndDate").val(endDate);
+                $("#gStartBoardingDate").val(boardingDate);
+                $("#gCourse").val(editedGroup.course.name);
+                $("#gAddress").val(editedGroup.address);
+            }
+        },
         close: function () {
             $("#gName").val("");
             $("#gCapacity").val("");
@@ -26,35 +44,158 @@ $(function () {
         }
     });
 
+    function calculateStringDate(date) {
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var year = date.getFullYear();
+        var stringDate = "" + month + "/" + day + "/" + year;
+        return stringDate;
+    }
+
+    function calculateStringTime(date) {
+        var minutes = date.getMinutes();
+        var hours = date.getHours();
+        var stringTime = hours + ":" + minutes;
+        return stringTime;
+    }
+
+    function getGroupById(id) {
+        var group;
+        $.ajax({
+            url: location.origin + "/groups/" + id,
+            dataType: "json",
+            type: "GET",
+            async: false,
+            success: function (data) {
+                group = data;
+            },
+            error: function (data) {
+                console.log("" + data);
+            }
+        });
+        return group;
+    }
+
+    $("#dialog-information").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 'auto',
+        resizable: false,
+        dialogClass: 'dialog',
+        show: { effect: "fade", duration: 800 },
+        hide: { effect: "fade", duration: 800 }
+    });
+
+    $("#dialog-form-delete-group").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 'auto',
+        resizable: false,
+        dialogClass: 'dialog',
+        show: { effect: "fade", duration: 800 },
+        hide: { effect: "fade", duration: 800 }
+    });
+
     $("#cancelUButton").click(function (e) {
         e.preventDefault();
         $("#dialog-form-add-group").dialog("close");
     });
 
-    $("#saveUButton").click( function(e){
+    $("#cancelDUButton").click(function (e) {
+        e.preventDefault();
+        $("#dialog-form-delete-group").dialog("close");
+    });
+
+    $("#okInfButton").click(function (e) {
         e.preventDefault();
         e.stopPropagation();
-        if($("#userForm").valid()){
-            var group = getGroupFromForm();
-            sendGroup(group);
+        $("#dialog-information").dialog("close");
+    });
+
+    $("#okDUButton").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        deleteGroup(groupId);
+        $("#dialog-form-delete-group").dialog("close");
+    });
+
+    function deleteGroup(groupId) {
+        $.ajax({
+            url: location.origin + "/groups/" + groupId,
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            dataType: "json",
+            async: false,
+            type: "DELETE",
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                $('#Information').html(data.responseJSON.reason);
+                viewInformationDialog();
+                console.log("" + data);
+            }
+        });
+    };
+
+    $("#saveUButton").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if ($("#userForm").valid()) {
+            if (!editDialog) {
+                var group = getGroupFromForm();
+                sendGroup(group);
+            }
+            else {
+                var group = getGroupFromForm();
+                updateGroup(group);
+            }
             $("#dialog-form-add-group").dialog("close");
         }
     });
+
 
     function getGroupFromForm() {
         var course = {};
         course.name = $("#gCourse").val();
         var group =  {};
-        group.groupID = "1";
+        if (editDialog) {
+            group.groupID = editedGroup.groupID;
+            group.applicants = editedGroup.applicants;
+        }
+        else {
+            group.groupID = "1";
+        }
         group.groupName = $("#gName").val();
         group.address = $("#gAddress").val();
         group.capacity = $("#gCapacity").val();
         group.startBoardingTime = new Date($("#gStartBoardingDate").val()).getTime();
-        group.startTime = new Date($("#gStartDate").val()).getTime() + $("#gStartTime").timepicker('getSecondsFromMidnight') * 60;
+        group.startTime = new Date($("#gStartDate").val()).getTime() + $("#gStartTime").timepicker('getSecondsFromMidnight') * 1000;
         group.endTime = new Date($("#gEndDate").val()).getTime();
         group.course = course;
         return group;
     };
+
+    function updateGroup(group) {
+        var jsonGroup = JSON.stringify(group);
+        $.ajax({
+            url: location.origin + "/groups/editGroup",
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            dataType: "json",
+            async: false,
+            type: "PUT",
+            data: jsonGroup,
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                $('#Information').html(data.responseJSON.reason);
+                viewInformationDialog();
+                console.log("" + data);
+            }
+        });
+    }
 
     function sendGroup(group) {
         var jsonGroup = JSON.stringify(group);
@@ -68,7 +209,7 @@ $(function () {
             type: "POST",
             data: jsonGroup,
             success: function (data) {
-                viewGroups();
+                location.reload();
             },
             error: function (data) {
                 console.log("" + data);
@@ -113,7 +254,7 @@ $(function () {
             groupName: {
                 required: true,
                 minlength: 3,
-                maxlength: 40
+                maxlength: 8
             },
             groupAddress: {
                 required: true,
@@ -131,13 +272,11 @@ $(function () {
             },
             groupStartBoardingDate: {
                 required: true,
-                date: true,
-                greaterThanToday: new Date()
+                date: true
             },
             groupStartDate: {
                 required: true,
                 date: true,
-                greaterThanToday: new Date(),
                 greaterThanBoardingDate: "#gStartBoardingDate"
             },
             groupStartTime:{
@@ -171,14 +310,11 @@ $(function () {
             },
             groupStartBoardingDate: {
                 required: "Start boarding date is required",
-                date: "Should be a correct date format",
-                greaterThanToday: "Should be greater than today's date"
-
+                date: "Should be a correct date format"
             },
             groupStartDate: {
                 required: "Start date is required.",
                 date: "Should be a correct date format.",
-                greaterThanToday: "Should be greater than today's date",
                 greaterThanBoardingDate: "Should be greater than boarding date not less than 1 week"
             },
             groupStartTime:{

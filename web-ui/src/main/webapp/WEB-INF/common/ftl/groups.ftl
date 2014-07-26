@@ -121,6 +121,31 @@
     </div>
 </div>
 
+<div id="dialog-form-delete-group" class="dialog" style="padding: 0px;">
+    <div class="inner">
+        <div id="delete-user-box">
+            <div class="headline title" >
+                Are you sure that you want to delete selected group?
+            </div>
+            <br>
+            <button id="okDUButton" class="btn okButton">OK</button>
+            <button id="cancelDUButton" class="btn cancelButton">CANCEL</button>
+        </div>
+    </div>
+</div>
+
+<div id="dialog-information" class="dialog" style="padding: 0px;">
+    <div class="inner">
+        <div id="delete-user-box">
+            <div class="headline title" id = "Information" >
+            </div>
+            <br>
+            <button id="okInfButton" class="btn okButton">OK</button>
+        </div>
+    </div>
+</div>
+
+
 <br>
 <div class="container">
     <div class="row-fluid">
