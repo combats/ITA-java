@@ -1,7 +1,7 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.DaoGroupBaseTest;
-import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import org.joda.time.DateTime;
@@ -13,12 +13,13 @@ import static org.junit.Assert.assertEquals;
 public class DaoGroupTests extends DaoGroupBaseTest {
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupDAO groupDAO;
 
     @Test
     public void testAddNewGroupAndExpectCorrectNewGroup() {
         Group group = new Group("id43", new Course("Java", "pen-java.png"), "kv321");
-        Group newGroup = groupDao.addGroup(group);
+        Group newGroup = groupDAO
+                .addGroup(group);
         assertEquals(group.getGroupID(), newGroup.getGroupID());
     }
 
@@ -27,7 +28,8 @@ public class DaoGroupTests extends DaoGroupBaseTest {
         Group group = new Group("id1");
         Course groupCourse = new Course("Java");
         group.setCourse(groupCourse);
-        group =  groupDao.addGroup(group);
+        group =  groupDAO
+                .addGroup(group);
         assertEquals(group.getGroupID(),"id100");
         assertEquals(group.getCourse().getImageRef(),"pen-java.png");
     }
@@ -38,7 +40,8 @@ public class DaoGroupTests extends DaoGroupBaseTest {
         expectedGroup.setStartBoardingTime( new DateTime(2014, 8, 1, 0, 0, 0).getMillis());
         expectedGroup.setStartTime(new DateTime(2014, 8, 10, 0, 0, 0).getMillis());
         expectedGroup.setEndTime(new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
-        Group receivedGroup = groupDao.getGroupById(expectedGroup.getGroupID());
+        Group receivedGroup = groupDAO
+                .getGroupById(expectedGroup.getGroupID());
         assertEquals(expectedGroup,receivedGroup);
     }
 
@@ -48,7 +51,8 @@ public class DaoGroupTests extends DaoGroupBaseTest {
         group.setStartBoardingTime(100);
         group.setStartTime(200);
         group.setEndTime(300);
-        Group updatedGroup = groupDao.updateGroup(group);
+        Group updatedGroup = groupDAO
+                .updateGroup(group);
         assertEquals(group, updatedGroup);
     }
 
@@ -58,6 +62,7 @@ public class DaoGroupTests extends DaoGroupBaseTest {
         group.setStartBoardingTime(100);
         group.setStartTime(200);
         group.setEndTime(300);
-        Group updatedGroup = groupDao.updateGroup(group);
+        Group updatedGroup = groupDAO
+                .updateGroup(group);
     }
 }

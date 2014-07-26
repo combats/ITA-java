@@ -1,8 +1,8 @@
 package com.softserveinc.ita.service.impl;
 
-import com.softserveinc.ita.dao.CourseDao;
-import com.softserveinc.ita.dao.GroupDao;
-import com.softserveinc.ita.entity.Applicant;
+
+import com.softserveinc.ita.dao.CourseDAO;
+import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
@@ -20,17 +20,17 @@ import java.util.List;
 public class GroupServiceImpl implements GroupService {
 
     @Autowired
-    private GroupDao groupDao;
+    private GroupDAO groupDAO;
 
     @Autowired
-    private CourseDao courseDao;
+    private CourseDAO courseDAO;
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public List<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime) {
-        List<Group> groups = groupDao.getAllGroups();
+        List<Group> groups = groupDAO.getAllGroups();
         ArrayList<Group> choosenGroups = new ArrayList<>();
-        long currentTime = System.currentTimeMillis();
+//        long currentTime = System.currentTimeMillis();
         for (Group group : groups) {
             switch (groupStatus) {
                 case PLANNED:
@@ -62,26 +62,26 @@ public class GroupServiceImpl implements GroupService {
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public List<Course> getCourses() {
-        List<Course> courses = courseDao.getAllCourses();
+        List<Course> courses = courseDAO.getAllCourses();
         return courses;
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public Group createGroup(Group group) {
-        return groupDao.addGroup(group);
+        return groupDAO.addGroup(group);
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public List<Group> getAllGroups() {
-        return groupDao.getAllGroups();
+        return groupDAO.getAllGroups();
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public Group getGroupById(String id) throws GroupDoesntExistException {
-        Group searchedGroup = groupDao.getGroupById(id);
+        Group searchedGroup = groupDAO.getGroupById(id);
         if(searchedGroup == null){
             throw new GroupDoesntExistException();
         }
@@ -92,7 +92,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public void removeGroup(String groupId) throws GroupDoesntExistException {
         try {
-            groupDao.removeGroup(groupId);
+            groupDAO.removeGroup(groupId);
         } catch (Exception e) {
             throw new GroupDoesntExistException();
         }
@@ -102,7 +102,7 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group updateGroup(Group group) throws GroupWithThisNameIsAlreadyExists {
         try {
-            Group updatedGroup = groupDao.updateGroup(group);
+            Group updatedGroup = groupDAO.updateGroup(group);
             return updatedGroup;
         }
         catch(Exception e){

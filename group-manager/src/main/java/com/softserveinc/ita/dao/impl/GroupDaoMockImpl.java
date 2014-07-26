@@ -1,6 +1,6 @@
 package com.softserveinc.ita.dao.impl;
 
-import com.softserveinc.ita.dao.GroupDao;
+import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import org.joda.time.DateTime;
@@ -8,7 +8,7 @@ import org.joda.time.DateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GroupDaoMockImpl implements GroupDao {
+public class GroupDaoMockImpl implements GroupDAO {
     private ArrayList<Group> groups = new ArrayList<Group>();
 
     public GroupDaoMockImpl() {

@@ -1,12 +1,13 @@
 package com.softserveinc.ita.dao.impl;
 
-import com.softserveinc.ita.dao.CourseDao;
+import com.softserveinc.ita.dao.CourseDAO;
 import com.softserveinc.ita.entity.Course;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseDaoMockImpl implements CourseDao {
+public class CourseDaoMockImpl implements CourseDAO {
+
     @Override
     public Course addCourse(Course course) {
         return null;

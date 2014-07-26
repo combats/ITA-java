@@ -11,15 +11,12 @@
         http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
     <aop:aspectj-autoproxy />
-    <bean id = "courseDao" class = "com.softserveinc.ita.dao.impl.CourseDaoMockImpl"/>
-    <bean id = "groupDoa" class = "com.softserveinc.ita.dao.impl.GroupDaoMockImpl"/>
-    <bean id = "groupService" class = "com.softserveinc.ita.service.impl.GroupServiceImpl"/>
     <bean id="logAspect" class="com.softserveinc.ita.logging.AopControllerLogging"/>
     <context:component-scan base-package="com.softserveinc.ita.controller"/>
     <context:component-scan base-package="com.softserveinc.ita.service"/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
     <context:component-scan base-package="com.softserveinc.ita.error"/>
-    <!--<context:component-scan base-package="com.softserveinc.ita.config"/>-->
+    <context:component-scan base-package="com.softserveinc.ita.config"/>
     <mvc:annotation-driven />
     <context:annotation-config/>
 </beans>

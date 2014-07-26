@@ -30,7 +30,7 @@ public class GroupDAOHibernate implements GroupDAO {
     }
 
     @Override
-    public Group getGroupBiId(String groupId) {
+    public Group getGroupById(String groupId) {
         return (Group) sessionFactory.getCurrentSession().get(Group.class, groupId);
     }
 
