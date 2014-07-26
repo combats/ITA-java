@@ -15,12 +15,11 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService{
 
     @Autowired
-    private RoleDAO roleDao;
+    private RoleDAO roleDAO;
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<Role> getAllRoles() {
-        return roleDao.getAllRoles();
+        return roleDAO.getAllRoles();
     }
 }

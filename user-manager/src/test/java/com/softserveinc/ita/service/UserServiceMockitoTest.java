@@ -2,7 +2,6 @@ package com.softserveinc.ita.service;
 
 
 import com.softserveinc.ita.dao.UserDAO;
-import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -22,7 +21,7 @@ public class UserServiceMockitoTest extends BaseServiceTest {
 
     @Autowired
     @Mock
-    private UserDAO userDao;
+    private UserDAO userDAO;
 
     @Before
     public void init() {
@@ -32,9 +31,9 @@ public class UserServiceMockitoTest extends BaseServiceTest {
     public void testDeleteUser() throws Exception {
         String muserID = "123";
 
-        when(userDao.deleteUserById(muserID)).thenReturn(muserID);
+        when(userDAO.deleteUserById(muserID)).thenReturn(muserID);
         String result = userService.deleteUser(muserID);
-        verify(userDao, times(1)).deleteUserById(muserID);
+        verify(userDAO, times(1)).deleteUserById(muserID);
         assertEquals(muserID, result);
     }
 
@@ -42,8 +41,8 @@ public class UserServiceMockitoTest extends BaseServiceTest {
 //    public void testDeleteUserAndExpectedIsException() throws UserDoesNotExistException { /TODO: test how hibernate will throw exception
 //        String muserID = "124";
 //
-//        doThrow(new UserDoesNotExistException()).when(userDao).deleteUserById(muserID);
+//        doThrow(new UserDoesNotExistException()).when(userDAO).deleteUserById(muserID);
 //        userService.deleteUser(muserID);
-//        verify(userDao, times(1)).deleteUserById(muserID);
+//        verify(userDAO, times(1)).deleteUserById(muserID);
 //    }
 }
