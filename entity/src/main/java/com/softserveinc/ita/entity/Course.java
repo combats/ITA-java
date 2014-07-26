@@ -71,7 +71,6 @@ public class Course implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Course course = (Course) o;
 
         if (!courseId.equals(course.courseId)) return false;
