@@ -1,17 +1,13 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.GroupDao;
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import org.joda.time.DateTime;
-import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-@Repository
 public class GroupDaoMockImpl implements GroupDao {
     private ArrayList<Group> groups = new ArrayList<Group>();
 
@@ -87,7 +83,7 @@ public class GroupDaoMockImpl implements GroupDao {
     }
 
     @Override
-    public ArrayList<Group> getAllGroups() {
+    public List<Group> getAllGroups() {
         return groups;
     }
 
@@ -109,6 +105,7 @@ public class GroupDaoMockImpl implements GroupDao {
                 return;
             }
         }
+        throw new RuntimeException();
     }
 
     @Override
@@ -116,8 +113,9 @@ public class GroupDaoMockImpl implements GroupDao {
         for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).getGroupID().equals(group.getGroupID())) {
                 groups.set(i, group);
+                return group;
             }
         }
-        return group;
+        throw new RuntimeException();
     }
 }

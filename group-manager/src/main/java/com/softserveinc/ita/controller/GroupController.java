@@ -23,7 +23,7 @@ public class GroupController {
     @RequestMapping(value = "/status/{status}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
-    ArrayList<Group> getGroupsByStatus(@PathVariable Group.Status status) {
+    List<Group> getGroupsByStatus(@PathVariable Group.Status status) {
         return groupService.getGroupsByStatus(status, System.currentTimeMillis());
     }
 
@@ -33,7 +33,7 @@ public class GroupController {
     }
 
     @RequestMapping(value ="/courses", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody ArrayList<Course> getCourses(){
+    public @ResponseBody List<Course> getCourses(){
         return groupService.getCourses();
     }
 
@@ -55,10 +55,10 @@ public class GroupController {
         return true;
     }
 
-//    @RequestMapping(value = "/editGroup", method = RequestMethod.PUT, produces = "application/json")
-//    public
-//    @ResponseBody
-//    Group updateGroup(@RequestBody Group group) throws GroupWithThisNameIsAlreadyExists {
-//        return groupService.updateGroup(group);
-//    }
+    @RequestMapping(value = "/editGroup", method = RequestMethod.PUT, produces = "application/json")
+    public
+    @ResponseBody
+    Group updateGroup(@RequestBody Group group) throws GroupWithThisNameIsAlreadyExists {
+        return groupService.updateGroup(group);
+    }
 }

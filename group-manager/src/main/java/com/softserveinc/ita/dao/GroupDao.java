@@ -11,7 +11,7 @@ public interface GroupDao {
 
     Group addGroup(Group group);
 
-    ArrayList<Group> getAllGroups();
+    List<Group> getAllGroups();
 
     Group getGroupById(String id);
 

@@ -1,6 +1,5 @@
 package com.softserveinc.ita.mvc.impl;
 
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
@@ -13,10 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -138,7 +133,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     }
 
     @Test
-    public void testPutGroupAndExpectIsOk() throws Exception {
+    public void testPutGroupAndExpectIsOkAndJSONType() throws Exception {
         Group group = new Group("id1");
         String jsonGroup = jsonUtil.toJson(group);
         System.out.println(jsonGroup);

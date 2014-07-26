@@ -60,6 +60,7 @@ function viewAddDialog() {
     $('#dialog-form-add-group').dialog('open');
 }
 var groupId;
+var editDialog;
 function viewDeleteDialog(id) {
     groupId = id;
     $("#dialog-form-delete-group").data('content', 'Group deleted');
@@ -68,4 +69,10 @@ function viewDeleteDialog(id) {
 function viewInformationDialog() {
     $("#dialog-information").data('content', 'Group deleted');
     $('#dialog-information').dialog('open');
+}
+
+function viewEditInformationDialog(id) {
+    groupId = id;
+    $("#dialog-form-add-group").data('content', 'Group edited');
+    $('#dialog-form-add-group').dialog('open');
 }

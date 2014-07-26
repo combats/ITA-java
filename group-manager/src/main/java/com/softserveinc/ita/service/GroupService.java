@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface GroupService {
-    ArrayList<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime);
+    List<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime);
 
-    ArrayList<Course> getCourses();
+    List<Course> getCourses();
 
     Group createGroup(Group group);
 
-    ArrayList<Group> getAllGroups();
+    List<Group> getAllGroups();
 
     Group getGroupById(String id) throws GroupDoesntExistException;
 

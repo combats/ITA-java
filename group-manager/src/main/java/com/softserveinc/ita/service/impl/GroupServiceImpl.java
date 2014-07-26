@@ -1,5 +1,6 @@
 package com.softserveinc.ita.service.impl;
 
+import com.softserveinc.ita.dao.CourseDao;
 import com.softserveinc.ita.dao.GroupDao;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
@@ -12,14 +13,16 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
 public class GroupServiceImpl implements GroupService {
 
     @Autowired
     private GroupDao groupDao;
 
+    @Autowired
+    private CourseDao courseDao;
+
     @Override
-    public ArrayList<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime) {
+    public List<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime) {
         List<Group> groups = groupDao.getAllGroups();
         ArrayList<Group> choosenGroups = new ArrayList<>();
         for (Group group : groups) {
@@ -50,12 +53,8 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ArrayList<Course> getCourses() {
-        ArrayList<Course> courses = new ArrayList<>();
-        courses.add(new Course("DevOps", "pen-devops.png"));
-        courses.add(new Course("JavaScript", "pen-jsui.png"));
-        courses.add(new Course("Java", "pen-java.png"));
-        courses.add(new Course("Sharp", "pen-net.png"));
+    public List<Course> getCourses() {
+        List<Course> courses = courseDao.getAllCourses();
         return courses;
     }
 
@@ -65,7 +64,7 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public ArrayList<Group> getAllGroups() {
+    public List<Group> getAllGroups() {
         return groupDao.getAllGroups();
     }
 

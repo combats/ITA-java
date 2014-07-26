@@ -66,7 +66,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         expectedList.add(group2);
         expectedList.add(group3);
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED, 150);
+        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED, 150);
         assertEquals(groupsByStatus,expectedList);
     }
 
@@ -74,7 +74,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     public void testGetGroupsByBoardingStatusAndExpectCorrectList() throws Exception {
         ArrayList<Group> expectedList = new ArrayList<Group>();
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.BOARDING, 200);
+        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.BOARDING, 200);
         assertEquals(groupsByStatus, expectedList);
     }
 
@@ -83,7 +83,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         ArrayList<Group> expectedList = new ArrayList<Group>();
         expectedList.add(group2);
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.IN_PROCESS, 350);
+        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.IN_PROCESS, 350);
         assertEquals(groupsByStatus, expectedList);
     }
 
@@ -94,7 +94,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         expectedList.add(group2);
         expectedList.add(group3);
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.FINISHED, 600);
+        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.FINISHED, 600);
         assertEquals(groupsByStatus, expectedList);
     }
 

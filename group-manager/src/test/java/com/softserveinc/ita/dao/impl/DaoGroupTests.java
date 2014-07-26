@@ -2,16 +2,11 @@ package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.DaoGroupBaseTest;
 import com.softserveinc.ita.dao.GroupDao;
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
-import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import org.joda.time.DateTime;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -38,12 +33,31 @@ public class DaoGroupTests extends DaoGroupBaseTest {
     }
 
     @Test
-    public void  getGroupByExistingIdAndExpectCorrectGroup(){
+    public void testGetGroupByExistingIdAndExpectCorrectGroup() {
         Group expectedGroup = new Group("id1", new Course("Java", "pen-java.png"), "kv001");
         expectedGroup.setStartBoardingTime( new DateTime(2014, 8, 1, 0, 0, 0).getMillis());
         expectedGroup.setStartTime(new DateTime(2014, 8, 10, 0, 0, 0).getMillis());
         expectedGroup.setEndTime(new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         Group receivedGroup = groupDao.getGroupById(expectedGroup.getGroupID());
         assertEquals(expectedGroup,receivedGroup);
+    }
+
+    @Test
+    public void testUpdateGroupByExistingId() {
+        Group group = new Group("id1", new Course("Java", "pen-java.png"), "kv002");
+        group.setStartBoardingTime(100);
+        group.setStartTime(200);
+        group.setEndTime(300);
+        Group updatedGroup = groupDao.updateGroup(group);
+        assertEquals(group, updatedGroup);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void testUpdateGroupByNotExistingId() {
+        Group group = new Group("id111", new Course("Java", "pen-java.png"), "kv002");
+        group.setStartBoardingTime(100);
+        group.setStartTime(200);
+        group.setEndTime(300);
+        Group updatedGroup = groupDao.updateGroup(group);
     }
 }

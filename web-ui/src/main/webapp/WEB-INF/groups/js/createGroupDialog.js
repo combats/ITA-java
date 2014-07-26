@@ -14,7 +14,10 @@ $(function () {
         dialogClass: 'dialog',
         show: { effect: "fade", duration: 800 },
         hide: { effect: "fade", duration: 800 },
-        open: createCourseMenu("#gCourse", "Select group course"),
+        open: function(){
+            createCourseMenu("#gCourse", "Select group course");
+
+        },
         close: function () {
             $("#gName").val("");
             $("#gCapacity").val("");
