@@ -1,6 +1,5 @@
 package com.softserveinc.ita.entity;
 
-import com.google.gson.annotations.Expose;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -65,7 +64,7 @@ public class Applicant implements Serializable {
     private String name;
     @Column(name = "Surname")
     private String surname;
-    @Column(name = "Email")
+    @Column(name = "Email", unique = true)
     private String email;
     @Column(name = "GroupId")
     private String groupId;

@@ -1,13 +1,24 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Table(name = "Course")
 public class Course implements Serializable {
 
-    private static final String DEFAULT_ID_VALUE = "0000000";
+    private static final long serialVersionUID = 1L;
 
+    @Id
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
+    @Column(name = "Id", unique = true)
+    private String courseId;
+    @Column(name = "Name", unique = true)
     private String name = "";
-    private String courseId = DEFAULT_ID_VALUE;
+    @Column(name = "ImageReference", unique = true)
     private String imageRef = "";
 
     public Course(){

@@ -22,21 +22,20 @@ public class AppointmentController {
     private Validator appointmentValidator;
     @Autowired
     private AppointmentService appointmentService;
-    @Autowired
-    private JsonUtil jsonUtil;
+
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
         binder.setValidator(appointmentValidator);
     }
 
-    @RequestMapping(value = "/applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "applicants/{applicantId}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Appointment> getAppointmentByApplicantId(@PathVariable String applicantId) {
         return appointmentService.getAppointmentByApplicantId(applicantId);
     }
 
-    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "{appointmentId}", method = RequestMethod.DELETE)
     public void removeAppointmentById(@PathVariable String appointmentId) {
         appointmentService.removeAppointmentById(appointmentId);
     }
@@ -50,7 +49,7 @@ public class AppointmentController {
         return appointmentService.putAppointment(appointment);
     }
 
-    @RequestMapping(value = "/{appointmentId}", method = RequestMethod.GET)
+    @RequestMapping(value = "{appointmentId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
     public Appointment getAppointmentByAppointmentID(@PathVariable("appointmentId") String appointmentId) {
@@ -58,7 +57,7 @@ public class AppointmentController {
         return appointmentService.getAppointmentByAppointmentId(appointmentId);
     }
 
-    @RequestMapping(value = "/date/{date}", method = RequestMethod.GET, produces = "application/json")
+    @RequestMapping(value = "date/{date}", method = RequestMethod.GET, produces = "application/json")
     @ResponseBody
     public List<Appointment> getAppointmentsByDate(@PathVariable long date) {
 

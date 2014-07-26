@@ -7,6 +7,7 @@ import com.softserveinc.ita.exception.UserDoesNotExistException;
 import com.softserveinc.ita.exception.UserAlreadyExistsException;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -21,7 +22,7 @@ public class UserServiceTest extends BaseServiceTest {
     public void testGetUserByExistingIdAndExpectEquals() throws Exception {
         String userId = "1";
         User expectedApplicant = new User("1");
-        assertEquals(expectedApplicant,userService.getUserByID(userId));
+        assertEquals(expectedApplicant, userService.getUserByID(userId));
     }
 
     @Test(expected = InvalidUserIDException.class)
@@ -29,6 +30,21 @@ public class UserServiceTest extends BaseServiceTest {
         String userID = "ABC";
         userService.getUserByID(userID);
     }
+
+    @Test
+    public void testGetUserByExistingEmailAndExpectEquals() throws Exception {
+        String testEmail = "test@test.com";
+        User expectedUser = new User("1");
+        expectedUser.setEmail(testEmail);
+        assertEquals(expectedUser, userService.getUserByEmail(testEmail));
+    }
+
+    @Test(expected = InvalidUserIDException.class)
+    public void testGetUserByNotExistingEmailAndExpectException() throws Exception {
+        String testEmail = "no@such.com";
+        userService.getUserByID(testEmail);
+    }
+
     @Test
     public void testGetAllUsersIDAndExpectListOfUsersID() throws Exception {
         ArrayList<String> usersIDList = new ArrayList<String>() {{
@@ -38,6 +54,12 @@ public class UserServiceTest extends BaseServiceTest {
         }};
         assertEquals(userService.getAllUsersID(), usersIDList);
     }
+
+    //    @Test(expected = UserAlreadyExistsException.class)
+//    public void testAddNewUserWithDuplicateIDThrowsException() throws Exception { /TODO: test how hibernate will throw exception
+//        User testUser = new User("1");
+//        userService.postNewUser(testUser);
+//    }
 
     @Test(expected = UserDoesNotExistException.class)
     public void testEditUserWithNotExistingIdAndExpectException() throws UserDoesNotExistException, EmptyUserException {

@@ -68,4 +68,13 @@ public class ApplicantDAOMockImpl implements ApplicantDAO {
         applicants.put(applicantForEditId, applicant);
         return applicant;
     }
+
+    @Override
+    public List<String> getApplicantIdList() {
+        List<String> applicantsIdList = new ArrayList<>();
+        for (Applicant allApplicant : allApplicants) {
+            applicantsIdList.add(allApplicant.getId());
+        }
+        return applicantsIdList;
+    }
 }

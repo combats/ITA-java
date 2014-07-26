@@ -13,4 +13,6 @@ public interface ApplicantDAO {
     Applicant addNewApplicant(Applicant applicant);
 
     Applicant editApplicant(Applicant applicant);
+
+    List<String> getApplicantIdList();
 }
