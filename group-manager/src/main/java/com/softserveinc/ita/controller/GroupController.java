@@ -15,7 +15,7 @@ import java.util.Map;
 public class GroupController {
     @Autowired
     private GroupService groupService;
-
+ 
     @RequestMapping(value = "/capacity/{groupID}", method = RequestMethod.GET, produces = "application/json")
     public
     @ResponseBody
