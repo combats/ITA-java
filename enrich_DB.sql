@@ -10,7 +10,14 @@ INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, 
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199476e716901476e7511360005', 1, 'voryi3@ybivai.com', 'Alla', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Cruper', '1');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199477288a50147729125b00000', 1, 'dod@dod.com', 'Douche', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Bag', 1);
 
-INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('1', 'Joe@gmail.com', 'Terison', 'Joe', 'Terison');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('1', 'Joe@gmail.com', 'id1', 'Joe1', 'Terison1');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('2', 'ivan@gmail.com', 'id1', 'Joe2', 'Terison2');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('3', 'rastaman@gmail.com', 'id1', 'Joe3', 'Terison3');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('4', 'vasiliy@gmail.com', 'id1', 'Joe4', 'Terison4');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('5', 'nikolay@gmail.com', 'id1', 'Joe5', 'Terison5');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('6', 'denis@gmail.com', 'id1', 'Joe6', 'Terison6');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('7', 'andrey@gmail.com', 'id1', 'Joe7', 'Terison7');
+INSERT INTO interview.Applicants (Id, Email, GroupId, Name, Surname) VALUES ('8', 'anton@gmail.com', 'id1', 'Joe8', 'Terison8');
 
 INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5e0111', 'http://java.com', 'Java');
 INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5f0012', 'http://vasya.com', 'C#');
