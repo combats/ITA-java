@@ -1,12 +1,18 @@
 package com.softserveinc.ita.controller;
 
+import com.softserveinc.ita.service.ViewResolverService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 @RequestMapping("/ui")
 public class OtherPagesController {
+
+    @Autowired
+    private ViewResolverService viewResolverServiceImpl;
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String getGroups() {
@@ -21,5 +27,10 @@ public class OtherPagesController {
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String showUsers() {
         return "users";
+    }
+
+    @RequestMapping(value = "/group/{groupID}", method = RequestMethod.GET)
+    public String showGroup(@PathVariable String groupID) {
+        return viewResolverServiceImpl.choosePageByGroupId(groupID, System.currentTimeMillis());
     }
 }

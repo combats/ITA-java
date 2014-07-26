@@ -5,12 +5,14 @@ import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
+import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public interface GroupService {
-    List<Group> getGroupsByStatus(Group.Status groupStatus);
+    List<Group> getGroupsByStatus(Group.Status groupStatus, long currentTime);
 
     List<Course> getCourses();
 
@@ -18,8 +20,12 @@ public interface GroupService {
 
     List<Group> getAllGroups();
 
-    List<Applicant> getApplicantsByGroupID(String groupID) throws GroupDoesntExistException;
+    Group getGroupById(String id) throws GroupDoesntExistException;
 
+    void removeGroup(String groupId) throws GroupDoesntExistException;
+
+    Group updateGroup(Group group) throws GroupWithThisNameIsAlreadyExists;
+    
     int getGroupCapacity(String groupID);
 
     Group updateApplicantsInGroup(String groupID, Map<String,

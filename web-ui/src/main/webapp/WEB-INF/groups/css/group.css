@@ -179,4 +179,19 @@
 .users .sectionFaq .accordion .btn-icon {
     cursor: pointer;
 }
+#cancelDUButton {
+    float: right;
+    padding: inherit;
+    width: 200;
+}
+#okInfButton {
+    float: left;
+    margin-left: 30px;
+}
+
+#okDUButton {
+    float: left;
+    padding: inherit;
+    width: 200;
+}
 
