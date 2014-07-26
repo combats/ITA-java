@@ -19,6 +19,4 @@
 
     <mvc:annotation-driven />
     <context:annotation-config/>
-
-
 </beans>

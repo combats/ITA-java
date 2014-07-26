@@ -1,5 +1,7 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -26,7 +28,8 @@ public class QuestionsBlock implements Serializable {
     @Column(name = "InterviewId")
     String interviewId = "";
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "questionsblock_questions",
             joinColumns = {@JoinColumn(name = "questionsBlock_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionInformation_id")})
