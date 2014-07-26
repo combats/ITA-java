@@ -19,4 +19,4 @@ INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d
 
 
 INSERT INTO interview.Interview (interview_id, InterviewType) VALUES ('1', 0);
-INSERT INTO interview.Interview (interview_id, InterviewType) VALUES ('2', 0);*/
+INSERT INTO interview.Interview (interview_id, InterviewType) VALUES ('2', 0);
