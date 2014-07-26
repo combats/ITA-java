@@ -15,7 +15,7 @@ public class Course implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    private String courseId;
+    private String courseId="";
     @Column(name = "Name", unique = true)
     private String name = "";
     @Column(name = "ImageReference", unique = true)

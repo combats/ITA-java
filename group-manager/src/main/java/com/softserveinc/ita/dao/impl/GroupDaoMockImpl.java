@@ -114,7 +114,6 @@ public class GroupDaoMockImpl implements GroupDao {
 
     @Override
     public Group updateGroup(Group group) {
-        System.out.println("lol = " + group.getGroupID());
         for (int i = 0; i < groups.size(); i++) {
             if (groups.get(i).getGroupID().equals(group.getGroupID())) {
                 setCourseRef(group);
