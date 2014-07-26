@@ -39,7 +39,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-      public void testGetGroupsByCorrectStatusAndExpectCorrectList() throws Exception{
+    public void testGetGroupsByCorrectStatusAndExpectCorrectList() throws Exception {
         ArrayList<Group> expectedList = new ArrayList<Group>();
         ArrayList<Group> groupList = new ArrayList<Group>();
         //Planned
@@ -60,12 +60,12 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         groupList.add(group3);
 
         when(groupDao.getAllGroups()).thenReturn(groupList);
-        ArrayList<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED);
-        assertEquals(groupsByStatus,expectedList);
+        List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED);
+        assertEquals(groupsByStatus, expectedList);
     }
 
     @Test
-    public void testAddNewGroupAndExpectIsOk(){
+    public void testAddNewGroupAndExpectIsOk() {
         Group group = new Group();
         when(groupDao.addGroup(group)).thenReturn(new Group("id100"));
         assertEquals("id100", groupService.createGroup(group).getGroupID());
@@ -78,7 +78,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-    public void getAllGroupsAndExpectCorrectList(){
+    public void getAllGroupsAndExpectCorrectList() {
         ArrayList<Group> expectedList = new ArrayList<Group>();
         expectedList.add(new Group("id3", new Course("Java", "pen-java.png"), "kv021"));
         expectedList.add(new Group("id6", new Course("Java Script", "pen-net.png"), "kv061"));
