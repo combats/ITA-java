@@ -27,6 +27,16 @@ public class OrmConfig {
     private Environment env;
 
     @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(restDataSource());
+        sessionFactory.setPackagesToScan("com.softserveinc.ita.entity");
+        sessionFactory.setHibernateProperties(hibernateProperties());
+
+        return sessionFactory;
+    }
+
+    @Bean
     public DataSource restDataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));

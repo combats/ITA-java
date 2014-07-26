@@ -25,7 +25,6 @@ public class InterviewDAOHibernate implements InterviewDAO {
         return (Interview) sessionFactory.getCurrentSession().get(Interview.class, appointmentId);
     }
 
-
     @Override
     public String putInterview(Interview interview) {
         return (String) sessionFactory.getCurrentSession().save(interview);
