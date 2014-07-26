@@ -37,7 +37,7 @@
             }
 
             var Appointment = {};
-            $http.get("interview/api/appointment.json")
+            $http.get("http://176.36.11.25:8080/appointmets/"+appointmentId)
             .then(function (response) {
                 app.value('Appointment', response.data);
                 Appointment = response.data;
