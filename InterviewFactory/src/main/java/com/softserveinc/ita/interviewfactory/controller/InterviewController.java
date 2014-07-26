@@ -8,7 +8,6 @@ import com.softserveinc.ita.interviewfactory.service.questionsBlockServices.Ques
 import com.softserveinc.ita.service.exception.HttpRequestException;
 import exceptions.WrongCriteriaException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
