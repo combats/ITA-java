@@ -157,6 +157,7 @@
                     <excludes>
                         <exclude>**/integration/**</exclude>
                     </excludes>
+
                 </configuration>
             </plugin>
         </plugins>

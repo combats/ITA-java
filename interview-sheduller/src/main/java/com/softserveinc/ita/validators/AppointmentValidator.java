@@ -23,11 +23,9 @@ public class AppointmentValidator implements Validator {
     @Override
     public void validate(Object o, Errors errors) {
         Appointment appointment = (Appointment) o;
-        System.out.println("1");
+
         validateUsers(appointment, errors);
-        System.out.println("2");
         validateApplicant(appointment, errors);
-        System.out.println("3");
     }
 
     private void validateUsers(Appointment appointment, Errors errors) {
