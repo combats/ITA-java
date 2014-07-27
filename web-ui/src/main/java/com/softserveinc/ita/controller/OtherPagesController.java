@@ -13,6 +13,10 @@ public class OtherPagesController {
 
     @Autowired
     private ViewResolverService viewResolverServiceImpl;
+    @RequestMapping(value = "/questions", method = RequestMethod.GET)
+    public String showQuestions() {
+        return "questions";
+    }
 
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     public String getGroups() {

@@ -23,6 +23,7 @@
     <mvc:resources location="/WEB-INF/applicants/" mapping="/ui/group/**"/>
     <mvc:resources location="/WEB-INF/groups/" mapping="/ui/groups/**"/>
     <mvc:resources location="/WEB-INF/user/" mapping="/ui/user/**"/>
+    <mvc:resources location="/WEB-INF/questions/" mapping="/ui/questions/**"/>
     <mvc:resources location="/WEB-INF/main/" mapping="/**"/>
 
     <bean id = "viewResolverServiceImpl" class = "com.softserveinc.ita.service.impl.ViewResolverServiceImpl"/>
@@ -41,6 +42,7 @@
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="suffix" value=".ftl"/>
+        <property name="exposeSessionAttributes" value="true"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

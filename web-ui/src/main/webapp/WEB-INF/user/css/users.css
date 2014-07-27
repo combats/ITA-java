@@ -20,7 +20,8 @@
 
 .users.lineBox.right {
 	text-align: right;
-	margin: 20px 0 15px 0;
+    margin-top: 0px;
+    margin-bottom: 15px;
 }
 
 /*DIALOG*/

@@ -25,18 +25,24 @@
                                         <li class="active dropdown">
                                             <a href="/ui/groups" class="dropdown-toggle">Groups</a>
                                         </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle">My questions</a>
+                                        <li class="dropdown central">
+                                            <a href="/ui/questions" class="dropdown-toggle">My questions</a>
                                         </li>
                                         <li class="dropdown">
                                             <a href="/ui/users" class="dropdown-toggle">Users</a>
                                         </li>
                                     </ul>
                                 </div>
+                                <ul class="menuIcon pull-right">
+                                    <li class="user" title="${user.getName() + " " + user.getSurname()}">
+                                    <a href="#">currentUser</a></li>
+                                    <li class="logout" title="Log out"><a href="/logout">logOut</a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <!--use this as an anchor for your specific page content-->
                 <#nested/>
 

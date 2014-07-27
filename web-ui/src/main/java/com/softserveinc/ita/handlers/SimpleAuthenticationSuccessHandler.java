@@ -38,6 +38,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
             // Create the User Cookie
             Cookie cookie = new Cookie("userId",user.getId());
 
+            request.getSession().setAttribute("user", user);
             response.addCookie(cookie);
             response.sendRedirect("/");
         }
