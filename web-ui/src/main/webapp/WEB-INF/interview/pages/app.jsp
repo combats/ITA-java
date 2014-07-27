@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <title>SoftServe |</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Interview</title>
     <link rel="stylesheet" href="interview/css/reset.css">
@@ -12,6 +13,8 @@
     <link rel="stylesheet" href="interview/css/applicantPopup.css">
     <link rel="stylesheet" href="interview/css/timer.css">
 
+
+    <link rel="icon" href="/common/img/favicon.ico">
 </head>
 <body>
    <div id="startData" userId="${userId}" appointmentId="${appointmentId}"></div>
