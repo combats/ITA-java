@@ -1,9 +1,0 @@
-{
-   "appointmentId":"1",
-   "userIdList":["testUserId"],
-   "applicantId":"testApplicantId",
-   "startTime":1405033242431,
-   "durationTime":1800000,
-   "actualStartTime":1405073623297,
-   "groupId":null
-}

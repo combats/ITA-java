@@ -8,8 +8,10 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
 
     $scope.isWebCamAsk=false;
     $scope.applicant = Applicant;
+    $activityIndicator.startAnimating();
     Photo.get().success(function(response){
         $scope.defPhoto =  response;
+        $activityIndicator.stopAnimating();
     }).error(function(response){
         $scope.defPhoto =  'interview/img/maestro-joda.jpg';
     }).catch(function(reason){

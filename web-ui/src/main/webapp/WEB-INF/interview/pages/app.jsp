@@ -37,7 +37,7 @@
             </div>
 
 
-            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" href="#"><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
+            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
         </div>
     </header>
     <div ng-controller="QuestionsController" id="main-panel">

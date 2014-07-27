@@ -47,12 +47,12 @@
             })
             .then(function(){
                 var initRequests = [
-                    $http.get('interview/api/user.json')
+                    $http.get('http://176.36.11.25:8080/users/'+userId)
                     //$http.get('/users/'+userId)
                     .then(function (response) {
                         app.value('User', response.data);
                     }),
-                    $http.get('interview/api/applicant.json')
+                    $http.get('http://176.36.11.25:8080/applicants/'+ Appointment.applicantId)
                     .then(function (response) {
                         app.value('Applicant', response.data);
                     })
