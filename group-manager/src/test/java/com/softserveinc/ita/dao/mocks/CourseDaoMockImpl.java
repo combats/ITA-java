@@ -25,6 +25,12 @@ public class CourseDaoMockImpl implements CourseDAO {
 
     @Override
     public void removeCourse(Course course) {
+        //TODO: implement this method
+    }
 
+    @Override
+    public Course getCourseByName(String courseName) {
+        return null;
+        //TODO: implement this method
     }
 }
