@@ -27,7 +27,7 @@
 
         <div ng-controller="ModalDemoCtrl">
 
-             <a  id="applicant-btn" ng-click="openAppPop()"  href="#"><span class="glyphicon glyphicon-user"></span> {{applicant.name}} {{applicant.lastname}}</a>
+             <a  id="applicant-btn" ng-click="openAppPop()"  href="#"><span class="glyphicon glyphicon-user"></span> {{applicant.name}} {{applicant.surname}}</a>
 
         </div>
 
@@ -40,7 +40,7 @@
             </div>
 
 
-            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
+            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.surname}}</span> </a>
         </div>
     </header>
     <div ng-controller="QuestionsController" id="main-panel">

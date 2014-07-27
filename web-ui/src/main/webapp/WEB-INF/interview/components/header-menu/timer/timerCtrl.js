@@ -14,7 +14,7 @@ angular.module('timerModule', []).controller('timerCtrl',['$scope','$timeout','A
     else{
         Appointment.actualStartTime = $scope.curentTime;
       $scope.duration = Appointment.durationTime;
-      Appointment.actualStartTime = time.now
+      Appointment.actualStartTime = $scope.curentTime
     }
 
     $scope.isForward = false;
