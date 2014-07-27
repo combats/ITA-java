@@ -10,27 +10,27 @@ INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, 
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('6', 1, 'paoloA@gmail.com', 'Paolo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Accorti', '2');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('7', 1, 'fran@gmail.com', 'Fran', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Wilson', '3');
 
-INSERT INTO interview.questions VALUES ('1', 'What do you know about Java?', 1);
-INSERT INTO interview.questions VALUES ('2', 'What are the supported platforms by Java Programming Language?', 1);
-INSERT INTO interview.questions VALUES ('3', 'List any five features of Java?', 1);
-INSERT INTO interview.questions VALUES ('4', 'What kind of variables a class can consist of?', 1);
-INSERT INTO interview.questions VALUES ('5', 'What is a static variable?', 1);
-INSERT INTO interview.questions VALUES ('6', 'Why is String class considered immutable?', 1);
-INSERT INTO interview.questions VALUES ('7', 'Explain Set Interface.', 2);
-INSERT INTO interview.questions VALUES ('8', 'Difference between throw and throws?', 3);
-INSERT INTO interview.questions VALUES ('9', 'Describe life cycle of thread.', 4);
-INSERT INTO interview.questions VALUES ('10', 'Explain suspend() method under Thread class.', 4);
+INSERT INTO interview.Questions VALUES ('1', 'What do you know about Java?', 1);
+INSERT INTO interview.Questions VALUES ('2', 'What are the supported platforms by Java Programming Language?', 1);
+INSERT INTO interview.Questions VALUES ('3', 'List any five features of Java?', 1);
+INSERT INTO interview.Questions VALUES ('4', 'What kind of variables a class can consist of?', 1);
+INSERT INTO interview.Questions VALUES ('5', 'What is a static variable?', 1);
+INSERT INTO interview.Questions VALUES ('6', 'Why is String class considered immutable?', 1);
+INSERT INTO interview.Questions VALUES ('7', 'Explain Set Interface.', 2);
+INSERT INTO interview.Questions VALUES ('8', 'Difference between throw and throws?', 3);
+INSERT INTO interview.Questions VALUES ('9', 'Describe life cycle of thread.', 4);
+INSERT INTO interview.Questions VALUES ('10', 'Explain suspend() method under Thread class.', 4);
 
-INSERT INTO interview.users_questions VALUES ('1', '1');
-INSERT INTO interview.users_questions VALUES ('1', '2');
-INSERT INTO interview.users_questions VALUES ('1', '3');
-INSERT INTO interview.users_questions VALUES ('1', '4');
-INSERT INTO interview.users_questions VALUES ('1', '5');
-INSERT INTO interview.users_questions VALUES ('1', '6');
-INSERT INTO interview.users_questions VALUES ('1', '7');
-INSERT INTO interview.users_questions VALUES ('1', '8');
-INSERT INTO interview.users_questions VALUES ('1', '9');
-INSERT INTO interview.users_questions VALUES ('1', '10');
+INSERT INTO interview.Users_Questions VALUES ('1', '1');
+INSERT INTO interview.Users_Questions VALUES ('1', '2');
+INSERT INTO interview.Users_Questions VALUES ('1', '3');
+INSERT INTO interview.Users_Questions VALUES ('1', '4');
+INSERT INTO interview.Users_Questions VALUES ('1', '5');
+INSERT INTO interview.Users_Questions VALUES ('1', '6');
+INSERT INTO interview.Users_Questions VALUES ('1', '7');
+INSERT INTO interview.Users_Questions VALUES ('1', '8');
+INSERT INTO interview.Users_Questions VALUES ('1', '9');
+INSERT INTO interview.Users_Questions VALUES ('1', '10');
 
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('1', 'lefft@ya.ru', '', 0, 'Anton', 'Kravchuk');
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('2', 'vasya@pupkin.su',  '', 0, 'Vasya', 'Pupkin');
