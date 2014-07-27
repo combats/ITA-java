@@ -6,11 +6,12 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
          http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <context:component-scan base-package="com.softserveinc.ita"/>
+    <context:component-scan base-package="com.softserveinc.ita.controller"/>
+    <context:component-scan base-package="com.softserveinc.ita.service"/>
     <mvc:annotation-driven />
    
-    <bean id = "courseDAO" class = "com.softserveinc.ita.dao.impl.CourseDaoMockImpl"/>
-    <bean id = "groupDAO" class = "com.softserveinc.ita.dao.impl.GroupDaoMockImpl"/>
+    <bean id = "courseDAO" class = "com.softserveinc.ita.dao.mocks.CourseDaoMockImpl"/>
+    <bean id = "groupDAO" class = "com.softserveinc.ita.dao.mocks.GroupDaoMockImpl"/>
     <bean id = "groupService" class = "com.softserveinc.ita.service.impl.GroupServiceImpl"/>
     <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
    

@@ -1,4 +1,4 @@
-package com.softserveinc.ita.dao.impl;
+package com.softserveinc.ita.dao.mocks;
 
 import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Course;
