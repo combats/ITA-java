@@ -11,8 +11,14 @@ angular.module('applicantPopupModule').factory('Photo',['$http','Applicant', fun
 //                    return response.data;
 //                });
         },
-        get: function(){
+        get: function(response){
             return $http({method: 'GET', url: "/repository/img/applicant/" + Applicant.id})
+        },
+        responseError: function(response) {
+            // do stuff or
+            return $http.reject(response);
         }
+
+
     }
 }])
