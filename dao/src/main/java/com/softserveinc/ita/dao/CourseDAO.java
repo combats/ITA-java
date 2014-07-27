@@ -11,4 +11,6 @@ public interface CourseDAO {
     List<Course> getAllCourses();
 
     void removeCourse(Course course);
+
+    Course getCourseByName(String courseName);
 }
