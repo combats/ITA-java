@@ -104,7 +104,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     }
 
     @Test
-    public void testGetGroupByExistingIdAndExpectJsonType() throws Exception{
+    public void testGetGroupByExistingIdAndExpectJsonType() throws Exception {
         mockMvc.perform(
                 get("/id1")
         )
@@ -135,8 +135,8 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testPutGroupAndExpectIsOkAndJSONType() throws Exception {
         Group group = new Group("id1");
+        group.setCourse(new Course("Java"));
         String jsonGroup = jsonUtil.toJson(group);
-        System.out.println(jsonGroup);
         mockMvc.perform(
                 put("/editGroup")
                         .content(jsonGroup)

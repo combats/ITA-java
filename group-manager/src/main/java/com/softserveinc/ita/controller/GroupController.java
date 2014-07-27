@@ -44,7 +44,7 @@ public class GroupController {
     @RequestMapping(value = "/addGroup", method = RequestMethod.POST)
     public
     @ResponseBody
-    Group addGroup(@RequestBody Group group) {
+    Group addGroup(@RequestBody Group group) throws GroupWithThisNameIsAlreadyExists {
         return groupService.createGroup(group);
     }
 

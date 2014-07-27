@@ -8,29 +8,41 @@ import java.util.List;
 
 public class CourseDaoMockImpl implements CourseDAO {
 
-    @Override
-    public Course addCourse(Course course) {
-        return null;
-    }
+    List<Course> courses = new ArrayList<>();
 
-    @Override
-    public List<Course> getAllCourses() {
-        ArrayList<Course> courses = new ArrayList<>();
+    public CourseDaoMockImpl() {
+        courses = new ArrayList<>();
         courses.add(new Course("DevOps", "pen-devops.png"));
         courses.add(new Course("JavaScript", "pen-jsui.png"));
         courses.add(new Course("Java", "pen-java.png"));
         courses.add(new Course("Sharp", "pen-net.png"));
+    }
+
+    @Override
+    public Course addCourse(Course course) {
+        courses.add(course);
+        return course;
+    }
+
+    @Override
+    public List<Course> getAllCourses() {
         return courses;
     }
 
     @Override
     public void removeCourse(Course course) {
-        //TODO: implement this method
+        for (int i = 0; i < courses.size(); i++) {
+            courses.remove(course);
+        }
     }
 
     @Override
     public Course getCourseByName(String courseName) {
+        for (Course course : courses) {
+            if (course.getName().equals(courseName)) {
+                return course;
+            }
+        }
         return null;
-        //TODO: implement this method
     }
 }

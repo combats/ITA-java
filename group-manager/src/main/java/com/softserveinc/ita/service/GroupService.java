@@ -16,7 +16,7 @@ public interface GroupService {
 
     List<Course> getCourses();
 
-    Group createGroup(Group group);
+    Group createGroup(Group group) throws GroupWithThisNameIsAlreadyExists;
 
     List<Group> getAllGroups();
 

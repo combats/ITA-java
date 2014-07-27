@@ -70,8 +70,14 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
-    public Group createGroup(Group group) {
-        return groupDAO.addGroup(group);
+    public Group createGroup(Group group) throws GroupWithThisNameIsAlreadyExists {
+        try {
+            Course course = courseDAO.getCourseByName(group.getCourse().getName());
+            group.setCourse(course);
+            return groupDAO.addGroup(group);
+        } catch (Exception e) {
+            throw new GroupWithThisNameIsAlreadyExists();
+        }
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -104,6 +110,8 @@ public class GroupServiceImpl implements GroupService {
     @Override
     public Group updateGroup(Group group) throws GroupWithThisNameIsAlreadyExists {
         try {
+            Course course = courseDAO.getCourseByName(group.getCourse().getName());
+            group.setCourse(course);
             Group updatedGroup = groupDAO.updateGroup(group);
             return updatedGroup;
         } catch (Exception e) {

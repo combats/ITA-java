@@ -97,7 +97,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-    public void testAddNewGroupAndExpectIsOk(){
+    public void testAddNewGroupAndExpectIsOk() throws GroupWithThisNameIsAlreadyExists {
         Group group = new Group();
         when(groupDAO.addGroup(group)).thenReturn(new Group("id100"));
         assertEquals("id100", groupService.createGroup(group).getGroupID());
