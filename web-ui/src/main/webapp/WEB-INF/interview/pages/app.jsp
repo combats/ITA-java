@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="interview/css/timer.css">
 
 
-    <link rel="icon" href="common/img/favicon.ico">
+    <link rel="icon"  href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
    <div id="startData" userId="${userId}" appointmentId="${appointmentId}"></div>
