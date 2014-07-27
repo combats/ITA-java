@@ -4,10 +4,11 @@ var applicants = [];
 var groupCapacity;
 var userList = [];
 $(function () {
+    groupID = getParamByName('groupID');
     //load page template
     $.ajax({
         async: false,
-        url: location.origin + '/ui/hr/mst/template.mst',
+        url: location.origin + '/ui/group/mst/template.mst',
         type: "GET",
         success: function (data) {
             pageTemplate = data;
@@ -325,4 +326,8 @@ getCookie = function (cname) {
 };
 getHRID = function () {
     return getCookie("userId");
+};
+getParamByName = function (name) {
+    if (name = (new RegExp('[?&]' + encodeURIComponent(name) + '=([^&]*)')).exec(location.search))
+        return decodeURIComponent(name[1]);
 };
