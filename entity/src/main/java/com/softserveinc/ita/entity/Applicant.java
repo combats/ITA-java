@@ -111,7 +111,7 @@ public class Applicant implements Serializable {
 
     @Column(name = "Phone")
     private String phone;
-    @Column(name = "birthday")
+    @Column(name = "Birthday")
     private long birthday;
 
     public String getPhone() {
