@@ -11,7 +11,7 @@ function viewGroups() {
         template = data;
     });
     var output = "";
-    var createGroupHtml="";
+    var createGroupHtml = "";
     var selectedStatus = $("#statuses").val();
     var selectedCourse = $("#courses").val();
     var getGroupsUrl;
@@ -35,19 +35,19 @@ function viewGroups() {
             for (var index = 0; index < data.length; index++) {
                 if (data[index].course.name == selectedCourse || selectedCourse == "All courses") {
                     var view = {
-                        ref: 'group/' + data[index].groupID,
+                        ref: 'group?groupID=' + data[index].groupID,
                         image: data[index].course.imageRef,
                         courseName: "Course : " + data[index].course.name,
                         groupName: "Group : " + data[index].groupName,
-                    groupId: data[index].groupID
-                }
-                output += Mustache.render(template, view);
+                        groupId: data[index].groupID
+                    }
+                    output += Mustache.render(template, view);
                 }
             }
             output += createGroupHtml;
             $("#portfolio1").html(output);
         },
-        error: function(data){
+        error: function (data) {
             console.log("" + data);
         }
     });
