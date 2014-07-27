@@ -2,11 +2,35 @@ INSERT INTO interview.Roles (Id, Name) VALUES ('1', 'ADMIN');
 INSERT INTO interview.Roles (Id, Name) VALUES ('2', 'USER');
 INSERT INTO interview.Roles (Id, Name) VALUES ('3', 'HR');
 
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199476e716901476e73c90c0000', 1, 'lucky@strike.com', 'PutinX', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Hccc', '1');
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199476e716901476e744ac20001', 1, 'voryi@ybivai.com', 'Jon', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Smith', '2');
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199476e716901476e74b9fc0003', 1, 'voryi2@ybivai.com', 'Mike', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Tyson', '3');
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199476e716901476e7511360005', 1, 'voryi3@ybivai.com', 'Alla', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Cruper', '1');
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('40288199477288a50147729125b00000', 1, 'dod@dod.com', 'Douche', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Bag', 1);
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('1', 1, 'lucky@strike.com', 'John', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Doe', '1');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('2', 1, 'va@gmail.com', 'Victoria', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Smith', '2');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('3', 1, 'bb@gmail.com', 'Bernardo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Batista', '3');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('4', 1, 'ac@ybivai.com', 'Alla', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Cruper', '1');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('5', 1, 'dod@dod.com', 'Francisco', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Chang', '1');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('6', 1, 'paoloA@gmail.com', 'Paolo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Accorti', '2');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('7', 1, 'fran@gmail.com', 'Fran', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Wilson', '3');
+
+INSERT INTO interview.questions VALUES ('1', 'What do you know about Java?', 1);
+INSERT INTO interview.questions VALUES ('2', 'What are the supported platforms by Java Programming Language?', 1);
+INSERT INTO interview.questions VALUES ('3', 'List any five features of Java?', 1);
+INSERT INTO interview.questions VALUES ('4', 'What kind of variables a class can consist of?', 1);
+INSERT INTO interview.questions VALUES ('5', 'What is a static variable?', 1);
+INSERT INTO interview.questions VALUES ('6', 'Why is String class considered immutable?', 1);
+INSERT INTO interview.questions VALUES ('7', 'Explain Set Interface.', 2);
+INSERT INTO interview.questions VALUES ('8', 'Difference between throw and throws?', 3);
+INSERT INTO interview.questions VALUES ('9', 'Describe life cycle of thread.', 4);
+INSERT INTO interview.questions VALUES ('10', 'Explain suspend() method under Thread class.', 4);
+
+INSERT INTO interview.users_questions VALUES ('1', '1');
+INSERT INTO interview.users_questions VALUES ('1', '2');
+INSERT INTO interview.users_questions VALUES ('1', '3');
+INSERT INTO interview.users_questions VALUES ('1', '4');
+INSERT INTO interview.users_questions VALUES ('1', '5');
+INSERT INTO interview.users_questions VALUES ('1', '6');
+INSERT INTO interview.users_questions VALUES ('1', '7');
+INSERT INTO interview.users_questions VALUES ('1', '8');
+INSERT INTO interview.users_questions VALUES ('1', '9');
+INSERT INTO interview.users_questions VALUES ('1', '10');
 
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('1', 'lefft@ya.ru', '', 0, 'Anton', 'Kravchuk');
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('2', 'vasya@pupkin.su',  '', 0, 'Vasya', 'Pupkin');
