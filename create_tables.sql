@@ -4,7 +4,8 @@ CREATE TABLE Applicants
 (
   Id VARCHAR(255) PRIMARY KEY NOT NULL,
   Email VARCHAR(255),
-  GroupId VARCHAR(255),
+  Phone VARCHAR(255),
+  Birthday BIGINT,
   Name VARCHAR(255),
   Surname VARCHAR(255)
 );
