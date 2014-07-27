@@ -49,6 +49,7 @@ public class ApplicantsNotificationTests extends BaseMVCTest {
 
     @Test
     public void testPostToApplicantsNotificationReturnsOK() throws Exception {
+        System.out.println(jsonInfo);
         mockMvc.perform(post("/applicantNotification").content(jsonInfo)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
