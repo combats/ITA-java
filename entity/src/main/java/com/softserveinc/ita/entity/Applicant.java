@@ -89,22 +89,22 @@ public class Applicant implements Serializable {
         Applicant applicant = (Applicant) o;
 
         if (birthday != applicant.birthday) return false;
-        if (!email.equals(applicant.email)) return false;
-        if (!id.equals(applicant.id)) return false;
-        if (!name.equals(applicant.name)) return false;
-        if (!phone.equals(applicant.phone)) return false;
-        if (!surname.equals(applicant.surname)) return false;
+        if (email != null ? !email.equals(applicant.email) : applicant.email != null) return false;
+        if (id != null ? !id.equals(applicant.id) : applicant.id != null) return false;
+        if (name != null ? !name.equals(applicant.name) : applicant.name != null) return false;
+        if (phone != null ? !phone.equals(applicant.phone) : applicant.phone != null) return false;
+        if (surname != null ? !surname.equals(applicant.surname) : applicant.surname != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = id.hashCode();
-        result = 31 * result + name.hashCode();
-        result = 31 * result + surname.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + phone.hashCode();
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (surname != null ? surname.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (int) (birthday ^ (birthday >>> 32));
         return result;
     }
