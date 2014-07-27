@@ -22,10 +22,10 @@
         <module>http-request-service</module>
         <module>interview-sheduller</module>
         <module>user-manager</module>
+        <module>group-manager</module>
         <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
-        <module>group-manager</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
     </modules>
