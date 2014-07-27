@@ -1,5 +1,6 @@
-'use strict';
-angular.module('timerModule', []).controller('timerCtrl',['$scope','$timeout','Appointment','StartTimeUpdate', function($scope,$timeout,Appointment,StartTimeUpdate) {
+
+angular.module('timerModule', []).
+controller('timerCtrl',['$scope','$timeout','Appointment','StartTimeUpdate', function($scope,$timeout,Appointment,StartTimeUpdate) {
 
 
     $scope.curentTime = Date.now();
