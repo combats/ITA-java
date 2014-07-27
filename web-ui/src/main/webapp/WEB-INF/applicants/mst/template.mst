@@ -4,7 +4,7 @@
     {{#offering}}{{^applicant.employed}}top{{/applicant.employed}}{{/offering}}"
         align="left">
         <span align="left">
-            {{^newApp}}{{applicant.name}} {{applicant.lastName}}{{/newApp}}
+            {{^newApp}}{{applicant.name}} {{applicant.surname}}{{/newApp}}
             {{#newApp}}[New applicant]{{/newApp}}
         </span>
         {{#interview}}
@@ -37,9 +37,9 @@
                             pattern="^([A-ZА-Я][а-яa-z']+)([- ]?[А-ЯA-Z][а-яa-z']+)*$"/>
                         </dd>
                         <dt>Last name:</dt>
-                        <dd><input class=" editable validatable" name="lastName" type="text"
+                        <dd><input class=" editable validatable" name="surname" type="text"
                             {{^newApp}}disabled{{/newApp}}
-                            value="{{applicant.lastName}}" pattern="^([A-ZА-Я][а-яa-z']+)([- ]?[А-ЯA-Z][а-яa-z']+)*$"/>
+                            value="{{applicant.surname}}" pattern="^([A-ZА-Я][а-яa-z']+)([- ]?[А-ЯA-Z][а-яa-z']+)*$"/>
                         </dd>
                         <dt>Phone:</dt>
                         <dd><input class=" editable validatable" name="phone" type="text"

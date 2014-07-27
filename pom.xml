@@ -23,11 +23,11 @@
         <module>interview-sheduller</module>
         <module>user-manager</module>
         <module>group-manager</module>
-        <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
+        <module>InterviewFactory</module>
     </modules>
 
     <dependencies>
