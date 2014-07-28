@@ -2,10 +2,11 @@ INSERT INTO interview.Roles (Id, Name) VALUES ('1', 'ADMIN');
 INSERT INTO interview.Roles (Id, Name) VALUES ('2', 'USER');
 INSERT INTO interview.Roles (Id, Name) VALUES ('3', 'HR');
 
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('1', 1, 'lucky@strike.com', 'John', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Doe', '1');
+
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('1', 1, 'lucky@strike.com', 'John', '', '0634942253', 'Doe', '1');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('2', 1, 'va@gmail.com', 'Victoria', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Smith', '2');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('3', 1, 'bb@gmail.com', 'Bernardo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Batista', '3');
-INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('4', 1, 'ac@ybivai.com', 'Alla', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Cruper', '1');
+INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('4', 1, 'petr@crupet.com', 'Petro', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Cruper', '1');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('5', 1, 'dod@dod.com', 'Francisco', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Chang', '1');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('6', 1, 'paoloA@gmail.com', 'Paolo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Accorti', '2');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('7', 1, 'fran@gmail.com', 'Fran', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Wilson', '3');

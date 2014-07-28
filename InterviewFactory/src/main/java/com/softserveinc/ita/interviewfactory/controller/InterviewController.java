@@ -68,6 +68,7 @@ public class InterviewController {
                                          @CookieValue("appointmentId") String appointmentId)
             throws WrongCriteriaException, HttpRequestException {
         questionInformation.setInterviewId(appointmentId);
+        interviewService.getInterviewByAppointmentID(appointmentId);
         questionsInformationServices.addQuestionInformation(questionInformation, userId);
         return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
     }
@@ -78,6 +79,7 @@ public class InterviewController {
                                                    @CookieValue("userId") String userId,
                                                    @CookieValue("appointmentId") String appointmentId) throws WrongCriteriaException, HttpRequestException {
         finalComment.setInterviewId(appointmentId);
+        interviewService.getInterviewByAppointmentID(appointmentId);
         questionsBlockServices.updateFinalCommentInQuestionsBlock(finalComment, userId);
     }
 
