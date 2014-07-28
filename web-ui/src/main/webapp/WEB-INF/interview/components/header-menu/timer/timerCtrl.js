@@ -16,7 +16,7 @@ controller('timerCtrl',['$scope','$timeout','Appointment', function($scope,$time
         Appointment.actualStartTime = $scope.curentTime;
       $scope.duration = Appointment.durationTime;
       Appointment.actualStartTime = $scope.curentTime
-       
+
 
     }
 
