@@ -19,6 +19,9 @@ $(function() {
     };
 
     function sendQuestion(question) {
+        if (!currentUser.questions) {
+            currentUser.questions = [];
+        }
         currentUser.questions[currentUser.questions.length] = question;
         var userInJson = JSON.stringify(currentUser);
         var success = true;
@@ -29,11 +32,12 @@ $(function() {
             async: false,
             type: "PUT",
             data: userInJson,
-            error: function (data, errorThrown) {
+            error: function (data, errorThrown, param3) {
                 success = false;
-                var failedAction = 'edit';
-                $("#userErrContent").append('Failed to ' + failedAction + ' user. Error: ' + errorThrown);
-                $("#dialog-form-error-user").dialog( "open" );
+
+                //TODO: replace with question specific error description
+                $("#questionsErrContent").append('Failed to add/edit question. Error: ' + param3.name + ' ; ' + data.responseText);
+                $("#dialog-form-error-question").dialog( "open" );
             }
         });
         return success;
@@ -68,11 +72,10 @@ $(function() {
             async: false,
             type: "PUT",
             data: userInJson,
-            error: function (data, errorThrown) {
+            error: function (data, errorThrown, param3) {
                 success = false;
-                var failedAction = 'edit';
-                $("#userErrContent").append('Failed to ' + failedAction + ' user. Error: ' + errorThrown);
-                $("#dialog-form-error-user").dialog( "open" );
+                $("#questionsErrContent").append('Failed to delete question(s). Error:'+ param3.name + ' ; ' + data.responseText);
+                $("#dialog-form-error-question").dialog( "open" );
             }
         });
         return success;
@@ -118,14 +121,19 @@ $(function() {
             }
         },
         close: function(){
-            $('#qBody').empty();
-            $( "#qWeight" ).empty();
+            $(".inputDLP").val('');
+            $( "label.error").hide();
+            $('#qWeight').raty({
+                numberMax : 4,
+                hints: ['low', 'medium', 'high', 'very high'],
+                starOff : 'questions/images/star-off.png',
+                starOn  : 'questions/images/star-on.png',
+                score: 0
+            });
         }
     });
 
-    //user management buttons
     $( "#addQButton" ).click(function(e) {
-        //$( "#dialog-form-add-user" ).data("user", null);
         $( "#dialog-form-add-question" ).data( "question", null );
         $( "#dialog-form-add-question" ).dialog( "open" );
     });
@@ -135,8 +143,6 @@ $(function() {
         if (!questions.length) {
             return;
         }
-
-        //$( "#dialog-form-add-user" ).data("user", null);
         $( "#dialog-form-add-question" ).data( "question", questions[0]);
         $( "#dialog-form-add-question" ).dialog( "open" );
     });
@@ -152,13 +158,15 @@ $(function() {
         e.preventDefault();
         e.stopPropagation();
 
-        var questionToSend = getQuestionFromForm();
-        if ($( "#dialog-form-add-question").data("question")) {
-            deleteQuestionsFromList (currentUser.questions, [$( "#dialog-form-add-question").data("question")]);
+        if($("#questionForm").valid()){
+            var questionToSend = getQuestionFromForm();
+            if ($( "#dialog-form-add-question").data("question")) {
+                deleteQuestionsFromList (currentUser.questions, [$( "#dialog-form-add-question").data("question")]);
+            }
+            sendQuestion(questionToSend);
+            $( "#dialog-form-add-question" ).dialog( "close" );
+            reloadPageContent();
         }
-        sendQuestion(questionToSend);
-        $( "#dialog-form-add-question" ).dialog( "close" );
-        reloadPageContent();
     });
 
     $( "#cancelQButton" ).click(function(e) {
@@ -171,6 +179,11 @@ $(function() {
         deleteQuestions();
         $( "#dialog-form-delete-question" ).dialog( "close" );
         reloadPageContent();
+    });
+
+    $( "#cancelDQButton" ).click(function(e) {
+        e.preventDefault();
+        $( "#dialog-form-delete-question" ).dialog( "close" );
     });
 
     function getCookie(name) {
@@ -193,7 +206,6 @@ $(function() {
                 };
             })
         }
-
         return questions;
     }
 
@@ -212,10 +224,25 @@ $(function() {
         return $(y).attr('name') - $(x).attr('name');
     }
 
+    $("#questionForm").validate({
+        rules: {
+            questionBody: {
+                required: true,
+                minlength: 5
+            }
+        },
+        messages: {
+            questionBody: {
+                required: "Question description is required.",
+                minlength: jQuery.validator.format("At least {0} characters required in \"Question\" field.")
+            }
+        }
+    });
+
     reloadPageContent();
 
     function reloadPageContent () {
-        questionsArray = [];
+        currentUser = {};
 
         $.ajax({
             async: false,
@@ -236,8 +263,8 @@ $(function() {
         $('#content').html(rendered);
 
         var table = $('#selectableList').DataTable({
-            'iDisplayLength': 1000,
-            scrollY:        400,
+            'iDisplayLength': 940,
+            scrollY:        430,
             "columnDefs": [ {
                 "targets": 2,
                 "orderable": true,
@@ -270,7 +297,9 @@ $(function() {
 
         $('#selectableList tbody').on( 'click', 'tr', function () {
             $(this).toggleClass('selected');
-            //$(this).attr('checkbox').checked = true;
+            /*var data = table.rows('.selected').data();
+            var data0 = data[0][0];
+            data0.('.check').checked = true;*/
         });
 
         $('#selectAll').click( function () {
@@ -283,10 +312,6 @@ $(function() {
                     this.checked = false;
                 });
             }
-        } );
+        });
     }
-
-    /*$('#button').click( function () {
-     alert( table.rows('.selected').data().length +' row(s) selected' );
-     } );*/
 });

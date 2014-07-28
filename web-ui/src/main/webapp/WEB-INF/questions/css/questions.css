@@ -72,13 +72,15 @@
 }
 
 #questions-box,
-#delete-question-box,
 #error-question-box{
     background-color: #dfdeda;
     display: inline-block;
     padding: 20px 40px 15px 40px;
 }
 
+#delete-question-box{
+    padding: 20px 70px 15px 70px;
+}
 #questions-box{
     width: 700px;
     height: 250px;
@@ -106,11 +108,11 @@
 #delete-question-box .btn,
 #error-question-box .btn{
     background-color: #ff6138;
-    margin-top: -20px;
+    margin-top: 30px;
 }
 #questions-box .saveButton{
     float: left;
-    margin-left: 420px;
+    margin-left: 190px;
 }
 #questions-box .cancelButton{
     float: right;
@@ -135,12 +137,13 @@
     border-color: #888e8d;
     float: right;
     margin: 10px 0;
+    margin-bottom: 20px;
     height: 125px;
     width: 540px;
     font-size: 14px;
-    padding-top: 0px;
+    /*padding-top: 0px;
     padding-bottom: 0px;
-    padding-left: 2px;
+    padding-left: 2px;*/
     padding: 5px 15px 5px 5px;
 }
 
@@ -171,7 +174,6 @@
     margin-bottom: 0px;
 }
 #questions-box .fieldgroup{
-    position: relative;
     height: 55px;
 }
 #questions-box .fieldgroup input[type="checkbox"] {
@@ -201,6 +203,7 @@
     float: left;
     margin-left: 20px;
     margin-top: 7px;
+    position: relative;
 }
 #selectableList_filter{
     display:none;
@@ -220,4 +223,22 @@
 .dataTables_wrapper .check{
     width: 15px;
     height: 15px;
+}
+
+#questions-box .fieldgroup label.error {
+    font-size: 11px;
+    color: #FB3A3A;
+    margin: 0px 0 0px 129px;
+    padding: 0;
+    text-align: right;
+    width: 220px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    line-height: 100%;
+}
+.starRow{
+    padding-left: 55px;
+    padding-right: 55px;
+    float: right;
 }

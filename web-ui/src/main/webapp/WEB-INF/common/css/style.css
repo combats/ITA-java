@@ -10736,16 +10736,3 @@ ul.commentList .oneComment:hover .metaIcon {
         right: 10px;
     }
 }
-
-.deleteButton {
-    float: right;
-}
-
-
-.editButton {
-    float: right;
-}
-
-#createGroup {
-    height: 401;
-}
