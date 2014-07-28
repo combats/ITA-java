@@ -10,7 +10,8 @@
     <script src="group/js/handler.js"></script>
     <script src="group/js/planned-handler.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
-    <script src="group/js/jquery.nicefileinput.min.js"></script>
+    <%--<script src="group/js/jquery.nicefileinput.min.js"></script>--%>
+    <script src="group/js/fileinput.js"></script>
 </head>
 <body>
 <a href="/ui/groups" class="done">Done</a>

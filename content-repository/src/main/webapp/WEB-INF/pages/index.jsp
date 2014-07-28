@@ -77,7 +77,7 @@
                 var formData = new FormData($(this)[0]);
                 var bla = $('#text_field1').val();
                 $.ajax({
-                    url: "http://localhost:8080/repository/imgfile/applicant/" + bla,
+                    url: "http://localhost:8080/repository/doc/" + bla,
                     type: "POST",
                     data: formData,
                     async: false,

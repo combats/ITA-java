@@ -1,3 +1,11 @@
+{{#data.length}}
+{{#edit}}
+<hr>
+{{/edit}}
+{{#schedule}}
+<hr>
+{{/schedule}}
+{{/data.length}}
 {{#data}}
 <div class="container ">
     <h3 class="accordion-section
@@ -58,14 +66,18 @@
                             before = "false"
                             value="{{applicant.birthday}}"/>
                         </dd>
-                    </dl>
-                    {{#newApp}}
-                    <form enctype="multipart/form-data">
-                        <input class="cv validatable" type="file" size="28"
-                               accept=".doc,.docx,.odt,.pdf,application/msword,
+                        {{#newApp}}
+                        <dt>CV:</dt>
+                        <dd>
+                            <form enctype="multipart/form-data">
+                                <span class="file-wrapper">
+  <input type="file" accept=".doc,.docx,.odt,.pdf,application/msword,
                                application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
-                    </form>
-                    {{/newApp}}
+  <span class="button">Choose a CV</span>
+</span></form>
+                        </dd>
+                        {{/newApp}}
+                    </dl>
                     {{^newApp}}
                     <a class="openCV" href="repository/doc/{{applicant.id}}"
                        target="_blank">Open CV</a>
@@ -146,11 +158,3 @@
     </div>
 </div>
 {{/data}}
-{{#data.length}}
-{{#newApp}}
-<hr>
-{{/newApp}}
-{{#schedule}}
-<hr>
-{{/schedule}}
-{{/data.length}}

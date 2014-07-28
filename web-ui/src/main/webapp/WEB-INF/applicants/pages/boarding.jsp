@@ -18,6 +18,9 @@
 <button id="notifications" class="scheduleView">Notifications</button>
 <br>
 
+<div class="nocontent">
+    <h3>Sorry, no content yet.</h3></div>
+<div class="accordion interviewed"></div>
 <div class="accordion interviewed"></div>
 <div id="dialog" title="Information">
     <p></p>

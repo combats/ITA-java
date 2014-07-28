@@ -10,7 +10,7 @@ $(function () {
             if (element['applicant']['status'] == 'SCHEDULED') {
                 $.ajax({
                     async: false,
-                    url: 'http://176.36.11.25:8080' + '/appointments/' + element.appointmentID,
+                    url: '/appointments/' + element.appointmentID,
                     dataType: 'json',
                     type: "GET",
                     success: function (appointment) {
@@ -55,7 +55,7 @@ beginInterview = function (target) {
     var appointmentID = $(target).closest('div.schedule').attr('appointmentID');
     $.ajax({
         async: false,
-        url: location.origin + '/ui/interview/?appointmentId=' + appointmentID,
+        url: '/ui/interview/?appointmentId=' + appointmentID,
         type: "GET"
     });
 };
@@ -84,24 +84,26 @@ postAppointment = function (event) {
         } else {
             var appointment = {
                 appointmentId: id,
+                groupId: groupID,
                 applicantId: $(event.target).closest('div.applicant').attr('applicantid'),
                 userIdList: userIDs,
                 durationTime: +$(durationTarget).val() * 60 * 1000,
                 startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
-                    url: 'http://176.36.11.25:8080' + '/appointments/',
+                    url: '/appointments/',
                     contentType: "application/json",
-                    dataType: "json",
                     data: JSON.stringify(appointment),
+                    dataType: "text",
                     type: requestType,
-                    success: function (newAppointment) {
+                    success: function (data) {
                         if (requestType == 'PUT') {
                             disableElements(event.target);
                             $("#dialog").data('content', 'Appointment successfuly scheduled/edited');
                             $('#dialog').dialog('open');
                         } else {
-                            createAppointment(newAppointment);
+                            appointment['id'] = data;
+                            createAppointment(appointment);
                         }
                     },
                     error: function () {
@@ -127,7 +129,7 @@ createAppointment = function (newApointment) {
     tosend[applicantID]['rank'] = -1;
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(tosend),
@@ -169,25 +171,9 @@ submitApplicant = function (event) {
             requestType = 'PUT';
             applicant['id'] = applicantID;
         }
-        if (requestType == 'POST') {
-            var formData = new FormData($('form')[0]);
-            $.ajax({
-                async: false,
-                url: location.origin + '/repository/doc/' + applicantID,
-                data: formData,
-                type: requestType,
-                cache: false,
-                contentType: false,
-                processData: false,
-                error: function () {
-                    $("#dialog").data('content', 'Failed to upload CV!');
-                    $('#dialog').dialog('open');
-                }
-            });
-        }
         $.ajax({
             async: false,
-            url: location.origin + '/applicants/',
+            url: '/applicants/',
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(applicant),
@@ -200,12 +186,15 @@ submitApplicant = function (event) {
                     $("#dialog").data('content', 'Information updated');
                     $('#dialog').dialog('open');
                 } else {
+                    postCV(newApp.id);
                     notify({
-                        applicantId: applicant.id,
+                        applicantId: newApp.id,
                         groupId: groupID,
                         responsibleHrId: getHRID()
                     });
                     $(event.target).closest('div.applicant').find('input').val('');
+                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-highlight');
+                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-error');
                     createApplicant(newApp);
                 }
             },
@@ -234,6 +223,25 @@ validateInput = function (target) {
         }
     });
     return result;
+};
+postCV = function (id) {
+    var formData = new FormData();
+    var file = $('input[type=file]').files[0];
+    formData.append('file', file);
+    $.ajax({
+        async: false,
+        url: '/repository/doc/' + id,
+        data: formData,
+        type: 'POST',
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function () {
+            $("#dialog").data('content', 'Failed to upload CV!');
+            $('#dialog').dialog('open');
+        }
+    });
 };
 validateDate = function (target) {
     var d = new Date();
@@ -282,7 +290,7 @@ createApplicant = function (input) {
     input.birthday = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(tosend),
@@ -339,7 +347,7 @@ parseAppointment = function (appointment) {
     var startDate = ('0' + date.getMonth() + 1).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
     var startTime = ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
     return {'availableUsers': availableUsers,
-        'scheduledUsers': scheduledUsers, 'duration': appointment.durationTime / 60 / 1000,
+        'scheduledUsers': scheduledUsers, 'durationTime': appointment.durationTime / 60 / 1000,
         'startDate': startDate,
         'startTime': startTime}
 };
