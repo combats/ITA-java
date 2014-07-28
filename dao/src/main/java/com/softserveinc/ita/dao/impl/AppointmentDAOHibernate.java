@@ -3,6 +3,7 @@ package com.softserveinc.ita.dao.impl;
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -44,8 +45,10 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
     }
 
     @Override
-    public void updateAppointment(Appointment appointment) {
-        sessionFactory.getCurrentSession().update(appointment);
+    public Appointment updateAppointment(Appointment appointment) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(appointment);
+        return (Appointment)session.get(Appointment.class, appointment.getAppointmentId());
     }
 
     @Override

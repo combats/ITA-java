@@ -21,11 +21,9 @@ function viewGroups() {
     else {
         getGroupsUrl = "/groups/status/" + selectedStatus;
     }
-    if (selectedStatus == "PLANNED") {
-        jQuery.get("groups/template/createGroupHtml", function (data) {
-            createGroupHtml = data;
-        });
-    }
+    jQuery.get("groups/template/createGroupHtml", function (data) {
+        createGroupHtml = data;
+    });
     $.ajax({
         url: location.origin + getGroupsUrl,
         dataType: "json",

@@ -52,7 +52,7 @@
         };
 
         $scope.isAnyChangesQuestion = function(q){
-            if($scope.questions){
+            if(!$scope.questions){
                 return false;
             }
             var i=0, len=$scope.questions.length;
