@@ -1,27 +1,47 @@
-angular.module('interview').factory('Questions',function() {
-    return {
-        get: function(){
-            return [{
-            question: "When did WWII start?",
-            comment: "lol, this guy is so stupid",
-            mark: 8,
-            weight: 4,
-            active: true
-    },
-        {
-            question: "When did WWI start?",
-            comment: "lol, this guy is not stupid",
-            mark: 7,
-            weight: 3,
-            answered: true
-    },
-        {
-            question: "When did we start?",
-            comment: "lol, this guy is very stupid",
-            mark: 6,
-            weight: 1
+angular.module('chatMod').factory('ChatService', function() {
+
+    var service = {};
+
+    service.connect = function(appointmentId) {
+
+        if(service.websocket) { return; }
+
+        console.log("ws://176.36.11.25/chat/websocket/" + appointmentId);
+
+        var websocket = new WebSocket("ws://176.36.11.25/chat/websocket/ " + appointmentId);
+
+        var ONLINE;
+
+        window.onbeforeunload = function() {
+            websocket.close();
         }
-                   ];
+
+        websocket.onopen = function(event) {
+            console.log("Connection succesful");
+            service.callback(websocket.readyState);
+        };
+
+        websocket.onclose = function(event){
+            service.callback('Close');
         }
+        websocket.onerror = function(event) {
+            service.callback('Error');
+        }
+
+        websocket.onmessage = function(event) {
+            service.callback(JSON.parse(event.data));
+        };
+
+        service.websocket = websocket;
     }
+
+    service.send = function(message) {
+        service.websocket.send(message);
+    }
+
+    service.subscribe = function(callback) {
+        service.callback = callback;
+    }
+
+    return service;
 })

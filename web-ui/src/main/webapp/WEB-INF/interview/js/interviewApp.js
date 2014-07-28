@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('interview', ['ui.bootstrap', 'questionMod', 'applicantPopupModule', 'finalComMod']);
+    var app = angular.module('interview', ['ui.bootstrap', 'questionMod', 'applicantPopupModule', 'finalComMod','chatMod']);
 
     //be sure to inject $scope and $location
     var changeLocation = function (url, forceReload) {
