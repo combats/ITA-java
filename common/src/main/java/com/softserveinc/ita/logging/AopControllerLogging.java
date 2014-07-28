@@ -50,6 +50,7 @@ public class AopControllerLogging {
         }
         logMessage.append(" ********START SNIPPET********\n");
         logMessage.append(requestMappingMethod + " request to the URL: " + controllerURL + methodURL + "\n");
+        logMessage.append(" from class: " + joinPoint.getTarget().getClass().getName()+"\n");
         if (realParameters.length!=0) {
             logMessage.append(" Passed parameter is (are): ");
             for (Object o : realParameters) {
