@@ -70,10 +70,14 @@ public class InterviewServiceImpl implements InterviewService {
     @Override
     public Interview getInterviewByAppointmentID(String appointmentId) throws WrongCriteriaException, HttpRequestException {
         Interview interview = interviewDAO.getInterviewByAppointmentId(appointmentId);
-        if (interview == null){
+        try{
+            interview.getInterviewId();
+        }
+        catch(Exception e){
             String interviewId = putInterview(appointmentId, InterviewType.INTERVIEW_WITHOUT_QUESTIONS);
             interview = interviewDAO.getInterviewByAppointmentId(interviewId);
         }
+
         return interview;
     }
 
