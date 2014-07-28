@@ -1,6 +1,6 @@
 
 angular.module('timerModule', []).
-controller('timerCtrl',['$scope','$timeout','Appointment', function($scope,$timeout,Appointment) {
+controller('timerCtrl',['$scope','$timeout','Appointment','StartTimeUpdate', function($scope,$timeout,Appointment,StartTimeUpdate) {
 
 
     $scope.curentTime = Date.now();
