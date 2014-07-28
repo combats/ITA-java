@@ -79,7 +79,7 @@
                         {{/newApp}}
                     </dl>
                     {{^newApp}}
-                    <a class="openCV" href="repository/doc/{{applicant.id}}"
+                    <a class="openCV" href="/repository/doc/{{applicant.id}}"
                        target="_blank">Open CV</a>
                     {{^rank}}
                     {{^offering}}

@@ -88,7 +88,7 @@ postAppointment = function (event) {
                 applicantId: $(event.target).closest('div.applicant').attr('applicantid'),
                 userIdList: userIDs,
                 durationTime: +$(durationTarget).val() * 60 * 1000,
-                startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
+                startTime: new Date($(dateTarget).val()).UTC() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
                     url: '/appointments/',
@@ -102,7 +102,7 @@ postAppointment = function (event) {
                             $("#dialog").data('content', 'Appointment successfuly scheduled/edited');
                             $('#dialog').dialog('open');
                         } else {
-                            appointment['id'] = data;
+                            appointment['appointmentId'] = data;
                             createAppointment(appointment);
                         }
                     },
@@ -116,10 +116,16 @@ postAppointment = function (event) {
     }
 };
 disableElements = function (item) {
-    var parentdiv = $(item).closest('div.schedule');
-    $(parentdiv).find("input.schedulable").prop('disabled', true);
-    $(parentdiv).find('button.schedulable').button({disabled: true});
-    $(parentdiv).find('.editAppointment').button({disabled: false});
+    var scheduleParentDiv = $(item).closest('div.schedule');
+    var infoParentDiv = $(item).closest('div.info');
+    if (scheduleParentDiv) {
+        $(scheduleParentDiv).find("input.schedulable").prop('disabled', true);
+        $(scheduleParentDiv).find('button.schedulable').button({disabled: true});
+        $(scheduleParentDiv).find('.editAppointment').button({disabled: false});
+    }
+    if (infoParentDiv) {
+        $(infoParentDiv).find('input').prop('disabled', true);
+    }
 };
 createAppointment = function (newApointment) {
     var tosend = {};
@@ -164,7 +170,7 @@ submitApplicant = function (event) {
     var inputDate = parentdiv.find('input.date');
     if (validateInput(inputData) && validateDate(inputDate)) {
         var applicant = buildApplicant(inputData);
-        applicant['birthday'] = new Date($(inputDate).val()).getTime();
+        applicant['birthday'] = new Date($(inputDate).val()).UTC();
         applicant['id'] = "";
         var applicantID = $(event.target).closest('div.applicant').attr('applicantID');
         if (applicantID) {
@@ -180,21 +186,22 @@ submitApplicant = function (event) {
             type: requestType,
             success: function (newApp) {
                 if (requestType == 'PUT') {
+                    disableElements(event.target);
                     updateApplicant(newApp);
                     $(event.target).closest('div').find('button').button({'disabled': false});
                     $(event.target).parent().button({'disabled': true});
                     $("#dialog").data('content', 'Information updated');
                     $('#dialog').dialog('open');
                 } else {
+                    $(event.target).closest('div.applicant').find('input').val('');
+                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-highlight');
+                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-error');
                     postCV(newApp.id);
                     notify({
                         applicantId: newApp.id,
                         groupId: groupID,
                         responsibleHrId: getHRID()
                     });
-                    $(event.target).closest('div.applicant').find('input').val('');
-                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-highlight');
-                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-error');
                     createApplicant(newApp);
                 }
             },
@@ -287,7 +294,7 @@ createApplicant = function (input) {
     tosend[input.id]['status'] = input['status'];
     tosend[input.id]['rank'] = -1;
     var date = new Date(input.birthday);
-    input.birthday = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+    input.birthday = ('0' + date.getUTCMonth() + 1).slice(-2) + '/' + ('0' + date.getUTCDate()).slice(-2) + '/' + date.getUTCFullYear();
     $.ajax({
         async: false,
         url: '/groups/' + groupID + '/applicants',
@@ -344,8 +351,8 @@ parseAppointment = function (appointment) {
         availableUsers.push(clone);
     });
     var date = new Date(appointment.startTime);
-    var startDate = ('0' + date.getMonth() + 1).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
-    var startTime = ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
+    var startDate = ('0' + date.getUTCMonth() + 1).slice(-2) + '/' + ('0' + date.getUTCDate()).slice(-2) + '/' + date.getUTCFullYear();
+    var startTime = ('0' + date.getUTCHours()).slice(-2) + ':' + ('0' + date.getUTCMinutes()).slice(-2);
     return {'availableUsers': availableUsers,
         'scheduledUsers': scheduledUsers, 'durationTime': appointment.durationTime / 60 / 1000,
         'startDate': startDate,

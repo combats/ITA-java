@@ -48,7 +48,7 @@ loadApplicantsByStatus = function (status) {
                 type: "GET",
                 success: function (data) {
                     var date = new Date(data.birthday);
-                    data['birthday'] = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+                    data['birthday'] = date.getUTCMonth() + '/' + date.getUTCDate() + '/' + date.getUTCFullYear();
                     data['rank'] = applicantsIDList[property]['rank'];
                     data['status'] = status;
                     var appID = {};
