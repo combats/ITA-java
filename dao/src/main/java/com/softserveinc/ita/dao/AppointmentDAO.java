@@ -14,7 +14,7 @@ public interface AppointmentDAO {
 
     void removeAppointmentById(String appointmentId);
 
-    void updateAppointment(Appointment appointment);
+    Appointment updateAppointment(Appointment appointment);
 
     String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId);
 

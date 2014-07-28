@@ -250,7 +250,7 @@ public class AppointmentTests extends BaseMVCTest {
     }
 
     @Test
-    public void testUpdateAppointmentAndExpectStatusNoContent() throws Exception {
+    public void testUpdateAppointmentAndExpectStatusIsOk() throws Exception {
         List<Appointment> appointments = new ArrayList<>();
         int TOMORROW = 24 * 60 * 60 * 1000;
         List<String> users = new ArrayList<>();
@@ -263,7 +263,7 @@ public class AppointmentTests extends BaseMVCTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(appointmentJson)
         )
-                .andExpect(status().is(204));
+                .andExpect(status().isOk());
     }
 
     @Test
