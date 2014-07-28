@@ -38,31 +38,31 @@
 
             var Appointment = {};
             $http.get("http://176.36.11.25:8080/appointments/"+appointmentId)
-            .then(function (response) {
-                app.value('Appointment', response.data);
-                Appointment = response.data;
-                //TODO: this is where we find applicant id and stuff.
-                // ....
-                //we should find these to calculate applicant we need to get and user
-            })
-            .then(function(){
-                var initRequests = [
-                    $http.get('http://176.36.11.25:8080/users/'+userId)
-                    //$http.get('/users/'+userId)
-                    .then(function (response) {
-                        app.value('User', response.data);
-                    }),
-                    $http.get('http://176.36.11.25:8080/applicants/'+ Appointment.applicantId)
-                    .then(function (response) {
-                        app.value('Applicant', response.data);
-                    })
-                ];
-                $q.all(initRequests)
-                    .then(function() {
-                    //Afterall, we are ready to initialize Ng-app.
-                    angular.bootstrap(document, ['interview']);
+                .then(function (response) {
+                    app.value('Appointment', response.data);
+                    Appointment = response.data;
+                    //TODO: this is where we find applicant id and stuff.
+                    // ....
+                    //we should find these to calculate applicant we need to get and user
+                })
+                .then(function(){
+                    var initRequests = [
+                        $http.get('http://176.36.11.25:8080/users/'+userId)
+                            //$http.get('/users/'+userId)
+                            .then(function (response) {
+                                app.value('User', response.data);
+                            }),
+                        $http.get('http://176.36.11.25:8080/applicants/'+ Appointment.applicantId)
+                            .then(function (response) {
+                                app.value('Applicant', response.data);
+                            })
+                    ];
+                    $q.all(initRequests)
+                        .then(function() {
+                            //Afterall, we are ready to initialize Ng-app.
+                            angular.bootstrap(document, ['interview']);
+                        });
                 });
-            });
         }
     );
 
@@ -73,8 +73,8 @@
 
         $scope.openAppPop = function () {
 
-             $modal.open({templateUrl: 'interview/components/header-menu/applicant/applicantPopup.html',
-                          controller: 'applicantPopupCtrl'});
+            $modal.open({templateUrl: 'interview/components/header-menu/applicant/applicantPopup.html',
+                controller: 'applicantPopupCtrl'});
 
         };
         $scope.openFCPop = function () {
