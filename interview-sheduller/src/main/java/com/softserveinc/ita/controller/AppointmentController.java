@@ -2,7 +2,6 @@ package com.softserveinc.ita.controller;
 
 import com.softserveinc.ita.entity.Appointment;
 import com.softserveinc.ita.service.AppointmentService;
-import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -64,9 +63,11 @@ public class AppointmentController {
         return appointmentService.getAppointmentsByDate(date);
     }
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateAppointment(@RequestBody @Valid Appointment appointment) {
-        appointmentService.updateAppointment(appointment);
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Appointment updateAppointment(@RequestBody @Valid Appointment appointment) {
+        return appointmentService.updateAppointment(appointment);
+
     }
 
     @RequestMapping(method = RequestMethod.GET)

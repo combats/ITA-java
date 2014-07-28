@@ -102,7 +102,7 @@ public class AppointmentServiceMock implements AppointmentService {
     }
 
     @Override
-    public void updateAppointment(Appointment appointment) {
+    public Appointment updateAppointment(Appointment appointment) {
         List<Appointment> appointments = new ArrayList<>();
         int TOMORROW = 24 * 60 * 60 * 1000;
         List<String> users = new ArrayList<>();
@@ -114,6 +114,7 @@ public class AppointmentServiceMock implements AppointmentService {
         if (!appointment1.equals(appointments.get(0))) {
             throw new RuntimeException();
         }
+        return null;
     }
 
     @Override

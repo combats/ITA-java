@@ -71,7 +71,6 @@ public class AppointmentDAOTests extends BaseDAOTest {
         Session session = sessionFactory.getCurrentSession();
         String appointmentId = (String) session.save(expected);
         expected.setActualStartTime(1000L);
-        appointmentDAO.updateAppointment(expected);
         Appointment actual = (Appointment)session.load(Appointment.class, appointmentId);
         assertEquals(expected, actual);
     }
