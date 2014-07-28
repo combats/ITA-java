@@ -14,6 +14,7 @@
 </head>
 <body>
 <button id="submitList" class="scheduleView">Submit</button>
+<a href="/ui/groups" class="done">Done</a>
 <br>
 
 <div class="nocontent">

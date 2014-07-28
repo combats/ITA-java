@@ -226,7 +226,7 @@ validateInput = function (target) {
 };
 postCV = function (id) {
     var formData = new FormData();
-    var file = $('input[type=file]').files[0];
+    var file = $('input:file')[0].files[0];
     formData.append('file', file);
     $.ajax({
         async: false,

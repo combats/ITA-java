@@ -16,6 +16,7 @@
 <button id="sort" class="scheduleView">Sort</button>
 <button id="submitList" class="scheduleView">Submit</button>
 <button id="notifications" class="scheduleView">Notifications</button>
+<a href="/ui/groups" class="done">Done</a>
 <br>
 
 <div class="nocontent">
