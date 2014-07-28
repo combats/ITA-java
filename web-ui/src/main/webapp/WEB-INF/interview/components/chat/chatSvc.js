@@ -2,7 +2,6 @@ angular.module('chatMod').factory('ChatService', function() {
 
     var service = {};
 
-
     service.connect = function(appointmentId) {
 
         if(service.websocket) { return; }
