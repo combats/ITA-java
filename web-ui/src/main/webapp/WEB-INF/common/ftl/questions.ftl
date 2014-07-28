@@ -15,6 +15,10 @@
 
     <script src="questions/js/jquery.raty.js"></script>
     <script src="questions/js/jquery_dataTables.js"></script>
+
+    <script src="/common/js/jquery.form.js"></script>
+    <script src="/common/js/jquery.validate.js"></script>
+
     <script src="questions/js/questions.js"></script>
 
     <div class="container">
@@ -48,7 +52,7 @@
     <div id="dialog-form-add-question" class="dialog" style="padding: 0px;">
         <div class="inner">
             <div id="questions-box">
-                <div id="questionForm">
+                <form id="questionForm" method="POST">
                     <H2><div id="formTitle"></div></H2>
                     <fieldset>
                         <div class="fieldgroup">
@@ -69,7 +73,7 @@
                                 </label>
                             </div>
                             <div class="fields">
-                                <div name="questionWeight" id="qWeight" class="inputDLP"/></div>
+                                <div name="questionWeight" id="qWeight" class="inputDLP"/>
                             </div>
                         </div>
                         
@@ -77,7 +81,7 @@
                         <button id="saveQButton" class="btn saveButton">SAVE</button>
                         <button id="cancelQButton" class="btn cancelButton">CANCEL</button>
                     </fieldset>
-                </div>
+                </form>
             </div>
         </div>
     </div>

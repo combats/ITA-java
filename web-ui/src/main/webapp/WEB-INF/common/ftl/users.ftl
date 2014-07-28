@@ -11,8 +11,8 @@
     <script src="/common/js/mustache.js"></script>
     <script src="/common/js/jquery-ui.js"></script>
 
-    <script src="user/js/jquery.form.js"></script>
-    <script src="user/js/jquery.validate.js"></script>
+    <script src="/common/js/jquery.form.js"></script>
+    <script src="/common/js/jquery.validate.js"></script>
     <script src="user/js/users.js"></script>
 
     <div class="container">
