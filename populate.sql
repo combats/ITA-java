@@ -29,9 +29,6 @@ INSERT INTO interview.Users_Questions VALUES ('4', '4');
 INSERT INTO interview.Users_Questions VALUES ('5', '5');
 INSERT INTO interview.Users_Questions VALUES ('6', '6');
 INSERT INTO interview.Users_Questions VALUES ('7', '7');
-INSERT INTO interview.Users_Questions VALUES ('8', '8');
-INSERT INTO interview.Users_Questions VALUES ('9', '9');
-INSERT INTO interview.Users_Questions VALUES ('10', '10');
 
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('1', 'lefft@ya.ru', '', 0, 'Anton', 'Kravchuk');
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('2', 'vasya@pupkin.su',  '', 0, 'Vasya', 'Pupkin');
@@ -78,5 +75,3 @@ INSERT INTO interview.ApplicantsWithStatus (Id, ApplicantsStatus, ApplicantId) V
 
 INSERT INTO interview.Interview (interview_id, InterviewType) VALUES ('1', 0);
 INSERT INTO interview.Interview (interview_id, InterviewType) VALUES ('2', 0);
-
-INSERT INTO interview.Appointments (Id, ActualStartTime, ApplicantId, DurationTime, GroupId, StartTime) VALUES ('4028819947789da3014778a3bf850000', 0, '1', 1800000, 'Апликант', 1407672000000);
