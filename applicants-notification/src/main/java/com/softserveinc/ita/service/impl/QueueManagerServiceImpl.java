@@ -5,9 +5,9 @@ import com.softserveinc.ita.service.QueueManager;
 import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.stereotype.Service;
-
+import org.apache.log4j.Logger;
 import java.util.List;
-import java.util.logging.Logger;
+
 
 @Service
 public class QueueManagerServiceImpl implements QueueManager {
