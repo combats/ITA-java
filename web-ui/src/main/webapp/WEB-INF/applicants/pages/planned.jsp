@@ -13,6 +13,9 @@
     <script src="group/js/jquery.nicefileinput.min.js"></script>
 </head>
 <body>
+<a href="/ui/groups" class="done">Done</a>
+<br>
+
 <div class="accordion newapp"></div>
 <div class="accordion not_scheduled"></div>
 <div class="accordion scheduled"></div>

@@ -64,7 +64,7 @@ postAppointment = function (event) {
     var id = "";
     if ($(event.target).parent('button').hasClass("schedulable")) {
         requestType = "PUT";
-        id = $(event.target).closest('div.schedule').attr('appointmentid');
+        id = $(event.target).closest('div.schedule').attr('appointmentID');
     }
     var target = $(event.target);
     var parentdiv = $(target).parent().closest("div.schedule");
@@ -83,10 +83,10 @@ postAppointment = function (event) {
             $('#dialog').dialog('open');
         } else {
             var appointment = {
-                id: id,
+                appointmentId: id,
                 applicantId: $(event.target).closest('div.applicant').attr('applicantid'),
                 userIdList: userIDs,
-                duration: +$(durationTarget).val() * 60 * 1000,
+                durationTime: +$(durationTarget).val() * 60 * 1000,
                 startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
@@ -173,7 +173,7 @@ submitApplicant = function (event) {
             var formData = new FormData($('form')[0]);
             $.ajax({
                 async: false,
-                url: location.origin + '/repo/doc/' + applicantID,
+                url: location.origin + '/repository/doc/' + applicantID,
                 data: formData,
                 type: requestType,
                 cache: false,
@@ -339,7 +339,7 @@ parseAppointment = function (appointment) {
     var startDate = ('0' + date.getMonth() + 1).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
     var startTime = ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
     return {'availableUsers': availableUsers,
-        'scheduledUsers': scheduledUsers, 'duration': appointment.duration / 60 / 1000,
+        'scheduledUsers': scheduledUsers, 'duration': appointment.durationTime / 60 / 1000,
         'startDate': startDate,
         'startTime': startTime}
 };

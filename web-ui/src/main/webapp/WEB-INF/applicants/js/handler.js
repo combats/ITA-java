@@ -65,7 +65,7 @@ loadApplicantsByStatus = function (status) {
                             data['employed'] = true;
                         case 'PASSED':
                         case 'NOT_PASSED':
-                            data.photo = location.origin + '/repo/img/applicant/' + property + '/height=200&width=150';
+                            data.photo = '/repository/imgfile/applicant/' + property + '?height=200&width=150';
                             appID = loadAppointmentID(property);
                             element = {applicant: data, appointmentID: appID};
                             break;
@@ -299,7 +299,7 @@ loadAppointmentID = function (applicantID) {
 notify = function (object) {
     $.ajax({
         async: false,
-        url: location.origin + '/applicantNotification',
+        url: location.origin + '/notification',
         type: 'POST',
         data: JSON.stringify(object),
         success: function () {

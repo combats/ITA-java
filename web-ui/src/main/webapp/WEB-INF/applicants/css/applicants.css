@@ -1,4 +1,4 @@
-span.points {
+span.points, .done {
     float: right;
 }
 

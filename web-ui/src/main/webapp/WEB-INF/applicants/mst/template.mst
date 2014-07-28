@@ -52,7 +52,7 @@
                             value="{{applicant.email}}"
                             pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$"/>
                         </dd>
-                        <dt>Birth date:</dt>
+                        <dt>Birthday:</dt>
                         <dd><input class="birthday editable date" type="text"
                             {{^newApp}}disabled{{/newApp}}
                             before = "false"
@@ -61,11 +61,13 @@
                     </dl>
                     {{#newApp}}
                     <form enctype="multipart/form-data">
-                        <input class="cv validatable" type="file" size="28"/>
+                        <input class="cv validatable" type="file" size="28"
+                               accept=".doc,.docx,.odt,.pdf,application/msword,
+                               application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
                     </form>
                     {{/newApp}}
                     {{^newApp}}
-                    <a class="openCV" href="repo/doc/{{applicant.id}}"
+                    <a class="openCV" href="repository/doc/{{applicant.id}}"
                        target="_blank">Open CV</a>
                     {{^rank}}
                     {{^offering}}
@@ -75,7 +77,7 @@
                     {{/rank}}
                     {{/newApp}}
                     {{#newApp}}
-                    <button class="add">Add</button>
+                    <button class="add">Submit</button>
                     {{/newApp}}
                 </div>
             </div>
@@ -91,7 +93,7 @@
                     <dt>Duration:</dt>
                     <dd><input type="text"
                                class="duration validatable {{^newApp}}schedulable{{/newApp}}"
-                               value="{{appointment.duration}}" pattern="^[1-9][0-9]*$"
+                               value="{{appointment.durationTime}}" pattern="^[1-9][0-9]*$"
                         {{#edit}}disabled{{/edit}}/>
                     </dd>
                     <dt>Time:</dt>
