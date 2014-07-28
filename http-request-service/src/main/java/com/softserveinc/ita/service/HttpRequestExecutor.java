@@ -17,6 +17,8 @@ public interface HttpRequestExecutor {
 
     <T> T getObjectByID(String id, Class<T> objectClass) throws HttpRequestException;
 
+    <T> T postNewObject(String urlPath, Object request, Class<T> clazz) throws HttpRequestException;
+
     RestTemplate getRestTemplate();
 
     String getBaseUrl();

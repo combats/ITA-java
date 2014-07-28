@@ -22,12 +22,13 @@
         <module>http-request-service</module>
         <module>interview-sheduller</module>
         <module>user-manager</module>
-        <module>group-manager</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
+        <module>group-manager</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
         <module>InterviewFactory</module>
+        <module>integrationTests</module>
     </modules>
 
     <dependencies>
@@ -153,6 +154,10 @@
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/integration/**</exclude>
+                    </excludes>
+
                 </configuration>
             </plugin>
         </plugins>
