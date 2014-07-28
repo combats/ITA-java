@@ -8,6 +8,7 @@ import javax.websocket.EndpointConfig;
 
 public class MessageDecoder implements Decoder.Text<Message> {
 
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(getClass());
     @Override
     public Message decode(String jsonMessage) throws DecodeException {
 
@@ -33,12 +34,12 @@ public class MessageDecoder implements Decoder.Text<Message> {
 
     @Override
     public void init(EndpointConfig ec) {
-        System.out.println("MessageDecoder -init method called");
+        logger.info("MessageDecoder -init method called");
     }
 
     @Override
     public void destroy() {
-        System.out.println("MessageDecoder - destroy method called");
+        logger.info("MessageDecoder - destroy method called");
     }
 
 }

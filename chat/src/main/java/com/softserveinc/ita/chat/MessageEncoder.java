@@ -8,6 +8,8 @@ import javax.websocket.EndpointConfig;
 
 public class MessageEncoder implements Encoder.Text<Message> {
 
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(getClass());
+
     @Override
     public String encode(Message message) throws EncodeException {
 
@@ -23,12 +25,12 @@ public class MessageEncoder implements Encoder.Text<Message> {
 
     @Override
     public void init(EndpointConfig ec) {
-        System.out.println("MessageEncoder - init method called");
+        logger.info("MessageEncoder - init method called");
     }
 
     @Override
     public void destroy() {
-        System.out.println("MessageEncoder - destroy method called");
+        logger.info("MessageEncoder - destroy method called");
     }
 
 }

@@ -11,26 +11,28 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 @ServerEndpoint(value = "/websocket/{appointmentId}", encoders = { MessageEncoder.class },
-                                       decoders = { MessageDecoder.class })
+        decoders = { MessageDecoder.class })
 public class ChatEndpoint {
 
     private static Set<Session> connections = java.util.Collections.synchronizedSet(new HashSet<Session>());
     private static Map<Session, String> clients = new ConcurrentHashMap<>();
     private Session currentSession;
-    private String currentNickName;
+
     private boolean online = false;
 
-	@OnMessage
-	public void onMessage(Message message, Session session) throws IOException, EncodeException {
+    private final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(getClass());
 
-        currentNickName = message.getNickname();
+    @OnMessage
+    public void onMessage(Message message, Session session) throws IOException, EncodeException {
+
+        String currentNickName = message.getNickname();
 
         if (!clients.containsValue(currentNickName)) {
 
             clients.put(currentSession, message.getNickname());
 
+            logger.info(message.getNickname() + " added to clients collections");
             online = true;
-
             sentToAllExceptThis(session, joinUser(currentNickName));
 
         } else {
@@ -40,37 +42,37 @@ public class ChatEndpoint {
             response.setText(message.getText());
             response.setTime(message.getTime());
 
-            System.out.println(currentNickName + currentSession.getId());
-
             if (clients.get(currentSession).equals(message.getNickname())) {
                 response.setSent(false);
             } else response.setSent(true);
 
+            logger.info("Sent message to all from " + currentNickName + " session: " + currentSession.getId());
             sentToAll(session, response);
         }
 
     }
-	@OnOpen
-	public void onOpen(Session session, @PathParam("appointmentId") final String appointment) {
-	    connections.add(session);
+    @OnOpen
+    public void onOpen(Session session, @PathParam("appointmentId") final String appointment) {
+        connections.add(session);
         this.currentSession = session;
-        System.out.println(appointment);
+        logger.info("New session added and current session is: " + currentSession);
+
         session.getUserProperties().put("appointmentId", appointment);
+        logger.info("Current appointment is: " + appointment);
     }
 
-	@OnClose
-	public void onClose(Session session) {
-
+    @OnClose
+    public void onClose(Session session) {
         String nick = clients.get(session);
-
         connections.remove(session);
+        logger.info("Connection" + session.getId() + " was removed");
 
         clients.remove(session);
+        logger.info("Client" + nick + " was removed");
 
         quitUser(nick);
-
-        System.out.println("Connection closed");
-	}
+        logger.info("Connection closed" + session.getId());
+    }
 
     public Message joinUser(String nick){
 
@@ -98,7 +100,7 @@ public class ChatEndpoint {
                 s.getAsyncRemote().sendObject(response);
             }
         }
-   }
+    }
 
     private void sentToAllExceptThis(Session session, Message response){
 
