@@ -23,15 +23,15 @@ INSERT INTO interview.Questions VALUES ('9', 'Describe life cycle of thread.', 4
 INSERT INTO interview.Questions VALUES ('10', 'Explain suspend() method under Thread class.', 4);
 
 INSERT INTO interview.Users_Questions VALUES ('1', '1');
-INSERT INTO interview.Users_Questions VALUES ('1', '2');
-INSERT INTO interview.Users_Questions VALUES ('1', '3');
-INSERT INTO interview.Users_Questions VALUES ('1', '4');
-INSERT INTO interview.Users_Questions VALUES ('1', '5');
-INSERT INTO interview.Users_Questions VALUES ('1', '6');
-INSERT INTO interview.Users_Questions VALUES ('1', '7');
-INSERT INTO interview.Users_Questions VALUES ('1', '8');
-INSERT INTO interview.Users_Questions VALUES ('1', '9');
-INSERT INTO interview.Users_Questions VALUES ('1', '10');
+INSERT INTO interview.Users_Questions VALUES ('2', '2');
+INSERT INTO interview.Users_Questions VALUES ('3', '3');
+INSERT INTO interview.Users_Questions VALUES ('4', '4');
+INSERT INTO interview.Users_Questions VALUES ('5', '5');
+INSERT INTO interview.Users_Questions VALUES ('6', '6');
+INSERT INTO interview.Users_Questions VALUES ('7', '7');
+INSERT INTO interview.Users_Questions VALUES ('8', '8');
+INSERT INTO interview.Users_Questions VALUES ('9', '9');
+INSERT INTO interview.Users_Questions VALUES ('10', '10');
 
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('1', 'lefft@ya.ru', '', 0, 'Anton', 'Kravchuk');
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('2', 'vasya@pupkin.su',  '', 0, 'Vasya', 'Pupkin');
@@ -64,15 +64,9 @@ INSERT INTO interview.Appointments (Id, ActualStartTime, ApplicantId, DurationTi
 
 
 INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a3bf850000', '1');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a3bf850000', '2');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a3eb8c0001', '3');
 INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a3eb8c0001', '4');
 INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a4019e0002', '5');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a4019e0002', '6');
 INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a416b70003', '7');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a416b70003', '8');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a6d52d0004', '1');
-INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a6d52d0004', '2');
 INSERT INTO interview.Appointment_userIdList (Appointment_Id, UserIdList) VALUES ('4028819947789da3014778a6d52d0004', '3');
 
 
