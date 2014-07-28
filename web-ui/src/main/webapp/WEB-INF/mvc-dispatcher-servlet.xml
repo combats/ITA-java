@@ -19,6 +19,7 @@
 
     <mvc:resources location="/WEB-INF/common/" mapping="/common/**"/>
     <mvc:resources location="/WEB-INF/login/" mapping="/login/**"/>
+    <mvc:resources location="/WEB-INF/errors/" mapping="/errors/**"/>
     <mvc:resources location="/WEB-INF/interview/" mapping="/ui/interview/**"/>
     <mvc:resources location="/WEB-INF/applicants/" mapping="/ui/group/**"/>
     <mvc:resources location="/WEB-INF/groups/" mapping="/ui/groups/**"/>

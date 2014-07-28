@@ -36,7 +36,7 @@
                                 <ul class="menuIcon pull-right">
                                     <li class="user" title="${user.getName() + " " + user.getSurname()}">
                                     <a href="#">currentUser</a></li>
-                                    <li class="logout" title="Log out"><a href="/logout">logOut</a></li>
+                                    <li class="logout" title="Log out"><a href="j_spring_security_logout">logOut</a></li>
                                 </ul>
                             </div>
                         </div>

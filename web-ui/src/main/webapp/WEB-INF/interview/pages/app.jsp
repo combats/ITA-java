@@ -18,29 +18,25 @@
 </head>
 <body>
    <div id="startData" userId="${userId}" appointmentId="${appointmentId}"></div>
-    <header>
+    <header  ng-controller="ModalDemoCtrl">
         <div id="header-left-group">
 
             <div id="header-logo"></div>
             <div id="page-title">Interview</div>
         </div>
 
-        <div ng-controller="ModalDemoCtrl">
+        <div>
 
              <a  id="applicant-btn" ng-click="openAppPop()"  href="#"><span class="glyphicon glyphicon-user"></span> {{applicant.name}} {{applicant.surname}}</a>
 
         </div>
 
-        <div id="header-right-group"  ng-controller="ModalDemoCtrl">
-            <a id="finish-btn"   ng-click="openFCPop()" href="#"><span class="glyphicon glyphicon-ok"></span></a>
+        <div id="header-right-group" >
+            <a id="finish-btn" ng-click="openFCPop()" href="#"><span class="glyphicon glyphicon-ok"></span></a>
 
-            <div class="timeOn" ng-controller="timerCtrl" ng-class="{'timeUp': isForward}">
-                {{ duration  | date:"mm:ss" }}
+            <div class="timeOn" ng-class="{'timeUp': isForward}">{{ duration  | date:"mm:ss" }}</div>
 
-            </div>
-
-
-            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.surname}}</span> </a>
+            <a id="header-user-profile-btn"><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.surname}}</span> </a>
         </div>
     </header>
     <div ng-controller="QuestionsController" id="main-panel">
@@ -83,52 +79,73 @@
         </a>
     </div>
     </div>
-    <div id="right-panel" ng-controller="ChatController">
-        <div class="panel-title">Chat/Notifications</div>
-        <div id="panel-notifications">
-            <div class="dm-chat">
-                <div ng-repeat="message in messages" class="dm" ng-class="{'sent':message.sent}">
-                    <img class="avatar" ng-src="{{message.avatar}}">
-                    <div class="dm-content">
-                        <small class="time">
-                            <span class="_timestamp">
-                                {{message.time | date:'HH:mm:ss'}}
-                            </span>
-                        </small>
-                        <div class="dm-message" ng-class="{'sent':message.sent}">
-                            <p class="js-tweet-text tweet-text">{{message.message}}</p>
-                            <div class="dm-caret">
-                                <div class="dm-caret-outer"></div>
-                                <div class="dm-caret-inner"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="panel-chat">
-            <div id="message-content">
-                <textarea placeholder="What's up?" required></textarea>
-            </div>
-            <a class="panel-btn" id="send-msg-btn">
-                <span class="glyphicon glyphicon-envelope"></span> Send message
-            </a>
-        </div>
-    </div>
+   <%--<div id="right-panel" ng-controller="ChatController" ng-init="connect()" >--%>
 
+       <%--<div class="panel-title">Chat/Notifications</div>--%>
+          <%--<div id="panel-notifications">--%>
+             <%--<div>--%>
+               <%--<div ng-switch="ONLINE">--%>
+                   <%--<div class="dm-online-text" ng-switch-when="true">ONLINE</div>--%>
+                   <%--<div class="dm-offline-text"ng-switch-default>OFFLINE</div>--%>
+               <%--</div>--%>
+           <%--</div>--%>
+           <%--<div class="dm-chat">--%>
+               <%--<div ng-repeat="message in messages" class="dm" ng-class="{'sent':message.sent}">--%>
+                   <%--<img ng-hide="message.nickname=='Server'" class="avatar" ng-src="https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png">--%>
+
+                   <%--<div class="dm-info-message" ng-show="message.nickname=='Server'">--%>
+                       <%--<div>--%>
+                           <%--{{message.text}}--%>
+                       <%--</div>--%>
+                   <%--</div>--%>
+
+                   <%--<div class="dm-content" ng-hide="message.nickname=='Server'">--%>
+                       <%--<small class="time">--%>
+                            <%--<span class="_timestamp">--%>
+                                <%--{{message.time | date:'HH:mm:ss'}}--%>
+                            <%--</span>--%>
+                           <%--<div class="_timestamp" ng-show="message.nickname=='Server'">--%>
+                                <%--{{message.text}}--%>
+                           <%--</div>--%>
+                       <%--</small>--%>
+
+                       <%--<div class="dm-nickname" ng-class="{'sent':message.sent}">{{message.nickname}}</div>--%>
+                       <%--<div class="dm-message" ng-class="{'sent':message.sent}">--%>
+                          <%--<p>{{message.text--%>
+                              <%--}}</p>--%>
+                           <%--<div class="dm-caret">--%>
+                               <%--<div class="dm-caret-outer"></div>--%>
+                               <%--<div class="dm-caret-inner"></div>--%>
+                           <%--</div>--%>
+                       <%--</div>--%>
+                   <%--</div>--%>
+
+               <%--</div>--%>
+           <%--</div>--%>
+       <%--</div>--%>
+       <%--<div id="panel-chat">--%>
+           <%--<div id="message-content">--%>
+               <%--<textarea  ng-model="message.text" placeholder="What's up?" required ng-enter="send()"></textarea>--%>
+           <%--</div>--%>
+           <%--<a class="panel-btn" id="send-msg-btn" ng-click="send()">--%>
+           <%--<span class="glyphicon glyphicon-envelope"></span> Send message--%>
+       <%--</a>--%>
+        <%--</div>--%>
+   <%--</div>--%>
     <script type="text/javascript" src="interview/js/angular.js"></script>
-   <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>
+    <script type="text/javascript" src="interview/js/angular-animate.min.js"></script>
+    <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>
     <script type="text/javascript" src="interview/js/interviewApp.js"></script>
     <script type="text/javascript" src="interview/js/ngActivityIndicator.js"></script>
     <script type="text/javascript" src="interview/js/ui-bootstrap-tpls-0.11.0.js"></script>
     <script type="text/javascript" src="interview/components/header-menu/applicant/applicantHeaderCtrl.js" ></script>
     <script type="text/javascript" src="interview/components/questions/questionsCtrl.js"></script>
     <script type="text/javascript" src="interview/components/chat/chatCtrl.js"></script>
+    <script type="text/javascript" src="interview/components/chat/chatSvc.js"></script>
     <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
-    <script type="text/javascript" src="interview/components/header-menu/timer/timerCtrl.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/timer/appointmentStartTimeSvc.js" ></script>
-    <script type="text/javascript" src="interview/components/header-menu/user/userHeaderCtrl.js" ></script>
    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>
+
 </body>
 </html>
