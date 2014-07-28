@@ -56,7 +56,7 @@ public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionH
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ExceptionJSONInfo> handleApplicantException(Exception exception, HttpServletRequest request){
-        String exceptionReason = "Internal Server Error.";
+        String exceptionReason = "Internal Server Error";
         ExceptionJSONInfo exceptionInfo = new ExceptionJSONInfo();
         exceptionInfo.setReason(exceptionReason);
         if(exception.getMessage() != null) {
