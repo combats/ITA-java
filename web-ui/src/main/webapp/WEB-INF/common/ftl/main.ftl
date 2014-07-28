@@ -74,9 +74,9 @@
 			<div class="span4">
 				<div class="iconBox doCenter">
 					<span class="entypo chat"><i></i></span>
-					<h3 class="light">Invite</h3>
+					<h3 class="light">Create</h3>
 					<p>
-						your colleagues to interview candidate.
+						and manage your own question list for candidates.
 					</p>
 				</div>
 			</div>

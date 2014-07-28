@@ -14,5 +14,7 @@ angular.module('applicantPopupModule').factory('Photo',['$http','Applicant', fun
         get: function(){
             return $http({method: 'GET', url: "/repository/img/applicant/" + Applicant.id})
         }
+
+
     }
 }])

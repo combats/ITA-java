@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="interview/css/timer.css">
 
 
-    <link rel="icon" href="/favicon.ico">
+    <link rel="icon"  href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
    <div id="startData" userId="${userId}" appointmentId="${appointmentId}"></div>
@@ -27,7 +27,7 @@
 
         <div ng-controller="ModalDemoCtrl">
 
-             <a  id="applicant-btn" ng-click="openAppPop()"  href="#"><span class="glyphicon glyphicon-user"></span> {{applicant.name}} {{applicant.lastname}}</a>
+             <a  id="applicant-btn" ng-click="openAppPop()"  href="#"><span class="glyphicon glyphicon-user"></span> {{applicant.name}} {{applicant.surname}}</a>
 
         </div>
 
@@ -40,7 +40,7 @@
             </div>
 
 
-            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.lastname}}</span> </a>
+            <a id="header-user-profile-btn" ng-controller="userHeaderCtrl" ><span> <img class="img-rounded" src="interview/img/userpic-small.png" alt="user-pic">  {{user.name}} {{user.surname}}</span> </a>
         </div>
     </header>
     <div ng-controller="QuestionsController" id="main-panel">
@@ -126,6 +126,7 @@
     <script type="text/javascript" src="interview/components/chat/chatCtrl.js"></script>
     <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
     <script type="text/javascript" src="interview/components/header-menu/timer/timerCtrl.js" ></script>
+    <script type="text/javascript" src="interview/components/header-menu/timer/appointmentStartTimeSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/user/userHeaderCtrl.js" ></script>
    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>
