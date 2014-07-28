@@ -100,7 +100,7 @@
 #delete-user-box{
     background-color: #dfdeda;
     display: inline-block;
-    padding: 20px 70px 15px 70px;
+    padding: 20px 70px 80px 70px;
 }
 
 #user-box h2{
@@ -160,14 +160,22 @@
     padding-left: 2px;
 }
 #user-box .fieldgroup label.error {
-    font-size: 13px;
+    font-size: 11px;
     color: #FB3A3A;
-    display: inline-block;
     margin: 0px 0 0px 129px;
     padding: 0;
-    text-align: left;
+    text-align: right;
     width: 220px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    line-height: 100%;
 }
+#user-box .fieldgroup {
+    position: relative;
+    height: 48px;
+}
+
 #userForm{
     margin-bottom: 0px;
 }
@@ -195,3 +203,14 @@
     width: 200;
 }
 
+.deleteButton {
+    float: right;
+}
+
+.editButton {
+    float: right;
+}
+
+#createGroup {
+    height: 401;
+}
