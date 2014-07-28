@@ -10,6 +10,7 @@ INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, 
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('5', 1, 'dod@dod.com', 'Francisco', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Chang', '1');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('6', 1, 'paoloA@gmail.com', 'Paolo', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Accorti', '2');
 INSERT INTO interview.Users (Id, Active, Email, Name, Password, Phone, Surname, role_Id) VALUES ('7', 1, 'fran@gmail.com', 'Fran', 'eed346aede1c64193b74d7264a809c3e', '0634942253', 'Wilson', '3');
+
 INSERT INTO interview.Questions VALUES ('1', 'What do you know about Java?', 1);
 INSERT INTO interview.Questions VALUES ('2', 'What are the supported platforms by Java Programming Language?', 1);
 INSERT INTO interview.Questions VALUES ('3', 'List any five features of Java?', 1);
