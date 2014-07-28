@@ -33,9 +33,8 @@ public class InterviewDAOHibernate implements InterviewDAO {
     @Override
     public void removeInterviewByAppointmentId(String appointmentId) {
         Interview interview = (Interview) sessionFactory.getCurrentSession().load(Interview.class, appointmentId);
-        if (interview != null) {
             sessionFactory.getCurrentSession().delete(interview);
-        }
+
     }
 
     @Override
