@@ -1,9 +1,7 @@
-package com.softserveinc.ita.dao;
+package com.softserveinc.ita.mocks;
 
-import com.softserveinc.ita.mocks.UserDAOMockImpl;
-import com.softserveinc.ita.exception.UserAlreadyExistsException;
+import com.softserveinc.ita.dao.UserDAO;
 import com.softserveinc.ita.entity.User;
-import com.softserveinc.ita.exception.UserDoesNotExistException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

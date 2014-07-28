@@ -119,7 +119,7 @@ public class QuestionsBlockDAOTests extends BaseDAOTest {
         questionInformation2.setMark(2);
         questionInformation2.setWeight(1);
         questionInformation2.setInterviewId("1");
-        questionInformationsList2.add(questionInformation);
+        questionInformationsList2.add(questionInformation2);
         questionsBlock2.setQuestions(questionInformationsList2);
         questionsBlock2.setUserId("1");
         questionsBlock2.setInterviewId("1");

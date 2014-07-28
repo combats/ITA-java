@@ -28,7 +28,6 @@
             // Retrieving a cookie
             var userId = $cookies.userId;
             var appointmentId = $cookies.appointmentId;
-
             console.log("user id = " + userId);
             console.log("appointment id = " + appointmentId);
             //if one of the cookie is absent
@@ -48,8 +47,8 @@
             })
             .then(function(){
                 var initRequests = [
-                    $http.get('interview/api/user.json')
-//                    $http.get('/users/'+userId)
+                    //$http.get('api/user.json')
+                    $http.get('/users/'+userId)
                     .then(function (response) {
                         app.value('User', response.data);
                     }),
@@ -68,6 +67,7 @@
     );
 
     app.controller('ModalDemoCtrl',['$scope', '$modal', '$log','Applicant', function ($scope, $modal, $log,Applicant) {
+
 
         $scope.applicant = Applicant;
 

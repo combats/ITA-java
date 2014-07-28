@@ -40,10 +40,10 @@ $(function() {
             async: false,
             type: requestType,
             data: userInJson,
-            error: function (data, errorThrown) {
+            error: function (data, errorThrown, param3) {
                 success = false;
                 var failedAction = requestType == "POST" ? 'add' : 'edit';
-                $("#userErrContent").append('Failed to ' + failedAction + ' user. Error: ' + errorThrown);
+                $("#userErrContent").append('Failed to ' + failedAction + ' user. Error: ' + param3.name + ' ; ' + data.responseText);
                 $("#dialog-form-error-user").dialog( "open" );
             }
         });
@@ -56,9 +56,9 @@ $(function() {
             url: '/users/' + user.id,
             async: false,
             type: 'DELETE',
-            error: function (data, errorThrown) {
+            error: function (data, errorThrown, param3) {
                 success = false;
-                $("#userErrContent").append('Failed to delete user. Error: ' + errorThrown);
+                $("#userErrContent").append('Failed to delete user. Error: ' + param3.name + ' ; ' + data.responseText);
                 $("#dialog-form-error-user").dialog( "open" );
             }
         });
@@ -125,6 +125,7 @@ $(function() {
 
     //user management buttons
     $( "#addUserButton" ).click(function() {
+        $( "#dialog-form-add-user" ).data("pass_changed", true);
         $( "#dialog-form-add-user" ).data("user", null);
         $( "#dialog-form-add-user" ).dialog( "open" );
     });
@@ -180,7 +181,11 @@ $(function() {
                 maxlength: 40
             },
             userPassword: {
-                required: true,
+                required: {
+                    depends: function(element) {
+                        return $( "#dialog-form-add-user" ).data("pass_changed");
+                    }
+                },
                 minlength: 5,
                 maxlength: 40
             },
@@ -208,7 +213,7 @@ $(function() {
                 maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Surname\" field.")
             },
             userPassword: {
-                required: "User name is required.",
+                required: "User password is required.",
                 minlength: jQuery.validator.format("At least {0} characters required in \"Password\" field."),
                 maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Password\" field.")
             },
@@ -230,6 +235,10 @@ $(function() {
             $("#uPassword").attr("type","text");
         else
             $("#uPassword").attr("type","password");
+    });
+
+    $( "#uPassword" ).change(function() {
+        $( "#dialog-form-add-user" ).data("pass_changed", true);
     });
 
     reloadTabContent(0);
@@ -264,6 +273,7 @@ $(function() {
             success: function (userList) {
                 if (userList) {
                     $.each( userList, function(index, user) {
+                        user.password = null; // hide the password hashes
                         userMap[user.id] = user;
                         if(user.role){
                             roleMap[user.role.id].users.push(user);
@@ -289,7 +299,7 @@ $(function() {
         function registerEventHandlers() {
             $( ".btn-edit-user" ).click(function() {
                 var userId = $(this).attr("id").substring("editUser".length);
-
+                $( "#dialog-form-add-user" ).data("pass_changed", false);
                 $( "#dialog-form-add-user" ).data("user", userMap[userId]);
                 $( "#dialog-form-add-user" ).data("roles", roleArray);
                 $( "#dialog-form-add-user" ).dialog( "open" );

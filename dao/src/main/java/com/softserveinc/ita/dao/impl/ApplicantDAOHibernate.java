@@ -5,6 +5,7 @@ import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -40,5 +41,12 @@ public class ApplicantDAOHibernate implements ApplicantDAO {
         Session session = sessionFactory.getCurrentSession();
         session.update(applicant);
         return (Applicant) session.load(Applicant.class, applicantId);
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<String> getApplicantIdList() {
+        return (List<String>) sessionFactory.getCurrentSession().createCriteria(Applicant.class)
+                .setProjection(Projections.projectionList().add(Projections.property("id"))).list();
     }
 }

@@ -7,6 +7,8 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -82,21 +84,21 @@ public abstract class AbstractHttpRequestExecutorRestImpl implements HttpRequest
 
     private <T> T getObject(String urlPath, Class<T> clazz) throws HttpRequestException {
 
-        ResponseEntity<T> entity;
+        T entity = null;
+
 
         try {
-            entity = restTemplate.getForEntity(urlPath, clazz );
+            URI uri =  new URI(urlPath);
+            entity = restTemplate.getForObject(uri, clazz);
         }catch (HttpServerErrorException httpServError) {
             throw new HttpRequestException(printException(httpServError), httpServError);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+            throw new HttpRequestException("Cant get URL in "+getClass().getSimpleName(),e);
         }
-
-        if (entity.getStatusCode().value() != STATUS_CODE_OK) {
-            throw new HttpRequestException("\nReason : " + entity.getStatusCode().getReasonPhrase() +
-                    "\nStatus code : " + +entity.getStatusCode().value() +
-                    "\nMessage : " + entity.getStatusCode().getReasonPhrase());
-        }
-        return entity.getBody();
+        return entity;
     }
+
 
     public RestTemplate getRestTemplate(){ return restTemplate;}
 

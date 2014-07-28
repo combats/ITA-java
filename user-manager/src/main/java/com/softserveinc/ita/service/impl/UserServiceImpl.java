@@ -5,6 +5,7 @@ import com.softserveinc.ita.entity.User;
 import com.softserveinc.ita.exception.InvalidUserIDException;
 import com.softserveinc.ita.exception.EmptyUserException;
 import com.softserveinc.ita.exception.UserDoesNotExistException;
+import com.softserveinc.ita.exception.UserEmailNotFoundException;
 import com.softserveinc.ita.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,25 +18,33 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDAO userDao;
+    private UserDAO userDAO;
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<String> getAllUsersID() {
-        return userDao.getAllUsersId();
+        return userDAO.getAllUsersId();
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public User getUserByID(String UserID) throws InvalidUserIDException {
-        if (userDao.getUserById(UserID) == null) throw new InvalidUserIDException();
-        return userDao.getUserById(UserID);
+        if (userDAO.getUserById(UserID) == null) throw new InvalidUserIDException();
+        return userDAO.getUserById(UserID);
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
+    public User getUserByEmail(String email) throws UserEmailNotFoundException {
+        if (userDAO.getUserByEmail(email) == null) throw new UserEmailNotFoundException();
+        return userDAO.getUserByEmail(email);
+    }
+
+
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     public String deleteUser(String userID){
-       return userDao.deleteUserById(userID);
+       return userDAO.deleteUserById(userID);
     }
     
     @Override
@@ -44,7 +53,7 @@ public class UserServiceImpl implements UserService {
         if (isEmpty(changingUser)) {
             throw new EmptyUserException();
         }
-        User editedUser = userDao.updateUser(changingUser);
+        User editedUser = userDAO.updateUser(changingUser);
         if (editedUser == null) {
             throw new UserDoesNotExistException();
         }
@@ -54,14 +63,14 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public User postNewUser(User user){
-        userDao.addUser(user);
+        userDAO.addUser(user);
         return user;
     }
 
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED)
     public List<User> getUsers() {
-        return userDao.getAllUsers();
+        return userDAO.getAllUsers();
     }
 
     private boolean isEmpty(User changingUser) {

@@ -54,4 +54,18 @@ public class ApplicantDAOTests extends BaseDAOTest {
         Applicant actual = applicantDAO.editApplicant(expected);
         assertThat(expected, equalTo(actual));
     }
+
+    @Test
+    public void testGetApplicantIdList() {
+        Session session = sessionFactory.getCurrentSession();
+        Applicant expectedOne = new Applicant("TestApplicantOne", "Surname");
+        Applicant expectedTwo = new Applicant("TestApplicantTwo", "Surname");
+        Applicant expectedThree = new Applicant("TestApplicantThree", "Surname");
+        session.save(expectedOne);
+        session.save(expectedTwo);
+        session.save(expectedThree);
+        List<String> applicantIdList = applicantDAO.getApplicantIdList();
+        int actual = applicantIdList.size();
+        assertEquals(3, actual);
+    }
 }

@@ -1,28 +1,24 @@
 package com.softserveinc.ita.mvc.impl;
 
-import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
+@FixMethodOrder(MethodSorters.DEFAULT)
 public class MvcGroupTests extends MvcGroupBaseTest {
 
     private MockMvc mockMvc;
@@ -42,7 +38,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsByStatusAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/BOARDING")
+                get("/status/BOARDING")
         )
                 .andExpect(status().isOk());
     }
@@ -50,7 +46,7 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     @Test
     public void testGetGroupsAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/BOARDING")
+                get("/status/BOARDING")
         )
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
@@ -100,51 +96,53 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     }
 
     @Test
-    public void testGetApplicantsByGroupIDAndExpectOk() throws Exception {
+    public void testGetGroupByExistingIdAndExpectIsOk() throws Exception {
         mockMvc.perform(
-                get("/applicants/TestGroupID")
+                get("/id1")
         )
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void testGetApplicantsByGroupIDAndExpectValidJson() throws Exception {
-        List<Applicant> applicants = new ArrayList<>();
-        Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
-        Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
-        Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
-        Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
-        String expected = jsonUtil.toJson(applicants);
-
+    public void testGetGroupByExistingIdAndExpectJsonType() throws Exception {
         mockMvc.perform(
-                get("/applicants/TestGroupID")
+                get("/id1")
         )
-                .andExpect(status().isOk())
-                .andExpect(content().string(expected));
-    }
-
-    @Test
-    public void testGetApplicantsByGroupIDAndExpectMediaTypeJson() throws Exception {
-        List<Applicant> applicants = new ArrayList<>();
-        Applicant applicantOne = new Applicant("TestApplicantOneName", "TestApplicantOneSurname");
-        Applicant applicantTwo = new Applicant("TestApplicantTwoName", "TestApplicantTwoSurname");
-        Applicant applicantThree = new Applicant("TestApplicantThreeName", "TestApplicantThreeSurname");
-        Collections.addAll(applicants, applicantOne, applicantTwo, applicantThree);
-        String expected = jsonUtil.toJson(applicants);
-
-        mockMvc.perform(
-                get("/applicants/TestGroupID")
-        )
-                .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 
     @Test
-    public void testGetApplicantsByWrongGroupIdAndExpectInternalServerError() throws Exception{
+    public void testGetGroupByNotExistingIdAndExpectInternalServerError() throws Exception {
         mockMvc.perform(
-                get("/applicants/wrongId")
+                get("/notExistingId")
         ).andExpect(status().isInternalServerError());
+    }
 
+    @Test
+    public void testDeleteGroupByIdAndExpectIsOk() throws Exception {
+        mockMvc.perform(
+                delete("/id4")
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testDeleteGroupByIdAndExpectJsonType() throws Exception {
+        mockMvc.perform(
+                delete("/id3")
+        ).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testPutGroupAndExpectIsOkAndJSONType() throws Exception {
+        Group group = new Group("id1");
+        group.setCourse(new Course("Java"));
+        String jsonGroup = jsonUtil.toJson(group);
+        mockMvc.perform(
+                put("/editGroup")
+                        .content(jsonGroup)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }
 

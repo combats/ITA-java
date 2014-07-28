@@ -1,5 +1,7 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -21,20 +23,26 @@ public class Group implements Serializable{
     @Column(name = "Id", unique = true)
     private String groupID;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "ApplicantsWithStatus", joinColumns = @JoinColumn(name = "Id"))
     @MapKeyColumn(name = "ApplicantId")
     @Column(name = "ApplicantsStatus")
     private Map<String, ApplicantBenchmark> applicants = new HashMap<>();
-    @Column(name = "GroupName")
+    @Column(name = "GroupName", unique = true)
     private String groupName;
-    @Column(name = "GroupStatus")
+    @Column(name = "StartBoardingTime")
     private long startBoardingTime;
+    @Column(name = "StartTime")
     private long startTime;
+    @Column(name = "EndTime")
     private long endTime;
+    @Column(name = "Capacity")
     private int capacity;
-    private String address;
-    private Course course;
+    @Column(name = "Address")
+    private String address="";
+    @ManyToOne(fetch=FetchType.EAGER, targetEntity = Course.class)
+    private Course course = new Course();
 
     public enum Status implements Serializable {
         IN_PROCESS, PLANNED, BOARDING, FINISHED;
@@ -59,6 +67,10 @@ public class Group implements Serializable{
         this.groupName = groupName;
     }
 
+    public Group(Course course, String groupName) {
+        this.course = course;
+        this.groupName = groupName;
+    }
     public long getStartBoardingTime() {
         return startBoardingTime;
     }

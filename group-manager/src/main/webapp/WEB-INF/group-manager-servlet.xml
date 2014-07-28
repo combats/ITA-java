@@ -16,9 +16,7 @@
     <context:component-scan base-package="com.softserveinc.ita.service"/>
     <context:component-scan base-package="com.softserveinc.ita.dao"/>
     <context:component-scan base-package="com.softserveinc.ita.error"/>
-
+    <context:component-scan base-package="com.softserveinc.ita.config"/>
     <mvc:annotation-driven />
     <context:annotation-config/>
-
-
 </beans>

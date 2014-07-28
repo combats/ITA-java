@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 
 @Controller
-@RequestMapping("/applicantNotification")
+@RequestMapping("/")
 public class ApplicantsNotificationController {
 
     @Autowired
     private QueueManager queueManagerService;
 
     @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody List<NotificationJSONInfo> postAppointmentIDtoNotifyApplicant(@RequestBody List<NotificationJSONInfo> infoList) {
+    public @ResponseBody List<NotificationJSONInfo> postIDEntityListToNotifyApplicants(@RequestBody List<NotificationJSONInfo> infoList) {
         queueManagerService.notifyApplicants(infoList);
         return infoList;
     }

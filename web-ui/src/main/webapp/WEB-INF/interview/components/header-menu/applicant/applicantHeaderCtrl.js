@@ -1,5 +1,5 @@
 var  mediapp = angular.module('applicantPopupModule',['ngActivityIndicator']);
-mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant','Photo' ,'$activityIndicator', '$timeout', function($scope,$modalInstance,Applicant,Photo, $activityIndicator,$timeout){
+mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance','Applicant','Photo' ,'$activityIndicator', '$timeout', function($rootScope, $scope,$modalInstance,Applicant,Photo, $activityIndicator,$timeout){
 
 
 
@@ -8,7 +8,18 @@ mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant','
 
     $scope.isWebCamAsk=false;
     $scope.applicant = Applicant;
-    $scope.defPhoto = 'interview/img/maestro-joda.jpg';
+    $activityIndicator.startAnimating();
+
+    Photo.get().success(function(response){
+        $scope.defPhoto =  response;
+
+        $activityIndicator.stopAnimating();
+    }).error(function(response){
+        $scope.defPhoto =  'interview/img/maestro-joda.jpg';
+    }).catch(function(reason){
+        console.log(reason);
+    });
+
     $scope.MEDIA_HOLDER = "IMG";
     $scope.sys = {video:"",localMediaStream:""};
 
@@ -50,7 +61,11 @@ mediapp.controller('applicantPopupCtrl',['$scope','$modalInstance','Applicant','
         $scope.MEDIA_HOLDER = mediaHolder;
     }
 
-
+$scope.postPhoto = function(){
+    Photo.add($scope.sys.tmpPhoto).then(function(response){
+        $scope.defPhoto = $scope.sys.tmpPhoto;
+    });
+}
 
 
 
@@ -148,8 +163,7 @@ mediapp.directive('videoHolder', function(){
                      scope.sys.localMediaStream = null;
                  }
 
-                 scope.tmpPhoto = canvas.toDataURL();
-                 scope.photo = canvas.toDataURL();
+                 scope.sys.tmpPhoto = canvas.toDataURL();
              }
          };
      }

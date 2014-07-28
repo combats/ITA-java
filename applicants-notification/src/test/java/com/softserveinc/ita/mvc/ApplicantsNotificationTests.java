@@ -49,7 +49,8 @@ public class ApplicantsNotificationTests extends BaseMVCTest {
 
     @Test
     public void testPostToApplicantsNotificationReturnsOK() throws Exception {
-        mockMvc.perform(post("/applicantNotification").content(jsonInfo)
+        System.out.println(jsonInfo);
+        mockMvc.perform(post("/").content(jsonInfo)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
@@ -57,7 +58,7 @@ public class ApplicantsNotificationTests extends BaseMVCTest {
 
     @Test
     public void testPostToApplicantsNotificationReturnsPostedIDList() throws Exception {
-        MvcResult result = mockMvc.perform(post("/applicantNotification").content(jsonInfo)
+        MvcResult result = mockMvc.perform(post("/").content(jsonInfo)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andReturn();
