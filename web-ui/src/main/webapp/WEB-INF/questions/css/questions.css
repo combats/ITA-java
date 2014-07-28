@@ -242,3 +242,11 @@
     padding-right: 55px;
     float: right;
 }
+.dataTables_scrollBody .sorting_1{
+    padding-left: 20px;
+    padding-right: 0px;
+}
+table.dataTable tbody td {
+    padding-left: 20px !important;
+    padding-right: 0px !important;
+}

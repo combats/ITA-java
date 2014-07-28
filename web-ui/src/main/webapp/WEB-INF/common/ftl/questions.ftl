@@ -69,7 +69,7 @@
                         <div class="fieldgroup">
                             <div class="headline questionWeight" >
                                 <label for="qWeight">
-                                    Question weight:
+                                    Question rating:
                                 </label>
                             </div>
                             <div class="fields">
@@ -108,7 +108,7 @@
 
                 </div>
                 <br>
-                <button id="okEUButton" class="btn okButton">OK</button>
+                <button id="okEQButton" class="btn okButton">OK</button>
             </div>
         </div>
     </div>
