@@ -17,17 +17,19 @@
 
     <modules>
         <module>entity</module>
+        <module>chat</module>
         <module>dao</module>
         <module>common</module>
         <module>http-request-service</module>
         <module>interview-sheduller</module>
         <module>user-manager</module>
-        <module>group-manager</module>
+        <module>InterviewFactory</module>
         <module>applicant-manager</module>
         <module>web-ui</module>
+        <module>group-manager</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
-        <module>InterviewFactory</module>
+
     </modules>
 
     <dependencies>
@@ -153,6 +155,11 @@
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
                     </includes>
+                    <excludes>
+                        <exclude>**/InterviewDAOTests.java</exclude>
+                        <exclude>**/QuestionInformationDAOTests.java</exclude>
+                        <exclude>**/QuestionsBlockDAOTests.java</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

@@ -220,10 +220,9 @@ $(function () {
 
     jQuery.validator.addMethod("greaterThanBoardingDate",
         function (value, element, params) {
-            var week = 604800000;
             var startDate = new Date(value).getTime();
             var boardingDate = new Date($(params).val()).getTime();
-            return boardingDate + week <= startDate;
+            return boardingDate < startDate;
         });
 
     jQuery.validator.addMethod("greaterThan",
@@ -254,7 +253,7 @@ $(function () {
             groupName: {
                 required: true,
                 minlength: 3,
-                maxlength: 8
+                maxlength: 7
             },
             groupAddress: {
                 required: true,
@@ -315,7 +314,7 @@ $(function () {
             groupStartDate: {
                 required: "Start date is required.",
                 date: "Should be a correct date format.",
-                greaterThanBoardingDate: "Should be greater than boarding date not less than 1 week"
+                greaterThanBoardingDate: "Should be greater than boarding date"
             },
             groupStartTime:{
                 required : "Start time is required"
