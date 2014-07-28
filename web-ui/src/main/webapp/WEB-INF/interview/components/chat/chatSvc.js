@@ -8,7 +8,7 @@ angular.module('chatMod').factory('ChatService', function() {
 
         console.log("ws://176.36.11.25/chat/websocket/" + appointmentId);
 
-        var websocket = new WebSocket("ws://176.36.11.25/chat/websocket/ " + appointmentId);
+        var websocket = new WebSocket("ws://176.36.11.25/chat/websocket/" + appointmentId);
 
         var ONLINE;
 
