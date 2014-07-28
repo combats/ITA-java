@@ -19,26 +19,39 @@ app.directive('ngEnter', function () {
     }
 })
 
-    app.controller('ChatController', ['$scope','ChatService', 'User',  function ($scope,ChatService,User) {
+    app.controller('ChatController', ['$scope', '$rootScope','ChatService','User', function ($scope,$rootScope,ChatService,User) {
 
     $scope.message = {};
     $scope.message.nickname = User.name + ' ' + User.lastname;
     $scope.messages = [];
 
+        var $cookies = angular.injector(['ngCookies']).get('$cookies');
+        var appointmentId = $cookies.appointmentId;
+
     ChatService.subscribe(function(message) {
 
         console.log("Hi from Subscribe - controller" + message.toJson);
-        if (!$scope.ONLINE) {if (message.data = true) $scope.ONLINE = true;}
+        if (!$scope.ONLINE) {
+            if (message.data = 1) $scope.ONLINE = true;
+            ChatService.send(JSON.stringify($scope.message));
+        }
         else {
             console.log("Push message" + message.nickname + message.text);
-            $scope.messages.push(message);
-            $scope.$apply();}
+            if($scope.message.text){
+                 $scope.messages.push(message);
+            }
+             $scope.$apply();
+    }
     });
 
     $scope.connect = function() {
-        console.log("Connect() function from Controller");
-        ChatService.connect();
-    }
+
+        console.log("Connect() function from Controller" + appointmentId);
+
+        ChatService.connect(appointmentId);
+
+        console.log("Connect() function from Controller" + $scope.message.nickname);
+           }
 
     $scope.send = function() {
 

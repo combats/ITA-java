@@ -92,27 +92,28 @@
            </div>
            <div class="dm-chat">
                <div ng-repeat="message in messages" class="dm" ng-class="{'sent':message.sent}">
-                   <img ng-hide=message.nickname=='Server' class="avatar" ng-src="https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png">
+                   <img ng-hide="message.nickname=='Server'" class="avatar" ng-src="https://pbs.twimg.com/profile_images/2077664484/avatar234_normal.png">
 
-                   <div class="dm-info-message" ng-show=message.nickname=='Server'>
+                   <div class="dm-info-message" ng-show="message.nickname=='Server'">
                        <div>
                            {{message.text}}
                        </div>
                    </div>
 
-                   <div class="dm-content" ng-hide=message.nickname=='Server'>
+                   <div class="dm-content" ng-hide="message.nickname=='Server'">
                        <small class="time">
                             <span class="_timestamp">
                                 {{message.time | date:'HH:mm:ss'}}
                             </span>
-                           <div class="_timestamp" ng-show=message.nickname=='Server'>
+                           <div class="_timestamp" ng-show="message.nickname=='Server'">
                                 {{message.text}}
-                            </div>
+                           </div>
                        </small>
 
                        <div class="dm-nickname" ng-class="{'sent':message.sent}">{{message.nickname}}</div>
                        <div class="dm-message" ng-class="{'sent':message.sent}">
-                          <p>{{message.text}}</p>
+                          <p>{{message.text
+                              }}</p>
                            <div class="dm-caret">
                                <div class="dm-caret-outer"></div>
                                <div class="dm-caret-inner"></div>
@@ -131,7 +132,7 @@
            <span class="glyphicon glyphicon-envelope"></span> Send message
        </a>
         </div>
-
+   </div>
     <script type="text/javascript" src="interview/js/angular.js"></script>
     <script type="text/javascript" src="interview/js/angular-animate.min.js"></script>
     <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>

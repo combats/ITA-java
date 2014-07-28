@@ -4,73 +4,71 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.websocket.*;
+import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ServerEndpoint(value = "/websocket", encoders = { MessageEncoder.class },
-                                 decoders = { MessageDecoder.class })
+@ServerEndpoint(value = "/websocket/{appointmentId}", encoders = { MessageEncoder.class },
+                                       decoders = { MessageDecoder.class })
 public class ChatEndpoint {
 
     private static Set<Session> connections = java.util.Collections.synchronizedSet(new HashSet<Session>());
     private static Map<Session, String> clients = new ConcurrentHashMap<>();
     private Session currentSession;
-    private static String CurrentNickName;
+    private String currentNickName;
     private boolean online = false;
 
 	@OnMessage
 	public void onMessage(Message message, Session session) throws IOException, EncodeException {
 
-        if(online) {
+        currentNickName = message.getNickname();
 
-            connections.add(session);
-            this.currentSession = session;
+        if (!clients.containsValue(currentNickName)) {
 
-            if (!clients.containsKey(currentSession)) {
+            clients.put(currentSession, message.getNickname());
 
-                clients.put(currentSession, message.getNickname());
+            online = true;
 
-            }
+            sentToAllExceptThis(session, joinUser(currentNickName));
+
+        } else {
 
             Message response = new Message();
             response.setNickname(message.getNickname());
             response.setText(message.getText());
             response.setTime(message.getTime());
 
+            System.out.println(currentNickName + currentSession.getId());
+
             if (clients.get(currentSession).equals(message.getNickname())) {
                 response.setSent(false);
             } else response.setSent(true);
 
             sentToAll(session, response);
-        } else {
-               String CurrentNickName = message.getNickname();
-               online = true;
-               sentToAll(session, joinUser(CurrentNickName));
-               }
+        }
 
     }
-
 	@OnOpen
-	public void onOpen(Session session) {
-        String nick = clients.get(session);
-
-        System.out.println("Client connected" + session.getId());
+	public void onOpen(Session session, @PathParam("appointmentId") final String appointment) {
 	    connections.add(session);
         this.currentSession = session;
-
+        System.out.println(appointment);
+        session.getUserProperties().put("appointmentId", appointment);
     }
 
 	@OnClose
 	public void onClose(Session session) {
+
         String nick = clients.get(session);
 
         connections.remove(session);
+
         clients.remove(session);
-         if (nick!= null) {
-         quitUser(nick);
-        }
+
         quitUser(nick);
+
         System.out.println("Connection closed");
 	}
 
@@ -92,10 +90,27 @@ public class ChatEndpoint {
     }
 
     private void sentToAll(Session session, Message response){
+
+        String appointment = (String) session.getUserProperties().get("appointmentId");
+
         for (Session s : session.getOpenSessions()) {
-            if (s.isOpen()) {
+            if (s.isOpen()&& appointment.equals(s.getUserProperties().get("appointmentId"))) {
                 s.getAsyncRemote().sendObject(response);
             }
         }
    }
+
+    private void sentToAllExceptThis(Session session, Message response){
+
+        String appointment = (String) session.getUserProperties().get("appointmentId");
+
+        Set<Session> openSessions = session.getOpenSessions();
+        openSessions.remove(currentSession);
+
+        for (Session s : openSessions) {
+            if (s.isOpen() && appointment.equals(s.getUserProperties().get("appointmentId"))) {
+                s.getAsyncRemote().sendObject(response);
+            }
+        }
+    }
 }

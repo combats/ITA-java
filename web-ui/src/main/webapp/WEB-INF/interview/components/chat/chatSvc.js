@@ -2,21 +2,26 @@ angular.module('chatMod').factory('ChatService', function() {
 
     var service = {};
 
-    service.connect = function() {
+
+    service.connect = function(appointmentId) {
+
         if(service.websocket) { return; }
 
-        var websocket = new WebSocket("ws://localhost:8080/ChatSocket/websocket");
+        console.log("connect" + appointmentId)
+
+        console.log("ws://localhost:8085/ChatSocket/websocket" + appointmentId);
+
+        var websocket = new WebSocket("ws://localhost:8085/ChatSocket/websocket/" + appointmentId);
 
         var ONLINE;
 
-        window.onbeforeunload = function() {
-            websocket.close();
-        }
+//        window.onbeforeunload = function() {
+//            websocket.close();
+//        }
 
         websocket.onopen = function(event) {
             console.log("Connection succesful function from Controller");
-            ONLINE = true;
-            service.callback(ONLINE);
+            service.callback(websocket.readyState);
         };
 
         websocket.onclose = function(event){
