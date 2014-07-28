@@ -5,10 +5,11 @@ var groupCapacity;
 var userList = [];
 $(function () {
     groupID = getParamByName('groupID');
+    $('nocontent').toggle();
     //load page template
     $.ajax({
         async: false,
-        url: location.origin + '/ui/group/mst/template.mst',
+        url: '/ui/group/mst/template.mst',
         type: "GET",
         success: function (data) {
             pageTemplate = data;
@@ -22,7 +23,7 @@ loadApplicantsIDListByStatus = function (status) {
     //load applicants list with status by group ID
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants/',
+        url: '/groups/' + groupID + '/applicants/',
         dataType: "json",
         type: "GET",
         data: 'status=' + status,
@@ -42,12 +43,12 @@ loadApplicantsByStatus = function (status) {
         if (applicantsIDList.hasOwnProperty(property) && applicantsIDList[property]['status'] == status) {
             $.ajax({
                 async: false,
-                url: location.origin + '/applicants/' + property,
+                url: '/applicants/' + property,
                 dataType: "json",
                 type: "GET",
                 success: function (data) {
                     var date = new Date(data.birthday);
-                    data['birthday'] = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+                    data['birthday'] = date.getUTCMonth() + '/' + date.getUTCDate() + '/' + date.getUTCFullYear();
                     data['rank'] = applicantsIDList[property]['rank'];
                     data['status'] = status;
                     var appID = {};
@@ -65,7 +66,7 @@ loadApplicantsByStatus = function (status) {
                             data['employed'] = true;
                         case 'PASSED':
                         case 'NOT_PASSED':
-                            data.photo = location.origin + '/repo/img/applicant/' + property + '/height=200&width=150';
+                            data.photo = '/repository/imgfile/applicant/' + property + '?height=200&width=150';
                             appID = loadAppointmentID(property);
                             element = {applicant: data, appointmentID: appID};
                             break;
@@ -82,7 +83,7 @@ loadApplicantsByStatus = function (status) {
 loadGroupCapacity = function () {
     $.ajax({
         async: false,
-        url: location.origin + '/groups/capacity/' + groupID,
+        url: '/groups/capacity/' + groupID,
         dataType: "json",
         type: "GET",
         success: function (data) {
@@ -97,7 +98,7 @@ loadGroupCapacity = function () {
 loadUsersList = function () {
     $.ajax({
         async: false,
-        url: location.origin + '/users',
+        url: '/users',
         dataType: "json",
         type: "GET",
         success: function (data) {
@@ -130,7 +131,7 @@ submitList = function () {
     //update statuses at server
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         dataType: "json",
         contentType: "application/json",
         type: "PUT",
@@ -152,7 +153,7 @@ setEventListeners = function () {
     $('.interview').click(function (event) {
         beginInterview(event.target);
     });
-    $("input[type=file]").nicefileinput();
+//    $("input[type=file]").nicefileinput();
     //Event listener for dialog
     $("#dialog").dialog({
         buttons: {
@@ -218,7 +219,7 @@ setEventListeners = function () {
     $('.submit, .add').click(function (event) {
         submitApplicant(event);
     });
-    $('a.openCV').button();
+    $('a').button();
     $('.notify').click(function (event) {
         notifyApplicant(event.target);
     });
@@ -287,8 +288,8 @@ loadAppointmentID = function (applicantID) {
     var result = -1;
     $.ajax({
         async: false,
-        url: 'http://176.36.11.25:8080' + '/appointments/?group=' + groupID + '&applicant=' + applicantID,
-        dataType: "json",
+        url: '/appointments/?group=' + groupID + '&applicant=' + applicantID,
+        dataType: "text",
         type: "GET",
         success: function (appointmentID) {
             result = appointmentID;
@@ -299,7 +300,9 @@ loadAppointmentID = function (applicantID) {
 notify = function (object) {
     $.ajax({
         async: false,
-        url: location.origin + '/applicantNotification',
+        url: '/notification',
+        contentType: "application/json",
+        dataType: "application/json",
         type: 'POST',
         data: JSON.stringify(object),
         success: function () {

@@ -3,16 +3,21 @@ $(function () {
     loadApplicantsIDListByStatus('EMPLOYED');
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('EMPLOYED');
-    //interviewed
-    var interviewedRendered = Mustache.render(pageTemplate, {'data': applicants, 'offering': true});
-    var interviewedAccordion = $('.interviewed');
-    interviewedAccordion.html(interviewedRendered);
+    if (!applicants.length) {
+        $('scheduleView').toggle();
+        $('nocontent').toggle();
+    } else {
+        //interviewed
+        var interviewedRendered = Mustache.render(pageTemplate, {'data': applicants, 'offering': true});
+        var interviewedAccordion = $('.interviewed');
+        interviewedAccordion.html(interviewedRendered);
 
-    $(".interviewed").sortable({"axis": "y", items: ".container", handle: ".accordion-section",
-        create: function (event) {
-            sort($(event.target).children()[0], applicants, false);
-        }});
-    postRender();
+        $(".interviewed").sortable({"axis": "y", items: ".container", handle: ".accordion-section",
+            create: function (event) {
+                sort($(event.target).children()[0], applicants, false);
+            }});
+        postRender();
+    }
 });
 employApplicant = function (target) {
     var div = $(target).closest('div.container');
@@ -24,13 +29,13 @@ employApplicant = function (target) {
     //update statuses at server
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         dataType: "json",
         contentType: "application/json",
         type: "PUT",
         data: JSON.stringify(list),
         success: function () {
-            $(div).find('h3').removeClass('top');
+            $(div).find('h3').removeClass('ui-state-highlight');
             $(div).find('h3').find('a').remove();
             $(div).find('h3').append('<span class="employ">[Employed]</span>');
             notifyApplicant($(div).find('div.applicant'));
