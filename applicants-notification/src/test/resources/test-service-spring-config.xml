@@ -31,7 +31,7 @@ http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     </bean>
 
     <bean id ="mailService" class="com.softserveinc.ita.service.impl.MailServiceImpl"/>
-    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilGsonImpl"/>
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
     <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
         <constructor-arg name="baseUrl" value="http://localhost:8080"/>
     </bean>

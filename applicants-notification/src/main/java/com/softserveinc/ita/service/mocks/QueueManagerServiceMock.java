@@ -3,6 +3,7 @@ package com.softserveinc.ita.service.mocks;
 import com.softserveinc.ita.entity.NotificationJSONInfo;
 import com.softserveinc.ita.service.MailService;
 import com.softserveinc.ita.service.QueueManager;
+import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +23,7 @@ public class QueueManagerServiceMock implements QueueManager {
     static Logger log = Logger.getLogger(
             QueueManagerServiceMock.class.getName());
 
-    public void notifyApplicants(List<NotificationJSONInfo> infoList) {
+    public void notifyApplicants(List<NotificationJSONInfo> infoList) throws HttpRequestException {
         for (NotificationJSONInfo info : infoList) {
             log.info("sending mock message " + info );
             mailService.notifyApplicant(jsonUtil.toJson(info));
