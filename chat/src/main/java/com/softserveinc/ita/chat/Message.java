@@ -20,6 +20,7 @@ public class Message {
         this.sent = sent;
 
     }
+    
     public String getNickname() {
         return nickname;
     }
