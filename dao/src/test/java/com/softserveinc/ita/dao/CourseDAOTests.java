@@ -51,4 +51,16 @@ public class CourseDAOTests extends BaseDAOTest {
         courseDAO.removeCourse(courseDelete);
         session.load(Course.class, courseId);
     }
+
+    @Test
+    public void testGetCourseByName() {
+        Session session = sessionFactory.getCurrentSession();
+        String courseName = "ExpectedName";
+        Course expected = new Course(courseName, "refOne");
+        Course course = new Course("SimpleName", "refTwo");
+        session.save(expected);
+        session.save(course);
+        Course actual = courseDAO.getCourseByName(courseName);
+        assertEquals(expected, actual);
+    }
 }

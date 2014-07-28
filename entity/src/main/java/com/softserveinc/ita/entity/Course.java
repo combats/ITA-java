@@ -15,7 +15,7 @@ public class Course implements Serializable {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "Id", unique = true)
-    private String courseId;
+    private String courseId="";
     @Column(name = "Name", unique = true)
     private String name = "";
     @Column(name = "ImageReference", unique = true)
@@ -71,7 +71,6 @@ public class Course implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         Course course = (Course) o;
 
         if (!courseId.equals(course.courseId)) return false;

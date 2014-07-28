@@ -1,5 +1,8 @@
 package com.softserveinc.ita.entity;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -13,7 +16,8 @@ public class Interview implements Serializable {
     @Column(name = "interview_id", unique = true)
     private String interviewId;
 
-    @OneToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @Fetch(FetchMode.SUBSELECT)
     @JoinTable(name = "interview_questionsBlock",
             joinColumns = {@JoinColumn(name = "interview_id")},
             inverseJoinColumns = {@JoinColumn(name = "questionsBlock_id")})

@@ -9,8 +9,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
-import java.rmi.NoSuchObjectException;
 import java.util.List;
 
 import static junit.framework.Assert.assertEquals;
@@ -67,7 +65,7 @@ public class GroupDAOTests extends BaseDAOTest {
         Group expected = new Group(course, "TestGroupName");
         session.save(course);
         String groupId = (String) session.save(expected);
-        Group actual = groupDAO.getGroupBiId(groupId);
+        Group actual = groupDAO.getGroupById(groupId);
         assertEquals(expected, actual);
     }
 

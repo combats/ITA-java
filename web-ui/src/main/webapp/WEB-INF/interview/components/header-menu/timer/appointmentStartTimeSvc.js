@@ -1,7 +1,7 @@
-angular.module('timerModule').factory('StartTimeUpdate',['$http','Appointment', function($http, Appointment) {
+angular.module('timerModule',[]).factory('StartTimeUpdate',['$http','Appointment', function($http, Appointment) {
     return {
         update: function(){
-            return $http.put("TODO:insert URL",Appointment).then(function(response){
+            return $http.put("http://localhost:8080/appointments/",Appointment).then(function(response){
                 return response.data;
             });
         }

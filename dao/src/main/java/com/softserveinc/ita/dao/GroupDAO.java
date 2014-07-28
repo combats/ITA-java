@@ -10,7 +10,7 @@ public interface GroupDAO {
 
     List<Group> getAllGroups();
 
-    Group getGroupBiId(String groupId);
+    Group getGroupById(String groupId);
 
     void removeGroup(String groupId);
 

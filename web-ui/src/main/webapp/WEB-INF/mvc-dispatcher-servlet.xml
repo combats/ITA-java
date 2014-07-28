@@ -20,10 +20,17 @@
     <mvc:resources location="/WEB-INF/common/" mapping="/common/**"/>
     <mvc:resources location="/WEB-INF/login/" mapping="/login/**"/>
     <mvc:resources location="/WEB-INF/interview/" mapping="/ui/interview/**"/>
+    <mvc:resources location="/WEB-INF/applicants/" mapping="/ui/group/**"/>
     <mvc:resources location="/WEB-INF/groups/" mapping="/ui/groups/**"/>
     <mvc:resources location="/WEB-INF/user/" mapping="/ui/user/**"/>
+    <mvc:resources location="/WEB-INF/questions/" mapping="/ui/questions/**"/>
     <mvc:resources location="/WEB-INF/main/" mapping="/**"/>
 
+    <bean id = "viewResolverServiceImpl" class = "com.softserveinc.ita.service.impl.ViewResolverServiceImpl"/>
+
+    <bean id="httpRequestExecutor" class="com.softserveinc.ita.service.impl.HttpRequestExecutorRestImpl">
+        <constructor-arg name="baseUrl" value="http://localhost:8080"/>
+    </bean>
 
     <!--Logging-->
     <aop:aspectj-autoproxy/>
@@ -35,6 +42,7 @@
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="suffix" value=".ftl"/>
+        <property name="exposeSessionAttributes" value="true"/>
     </bean>
 
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

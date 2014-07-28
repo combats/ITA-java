@@ -4,6 +4,7 @@ import com.softserveinc.ita.dao.CourseDAO;
 import com.softserveinc.ita.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -33,5 +34,11 @@ public class CourseDAOHibernate implements CourseDAO {
     @Override
     public void removeCourse(Course course) {
         sessionFactory.getCurrentSession().delete(course);
+    }
+
+    @Override
+    public Course getCourseByName(String courseName) {
+        return (Course) sessionFactory.getCurrentSession().createCriteria(Course.class)
+                .add(Restrictions.like("name", courseName)).uniqueResult();
     }
 }

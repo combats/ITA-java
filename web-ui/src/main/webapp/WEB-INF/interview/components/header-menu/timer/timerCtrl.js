@@ -1,7 +1,8 @@
-'use strict';
-angular.module('timerModule', []).controller('timerCtrl',['$scope','$timeout','Appointment', function($scope,$timeout,Appointment) {
 
-    Appointment = Appointment;
+angular.module('timerModule', []).
+controller('timerCtrl',['$scope','$timeout','Appointment','StartTimeUpdate', function($scope,$timeout,Appointment,StartTimeUpdate) {
+
+
     $scope.curentTime = Date.now();
 
 
@@ -14,7 +15,9 @@ angular.module('timerModule', []).controller('timerCtrl',['$scope','$timeout','A
     else{
         Appointment.actualStartTime = $scope.curentTime;
       $scope.duration = Appointment.durationTime;
-      Appointment.actualStartTime = time.now
+      Appointment.actualStartTime = $scope.curentTime
+
+
     }
 
     $scope.isForward = false;
