@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
-@Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsBlockServicesImpl implements QuestionsBlockServices {
 
