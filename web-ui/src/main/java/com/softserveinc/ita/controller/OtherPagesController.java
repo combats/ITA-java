@@ -35,6 +35,6 @@ public class OtherPagesController {
 
     @RequestMapping(value = "/group", method = RequestMethod.GET)
     public String showGroup(@RequestParam String groupID) {
-        return "applicants/pages/" + viewResolverServiceImpl.choosePageByGroupId(groupID, System.currentTimeMillis());
+        return "/applicants/pages/" + viewResolverServiceImpl.choosePageByGroupId(groupID, System.currentTimeMillis());
     }
 }

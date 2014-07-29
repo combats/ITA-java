@@ -16,8 +16,12 @@
 <button id="sort" class="scheduleView">Sort</button>
 <button id="submitList" class="scheduleView">Submit</button>
 <button id="notifications" class="scheduleView">Notifications</button>
+<a href="/ui/groups" class="done">Done</a>
 <br>
 
+<div class="nocontent">
+    <h3>Sorry, no content yet.</h3></div>
+<div class="accordion interviewed"></div>
 <div class="accordion interviewed"></div>
 <div id="dialog" title="Information">
     <p></p>

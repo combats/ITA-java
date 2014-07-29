@@ -19,7 +19,8 @@
 
     angular.element(document).ready(
         function () {
-            var baseUrl = "http://176.36.11.25:8080/"
+            var baseUrl = "http://176.36.11.25:8080/";
+//            var baseUrl = "/";
             var initInjector = angular.injector(['ng']);
             var $http = initInjector.get('$http');
             var $q = initInjector.get('$q');
@@ -36,21 +37,30 @@
             }
 
             var Appointment = {};
-            $http.get("http://176.36.11.25:8080/appointments/"+appointmentId)
+            $http.get(baseUrl + "appointments/" +appointmentId)
             .success(function (response) {
+                    if(!response.actualStartTime){
+                        response.actualStartTime = Date.now();
+                        $http({method: 'PUT', url: baseUrl + "appointments/", data : response}).then(function(res){
+
+                        },function(err){
+                            alert("Unfortunately, unable to update time of interview. Timer may have strange behaviour.")
+                        });
+                    }
                 app.value('Appointment', response);
                 Appointment = response;
+
             }).error(function (error) {
                     //if request failed
                     changeLocation("/sorry?code="+2,true);
             })
             .then(function(){
                 var initRequests = [
-                    $http.get('http://176.36.11.25:8080/users/'+userId)
+                    $http.get(baseUrl + 'users/'+userId)
                     .then(function (response) {
                         app.value('User', response.data);
                     }),
-                    $http.get('http://176.36.11.25:8080/applicants/'+ Appointment.applicantId)
+                    $http.get(baseUrl + 'applicants/'+ Appointment.applicantId)
                     .then(function (response) {
                         app.value('Applicant', response.data);
                     })
@@ -63,10 +73,7 @@
                             changeLocation("/sorry?code="+3,true);
                     });
             });
-//            app.value('User', {name: "John", surname: "Smith"});
-//            app.value('Applicant', {name: "Anton", surname: "Kravchuk"});
-//            app.value('Appointment', {date: 1401866602, durationTime: 3000, actualStartTime: 0});
-//            angular.bootstrap(document, ['interview']);
+
         }
     );
 
@@ -77,11 +84,6 @@
         if (Appointment.actualStartTime) {
             var timeTmp = $scope.curentTime - Appointment.actualStartTime;
             $scope.duration = Appointment.durationTime - timeTmp;
-        }
-        else {
-            Appointment.actualStartTime = $scope.curentTime;
-            $scope.duration = Appointment.durationTime;
-            Appointment.actualStartTime = $scope.curentTime
         }
 
         $scope.isForward = false;

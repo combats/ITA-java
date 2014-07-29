@@ -189,7 +189,6 @@
 }
 #cancelDUButton {
     float: right;
-    padding: inherit;
     width: 200;
 }
 #okInfButton {
@@ -199,7 +198,6 @@
 
 #okDUButton {
     float: left;
-    padding: inherit;
     width: 200;
 }
 

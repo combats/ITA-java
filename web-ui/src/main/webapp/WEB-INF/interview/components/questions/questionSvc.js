@@ -1,17 +1,23 @@
 angular.module('questionMod').factory('Question',['$http','Appointment', function($http, Appointment) {
     return {
-        update: function(id, q){
-            return $http({method: 'POST', url: "/repository/img/applicant/" + Applicant.id, data : photo});
-            q.interviewId = Appointment.appointmentId;
-            return $http.put("TODO:",q).then(function(response){
-               return response.data;
-            });
+        update: function(q){
+            return $http({method: 'PUT', url: "/interviews/interviewing/answer/", data : q});
         },
         add: function(q){
+            if(!q.answer){
+                q.answer = "";
+            }
+            if(!q.comment){
+                q.comment = "";
+            }
+            if(!q.mark){
+                q.mark = 0;
+            }
+            if(!q.id){
+                q.id = "";
+            }
             q.interviewId = Appointment.appointmentId;
-            $http.post("TODO:",q).then(function(response){
-               return response.data;
-            });
+            return $http({method: 'POST', url: "/interviews/interviewing/answer/", data : q});
         }
     }
 }])

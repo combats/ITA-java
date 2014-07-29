@@ -98,6 +98,9 @@ INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBo
 INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced0002', 'Degtya', 0, 0, 'ITA-005', 0, 0, '297ea2cd476e53d001476e540a5f0012');
 INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced0003', 'Degtya', 0, 0, 'ITA-006', 0, 0, '297ea2cd476e53d001476e540a600013');
 INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced0004', 'Degtya', 0, 0, 'ITA-007', 0, 0, '297ea2cd476e53d001476e540f350015');
+INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced3332', 'Degtya', 3, 1420185223000, 'planned', 1420185223000, 1409644423000, '297ea2cd476e53d001476e540a5f0012');
+INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced3333', 'Degtya', 3, 1420185223000, 'boardin', 1401695623000, 1406966023000, '297ea2cd476e53d001476e540a600013');
+INSERT INTO interview.Groups (Id, Address, Capacity, EndTime, GroupName, StartBoardingTime, StartTime, course_Id) VALUES ('297ea2cd47737b6c0147737b8ced3334', 'Degtya', 3, 1420185223000, 'progres', 1399017223000, 1401695623000, '297ea2cd476e53d001476e540f350015');
 
 
 INSERT INTO interview.Appointments (Id, ActualStartTime, ApplicantId, DurationTime, GroupId, StartTime) VALUES ('4028819947789da3014778a3bf850000', 0, '1', 1800000, '297ea2cd47737b6c0147737b8ced0001', 1407672000000);

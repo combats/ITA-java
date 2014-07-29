@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.MessagingException;
@@ -21,6 +22,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class MailServiceImpl implements MailService {
     public static final String ENCODING = "UTF-8";
     public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
@@ -58,7 +60,7 @@ public class MailServiceImpl implements MailService {
     private MimeMessage mimeMessage;
 
     @Consume(uri = "activemq:notification.queue")
-    public void notifyApplicant(String notificationJSONInfo) {
+    public void notifyApplicant(String notificationJSONInfo) throws HttpRequestException {
         NotificationJSONInfo notificationInfo = jsonUtil.fromJson(notificationJSONInfo, NotificationJSONInfo.class);
         mimeMessage = mailSender.createMimeMessage();
         try {
@@ -67,13 +69,14 @@ public class MailServiceImpl implements MailService {
             e.printStackTrace();
         }
         String applicantId = notificationInfo.getApplicantId();
-        String groupId = notificationInfo.getGroupId();
-        String responsibleHrId = notificationInfo.getResponsibleHrId();
+        String groupId =  notificationInfo.getGroupId();
+        String responsibleHrId =  notificationInfo.getResponsibleHrId();
         Applicant applicant = null;
         Group group = null;
         User responsibleHr = null;
-        try {
+//        try {
             applicant = httpRequestExecutor.getObjectByID(applicantId, Applicant.class);
+
             group = httpRequestExecutor.getObjectByID(groupId, Group.class);
             responsibleHr = httpRequestExecutor.getObjectByID(responsibleHrId, User.class);
 
@@ -94,9 +97,9 @@ public class MailServiceImpl implements MailService {
                 case EMPLOYED:
                     sendEmployedLetter(applicant, group, responsibleHr);
             }
-        } catch (HttpRequestException e) {
-            e.printStackTrace();
-        }
+//        } catch (HttpRequestException e) {
+//            e.printStackTrace();
+//        }
     }
 
     private void sendEmployedLetter(Applicant applicant, Group group, User responsibleHr) {
@@ -149,18 +152,18 @@ public class MailServiceImpl implements MailService {
     }
 
 
-    private void sendScheduledLetter(Applicant applicant, Group group, User responsibleHr) {
+    private void sendScheduledLetter(Applicant applicant, Group group, User responsibleHr) throws HttpRequestException {
         Appointment appointment = null;
         String appointmentID;
-        try {
+//        try {
             HashMap<Class, String> groupAndApplicantIDs = new HashMap<>();
             groupAndApplicantIDs.put(Applicant.class, applicant.getId());
             groupAndApplicantIDs.put(Group.class, group.getGroupID());
             appointmentID = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, groupAndApplicantIDs).get(0);
             appointment = httpRequestExecutor.getObjectByID(appointmentID, Appointment.class);
-        } catch (HttpRequestException e) {
-            e.printStackTrace();
-        }
+//        } catch (HttpRequestException e) {
+//            e.printStackTrace();
+//        }
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());

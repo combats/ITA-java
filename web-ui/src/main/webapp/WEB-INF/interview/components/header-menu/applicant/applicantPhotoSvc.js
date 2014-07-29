@@ -1,10 +1,14 @@
-angular.module('applicantPopupModule').factory('Photo',['$http','Applicant', function($http, Applicant) {
+angular.module('applicantPopupModule').factory('Repo',['$http','Applicant', function($http, Applicant) {
+    var baseUrl = "http://176.36.11.25:8080/"
     return {
-        add: function(photo){
-           return $http({method: 'POST', url: "/repository/img/applicant/" + Applicant.id, data : photo});
+        addPhoto: function(photo){
+           return $http({method: 'POST', url: baseUrl+"repository/img/applicant/" + Applicant.id, data : photo});
         },
-        get: function(){
-            return $http({method: 'GET', url: "/repository/img/applicant/" + Applicant.id})
+        getPhoto: function(){
+            return $http({method: 'GET', url: baseUrl+"repository/img/applicant/" + Applicant.id})
+        },
+        getCV: function(){
+            return $http({method: 'GET', url: baseUrl+"repository/doc/" + Applicant.id})
         }
     }
 }])

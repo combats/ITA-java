@@ -63,14 +63,16 @@ public class InterviewController {
     @RequestMapping(value = "interviewing/answer", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
-    public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
+    public QuestionInformation addQuestionInformation(@RequestBody QuestionInformation questionInformation,
                                          @CookieValue("userId") String userId,
                                          @CookieValue("appointmentId") String appointmentId)
             throws WrongCriteriaException, HttpRequestException {
         questionInformation.setInterviewId(appointmentId);
         interviewService.getInterviewByAppointmentID(appointmentId);
         questionsInformationServices.addQuestionInformation(questionInformation, userId);
-        return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
+        questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
+
+        return new QuestionInformation();
     }
 
     @RequestMapping(value = "interviewing/final_comment", method = RequestMethod.PUT, consumes = "application/json")

@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
-@Transactional(isolation= Isolation.READ_COMMITTED)
+
 @Service
 public class InterviewServiceImpl implements InterviewService {
 

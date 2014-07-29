@@ -18,6 +18,7 @@ public class JcrSessionCreator {
     Properties prop = new Properties();
     Session session;
 
+    private boolean xmlConfigHomeDir;
     private String config;
     private String homeDir;
     private String userRole;
@@ -29,7 +30,11 @@ public class JcrSessionCreator {
      * @throws com.softserveinc.ita.exception.JcrException
      */
     public Session getSession() throws JcrException {
-        prop.setProperty("org.apache.jackrabbit.repository.home", homeDir);
+        if(isXmlConfigHomeDir()) {
+            prop.setProperty("org.apache.jackrabbit.repository.home", homeDir);
+        } else {
+            prop.setProperty("org.apache.jackrabbit.repository.home", getHomeDir());
+        }
         prop.setProperty("org.apache.jackrabbit.repository.conf", config);
         try {
             JackrabbitRepository repository = (JackrabbitRepository) rf.getRepository(prop);
@@ -64,5 +69,17 @@ public class JcrSessionCreator {
      */
     public void setUserRole(String userRole) {
         this.userRole = userRole;
+    }
+
+    public String getHomeDir() {
+        return System.getProperty("catalina.home") + "/work/repository";
+    }
+
+    public boolean isXmlConfigHomeDir() {
+        return xmlConfigHomeDir;
+    }
+
+    public void setXmlConfigHomeDir(boolean xmlConfigHomeDir) {
+        this.xmlConfigHomeDir = xmlConfigHomeDir;
     }
 }

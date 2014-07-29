@@ -146,6 +146,7 @@
     <script type="text/javascript" src="interview/components/header-menu/timer/appointmentStartTimeSvc.js" ></script>
    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>
+   <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComSvc.js"></script>
 
 </body>
 </html>
