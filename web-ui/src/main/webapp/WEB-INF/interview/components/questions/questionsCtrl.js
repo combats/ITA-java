@@ -25,12 +25,12 @@
         };
 
         var addQuestion = function(q){
-//            Question.add(q).then(function (response) {
-//                q.id = response;
+            Question.add(q).then(function (response) {
+                q.id = response;
                 $scope.questions.push(angular.copy(q));
-//            },function(err){
-//                alert("Error during question submit. Check the connection");
-//            });
+            },function(err){
+                alert("Error during question submit. Check the connection");
+            });
         };
 
         $scope.submitQuestion = function(q){
@@ -45,11 +45,11 @@
                         $scope.questions[i].mark = q.mark;
                         $scope.questions[i].weight = q.weight;
                         if(q.id){
-//                            Question.update(q).then(function (response) {
-//
-//                            }, function (err) {
-//                                alert("Error during question update. Check the connection");
-//                            });
+                            Question.update(q).then(function (response) {
+
+                            }, function (err) {
+                                alert("Error during question update. Check the connection");
+                            });
                         }
                         else{
                             addQuestion(q);
