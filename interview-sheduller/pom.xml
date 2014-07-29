@@ -76,6 +76,5 @@
 
     <build>
         <finalName>appointments</finalName>
-
     </build>
 </project>

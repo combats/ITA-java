@@ -1,6 +1,6 @@
 (function () {
 
-    var app = angular.module('interview', ['ui.bootstrap', 'questionMod', 'applicantPopupModule', 'finalComMod','chatMod']);
+    var app = angular.module('interviewApp', ['ui.bootstrap', 'questionMod', 'applicantPopupModule', 'finalComMod','chatMod']);
 
     //be sure to inject $scope and $location
     var changeLocation = function (url, forceReload) {
@@ -29,12 +29,6 @@
             // Retrieving a cookie
             var userId = $cookies.userId;
             var appointmentId = $cookies.appointmentId;
-            var groupId = $cookies.groupID;
-
-            console.log("user id = " + userId);
-            console.log("appointment id = " + appointmentId);
-            console.log("group id = " + groupId);
-
             //if one of the cookie is absent
             if (!userId || !appointmentId) {
                 changeLocation("/sorry?code=" + 1, true);
@@ -71,7 +65,7 @@
                 ];
                 $q.all(initRequests).then(function(){
                     //Afterall, we are ready to initialize Ng-app.
-                    angular.bootstrap(document, ['interview']);
+                    angular.bootstrap(document, ['interviewApp']);
                     },
                     function() {
                             changeLocation("/sorry?code="+3,true);
@@ -81,7 +75,21 @@
         }
     );
 
-    app.controller('ModalDemoCtrl', ['$timeout', '$scope', '$modal', '$log', 'Applicant', 'Appointment', 'User', function ($timeout, $scope, $modal, $log, Applicant, Appointment, User) {
+    app.controller('ModalDemoCtrl', ['Interview','$timeout', '$scope', '$modal', '$log', 'Applicant', 'Appointment', 'User', function (Interview, $timeout, $scope, $modal, $log, Applicant, Appointment, User) {
+
+        var interview = {};
+        interview.id = Appointment.id;
+        interview.applicantId = Applicant.id;
+        interview.usersId = Appointment.userIdList;
+        interview.questions = User.questions;
+        interview.finalComment = "";
+
+        Interview.add(interview).then(function(response){
+            alert("success");
+            console.log(response);
+            console.log(response.data);
+        });
+
 
         $scope.curentTime = Date.now();
 
