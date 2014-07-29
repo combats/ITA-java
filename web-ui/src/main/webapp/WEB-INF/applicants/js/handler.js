@@ -300,9 +300,9 @@ loadAppointmentID = function (applicantID) {
 notify = function (object) {
     $.ajax({
         async: false,
-        url: '/notification',
+        url: '/notification/',
         contentType: "application/json",
-        dataType: "application/json",
+        accept: "application/json",
         type: 'POST',
         data: JSON.stringify(object),
         success: function () {
