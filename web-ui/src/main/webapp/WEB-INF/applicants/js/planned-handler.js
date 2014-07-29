@@ -142,6 +142,7 @@ createAppointment = function (newApointment) {
         success: function () {
             var elementToChange = elementByApplicantID(applicantID);
             elementToChange['applicant']['status'] = 'SCHEDULED';
+            elementToChange['appointmentID'] = newApointment['appointmentId'];
             elementToChange['appointment'] = parseAppointment(newApointment);
             var scheduledRendered = Mustache.render(pageTemplate, {'data': applicants.filter(function (element) {
                 return element['applicant']['status'] == 'SCHEDULED';
