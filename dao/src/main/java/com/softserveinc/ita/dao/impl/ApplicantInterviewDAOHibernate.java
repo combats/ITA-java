@@ -23,23 +23,30 @@ public class ApplicantInterviewDAOHibernate implements ApplicantInterviewDAO {
 		return (ApplicantInterview) currentSession.get(ApplicantInterview.class, id);
 	}
 
-	@Override
-	public List<ApplicantInterview> getAllInterview() {
-		return null;
-	}
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<ApplicantInterview> getAllInterview() {
+        return (List<ApplicantInterview>) sessionFactory.getCurrentSession()
+                .createCriteria(ApplicantInterview.class).list();
+    }
 
-	@Override
-	public ApplicantInterview getInterviewById(String id) {
-		return null;
-	}
+    @Override
+    public ApplicantInterview getInterviewById(String id) {
+        return (ApplicantInterview) sessionFactory.getCurrentSession().get(ApplicantInterview.class, id);
+    }
 
-	@Override
-	public ApplicantInterview updateInterview(ApplicantInterview applicantInterview) {
-		return null;
-	}
+    @Override
+    public ApplicantInterview updateInterview(ApplicantInterview applicantInterview) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(applicantInterview);
+        return (ApplicantInterview) session.get(ApplicantInterview.class, applicantInterview.getId());
+    }
 
-	@Override
-	public ApplicantInterview deleteInterviewById(String id) {
-		return null;
-	}
+    @Override
+    public ApplicantInterview deleteInterviewById(String id) {
+        Session session = sessionFactory.getCurrentSession();
+        ApplicantInterview interviewOnDelete = (ApplicantInterview) session.get(ApplicantInterview.class, id);
+        session.delete(interviewOnDelete);
+        return interviewOnDelete;
+    }
 }
