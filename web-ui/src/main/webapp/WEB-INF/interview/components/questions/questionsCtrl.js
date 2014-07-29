@@ -1,7 +1,7 @@
 (function () {
     var questionModule = angular.module('questionMod', []);
 
-    questionModule.controller('QuestionsController', ['$scope','Question','User', function ($scope, Question, User) {
+    questionModule.controller('QuestionsController', ['$scope','Question','User', '$rootScope', function ($scope,Question, User, $rootScope) {
         $scope.question = angular.copy(question);
 
         var qs = User.questions;
@@ -35,6 +35,9 @@
 
         $scope.submitQuestion = function(q){
             if($scope.isNewQuestion(q)){
+
+                $rootScope.$broadcast('New question was added');
+
                 addQuestion(q);
             }
             else if($scope.isAnyChangesQuestion(q)){

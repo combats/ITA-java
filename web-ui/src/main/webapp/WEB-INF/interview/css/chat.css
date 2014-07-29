@@ -26,6 +26,10 @@
     cursor: pointer;
 }
 
+[scroll-glue]{
+    overflow-y: scroll;
+}
+
 #message-content {
     height: calc(100% - 45px);
     width: 100%;
