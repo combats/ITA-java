@@ -66,7 +66,7 @@ loadApplicantsByStatus = function (status) {
                             data['employed'] = true;
                         case 'PASSED':
                         case 'NOT_PASSED':
-                            data.photo = '/repository/imgfile/applicant/' + property + '?height=200&width=150';
+                            data.photo = '/repository/img/applicant/' + property + '?height=200&width=150';
                             appID = loadAppointmentID(property);
                             element = {applicant: data, appointmentID: appID};
                             break;
@@ -288,7 +288,7 @@ loadAppointmentID = function (applicantID) {
     var result = -1;
     $.ajax({
         async: false,
-        url: '/appointments/?group=' + groupID + '&applicant=' + applicantID,
+        url: '/appointments?group=' + groupID + '&applicant=' + applicantID,
         dataType: "text",
         type: "GET",
         success: function (appointmentID) {

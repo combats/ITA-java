@@ -4,7 +4,7 @@ $(function () {
     loadApplicantsIDListByStatus('NOT_PASSED');
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('NOT_PASSED');
-    if (!applicants.length) {
+    if (applicants.length == 0) {
         $('scheduleView').toggle();
         $('nocontent').toggle();
     } else {

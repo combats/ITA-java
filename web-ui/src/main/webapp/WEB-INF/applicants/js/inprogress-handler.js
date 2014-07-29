@@ -3,7 +3,7 @@ $(function () {
     loadApplicantsIDListByStatus('EMPLOYED');
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('EMPLOYED');
-    if (!applicants.length) {
+    if (applicants.length == 0) {
         $('scheduleView').toggle();
         $('nocontent').toggle();
     } else {
