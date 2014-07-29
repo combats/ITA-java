@@ -29,7 +29,7 @@ $(function () {
 loadInterviewResult = function (element) {
     $.ajax({
         async: false,
-        url: location.origin + '/interviews/' + element.appointmentID + '/result',
+        url: location.origin + '/interview/' + element.appointmentID,
         dataType: 'json',
         type: 'GET',
         success: function (interview) {

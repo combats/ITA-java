@@ -219,7 +219,8 @@ setEventListeners = function () {
     $('.submit, .add').click(function (event) {
         submitApplicant(event);
     });
-    $('a').button();
+    $('a.openCV').button();
+    $('a.done').button();
     $('.notify').click(function (event) {
         notifyApplicant(event.target);
     });

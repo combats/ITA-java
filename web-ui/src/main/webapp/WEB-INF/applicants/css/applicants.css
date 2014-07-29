@@ -36,7 +36,13 @@ div.ui-accordion {
     margin-top: 10px;
 }
 
-button.scheduleView, .done {
+.done{
+    position: relative;
+    top: -25px;
+    float: right;
+}
+
+button.scheduleView,  {
     position: relative;
     top: -28px;
     /*left: 885px;*/
