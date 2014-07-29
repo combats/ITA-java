@@ -7,6 +7,9 @@ import com.softserveinc.ita.service.exception.HttpRequestException;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.apache.camel.Consume;
 import org.apache.velocity.app.VelocityEngine;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -62,6 +65,7 @@ public class MailServiceImpl implements MailService {
     @Consume(uri = "activemq:notification.queue")
     public void notifyApplicant(String notificationJSONInfo) throws HttpRequestException {
         NotificationJSONInfo notificationInfo = jsonUtil.fromJson(notificationJSONInfo, NotificationJSONInfo.class);
+
         mimeMessage = mailSender.createMimeMessage();
         try {
             helper = new MimeMessageHelper(mimeMessage, true);
@@ -156,10 +160,10 @@ public class MailServiceImpl implements MailService {
         Appointment appointment = null;
         String appointmentID;
 //        try {
-            HashMap<Class, String> groupAndApplicantIDs = new HashMap<>();
-            groupAndApplicantIDs.put(Applicant.class, applicant.getId());
+            Map<Class, String> groupAndApplicantIDs = new HashMap<>();
             groupAndApplicantIDs.put(Group.class, group.getGroupID());
-            appointmentID = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, groupAndApplicantIDs).get(0);
+            groupAndApplicantIDs.put(Applicant.class, applicant.getId());
+            appointmentID = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, groupAndApplicantIDs);
             appointment = httpRequestExecutor.getObjectByID(appointmentID, Appointment.class);
 //        } catch (HttpRequestException e) {
 //            e.printStackTrace();
@@ -192,11 +196,20 @@ public class MailServiceImpl implements MailService {
             e.printStackTrace();
         }
     }
-
     public static String convertTimeToDate(long milliseconds) {
-        DateFormat formatter = new SimpleDateFormat(DATE_FORMAT);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(milliseconds);
-        return formatter.format(calendar.getTime());
+        DateTime dateTime = new DateTime(milliseconds);
+        DateTimeFormatter fmt = new DateTimeFormatterBuilder()
+                .appendDayOfWeekText()
+                .appendLiteral(", ")
+                .appendDayOfMonth(2)
+                .appendLiteral("/")
+                .appendMonthOfYear(2)
+                .appendLiteral(" ")
+                .appendHourOfDay(2)
+                .appendLiteral(":")
+                .appendMinuteOfHour(2)
+                .toFormatter();
+        String stringTime = fmt.print(dateTime.getMillis());
+        return stringTime;
     }
 }
