@@ -24,6 +24,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
 	@Test
 	public void testAddNewApplicantInterview() {
 		ApplicantInterview applicantInterviewOne = new ApplicantInterview();
+        applicantInterviewOne.setId("1");
 		applicantInterviewOne.setApplicantId("TestApplicantId");
 		applicantInterviewOne.setFinalComment("TestFinalComment");
 		applicantInterviewOne
@@ -55,6 +56,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
     @Test
     public void testGetAllApplicantInterview() {
         ApplicantInterview applicantInterviewOne = new ApplicantInterview();
+        applicantInterviewOne.setId("1");
         applicantInterviewOne.setApplicantId("TestApplicantId");
         applicantInterviewOne.setFinalComment("TestFinalComment");
         applicantInterviewOne
@@ -79,6 +81,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
         applicantInterviewOne.setQuestions(questions);
 
         ApplicantInterview applicantInterviewTwo = new ApplicantInterview();
+        applicantInterviewTwo.setId("2");
         applicantInterviewTwo.setApplicantId("TestApplicantId");
         applicantInterviewTwo.setFinalComment("TestFinalComment");
         applicantInterviewTwo
@@ -112,6 +115,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
     @Test
     public void testGetInterviewById() {
         ApplicantInterview applicantInterviewOne = new ApplicantInterview();
+        applicantInterviewOne.setId("1");
         applicantInterviewOne.setApplicantId("TestApplicantId");
         applicantInterviewOne.setFinalComment("TestFinalComment");
         applicantInterviewOne
@@ -143,6 +147,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
     @Test
     public void testUpdateInterview() {
         ApplicantInterview applicantInterviewOne = new ApplicantInterview();
+        applicantInterviewOne.setId("1");
         applicantInterviewOne.setApplicantId("TestApplicantId");
         applicantInterviewOne.setFinalComment("TestFinalComment");
         applicantInterviewOne
@@ -177,6 +182,7 @@ public class ApplicantInterviewDAOTests extends BaseDAOTest {
     @Test(expected = ObjectNotFoundException.class)
     public void testDeleteInterview() {
         ApplicantInterview applicantInterviewOne = new ApplicantInterview();
+        applicantInterviewOne.setId("1");
         applicantInterviewOne.setApplicantId("TestApplicantId");
         applicantInterviewOne.setFinalComment("TestFinalComment");
         applicantInterviewOne
