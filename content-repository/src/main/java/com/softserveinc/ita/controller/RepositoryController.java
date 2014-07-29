@@ -185,15 +185,9 @@ public class RepositoryController {
      */
     private String getPure64String(String string64image, String contentType, String ID) throws Base64ValidationException {
         String regexp = "data:" + contentType + ";base64,";
-        //
             int index = regexp.length();
             StringBuilder str = new StringBuilder(string64image);
             str.delete(0, index);
-        //
-
-        //
-//            return string64image.replaceAll(regexp, "");
-        //
         String response = str.toString();
         if(!isValidBase64String(response)) {
             throw new Base64ValidationException(ID);
@@ -229,15 +223,6 @@ public class RepositoryController {
         } else {
             responseInBase64 = imageService.getImage64(requestedNode);
         }
-//        final HttpHeaders headers = new HttpHeaders();
-//
-//        String responseMediaType = responseInBase64.getContentType();
-//        if(isSupportedFormatForImage(responseMediaType)) {
-//            headers.setContentType(MediaType.parseMediaType(responseMediaType));
-//        }
-//        headers.setContentLength(responseInBase64.getContent().length());
-//        headers.set("Content-Transfer-Encoding", "base64");
-//        return new ResponseEntity<>(responseInBase64.getContent(), headers, HttpStatus.OK);
         return responseInBase64.getContent();
     }
 
@@ -275,6 +260,8 @@ public class RepositoryController {
     private boolean isSupportedFormatForDocument(String contentType) {
         return contentType.equals("text/plain") ||
                contentType.equals("application/pdf") ||
+               contentType.equals("image/png") ||
+               contentType.equals("image/jpeg") ||
                contentType.equals("application/vnd.oasis.opendocument.text") || // OpenDocument
                contentType.equals("application/msword") || // Microsoft Word files
                contentType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document") || // MS Word 2007
