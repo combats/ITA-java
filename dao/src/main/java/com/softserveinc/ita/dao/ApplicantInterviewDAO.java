@@ -1,6 +1,6 @@
 package com.softserveinc.ita.dao;
 
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
+import com.softserveinc.ita.entity.ApplicantInterview;
 
 import java.util.List;
 

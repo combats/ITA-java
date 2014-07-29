@@ -30,7 +30,6 @@
         <module>web-ui</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
-        <module>InterviewFactory</module>
         <module>interview</module>
     </modules>
 

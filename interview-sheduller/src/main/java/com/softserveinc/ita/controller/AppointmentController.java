@@ -10,6 +10,7 @@ import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -42,7 +43,7 @@ public class AppointmentController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     public
     @ResponseBody
-    String addNewAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
+    String addNewAppointment(@RequestBody @Valid Appointment appointment) {
 
         return appointmentService.putAppointment(appointment);
     }
@@ -64,7 +65,7 @@ public class AppointmentController {
     @RequestMapping(method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
     @ResponseBody
-    public Appointment updateAppointment(@RequestBody /*@Valid*/ Appointment appointment) {
+    public Appointment updateAppointment(@RequestBody @Valid Appointment appointment) {
         return appointmentService.updateAppointment(appointment);
 
     }

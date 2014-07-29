@@ -1,21 +1,24 @@
 package com.softserveinc.ita.dao.impl;
 
 import com.softserveinc.ita.dao.ApplicantInterviewDAO;
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
+import com.softserveinc.ita.entity.ApplicantInterview;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.List;
 
-@Repository
+@Service
 public class ApplicantInterviewDAOHibernate implements ApplicantInterviewDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public ApplicantInterview addInterview(ApplicantInterview applicantInterview) {
 		Session currentSession = sessionFactory.getCurrentSession();
@@ -23,6 +26,7 @@ public class ApplicantInterviewDAOHibernate implements ApplicantInterviewDAO {
 		return (ApplicantInterview) currentSession.get(ApplicantInterview.class, id);
 	}
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @SuppressWarnings("unchecked")
     @Override
     public List<ApplicantInterview> getAllInterview() {
@@ -30,11 +34,13 @@ public class ApplicantInterviewDAOHibernate implements ApplicantInterviewDAO {
                 .createCriteria(ApplicantInterview.class).list();
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ApplicantInterview getInterviewById(String id) {
         return (ApplicantInterview) sessionFactory.getCurrentSession().get(ApplicantInterview.class, id);
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ApplicantInterview updateInterview(ApplicantInterview applicantInterview) {
         Session session = sessionFactory.getCurrentSession();
@@ -42,6 +48,7 @@ public class ApplicantInterviewDAOHibernate implements ApplicantInterviewDAO {
         return (ApplicantInterview) session.get(ApplicantInterview.class, applicantInterview.getId());
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public ApplicantInterview deleteInterviewById(String id) {
         Session session = sessionFactory.getCurrentSession();

@@ -1,9 +1,8 @@
 package com.softserveinc.ita.interview.mvc;
 
 import com.softserveinc.ita.dao.ApplicantInterviewDAO;
-import com.softserveinc.ita.entity.Interview;
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
-import com.softserveinc.ita.entity.interview.InterviewQuestion;
+import com.softserveinc.ita.entity.ApplicantInterview;
+import com.softserveinc.ita.entity.InterviewQuestion;
 import com.softserveinc.ita.interview.BaseMVCTest;
 import com.softserveinc.ita.utils.JsonUtil;
 import org.junit.Before;
@@ -15,12 +14,10 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

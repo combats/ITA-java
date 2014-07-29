@@ -41,4 +41,8 @@
 
     </dependencies>
 
+    <build>
+        <finalName>interviews</finalName>
+    </build>
+
 </project>

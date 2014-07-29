@@ -1,4 +1,4 @@
-package com.softserveinc.ita.entity.interview;
+package com.softserveinc.ita.entity;
 
 
 

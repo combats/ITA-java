@@ -2,7 +2,7 @@ package com.softserveinc.ita.interview.mvc;
 
 
 import com.softserveinc.ita.dao.ApplicantInterviewDAO;
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
+import com.softserveinc.ita.entity.ApplicantInterview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

@@ -1,10 +1,9 @@
 package com.softserveinc.ita.interview.mock;
 
 import com.softserveinc.ita.dao.ApplicantInterviewDAO;
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
-import com.softserveinc.ita.entity.interview.InterviewQuestion;
+import com.softserveinc.ita.entity.ApplicantInterview;
+import com.softserveinc.ita.entity.InterviewQuestion;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

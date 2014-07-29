@@ -1,4 +1,4 @@
-package com.softserveinc.ita.entity.interview;
+package com.softserveinc.ita.entity;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;

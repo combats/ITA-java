@@ -1,15 +1,13 @@
 package com.softserveinc.ita.dao;
 
-import com.softserveinc.ita.entity.interview.ApplicantInterview;
-import com.softserveinc.ita.entity.interview.InterviewQuestion;
+import com.softserveinc.ita.entity.ApplicantInterview;
+import com.softserveinc.ita.entity.InterviewQuestion;
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.Serializable;
 import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
