@@ -88,7 +88,7 @@ public class InterviewDAOMock implements InterviewDAO {
     }
 
     @Override
-    public void updateInterview(Interview interview) {
+    public Interview updateInterview(Interview interview) {
         interviewsList.clear();
         Interview interview1 = null;
         try {
@@ -112,6 +112,7 @@ public class InterviewDAOMock implements InterviewDAO {
             }
 
         }
+        return null;
     }
 
     @Override

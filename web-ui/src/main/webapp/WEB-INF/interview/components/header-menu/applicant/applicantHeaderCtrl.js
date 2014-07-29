@@ -11,7 +11,7 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
     $activityIndicator.startAnimating();
 
     Repo.getPhoto().then(function(response){
-        $scope.defPhoto =  response;
+        $scope.defPhoto =  response.data;
         $activityIndicator.stopAnimating();
     },
         function(response){

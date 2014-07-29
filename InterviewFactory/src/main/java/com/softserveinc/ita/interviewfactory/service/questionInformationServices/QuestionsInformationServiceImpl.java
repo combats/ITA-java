@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Iterator;
 import java.util.Set;
 
-@Transactional(isolation= Isolation.READ_COMMITTED)
 @Service
 public class QuestionsInformationServiceImpl implements QuestionsInformationServices {
 
@@ -35,6 +34,7 @@ public class QuestionsInformationServiceImpl implements QuestionsInformationServ
     public QuestionInformation getQuestionInformationById(String questionsInformationId) {
         return questionInformationDAO.getQuestionInformationById(questionsInformationId);
     }
+
 
     @Override
     public void addQuestionInformation(QuestionInformation questionInformation, String userId) throws WrongCriteriaException, HttpRequestException {
