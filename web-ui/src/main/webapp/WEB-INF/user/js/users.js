@@ -5,15 +5,6 @@ $(function() {
     var pageTemplate;
     var requestType = "";
 
-    $.ajax({
-        async: false,
-        url: '/ui/user/mst/users_template.mst',
-        type: "GET",
-        success: function (data) {
-            pageTemplate = data;
-        }
-    });
-
     function getUserFromForm() {
         var userRole = {};
         userRole.id = $('#uRole option:selected').attr('id');
@@ -31,8 +22,15 @@ $(function() {
     };
 
     function sendUser(user) {
-        var userInJson = JSON.stringify(user);
+        var failedAction = (requestType == "POST") ? 'add' : 'edit';
+        if((requestType == "POST") && userWithThisEmailExists(user)){
+            $("#userErrContent").append('Impossible to ' + failedAction + ' user. User with this email already exists.');
+            $("#dialog-form-error-user").dialog( "open" );
+            return false;
+        }
+
         var success = true;
+        var userInJson = JSON.stringify(user);
         $.ajax({
             url: '/users/',
             contentType: "application/json; charset=utf-8",
@@ -40,10 +38,9 @@ $(function() {
             async: false,
             type: requestType,
             data: userInJson,
-            error: function (data, errorThrown, param3) {
+            error: function (data) {
                 success = false;
-                var failedAction = requestType == "POST" ? 'add' : 'edit';
-                $("#userErrContent").append('Failed to ' + failedAction + ' user. Error: ' + param3.name + ' ; ' + data.responseText);
+                $("#userErrContent").append('Failed to ' + failedAction + ' user. ' + data.statusText);
                 $("#dialog-form-error-user").dialog( "open" );
             }
         });
@@ -56,14 +53,38 @@ $(function() {
             url: '/users/' + user.id,
             async: false,
             type: 'DELETE',
-            error: function (data, errorThrown, param3) {
+            error: function (data) {
                 success = false;
-                $("#userErrContent").append('Failed to delete user. Error: ' + param3.name + ' ; ' + data.responseText);
+                $("#userErrContent").append('Failed to delete user. ' + data.statusText);
                 $("#dialog-form-error-user").dialog( "open" );
             }
         });
         return success;
     };
+
+    function userWithThisEmailExists(user) {
+        var success = false;
+        $.ajax({
+            url: '/users/param?email=' + user.email,
+            async: false,
+            type: 'GET',
+            success: function (data) {
+                var existingUser = data;
+                success = (existingUser.email == user.email);
+            },
+            error: function (data) {
+                if (data.responseText) {
+                    var response = JSON.parse(data.responseText);
+                    if (response.reason && response.reason == 'There is no user with such email') {
+                        return;
+                    }
+                }
+                $("#userErrContent").append(data.statusText);
+                $("#dialog-form-error-user").dialog( "open" );
+            }
+        });
+        return success;
+    }
 
     $( "#dialog-form-error-user" ).dialog({
         modal: true,
@@ -205,24 +226,24 @@ $(function() {
             userName: {
                 required: "User name is required.",
                 minlength: jQuery.validator.format("At least {0} characters required in \"Name\" field."),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Name\" field.")
+                maxlength: jQuery.validator.format("Name length should not exceed {0} characters.")
             },
             userSurname: {
                 required: "User surname is required.",
                 minlength: jQuery.validator.format("At least {0} characters required in \"Surname\" field."),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Surname\" field.")
+                maxlength: jQuery.validator.format("Surname length should not exceed {0} characters.")
             },
             userPassword: {
                 required: "User password is required.",
                 minlength: jQuery.validator.format("At least {0} characters required in \"Password\" field."),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Password\" field.")
+                maxlength: jQuery.validator.format("Password length should not exceed {0} characters.")
             },
             userPhone: {
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed in \"Phone\" field.")
+                maxlength: jQuery.validator.format("Phone length should not exceed {0} characters.")
             },
             userEmail: {
                 required: "User email is required.",
-                email: "Your email address must be in the format of name@domain.com"
+                email: "Email address must be in the format of name@domain.com"
             },
             userRole: {
                 required: "User role is required."
@@ -239,6 +260,15 @@ $(function() {
 
     $( "#uPassword" ).change(function() {
         $( "#dialog-form-add-user" ).data("pass_changed", true);
+    });
+
+    $.ajax({
+        async: false,
+        url: '/ui/user/mst/users_template.mst',
+        type: "GET",
+        success: function (data) {
+            pageTemplate = data;
+        }
     });
 
     reloadTabContent(0);

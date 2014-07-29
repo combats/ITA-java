@@ -3,6 +3,7 @@ package com.softserveinc.ita.dao.impl;
 import com.softserveinc.ita.dao.AppointmentDAO;
 import com.softserveinc.ita.entity.Appointment;
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -44,21 +45,23 @@ public class AppointmentDAOHibernate implements AppointmentDAO {
     }
 
     @Override
-    public void updateAppointment(Appointment appointment) {
-        sessionFactory.getCurrentSession().update(appointment);
+    public Appointment updateAppointment(Appointment appointment) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(appointment);
+        return (Appointment) session.get(Appointment.class, appointment.getAppointmentId());
     }
 
     @Override
     public String getAppointmentIdByGroupIdAndApplicantId(String groupId, String applicantId) {
         Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Appointment.class)
-                .setProjection(Projections.projectionList().add(Projections.property("GroupId"), groupId).add(Projections.property("ApplicantId"), applicantId));
+                .add(Restrictions.like("groupId", groupId)).add(Restrictions.like("applicantId", applicantId));
         return (String) criteria.setProjection(Projections.property("id")).uniqueResult();
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public List<Appointment> getAppointmentsByDate(long startOfDay, long endOfDay) {
-        return (List<Appointment>)sessionFactory.getCurrentSession().createCriteria(Appointment.class)
+        return (List<Appointment>) sessionFactory.getCurrentSession().createCriteria(Appointment.class)
                 .add(Restrictions.between("startTime", startOfDay, endOfDay)).list();
     }
 }

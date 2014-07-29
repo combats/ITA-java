@@ -2,85 +2,6 @@ $(function() {
     var pageTemplate;
     var currentUser;
 
-    $.ajax({
-        async: false,
-        url: '/ui/questions/mst/questions_template.mst',
-        type: "GET",
-        success: function (data) {
-            pageTemplate = data;
-        }
-    });
-
-    function getQuestionFromForm() {
-        var question = {};
-        question.questionBody = $('#qBody').val();
-        question.weight = $('#qWeight').find("input[name='score']").val();
-        return question;
-    };
-
-    function sendQuestion(question) {
-        if (!currentUser.questions) {
-            currentUser.questions = [];
-        }
-        currentUser.questions[currentUser.questions.length] = question;
-        var userInJson = JSON.stringify(currentUser);
-        var success = true;
-        $.ajax({
-            url: '/users/',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            type: "PUT",
-            data: userInJson,
-            error: function (data, errorThrown, param3) {
-                success = false;
-
-                //TODO: replace with question specific error description
-                $("#questionsErrContent").append('Failed to add/edit question. Error: ' + param3.name + ' ; ' + data.responseText);
-                $("#dialog-form-error-question").dialog( "open" );
-            }
-        });
-        return success;
-    };
-
-    function deleteQuestionsFromList(questionList, questionsToDelete) {
-        // remove from current user questions that were selected for deletion
-        $.each(questionsToDelete, function (index, questionToDelete) {
-            $.each(questionList, function(index, question) {
-                if (questionToDelete.weight == question.weight && questionToDelete.questionBody == question.questionBody) {
-                    questionList.splice(index, 1);
-                    return false;
-                }
-            });
-        });
-    }
-    function deleteQuestions() {
-        var selectedQuestions = getSelectedQuestions();
-        if (!selectedQuestions.length) {
-            return;
-        }
-
-        deleteQuestionsFromList(currentUser.questions, selectedQuestions);
-
-        // serialize back the user with the new question set
-        var userInJson = JSON.stringify(currentUser);
-        var success = true;
-        $.ajax({
-            url: '/users/',
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            async: false,
-            type: "PUT",
-            data: userInJson,
-            error: function (data, errorThrown, param3) {
-                success = false;
-                $("#questionsErrContent").append('Failed to delete question(s). Error:'+ param3.name + ' ; ' + data.responseText);
-                $("#dialog-form-error-question").dialog( "open" );
-            }
-        });
-        return success;
-    };
-
     $( "#dialog-form-error-question" ).dialog({
         modal: true,
         autoOpen: false,
@@ -151,6 +72,10 @@ $(function() {
         e.preventDefault();
         e.stopPropagation();
 
+        var questions = getSelectedQuestions();
+        if (!questions.length) {
+            return;
+        }
         $( "#dialog-form-delete-question" ).dialog( "open" );
     });
 
@@ -186,6 +111,112 @@ $(function() {
         $( "#dialog-form-delete-question" ).dialog( "close" );
     });
 
+    $( "#okEQButton" ).click(function(e) {
+        e.preventDefault();
+        $( "#dialog-form-error-question" ).dialog( "close" );
+    });
+
+    $('#qWeight').raty({
+        numberMax : 4,
+        hints: ['low', 'medium', 'high', 'very high'],
+        starOff : 'questions/images/star-off.png',
+        starOn  : 'questions/images/star-on.png'
+    });
+
+    $("#questionForm").validate({
+        rules: {
+            questionBody: {
+                required: true,
+                minlength: 5,
+                maxlength: 255
+            }
+        },
+        messages: {
+            questionBody: {
+                required: "Question description is required.",
+                minlength: jQuery.validator.format("At least {0} characters required in \"Question\" field."),
+                maxlength: jQuery.validator.format("Question length should not exceed {0} characters.")
+            }
+        }
+    });
+
+    jQuery.fn.dataTableExt.oSort["starsort-desc"] = function (x, y) {
+        return $(x).attr('name') - $(y).attr('name');
+    };
+
+    jQuery.fn.dataTableExt.oSort["starsort-asc"] = function (x, y) {
+        return $(y).attr('name') - $(x).attr('name');
+    }
+
+    function getQuestionFromForm() {
+        var question = {};
+        question.questionBody = $('#qBody').val();
+        question.weight = $('#qWeight').find("input[name='score']").val();
+        return question;
+    };
+
+    function sendQuestion(question) {
+        if (!currentUser.questions) {
+            currentUser.questions = [];
+        }
+        currentUser.questions[currentUser.questions.length] = question;
+        var userInJson = JSON.stringify(currentUser);
+        var success = true;
+        $.ajax({
+            url: '/users/',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            type: "PUT",
+            data: userInJson,
+            error: function (data) {
+                success = false;
+
+                $("#questionsErrContent").append('Failed to add/edit question. ' + data.statusText);
+                $("#dialog-form-error-question").dialog( "open" );
+            }
+        });
+        return success;
+    };
+
+    function deleteQuestionsFromList(questionList, questionsToDelete) {
+        // remove from current user questions that were selected for deletion
+        $.each(questionsToDelete, function (index, questionToDelete) {
+            $.each(questionList, function(index, question) {
+                if (questionToDelete.weight == question.weight && questionToDelete.questionBody == question.questionBody) {
+                    questionList.splice(index, 1);
+                    return false;
+                }
+            });
+        });
+    }
+    function deleteQuestions() {
+        var selectedQuestions = getSelectedQuestions();
+        if (!selectedQuestions.length) {
+            return;
+        }
+
+        deleteQuestionsFromList(currentUser.questions, selectedQuestions);
+
+        // serialize back the user with the new question set
+        var userInJson = JSON.stringify(currentUser);
+        var success = true;
+        $.ajax({
+            url: '/users/',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            async: false,
+            type: "PUT",
+            data: userInJson,
+            error: function (data) {
+                success = false;
+                $("#questionsErrContent").append('Failed to delete question(s). :' + data.statusText);
+                $("#dialog-form-error-question").dialog( "open" );
+            }
+        });
+        return success;
+    };
+
     function getCookie(name) {
         var value = "; " + document.cookie;
         var parts = value.split("; " + name + "=");
@@ -209,33 +240,12 @@ $(function() {
         return questions;
     }
 
-    $('#qWeight').raty({
-        numberMax : 4,
-        hints: ['low', 'medium', 'high', 'very high'],
-        starOff : 'questions/images/star-off.png',
-        starOn  : 'questions/images/star-on.png'
-    });
-
-    jQuery.fn.dataTableExt.oSort["starsort-desc"] = function (x, y) {
-        return $(x).attr('name') - $(y).attr('name');
-    };
-
-    jQuery.fn.dataTableExt.oSort["starsort-asc"] = function (x, y) {
-        return $(y).attr('name') - $(x).attr('name');
-    }
-
-    $("#questionForm").validate({
-        rules: {
-            questionBody: {
-                required: true,
-                minlength: 5
-            }
-        },
-        messages: {
-            questionBody: {
-                required: "Question description is required.",
-                minlength: jQuery.validator.format("At least {0} characters required in \"Question\" field.")
-            }
+    $.ajax({
+        async: false,
+        url: '/ui/questions/mst/questions_template.mst',
+        type: "GET",
+        success: function (data) {
+            pageTemplate = data;
         }
     });
 
@@ -252,9 +262,6 @@ $(function() {
             success: function (user) {
                 currentUser = user;
                 currentUser.password = null;
-                if (user.questions) {
-
-                }
             }
         });
 
@@ -264,7 +271,8 @@ $(function() {
 
         var table = $('#selectableList').DataTable({
             'iDisplayLength': 940,
-            scrollY:        430,
+            "scrollY": 430,
+            "scrollX": false,
             "columnDefs": [ {
                 "targets": 2,
                 "orderable": true,
@@ -274,10 +282,18 @@ $(function() {
                     return '<div class="starRow" id="' + meta.row + '" name=' + starsCount + '></div>';
                 }
             }],
+            "bAutoWidth": false, // Disable the auto width calculation
             "aoColumns": [
-                { "bSortable": false },
-                { "bSortable": true },
                 {
+                    "bSortable": false,
+                    "sWidth": "5%"
+                },
+                {
+                   "bSortable": true,
+                   "sWidth": "65%"
+                },
+                {
+                    "sWidth": "20%",
                     "bSortable": true,
                     "sType": "starsort"
                 }
@@ -295,23 +311,17 @@ $(function() {
             }
         });
 
-        $('#selectableList tbody').on( 'click', 'tr', function () {
-            $(this).toggleClass('selected');
-            /*var data = table.rows('.selected').data();
-            var data0 = data[0][0];
-            data0.('.check').checked = true;*/
+        $('#selectAll').click( function () {
+            var checkAll = this.checked;
+            $('.check.questionrow').each(function() {
+                var checkedRow = this.parentElement.parentElement;
+                this.checked = checkAll;
+                $(checkedRow).toggleClass('selected', checkAll);
+            });
         });
 
-        $('#selectAll').click( function () {
-            if(this.checked) {
-                $('.check').each(function() {
-                    this.checked = true;
-                });
-            }else{
-                $('.check').each(function() {
-                    this.checked = false;
-                });
-            }
+        $(".check.questionrow").change(function() {
+            $(this.parentElement.parentElement).toggleClass('selected');
         });
     }
 });

@@ -10,7 +10,7 @@ $(function () {
             if (element['applicant']['status'] == 'SCHEDULED') {
                 $.ajax({
                     async: false,
-                    url: 'http://176.36.11.25:8080' + '/appointments/' + element.appointmentID,
+                    url: '/appointments/' + element.appointmentID,
                     dataType: 'json',
                     type: "GET",
                     success: function (appointment) {
@@ -55,16 +55,18 @@ beginInterview = function (target) {
     var appointmentID = $(target).closest('div.schedule').attr('appointmentID');
     $.ajax({
         async: false,
-        url: location.origin + '/ui/interview/?appointmentId=' + appointmentID,
+        url: '/ui/interview/?appointmentId=' + appointmentID,
         type: "GET"
     });
 };
 postAppointment = function (event) {
     var requestType = "POST";
+    var dataType = "text";
     var id = "";
     if ($(event.target).parent('button').hasClass("schedulable")) {
         requestType = "PUT";
-        id = $(event.target).closest('div.schedule').attr('appointmentid');
+        dataType = "json";
+        id = $(event.target).closest('div.schedule').attr('appointmentID');
     }
     var target = $(event.target);
     var parentdiv = $(target).parent().closest("div.schedule");
@@ -83,25 +85,29 @@ postAppointment = function (event) {
             $('#dialog').dialog('open');
         } else {
             var appointment = {
-                id: id,
+                appointmentId: id,
+                groupId: groupID,
                 applicantId: $(event.target).closest('div.applicant').attr('applicantid'),
                 userIdList: userIDs,
-                duration: +$(durationTarget).val() * 60 * 1000,
+                durationTime: +$(durationTarget).val() * 60 * 1000,
                 startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
-                    url: 'http://176.36.11.25:8080' + '/appointments/',
+                    url: '/appointments/',
                     contentType: "application/json",
-                    dataType: "json",
+                    dataType: dataType,
                     data: JSON.stringify(appointment),
                     type: requestType,
-                    success: function (newAppointment) {
+                    success: function (data) {
+                        $(event.target).closest('div.schedule').find('input').removeClass('ui-state-highlight');
+                        $(event.target).closest('div.schedule').find('input').removeClass('ui-state-error');
                         if (requestType == 'PUT') {
                             disableElements(event.target);
                             $("#dialog").data('content', 'Appointment successfuly scheduled/edited');
                             $('#dialog').dialog('open');
                         } else {
-                            createAppointment(newAppointment);
+                            appointment['appointmentId'] = data;
+                            createAppointment(appointment);
                         }
                     },
                     error: function () {
@@ -114,10 +120,16 @@ postAppointment = function (event) {
     }
 };
 disableElements = function (item) {
-    var parentdiv = $(item).closest('div.schedule');
-    $(parentdiv).find("input.schedulable").prop('disabled', true);
-    $(parentdiv).find('button.schedulable').button({disabled: true});
-    $(parentdiv).find('.editAppointment').button({disabled: false});
+    var scheduleParentDiv = $(item).closest('div.schedule');
+    var infoParentDiv = $(item).closest('div.info');
+    if (scheduleParentDiv) {
+        $(scheduleParentDiv).find("input.schedulable").prop('disabled', true);
+        $(scheduleParentDiv).find('button.schedulable').button({disabled: true});
+        $(scheduleParentDiv).find('.editAppointment').button({disabled: false});
+    }
+    if (infoParentDiv) {
+        $(infoParentDiv).find('input').prop('disabled', true);
+    }
 };
 createAppointment = function (newApointment) {
     var tosend = {};
@@ -127,7 +139,7 @@ createAppointment = function (newApointment) {
     tosend[applicantID]['rank'] = -1;
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(tosend),
@@ -135,6 +147,7 @@ createAppointment = function (newApointment) {
         success: function () {
             var elementToChange = elementByApplicantID(applicantID);
             elementToChange['applicant']['status'] = 'SCHEDULED';
+            elementToChange['appointmentID'] = newApointment['appointmentId'];
             elementToChange['appointment'] = parseAppointment(newApointment);
             var scheduledRendered = Mustache.render(pageTemplate, {'data': applicants.filter(function (element) {
                 return element['applicant']['status'] == 'SCHEDULED';
@@ -169,43 +182,32 @@ submitApplicant = function (event) {
             requestType = 'PUT';
             applicant['id'] = applicantID;
         }
-        if (requestType == 'POST') {
-            var formData = new FormData($('form')[0]);
-            $.ajax({
-                async: false,
-                url: location.origin + '/repo/doc/' + applicantID,
-                data: formData,
-                type: requestType,
-                cache: false,
-                contentType: false,
-                processData: false,
-                error: function () {
-                    $("#dialog").data('content', 'Failed to upload CV!');
-                    $('#dialog').dialog('open');
-                }
-            });
-        }
         $.ajax({
             async: false,
-            url: location.origin + '/applicants/',
+            url: '/applicants/',
             contentType: "application/json",
             dataType: "json",
             data: JSON.stringify(applicant),
             type: requestType,
             success: function (newApp) {
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
                 if (requestType == 'PUT') {
+                    disableElements(event.target);
                     updateApplicant(newApp);
                     $(event.target).closest('div').find('button').button({'disabled': false});
                     $(event.target).parent().button({'disabled': true});
                     $("#dialog").data('content', 'Information updated');
                     $('#dialog').dialog('open');
                 } else {
+                    postCV(newApp.id);
+                    $(event.target).closest('div.info').find('input').val('');
+                    $(event.target).closest('div.info').find('span.button').text('');
                     notify({
-                        applicantId: applicant.id,
+                        applicantId: newApp.id,
                         groupId: groupID,
                         responsibleHrId: getHRID()
                     });
-                    $(event.target).closest('div.applicant').find('input').val('');
                     createApplicant(newApp);
                 }
             },
@@ -222,6 +224,10 @@ validateInput = function (target) {
         var tmpresult = true;
         if ($(element).hasClass('cv')) {
             tmpresult = $(element).val().length != 0;
+            if (!tmpresult) {
+                $("#dialog").data('content', 'Select the CV file!');
+                $('#dialog').dialog('open');
+            }
         } else {
             var regex = $(element).attr('pattern');
             regex = new RegExp(regex);
@@ -234,6 +240,25 @@ validateInput = function (target) {
         }
     });
     return result;
+};
+postCV = function (id) {
+    var formData = new FormData();
+    var file = $('input:file')[0].files[0];
+    formData.append('file', file);
+    $.ajax({
+        async: false,
+        url: '/repository/doc/' + id,
+        data: formData,
+        type: 'POST',
+        dataType: "json",
+        cache: false,
+        contentType: false,
+        processData: false,
+        error: function () {
+            $("#dialog").data('content', 'Failed to upload CV!');
+            $('#dialog').dialog('open');
+        }
+    });
 };
 validateDate = function (target) {
     var d = new Date();
@@ -279,10 +304,10 @@ createApplicant = function (input) {
     tosend[input.id]['status'] = input['status'];
     tosend[input.id]['rank'] = -1;
     var date = new Date(input.birthday);
-    input.birthday = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+    input.birthday = ('0' + +(date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
     $.ajax({
         async: false,
-        url: location.origin + '/groups/' + groupID + '/applicants',
+        url: '/groups/' + groupID + '/applicants',
         contentType: "application/json",
         dataType: "json",
         data: JSON.stringify(tosend),
@@ -336,10 +361,10 @@ parseAppointment = function (appointment) {
         availableUsers.push(clone);
     });
     var date = new Date(appointment.startTime);
-    var startDate = ('0' + date.getMonth() + 1).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+    var startDate = ('0' + +(date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
     var startTime = ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
     return {'availableUsers': availableUsers,
-        'scheduledUsers': scheduledUsers, 'duration': appointment.duration / 60 / 1000,
+        'scheduledUsers': scheduledUsers, 'durationTime': appointment.durationTime / 60 / 1000,
         'startDate': startDate,
         'startTime': startTime}
 };

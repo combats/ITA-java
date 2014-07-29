@@ -77,7 +77,7 @@
                 var formData = new FormData($(this)[0]);
                 var bla = $('#text_field1').val();
                 $.ajax({
-                    url: "http://localhost:8080/repository/imgfile/applicant/" + bla,
+                    url: location.origin + "/repository/imgfile/applicant/" + bla,
                     type: "POST",
                     data: formData,
                     async: false,
@@ -123,7 +123,7 @@
                 var bla = $('#text_field2').val();
                 var width = $('#text_field5').val();
 
-                var img = $("<img />").attr('src', 'http://localhost:8080/repository/imgfile/applicant/' + bla + '?height=200&width=' + width)
+                var img = $("<img />").attr('src', location.origin + '/repository/imgfile/applicant/' + bla + '?height=' + width + '&width=' + width)
                         .load(function() {
                             if (!this.complete || typeof this.naturalWidth == "undefined" || this.naturalWidth == 0) {
                                 alert('broken image!');
@@ -148,7 +148,7 @@
                 var blablabla = $('#text_field3').val();
                 var width = $('#text_field4').val();
 
-                $.get("http://localhost:8080/repository/img/applicant/" + blablabla + "?height=200&width=" + width,
+                $.get(location.origin + "/repository/img/applicant/" + blablabla + "?height=" + width + "&width=" + width,
                             function(data,status){
                                 if (this.error) {
                                     alert("Data: " + data + "\nStatus: " + status);

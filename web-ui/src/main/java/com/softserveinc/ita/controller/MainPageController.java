@@ -19,9 +19,34 @@ import java.util.Properties;
 public class MainPageController {
 
 	@RequestMapping(method = RequestMethod.GET)
-	public String showMainPage() {
+         public String showMainPage() {
         return "main";
-	}
+    }
+
+    @RequestMapping(value = "sorry", method = RequestMethod.GET)
+    public ModelAndView showSorryPage(@RequestParam("code") int code) {
+        ModelAndView model = new ModelAndView();
+        model.setViewName("errors/sorry");
+        switch (code){
+            case 1:
+                model.addObject("error", "Can't find some cookies");
+                model.addObject("description", "Unfortunately your cookies are not the ones that we expect. Check your browser settings");
+                break;
+            case 2:
+                model.addObject("error", "Can't load Appointment");
+                model.addObject("description", "Appointment service is unreachable for the moment, or you're asking for nonexistent appointment");
+                break;
+            case 3:
+                model.addObject("error", "Can't load User/Applicant");
+                model.addObject("description", "Either services are unreachable for the moment or you're asking for nonexistent data");
+                break;
+            default:
+                model.addObject("error", "We don't know why you are here");
+                model.addObject("description", "Probably there is no such error code");
+                break;
+        }
+        return model;
+    }
 
     //Spring Security see this :
     @RequestMapping(value = "login", method = RequestMethod.GET)
@@ -38,12 +63,5 @@ public class MainPageController {
         }
         model.setViewName("login/login");
         return model;
-    }
-
-
-    @RequestMapping(value = "logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "forward:/login?logout";
     }
 }
