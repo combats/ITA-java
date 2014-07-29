@@ -82,12 +82,12 @@ public class CamelTest extends CamelSpringTestSupport {
         consumerMock.assertIsSatisfied();
     }
 
-    @Test
-    public void testServiceProducesCorrectMessageBodies() throws Exception {
-        consumerMock.expectedBodiesReceivedInAnyOrder(messageList);
-        queueManager.notifyApplicants(messageList);
-        boolean matches = notify.matches(5, TimeUnit.SECONDS);
-        assertTrue(matches);
-        consumerMock.assertIsSatisfied();
-    }
+//    @Test
+//    public void testServiceProducesCorrectMessageBodies() throws Exception {
+//        consumerMock.expectedBodiesReceivedInAnyOrder(messageList);
+//        queueManager.notifyApplicants(messageList);
+//        boolean matches = notify.matches(5, TimeUnit.SECONDS);
+//        assertTrue(matches);
+//        consumerMock.assertIsSatisfied();
+//    }
 }

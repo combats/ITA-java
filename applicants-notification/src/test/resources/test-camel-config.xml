@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="
          http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
          http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-         http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
+         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+         http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd
+         http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
 
     <!-- This creates an embedded ActiveMQ Broker -->
-
+    <mvc:annotation-driven/>
+    <context:annotation-config/>
     <broker xmlns="http://activemq.apache.org/schema/core" useJmx="true" persistent="false"
             brokerName="myBroker" id="broker">
         <transportConnectors>
@@ -45,4 +51,6 @@
     </bean>
 
     <camelContext xmlns="http://camel.apache.org/schema/spring" depends-on="broker"/>
+
+    <bean id="jsonUtil" class="com.softserveinc.ita.utils.impl.JsonUtilJaxsonImpl"/>
 </beans>

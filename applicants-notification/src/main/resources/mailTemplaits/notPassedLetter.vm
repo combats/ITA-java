@@ -1,10 +1,10 @@
 <body>
 <img src='cid:ItAcademyLogo'>
 <h1>Dear ${name} ${surname} ! </h1>
-The applicants for this post were of a very high standard and on this occasion, we regret to inform you, you haven't passed the interview.
+We regret to inform you that applicants for this position were of a very high standard and <br>on this occasion you haven't passed the interview.
 Thank you for your interest in the SofteServe It Academy. <br>Please accept our best wishes as you pursue your career goals.
 <br>
 <br>
-With best regards,<br>
+Best regards,<br>
 SoftServe ItAcademy.
 </body>
