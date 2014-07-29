@@ -9,7 +9,7 @@
 {{#data}}
 <div class="container ">
     <h3 class="accordion-section
-    {{#offering}}{{^applicant.employed}}top{{/applicant.employed}}{{/offering}}"
+    {{#offering}}{{^applicant.employed}}ui-state-highlight{{/applicant.employed}}{{/offering}}"
         align="left">
         <span align="left">
             {{^newApp}}{{applicant.name}} {{applicant.surname}}{{/newApp}}
