@@ -71,7 +71,7 @@
                         <dd>
                             <form enctype="multipart/form-data">
                                 <span class="file-wrapper">
-  <input type="file" class="cv" accept=".doc,.docx,.odt,.pdf,application/msword,
+  <input type="file" class="cv validatable" accept=".doc,.docx,.odt,.pdf,application/msword,
                                application/vnd.openxmlformats-officedocument.wordprocessingml.document"/>
   <span class="button">Choose a CV</span>
 </span></form>

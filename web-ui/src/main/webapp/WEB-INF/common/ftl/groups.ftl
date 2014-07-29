@@ -1,6 +1,6 @@
-<#--<#import "header_footer.ftl" as header_footer/>-->
+<#import "header_footer.ftl" as header_footer/>
 
-<#--<@header_footer.main_page>-->
+<@header_footer.main_page>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="groups/js/mustache.js"></script>
@@ -177,4 +177,4 @@
     </div>
 </div>
 
-<#--</@header_footer.main_page>-->
+</@header_footer.main_page>

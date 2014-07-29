@@ -61,9 +61,11 @@ beginInterview = function (target) {
 };
 postAppointment = function (event) {
     var requestType = "POST";
+    var dataType = "text";
     var id = "";
     if ($(event.target).parent('button').hasClass("schedulable")) {
         requestType = "PUT";
+        dataType = "json";
         id = $(event.target).closest('div.schedule').attr('appointmentID');
     }
     var target = $(event.target);
@@ -93,9 +95,12 @@ postAppointment = function (event) {
                     async: false,
                     url: '/appointments/',
                     contentType: "application/json",
+                    dataType: dataType,
                     data: JSON.stringify(appointment),
                     type: requestType,
                     success: function (data) {
+                        $(event.target).closest('div.schedule').find('input').removeClass('ui-state-highlight');
+                        $(event.target).closest('div.schedule').find('input').removeClass('ui-state-error');
                         if (requestType == 'PUT') {
                             disableElements(event.target);
                             $("#dialog").data('content', 'Appointment successfuly scheduled/edited');
@@ -185,6 +190,8 @@ submitApplicant = function (event) {
             data: JSON.stringify(applicant),
             type: requestType,
             success: function (newApp) {
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
                 if (requestType == 'PUT') {
                     disableElements(event.target);
                     updateApplicant(newApp);
@@ -193,10 +200,9 @@ submitApplicant = function (event) {
                     $("#dialog").data('content', 'Information updated');
                     $('#dialog').dialog('open');
                 } else {
-                    $(event.target).closest('div.applicant').find('input').val('');
-                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-highlight');
-                    $(event.target).closest('div.applicant').find('input').removeClass('ui-state-error');
                     postCV(newApp.id);
+                    $(event.target).closest('div.info').find('input').val('');
+                    $(event.target).closest('div.info').find('span.button').text('');
                     notify({
                         applicantId: newApp.id,
                         groupId: groupID,
@@ -298,7 +304,7 @@ createApplicant = function (input) {
     tosend[input.id]['status'] = input['status'];
     tosend[input.id]['rank'] = -1;
     var date = new Date(input.birthday);
-    input.birthday = ('0' + date.getUTCMonth() + 1).slice(-2) + '/' + ('0' + date.getUTCDate()).slice(-2) + '/' + date.getUTCFullYear();
+    input.birthday = ('0' + +(date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
     $.ajax({
         async: false,
         url: '/groups/' + groupID + '/applicants',
@@ -355,8 +361,8 @@ parseAppointment = function (appointment) {
         availableUsers.push(clone);
     });
     var date = new Date(appointment.startTime);
-    var startDate = ('0' + date.getUTCMonth() + 1).slice(-2) + '/' + ('0' + date.getUTCDate()).slice(-2) + '/' + date.getUTCFullYear();
-    var startTime = ('0' + date.getUTCHours()).slice(-2) + ':' + ('0' + date.getUTCMinutes()).slice(-2);
+    var startDate = ('0' + +(date.getMonth() + 1)).slice(-2) + '/' + ('0' + date.getDate()).slice(-2) + '/' + date.getFullYear();
+    var startTime = ('0' + date.getHours()).slice(-2) + ':' + ('0' + date.getMinutes()).slice(-2);
     return {'availableUsers': availableUsers,
         'scheduledUsers': scheduledUsers, 'durationTime': appointment.durationTime / 60 / 1000,
         'startDate': startDate,
