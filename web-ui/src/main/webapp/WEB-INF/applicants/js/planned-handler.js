@@ -88,13 +88,12 @@ postAppointment = function (event) {
                 applicantId: $(event.target).closest('div.applicant').attr('applicantid'),
                 userIdList: userIDs,
                 durationTime: +$(durationTarget).val() * 60 * 1000,
-                startTime: new Date($(dateTarget).val()).UTC() + parseTime($(timeTarget).val())};
+                startTime: new Date($(dateTarget).val()).getTime() + parseTime($(timeTarget).val())};
             $.ajax({
                     async: false,
                     url: '/appointments/',
                     contentType: "application/json",
                     data: JSON.stringify(appointment),
-                    dataType: "text",
                     type: requestType,
                     success: function (data) {
                         if (requestType == 'PUT') {
@@ -170,7 +169,7 @@ submitApplicant = function (event) {
     var inputDate = parentdiv.find('input.date');
     if (validateInput(inputData) && validateDate(inputDate)) {
         var applicant = buildApplicant(inputData);
-        applicant['birthday'] = new Date($(inputDate).val()).UTC();
+        applicant['birthday'] = new Date($(inputDate).val()).getTime();
         applicant['id'] = "";
         var applicantID = $(event.target).closest('div.applicant').attr('applicantID');
         if (applicantID) {
@@ -218,6 +217,10 @@ validateInput = function (target) {
         var tmpresult = true;
         if ($(element).hasClass('cv')) {
             tmpresult = $(element).val().length != 0;
+            if (!tmpresult) {
+                $("#dialog").data('content', 'Select the CV file!');
+                $('#dialog').dialog('open');
+            }
         } else {
             var regex = $(element).attr('pattern');
             regex = new RegExp(regex);
