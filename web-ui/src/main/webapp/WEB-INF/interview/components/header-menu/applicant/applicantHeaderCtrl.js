@@ -10,15 +10,14 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
     $scope.applicant = Applicant;
     $activityIndicator.startAnimating();
 
-    Photo.get().success(function(response){
+    Photo.get().then(function(response){
         $scope.defPhoto =  response;
-
         $activityIndicator.stopAnimating();
-    }).error(function(response){
+    },
+        function(response){
         $scope.defPhoto =  'interview/img/maestro-joda.jpg';
-    }).catch(function(reason){
-        console.log(reason);
-    });
+            $activityIndicator.stopAnimating();
+    })
 
     $scope.MEDIA_HOLDER = "IMG";
     $scope.sys = {video:"",localMediaStream:""};

@@ -22,7 +22,7 @@ app.directive('ngEnter', function () {
 app.controller('ChatController', ['$scope', '$rootScope','ChatService','User', function ($scope,$rootScope,ChatService,User) {
 
     $scope.message = {};
-    $scope.message.nickname = User.name + ' ' + User.lastname;
+    $scope.message.nickname = User.name + ' ' + User.surname;
     $scope.messages = [];
 
     var $cookies = angular.injector(['ngCookies']).get('$cookies');
