@@ -5,7 +5,7 @@ var groupCapacity;
 var userList = [];
 $(function () {
     groupID = getParamByName('groupID');
-    $('nocontent').toggle();
+    $('.nocontent').toggle();
     //load page template
     $.ajax({
         async: false,
