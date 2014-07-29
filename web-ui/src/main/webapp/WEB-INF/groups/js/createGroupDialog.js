@@ -253,7 +253,7 @@ $(function () {
             groupName: {
                 required: true,
                 minlength: 3,
-                maxlength: 7
+                maxlength: 10
             },
             groupAddress: {
                 required: true,

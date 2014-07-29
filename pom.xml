@@ -28,7 +28,7 @@
         <module>web-ui</module>
         <module>content-repository</module>
         <module>applicants-notification</module>
-        <module>InterviewFactory</module>
+        <module>interview</module>
     </modules>
 
     <dependencies>
@@ -121,12 +121,17 @@
             <artifactId>hibernate-core</artifactId>
             <version>4.2.11.Final</version>
         </dependency>
-    <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.10</version>
-        <scope>test</scope>
-    </dependency>
+        <!--Validators-->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${javax.validation.api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${org.hibernate.validator.version}</version>
+        </dependency>
     </dependencies>
 
      <build>
@@ -182,8 +187,7 @@
                         </configuration>
                     </execution>
                 </executions>
-                      </plugin>
-
+            </plugin>
           <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
