@@ -16,6 +16,8 @@ mediapp.controller('finalComCtrl',['$scope','Comment', 'User', 'Appointment', '$
 
         $rootScope.$broadcast('Final Comment was submit');
 
+        console.log(list);
+
         $http({method: 'PUT',
                url: baseUrl+'/groups/' + groupId + '/applicants',
                data: JSON.stringify(list)
