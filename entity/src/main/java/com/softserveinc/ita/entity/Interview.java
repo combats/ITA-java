@@ -83,7 +83,7 @@ public class Interview implements Serializable {
 
     @Override
     public String toString() {
-        return "Interview{" +
+        return "ApplicantInterview{" +
                 "interviewId='" + interviewId + '\'' +
                 ", questionsBlocks=" + questionsBlocks +
                 ", type=" + type +
