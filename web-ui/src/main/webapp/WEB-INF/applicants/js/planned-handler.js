@@ -191,8 +191,6 @@ submitApplicant = function (event) {
             data: JSON.stringify(applicant),
             type: requestType,
             success: function (newApp) {
-                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
-                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
                 if (requestType == 'PUT') {
                     disableElements(event.target);
                     updateApplicant(newApp);
@@ -204,6 +202,7 @@ submitApplicant = function (event) {
                     postCV(newApp.id);
                     $(event.target).closest('div.info').find('input').val('');
                     $(event.target).closest('div.info').find('span.file-holder').text('');
+                    createApplicant(newApp);
                     notify([
                         {
                             applicantId: newApp.id,
@@ -211,8 +210,9 @@ submitApplicant = function (event) {
                             responsibleHrId: getHRID()
                         }
                     ]);
-                    createApplicant(newApp);
                 }
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
             },
             error: function () {
                 $("#dialog").data('content', 'Failed to create/change applicant!');

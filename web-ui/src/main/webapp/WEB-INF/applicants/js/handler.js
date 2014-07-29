@@ -234,8 +234,8 @@ setEventListeners = function () {
 notifyListOfApplicants = function (target) {
     var list = [];
     var hrid = getHRID();
-    $(target).closest('div.applicant').siblings('div.applicant').addBack().each(function (index, element) {
-        list.push({applicantId: $(element).attr('applicantID'),
+    $('div.applicant').each(function (index, element) {
+        list.push({applicantId: $(element).attr('applicantid'),
             groupId: groupID,
             responsibleHrId: hrid
         });
@@ -243,7 +243,7 @@ notifyListOfApplicants = function (target) {
     notify(list);
 };
 notifyApplicant = function (target) {
-    var appid = $(target).closest('div.applicant').attr('applicantID');
+    var appid = $(target).closest('div.applicant').attr('applicantid');
     notify([
         {applicantId: appid,
             groupId: groupID,
