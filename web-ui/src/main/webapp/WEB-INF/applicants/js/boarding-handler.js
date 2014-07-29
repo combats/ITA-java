@@ -5,8 +5,8 @@ $(function () {
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('NOT_PASSED');
     if (applicants.length == 0) {
-        $('scheduleView').toggle();
-        $('nocontent').toggle();
+        $('.scheduleView').toggle();
+        $('.nocontent').toggle();
     } else {
         applicants.forEach(function (element) {
             loadInterviewResult(element)
@@ -23,8 +23,8 @@ $(function () {
                 highlight(ui.item);
             }
         });
-        postRender();
     }
+    postRender();
 });
 loadInterviewResult = function (element) {
     $.ajax({

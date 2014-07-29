@@ -203,11 +203,13 @@ submitApplicant = function (event) {
                     postCV(newApp.id);
                     $(event.target).closest('div.info').find('input').val('');
                     $(event.target).closest('div.info').find('span.file-holder').text('');
-                    notify({
-                        applicantId: newApp.id,
-                        groupId: groupID,
-                        responsibleHrId: getHRID()
-                    });
+                    notify([
+                        {
+                            applicantId: newApp.id,
+                            groupId: groupID,
+                            responsibleHrId: getHRID()
+                        }
+                    ]);
                     createApplicant(newApp);
                 }
             },
