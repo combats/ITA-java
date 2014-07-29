@@ -1,5 +1,5 @@
 angular.module('interviewApp').factory('Interview',['$http','Applicant', function($http, Applicant) {
-    var baseUrl = "http://176.36.11.25:8080/applicantInterview"
+    var baseUrl = "http://176.36.11.25:8080/interviews"
     return {
         add: function(interview){
             return $http({method: 'POST', url: baseUrl+"/", data: interview});

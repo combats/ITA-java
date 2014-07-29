@@ -2,16 +2,48 @@
     var questionModule = angular.module('questionMod', []);
 
     questionModule.controller('QuestionsController', ['$scope','Question','User', function ($scope, Question, User) {
+
         $scope.question = angular.copy(question);
 
-        var qs = User.questions;
-        if(qs) {
-            for (var i = 0; i < qs.length; i++) {
-                qs[i].question = qs[i].questionBody;
-                delete qs[i]['questionBody'];
+        Interview.get(Appointment.id).then(function (response) {
+                $scope.questions = response.questions;
+            },
+            function (err) {
+                var interview = {};
+                interview.id = Appointment.id;
+                interview.applicantId = Applicant.id;
+                interview.usersId = Appointment.userIdList;
+                var qs = User.questions;
+                if(qs) {
+                    for (var i = 0; i < qs.length; i++) {
+                        qs[i].question = qs[i].questionBody;
+                        delete qs[i]['questionBody'];
+                        qs[i].comment = "";
+                        qs[i].mark = 1;
+                    }
+                    interview.questions = qs;
+                }
+                interview.finalComment = "";
+
+                Interview.add(interview).then(function(response){
+                    alert("success");
+                    console.log(response);
+                    console.log(response.data);
+                    $scope.questions = response.questions;
+                });
             }
-            $scope.questions = qs;
+        );
+
+
+        $scope.updInterview = function(){
+            Interview.get(Appointment.id).then(function (response) {
+                response.questions = $scope.questions;
+                Interview.edit(response).then(function(){
+                    console.log("Interview was updated");
+                });
+            });
         }
+
 
         $scope.isActive = function(q){
             return q.question === $scope.question.question;
