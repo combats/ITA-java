@@ -1,5 +1,5 @@
 var  mediapp = angular.module('applicantPopupModule',['ngActivityIndicator']);
-mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance','Applicant','Photo' ,'$activityIndicator', '$timeout', function($rootScope, $scope,$modalInstance,Applicant,Photo, $activityIndicator,$timeout){
+mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance','Applicant','Repo' ,'$activityIndicator', '$timeout', function($rootScope, $scope,$modalInstance,Applicant,Repo, $activityIndicator,$timeout){
 
 
 
@@ -10,7 +10,7 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
     $scope.applicant = Applicant;
     $activityIndicator.startAnimating();
 
-    Photo.get().then(function(response){
+    Repo.getPhoto().then(function(response){
         $scope.defPhoto =  response;
         $activityIndicator.stopAnimating();
     },
@@ -21,6 +21,15 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
 
     $scope.MEDIA_HOLDER = "IMG";
     $scope.sys = {video:"",localMediaStream:""};
+
+    Repo.getCV().then(function(response){
+            $scope.cvTitle = 'Link to cv';
+            $scope.cv =  '/repository/doc/'+Applicant.id;
+        },
+        function(response){
+            $scope.cvTitle = 'Not uploaded yet';
+            $scope.cv =  '#';
+        })
 
 
     $scope.sys.stopVideo = function(){
@@ -61,7 +70,7 @@ mediapp.controller('applicantPopupCtrl',['$rootScope','$scope','$modalInstance',
     }
 
 $scope.postPhoto = function(){
-    Photo.add($scope.sys.tmpPhoto).then(function(response){
+    Repo.addPhoto($scope.sys.tmpPhoto).then(function(response){
         $scope.defPhoto = $scope.sys.tmpPhoto;
     });
 }

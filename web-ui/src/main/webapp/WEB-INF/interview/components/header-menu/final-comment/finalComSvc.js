@@ -1,7 +1,6 @@
 angular.module('finalComMod').factory('Comment',['$http','Appointment', function($http, Appointment) {
     return {
         update: function(finalComment){
-            var finalComment = {};
             finalComment.interviewId = Appointment.appointmentId;
             if(!finalComment.bonusPoints){
                 finalComment.bonusPoints = 0;
