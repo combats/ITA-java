@@ -64,31 +64,60 @@ public class InterviewController {
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String addQuestionInformation(@RequestBody QuestionInformation questionInformation,
-                                         @CookieValue("userId") String userId,
-                                         @CookieValue("appointmentId") String appointmentId)
+                                         @CookieValue("userId") String userId1,
+                                         @CookieValue("appointmentId") String appointmentId1,
+                                         @RequestParam String appointmentId,
+                                         @RequestParam String userId)
             throws WrongCriteriaException, HttpRequestException {
+        String userId3;
+        String appointmentId3;
+        if (userId1 == null && appointmentId1 == null){
+            userId3 = userId;
+            appointmentId3 = appointmentId;
+        }
+        else{
+            userId3 = userId1;
+            appointmentId3 = appointmentId1;
+        }
+
         questionInformation.setInterviewId(appointmentId);
-        interviewService.getInterviewByAppointmentID(appointmentId);
-        questionsInformationServices.addQuestionInformation(questionInformation, userId);
-        return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId);
+        interviewService.getInterviewByAppointmentID(appointmentId3);
+        questionsInformationServices.addQuestionInformation(questionInformation, userId3);
+        return questionsInformationServices.getQuestionInformationIdByQuestionInformationBody(questionInformation, userId3);
     }
 
     @RequestMapping(value = "interviewing/final_comment", method = RequestMethod.PUT, consumes = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateFinalCommentInQuestionsBlock(@RequestBody FinalComment finalComment,
-                                                   @CookieValue("userId") String userId,
-                                                   @CookieValue("appointmentId") String appointmentId) throws WrongCriteriaException, HttpRequestException {
-        finalComment.setInterviewId(appointmentId);
-        interviewService.getInterviewByAppointmentID(appointmentId);
-        questionsBlockServices.updateFinalCommentInQuestionsBlock(finalComment, userId);
+                                                   @CookieValue("userId") String userId1,
+                                                   @CookieValue("appointmentId") String appointmentId1,
+                                                   @RequestParam String appointmentId,
+                                                   @RequestParam String userId)
+            throws WrongCriteriaException, HttpRequestException {
+        String userId3;
+        String appointmentId3;
+        if (userId1 == null && appointmentId1 == null){
+            userId3 = userId;
+            appointmentId3 = appointmentId;
+        }
+        else{
+            userId3 = userId1;
+            appointmentId3 = appointmentId1;
+        }
+        finalComment.setInterviewId(appointmentId3);
+        interviewService.getInterviewByAppointmentID(appointmentId3);
+        questionsBlockServices.updateFinalCommentInQuestionsBlock(finalComment, userId3);
     }
 
     @RequestMapping(value = "interviewing/answer", method = RequestMethod.PUT, consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @ResponseBody
     public String updateQuestionInformation(@RequestBody QuestionInformation questionInformation,
-                                            @CookieValue("appointmentId") String appointmentId){
-        questionInformation.setInterviewId(appointmentId);
+                                            @CookieValue("appointmentId") String appointmentId1,
+                                            @RequestParam String appointmentId){
+        if (appointmentId1 == null) questionInformation.setInterviewId(appointmentId);
+        else questionInformation.setInterviewId(appointmentId1);
+        questionInformation.setInterviewId(appointmentId1);
         return questionsInformationServices.updateQuestionInformation(questionInformation);
     }
 
