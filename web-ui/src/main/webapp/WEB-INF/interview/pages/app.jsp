@@ -55,22 +55,22 @@
         <div class="panel-title">Question Manager</div>
         <div id="question-manager">
             <div id="question-container">
-                <textarea id="question-area" placeholder="Enter your question over here ..." required ng-model="question.question"></textarea>
+                <textarea id="question-area" placeholder="Enter your question over here ..." required ng-model="questions[activeIndex].question"></textarea>
             </div>
             <div id="comment-container">
-                <textarea id="comment-area" placeholder="Enter your comment over here ..." required ng-model="question.comment"></textarea>
+                <textarea id="comment-area" placeholder="Enter your comment over here ..." required ng-model="questions[activeIndex].comment"></textarea>
             </div>
             <div class="rating-container">
                 <div id="question-mark">
                 <b>Mark:</b>
-                   <rating ng-model="question.mark" max="10" state-on="'glyphicon-star'" state-off="'glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="hoverMark = null"></rating><b>
+                   <rating ng-model="questions[activeIndex].mark" max="10" state-on="'glyphicon-star'" state-off="'glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="hoverMark = null"></rating><b>
 
-                <span id="mark">{{hoverMark || question.mark}}</span>/10</b>
+                <span id="mark">{{hoverMark || questions[activeIndex].mark}}</span>/10</b>
                 </div>
                 <div id="question-weight">
                 <b>Weight:</b>
                    <rating ng-model="question.weight" max="4" state-on="'glyphicon-stop'" state-off="'glyphicon-unchecked'"></rating><b>
-                <span id="weight">{{intToWeight(question.weight)}}</span></b>
+                <span id="weight">{{intToWeight(questions[activeIndex].weight)}}</span></b>
                 </div>
             </div>
         </div>
@@ -142,7 +142,6 @@
     <script type="text/javascript" src="interview/components/questions/questionsCtrl.js"></script>
     <script type="text/javascript" src="interview/components/chat/chatCtrl.js"></script>
     <script type="text/javascript" src="interview/components/chat/chatSvc.js"></script>
-    <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
     <script type="text/javascript" src="interview/components/header-menu/timer/appointmentStartTimeSvc.js" ></script>
    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>

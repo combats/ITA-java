@@ -1,16 +1,21 @@
 (function () {
     var questionModule = angular.module('questionMod', []);
 
-    questionModule.controller('QuestionsController', ['$scope','Question','User', function ($scope, Question, User) {
+    questionModule.controller('QuestionsController', ['$scope','Interview','User','Applicant','Appointment', function ($scope, Interview,Applicant, User, Appointment) {
 
+        $scope.activeIndex = 0;
         $scope.question = angular.copy(question);
 
-        Interview.get(Appointment.id).then(function (response) {
+        Interview.get(Appointment.appointmentId).then(function (response) {
                 $scope.questions = response.questions;
+                if(!$scope.questions){
+                    $scope.questions = [];
+                    $scope.questions.push(question);
+                }
             },
             function (err) {
                 var interview = {};
-                interview.id = Appointment.id;
+                interview.id = Appointment.appointmentId;
                 interview.applicantId = Applicant.id;
                 interview.usersId = Appointment.userIdList;
                 var qs = User.questions;
@@ -26,20 +31,23 @@
                 interview.finalComment = "";
 
                 Interview.add(interview).then(function(response){
-                    alert("success");
-                    console.log(response);
-                    console.log(response.data);
                     $scope.questions = response.questions;
+                    if(!$scope.questions){
+                        $scope.questions = [];
+                        $scope.questions.push(question);
+                    }
                 });
             }
         );
 
 
-        $scope.updInterview = function(){
-            Interview.get(Appointment.id).then(function (response) {
-                response.questions = $scope.questions;
-                Interview.edit(response).then(function(){
+        $scope.updateInterview = function(){
+            Interview.get(Appointment.appointmentId).then(function (response) {
+                response.data.questions = $scope.questions;
+
+                Interview.edit(response.data).then(function(){
                     console.log("Interview was updated");
+
                 });
             });
         }
@@ -49,7 +57,7 @@
             return q.question === $scope.question.question;
         };
         $scope.isAnswered = function(q){
-            return (q.comment || q.mark) && !$scope.isActive(q);
+            return (q.comment) && !$scope.isActive(q);
         };
         $scope.selectQuestion = function(q){
             $scope.submitQuestion($scope.question);
@@ -57,39 +65,19 @@
         };
 
         var addQuestion = function(q){
-            Question.add(q).then(function (response) {
-                q.id = response;
+//            Question.add(q).then(function (response) {
+//                q.id = response;
                 $scope.questions.push(angular.copy(q));
-            },function(err){
-                alert("Error during question submit. Check the connection");
-            });
+//            },function(err){
+//                alert("Error during question submit. Check the connection");
+//            });
         };
 
         $scope.submitQuestion = function(q){
             if($scope.isNewQuestion(q)){
                 addQuestion(q);
             }
-            else if($scope.isAnyChangesQuestion(q)){
-                var i=0, len=$scope.questions.length;
-                for (; i<len; i++) {
-                    if (q.question === $scope.questions[i].question) {
-                        $scope.questions[i].comment = angular.copy(q.comment);
-                        $scope.questions[i].mark = q.mark;
-                        $scope.questions[i].weight = q.weight;
-                        if(q.id){
-                            Question.update(q).then(function (response) {
-
-                            }, function (err) {
-                                alert("Error during question update. Check the connection");
-                            });
-                        }
-                        else{
-                            addQuestion(q);
-                        }
-                    }
-                }
-
-            }
+            $scope.updateInterview();
 
         };
         $scope.intToWeight = function(num){
@@ -115,8 +103,8 @@
             if(!$scope.questions){
                 return false;
             }
-            var i=0, len=$scope.questions.length;
-            for (; i<len; i++) {
+            var len=$scope.questions.length;
+            for (var i=0; i<len; i++) {
                 if(q.question === $scope.questions[i].question){
                     return q !== $scope.questions[i].question;
                 }
@@ -124,6 +112,8 @@
             return false;
         }
         $scope.newQuestion = function(){
+            $scope.questions.push(question);
+            $scope.activeIndex = $scope.questions.length-1;
             $scope.question = angular.copy(question);
         }
     }]);
