@@ -2,10 +2,9 @@ package com.softserveinc.ita.entity.interview;
 
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "InterviewQuestions")
@@ -26,16 +25,21 @@ public class InterviewQuestion {
 	private String comment;
 
 	@Column(name = "mark")
-	@Min(1)
-	@Max(10)
+	@Range(min = 1, max = 10)
 	private int mark;
 
 	@Column(name = "weight")
-	@Min(1)
-	@Max(4)
+	@Range(min = 1, max = 4)
 	private int weight;
 
 	public InterviewQuestion() {
+	}
+
+	public InterviewQuestion(String question, String comment, int mark, int weight) {
+		this.question = question;
+		this.comment = comment;
+		this.mark = mark;
+		this.weight = weight;
 	}
 
 	public String getId() {
