@@ -56,6 +56,7 @@ checkInterviewAvailable = function () {
 };
 beginInterview = function (target) {
     var appointmentID = $(target).closest('div.schedule').attr('appointmentID');
+    writeCookie('groupID', groupID);
     writeCookie('appointmentId', appointmentID);
     window.location.href = '/ui/interview';
 };

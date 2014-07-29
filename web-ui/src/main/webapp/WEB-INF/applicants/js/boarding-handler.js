@@ -33,13 +33,23 @@ loadInterviewResult = function (element) {
         dataType: 'json',
         type: 'GET',
         success: function (interview) {
-            element['interview'] = interview;
+            element['interview'] = calculateInterviewResult(interview);
         },
         error: function () {
             $("#dialog").data('content', "Failed to load result of the interview by id:" + element.appointmentID);
             $('#dialog').dialog('open');
         }
     });
+};
+calculateInterviewResult = function (interview) {
+    var result = {};
+    var totalPoints = 0;
+    result['finalComment'] = interview['finalComment'];
+    $(interview['questions']).each(function (index, value) {
+        totalPoints += +value['mark'] * +value['weight'];
+    });
+    result['totalPoints'] = totalPoints;
+    return result;
 };
 highlight = function (item) {
     var siblings = $(item).siblings("div.container").addBack();
