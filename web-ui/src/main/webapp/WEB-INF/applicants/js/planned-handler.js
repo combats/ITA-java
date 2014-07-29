@@ -39,25 +39,26 @@ $(function () {
     }), 'schedule': true });
     $('.not_scheduled').html(notScheduledRendered);
     postRender();
-    setInterval(function () {
-        $('div.schedule').each(function (index, element) {
-            var date = $(element).find('.date')[0];
-            var time = $(element).find('.time')[0];
-            if (date && time) {
-                if (new Date($(date).val()).getTime() + parseTime($(time).val()) - new Date().getTime() < 30 * 60 * 1000) {
-                    $(element).find('.interview').button({disabled: false});
-                }
-            }
-        });
-    }, 1000 * 60 * 2);
+    checkInterviewAvailable();
+    setInterval(checkInterviewAvailable(), 1000 * 30);
 });
+checkInterviewAvailable = function () {
+    $('div.schedule').each(function (index, element) {
+        var date = $(element).find('.date')[0];
+        var time = $(element).find('.time')[0];
+        if (date && time) {
+            var planned = new Date($(date).val()).getTime() + parseTime($(time).val());
+            if (planned - new Date().getTime() < 30 * 60 * 1000) {
+                $(element).find('.interview').button({disabled: false});
+            }
+        }
+    });
+};
 beginInterview = function (target) {
     var appointmentID = $(target).closest('div.schedule').attr('appointmentID');
-    $.ajax({
-        async: false,
-        url: '/ui/interview/?appointmentId=' + appointmentID,
-        type: "GET"
-    });
+    writeCookie('groupID', groupID);
+    writeCookie('appointmentId', appointmentID);
+    window.location.href = '/ui/interview';
 };
 postAppointment = function (event) {
     var requestType = "POST";
@@ -190,8 +191,6 @@ submitApplicant = function (event) {
             data: JSON.stringify(applicant),
             type: requestType,
             success: function (newApp) {
-                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
-                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
                 if (requestType == 'PUT') {
                     disableElements(event.target);
                     updateApplicant(newApp);
@@ -202,14 +201,18 @@ submitApplicant = function (event) {
                 } else {
                     postCV(newApp.id);
                     $(event.target).closest('div.info').find('input').val('');
-                    $(event.target).closest('div.info').find('span.button').text('');
-                    notify({
-                        applicantId: newApp.id,
-                        groupId: groupID,
-                        responsibleHrId: getHRID()
-                    });
+                    $(event.target).closest('div.info').find('span.file-holder').text('');
                     createApplicant(newApp);
+                    notify([
+                        {
+                            applicantId: newApp.id,
+                            groupId: groupID,
+                            responsibleHrId: getHRID()
+                        }
+                    ]);
                 }
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-highlight');
+                $(event.target).closest('div.info').find('input').removeClass('ui-state-error');
             },
             error: function () {
                 $("#dialog").data('content', 'Failed to create/change applicant!');
@@ -419,4 +422,10 @@ getUsersByIDList = function (IDList) {
     return userList.filter(function (element) {
         return $.inArray(element.id, IDList) > -1;
     });
+};
+writeCookie = function (cname, cvalue) {
+    var d = new Date();
+    d.setTime(d.getTime() + (24 * 60 * 60 * 1000));
+    var expires = "expires=" + d.toGMTString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
 };

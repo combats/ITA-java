@@ -4,8 +4,8 @@ $(function () {
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('EMPLOYED');
     if (applicants.length == 0) {
-        $('scheduleView').toggle();
-        $('nocontent').toggle();
+        $('.scheduleView').toggle();
+        $('.nocontent').toggle();
     } else {
         //interviewed
         var interviewedRendered = Mustache.render(pageTemplate, {'data': applicants, 'offering': true});
@@ -16,8 +16,8 @@ $(function () {
             create: function (event) {
                 sort($(event.target).children()[0], applicants, false);
             }});
-        postRender();
     }
+    postRender();
 });
 employApplicant = function (target) {
     var div = $(target).closest('div.container');

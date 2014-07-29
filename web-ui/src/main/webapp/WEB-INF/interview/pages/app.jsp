@@ -82,7 +82,7 @@
    <div id="right-panel" ng-controller="ChatController" ng-init="connect()" >
 
        <div class="panel-title">Chat/Notifications</div>
-          <div id="panel-notifications">
+          <div id="panel-notifications" scroll-glue ng-model="glued">
              <div>
                <div ng-switch="ONLINE">
                    <div class="dm-online-text" ng-switch-when="true">ONLINE</div>
@@ -111,8 +111,7 @@
 
                        <div class="dm-nickname" ng-class="{'sent':message.sent}">{{message.nickname}}</div>
                        <div class="dm-message" ng-class="{'sent':message.sent}">
-                          <p>{{message.text
-                              }}</p>
+                          <p>{{message.text}}</p>
                            <div class="dm-caret">
                                <div class="dm-caret-outer"></div>
                                <div class="dm-caret-inner"></div>
@@ -134,6 +133,7 @@
    </div>
     <script type="text/javascript" src="interview/js/angular.js"></script>
     <script type="text/javascript" src="interview/js/angular-animate.js"></script>
+    <script type="text/javascript" src="interview/js/scrollglue.js"></script>
     <script type="text/javascript" src="https://code.angularjs.org/1.2.18/angular-cookies.js"></script>
     <script type="text/javascript" src="interview/js/interviewApp.js"></script>
     <script type="text/javascript" src="interview/js/ngActivityIndicator.js"></script>

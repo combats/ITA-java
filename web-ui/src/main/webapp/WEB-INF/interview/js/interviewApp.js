@@ -29,6 +29,7 @@
             // Retrieving a cookie
             var userId = $cookies.userId;
             var appointmentId = $cookies.appointmentId;
+            
             //if one of the cookie is absent
             if (!userId || !appointmentId) {
                 changeLocation("/sorry?code=" + 1, true);

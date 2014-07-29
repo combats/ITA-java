@@ -75,6 +75,9 @@
 
         $scope.submitQuestion = function(q){
             if($scope.isNewQuestion(q)){
+
+                $rootScope.$broadcast('New question was added');
+
                 addQuestion(q);
             }
             $scope.updateInterview();
