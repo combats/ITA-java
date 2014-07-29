@@ -1,7 +1,10 @@
-angular.module('finalComMod').factory('Comment',['$http', function($http) {
+angular.module('finalComMod').factory('Comment',['$http','Appointment', function($http, Appointment) {
     return {
-        update: function(fc){
-            q.interviewId = Appointment.appointmentId;
-            return $http({method: 'PUT', url: "http://176.36.11.25:8080/interviewing/final_comment/", data : fc});
+        update: function(finalComment){
+            finalComment.interviewId = Appointment.appointmentId;
+            if(!finalComment.bonusPoints){
+                finalComment.bonusPoints = 0;
+            }
+            return $http({method: 'PUT', url: "/interviewing/final_comment/", data : finalComment});
         }
     }}])
