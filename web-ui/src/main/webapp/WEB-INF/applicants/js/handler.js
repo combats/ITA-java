@@ -227,7 +227,7 @@ setEventListeners = function () {
     $('#notifications').click(function (event) {
         notifyListOfApplicants(event.target);
     });
-    $('.employ').click(function (event) {
+    $('a.employ').click(function (event) {
         employApplicant(event.target);
     });
 };
