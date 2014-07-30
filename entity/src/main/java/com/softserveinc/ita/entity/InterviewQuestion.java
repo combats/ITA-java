@@ -20,6 +20,9 @@ public class InterviewQuestion {
 	@NotEmpty
 	private String question;
 
+    @Column(name = "userId")
+    private String userId;
+
 	@Column(name = "comment")
 	private String comment;
 
@@ -41,80 +44,85 @@ public class InterviewQuestion {
 		this.weight = weight;
 	}
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public String getQuestion() {
-		return question;
-	}
+    public String getQuestion() {
+        return question;
+    }
 
-	public void setQuestion(String question) {
-		this.question = question;
-	}
+    public void setQuestion(String question) {
+        this.question = question;
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public String getUserId() {
+        return userId;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-	public int getMark() {
-		return mark;
-	}
+    public String getComment() {
+        return comment;
+    }
 
-	public void setMark(int mark) {
-		this.mark = mark;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public int getWeight() {
-		return weight;
-	}
+    public int getMark() {
+        return mark;
+    }
 
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
+    public void setMark(int mark) {
+        this.mark = mark;
+    }
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
+    public int getWeight() {
+        return weight;
+    }
 
-		InterviewQuestion question1 = (InterviewQuestion) o;
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
 
-		if (mark != question1.mark) return false;
-		if (weight != question1.weight) return false;
-		if (comment != null ? !comment.equals(question1.comment) : question1.comment != null) return false;
-		if (id != null ? !id.equals(question1.id) : question1.id != null) return false;
-		if (question != null ? !question.equals(question1.question) : question1.question != null) return false;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof InterviewQuestion)) return false;
 
-		return true;
-	}
+        InterviewQuestion that = (InterviewQuestion) o;
 
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (question != null ? question.hashCode() : 0);
-		result = 31 * result + (comment != null ? comment.hashCode() : 0);
-		result = 31 * result + mark;
-		result = 31 * result + weight;
-		return result;
-	}
+        if (mark != that.mark) return false;
+        if (weight != that.weight) return false;
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
-	@Override
-	public String toString() {
-		return "Question{" +
-				"id='" + id + '\'' +
-				", question='" + question + '\'' +
-				", comment='" + comment + '\'' +
-				", mark=" + mark +
-				", weight=" + weight +
-				'}';
-	}
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + mark;
+        result = 31 * result + weight;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "InterviewQuestion{" +
+                "id='" + id + '\'' +
+                ", question='" + question + '\'' +
+                ", userId='" + userId + '\'' +
+                ", comment='" + comment + '\'' +
+                ", mark=" + mark +
+                ", weight=" + weight +
+                '}';
+    }
 }
