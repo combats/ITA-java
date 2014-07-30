@@ -162,10 +162,15 @@
         };
         $scope.newQuestion = function(){
             var last = $scope.questions.length-1;
+            if(last===-1){
+                last = 0;
+            }
             //only if the last question has question fomulation
-            if($scope.questions[last].question) {
+            if($scope.questions[last]) {
                 $scope.questions.push(angular.copy(question));
-                $scope.activeIndex = $scope.questions.length-1;
+                if ($scope.questions[last].question) {
+                    $scope.activeIndex = $scope.questions.length - 1;
+                }
             }
         }
     }]);
