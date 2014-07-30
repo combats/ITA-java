@@ -1,18 +1,20 @@
 (function () {
     var questionModule = angular.module('questionMod', []);
 
-    questionModule.controller('QuestionsController', ['$scope','Interview','User','Applicant','Appointment', function ($scope, Interview,Applicant, User, Appointment) {
+    questionModule.controller('QuestionsController', ['$scope','$rootScope','Interview','User','Applicant','Appointment', function ($rootScope,$scope, Interview,Applicant, User, Appointment) {
 
         $scope.activeIndex = 0;
 
         Interview.get(Appointment.appointmentId).then(function (response) {
-                if(response.data.finalComment){
-                    window.location = "/sorry?code=6";
-                }
+//                if(response.data.finalComment){
+//                    window.location = "/sorry?code=6";
+//                }
                 $scope.questions = response.data.questions;
                 if(!$scope.questions){
                     $scope.questions = [];
-                    $scope.questions.push(question);
+                }
+                if($scope.questions.length === 0){
+                    $scope.questions.push(angular.copy(question));
                 }
             },
             function (err) {
@@ -47,7 +49,7 @@
 
         $scope.updateInterview = function(){
             //TODO:
-            //$rootScope.$broadcast('New question was added');
+            $rootScope.$broadcast('New question was added');
             Interview.get(Appointment.appointmentId).then(function (response) {
                 response.data.questions = $scope.questions;
                 var len = $scope.questions.length;
@@ -56,7 +58,8 @@
                         return;
                     }
                 }
-                Interview.edit(response.data).then(function(){
+                Interview.edit(response.data).then(function(response){
+                    $scope.questions = response.data.questions;
                     console.log("Interview was updated");
                 });
             });
@@ -94,8 +97,8 @@
     var question = {
         question: "",
         comment: "",
-        mark: 1,
-        id: "",
+        mark: 0,
+        id: null,
         weight: 2
     };
 })();
