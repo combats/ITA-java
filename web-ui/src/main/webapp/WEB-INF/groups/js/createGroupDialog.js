@@ -190,7 +190,7 @@ $(function () {
                 location.reload();
             },
             error: function (data) {
-                $('#Information').html(data.responseJSON.reason);
+                $('#Information').html('Group with this name already exists');
                 viewInformationDialog();
                 console.log("" + data);
             }
@@ -212,7 +212,7 @@ $(function () {
                 location.reload();
             },
             error: function (data) {
-                $('#Information').html(data.responseJSON.reason);
+                $('#Information').html('Group with this name already exists');
                 viewInformationDialog();
                 console.log("" + data);
             }

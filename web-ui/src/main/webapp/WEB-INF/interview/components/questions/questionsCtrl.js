@@ -1,8 +1,10 @@
 (function () {
     var questionModule = angular.module('questionMod', []);
 
-    questionModule.controller('QuestionsController', ['$scope','$rootScope','Interview','User','Applicant','Appointment', function ($rootScope,$scope, Interview,Applicant, User, Appointment) {
+    questionModule.controller('QuestionsController', ['$scope','$rootScope','Interview','User','Applicant','Appointment', function ($rootScope,$scope, Interview,User, Applicant, Appointment) {
 
+        var userId = User.id;
+        question.userId = userId;
         $scope.activeIndex = 0;
 
         Interview.get(Appointment.appointmentId).then(function (response) {
@@ -46,18 +48,65 @@
             }
         );
 
+        var getQuestionById = function(id){
+            var arr = $scope.questions;
+            for(var j=0;j<arr.length;j++){
+                if(arr[j].id === id){
+                    return arr[j];
+                }
+            }
+            return undefined;
+        }
+        var getQuestionByIdFromArr = function(id,arr){
+            for(var j=0;j<arr.length;j++){
+                if(arr[j].id === id){
+                    return arr[j];
+                }
+            }
+            return undefined;
+        }
+
+        $scope.questionIsMine = function(q){
+            return userId === q.userId;
+        }
 
         $scope.updateInterview = function(){
-            //TODO:
-            $rootScope.$broadcast('New question was added');
+
+
             Interview.get(Appointment.appointmentId).then(function (response) {
-                response.data.questions = $scope.questions;
+
+                var qs = response.data.questions;
+                for(var i=0;i<qs.length;i++){
+                    if(qs[i].userId === userId){
+                        qs[i] = getQuestionById(qs[i].id);
+                    }
+                }
+                var maybeNewQuestion = $scope.questions[$scope.questions.length-1];
+                //check if question is present
+                var q = getQuestionByIdFromArr(maybeNewQuestion.id,qs);
+                if(q) {
+                    if (q.id !== maybeNewQuestion.id) {
+                        qs.push(maybeNewQuestion);
+                        $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
+
+                    }
+                }
+                else{
+                    qs.push(maybeNewQuestion);
+                    $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
+                }
+
                 var len = $scope.questions.length;
                 for(var i=0;i<len;i++){
                     if(!$scope.questions[i].question){
-                        return;
+                        var index = array.indexOf(i);
+                        if (index > -1) {
+                            array.splice(index, 1);
+                            i--;
+                        }
                     }
                 }
+                response.data.questions = qs;
                 Interview.edit(response.data).then(function(response){
                     $scope.questions = response.data.questions;
                     console.log("Interview was updated");
