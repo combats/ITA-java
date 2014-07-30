@@ -103,7 +103,7 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <version>4.10</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -163,6 +163,7 @@
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
                         </configuration>
                     </execution>
+<!--
                     <execution>
                         <id>pre-integration-test</id>
                         <phase>pre-integration-test</phase>
@@ -174,6 +175,8 @@
                             <propertyName>failsafeArgLine</propertyName>
                         </configuration>
                     </execution>
+-->
+<!--
                     <execution>
                         <id>post-integration-test</id>
                         <phase>post-integration-test</phase>
@@ -185,6 +188,7 @@
                             <outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
                         </configuration>
                     </execution>
+-->
                 </executions>
             </plugin>
           <plugin>
@@ -212,7 +216,8 @@
                 <version>2.15</version>
                 <configuration>
                     <argLine>-Dfile.encoding=UTF-8</argLine>
-                    <argLine>-Xmx1024m</argLine>
+                    <argLine>${surefireArgLine}</argLine>
+
                     <includes>
                         <include>**/*Tests.java</include>
                         <include>**/*Test.java</include>
