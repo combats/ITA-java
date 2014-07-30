@@ -21,11 +21,10 @@ public class InterviewQuestion {
 	private String question;
 
 	@Column(name = "comment")
-	@NotEmpty
 	private String comment;
 
 	@Column(name = "mark")
-	@Range(min = 1, max = 10)
+	@Range(min = 0, max = 10)
 	private int mark;
 
 	@Column(name = "weight")
