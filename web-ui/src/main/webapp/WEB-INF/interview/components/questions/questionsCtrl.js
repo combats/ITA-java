@@ -16,7 +16,7 @@
                     $scope.questions = [];
                 }
                 if($scope.questions.length === 0){
-                    $scope.questions.push(angular.copy(question));
+                    $scope.newQuestion();
                 }
             },
             function (err) {
@@ -40,7 +40,7 @@
                     $scope.questions = response.data.questions;
                     if(!$scope.questions){
                         $scope.questions = [];
-                        $scope.questions.push(question);
+                        $scope.newQuestion();
                     }
                 },function(err){
                     window.location = "/sorry?code=4";
