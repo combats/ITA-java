@@ -7,6 +7,23 @@
         question.userId = userId;
         $scope.activeIndex = 0;
 
+        var hasAnyOfMineQuestions = function(qs){
+            for(var i=0;i<qs.length;i++){
+                if(qs[i].userId===userId){
+                    return true;
+                }
+            }
+            return false;
+        }
+        var getMineQuestionIndex = function(qs){
+            for(var i=0;i<qs.length;i++){
+                if(qs[i].userId===userId){
+                    return i;
+                }
+            }
+            return 0;
+        }
+
         Interview.get(Appointment.appointmentId).then(function (response) {
 //                if(response.data.finalComment){
 //                    window.location = "/sorry?code=6";
@@ -17,6 +34,9 @@
                 }
                 if($scope.questions.length === 0){
                     $scope.newQuestion();
+                }
+                else if(hasAnyOfMineQuestions($scope.questions)){
+                    $scope.activeIndex = getMineQuestionIndex($scope.questions)
                 }
             },
             function (err) {
@@ -40,8 +60,15 @@
                     $scope.questions = response.data.questions;
                     if(!$scope.questions){
                         $scope.questions = [];
+                    }
+                    if($scope.questions.length === 0){
                         $scope.newQuestion();
                     }
+                    else if(hasAnyOfMineQuestions($scope.questions)){
+                        $scope.activeIndex = getMineQuestionIndex($scope.questions)
+                    }
+                    else
+                    $scope.newQuestion();
                 },function(err){
                     window.location = "/sorry?code=4";
                 });
