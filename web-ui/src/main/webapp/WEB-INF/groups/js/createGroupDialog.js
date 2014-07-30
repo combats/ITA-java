@@ -212,6 +212,8 @@ $(function () {
                 location.reload();
             },
             error: function (data) {
+                $('#Information').html(data.responseJSON.reason);
+                viewInformationDialog();
                 console.log("" + data);
             }
         });
