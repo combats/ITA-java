@@ -48,7 +48,16 @@
                     }
                     app.value('Appointment', response);
                     Appointment = response;
-
+                    var usersId = Appointment.userIdList;
+                    var allowed = false;
+                    for (var i = 0; i < usersId.length; i++) {
+                        if (usersId[i] === userId) {
+                            allowed=true;
+                        }
+                    }
+                    if(!allowed){
+                        window.location = "/sorry?code=5";
+                    }
                 }).error(function (error) {
                     //if request failed
                     changeLocation("/sorry?code="+2,true);

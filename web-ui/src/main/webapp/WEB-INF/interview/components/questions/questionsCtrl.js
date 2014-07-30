@@ -4,10 +4,12 @@
     questionModule.controller('QuestionsController', ['$scope','Interview','User','Applicant','Appointment', function ($scope, Interview,Applicant, User, Appointment) {
 
         $scope.activeIndex = 0;
-        $scope.question = angular.copy(question);
 
         Interview.get(Appointment.appointmentId).then(function (response) {
-                $scope.questions = response.questions;
+                if(response.data.finalComment){
+                    window.location = "/sorry?code=6";
+                }
+                $scope.questions = response.data.questions;
                 if(!$scope.questions){
                     $scope.questions = [];
                     $scope.questions.push(question);
@@ -31,97 +33,69 @@
                 interview.finalComment = "";
 
                 Interview.add(interview).then(function(response){
-                    $scope.questions = response.questions;
+                    $scope.questions = response.data.questions;
                     if(!$scope.questions){
                         $scope.questions = [];
                         $scope.questions.push(question);
                     }
+                },function(err){
+                    window.location = "/sorry?code=4";
                 });
             }
         );
 
 
         $scope.updateInterview = function(){
+            //TODO:
+            //$rootScope.$broadcast('New question was added');
             Interview.get(Appointment.appointmentId).then(function (response) {
                 response.data.questions = $scope.questions;
-
+                var len = $scope.questions.length;
+                for(var i=0;i<len;i++){
+                    if(!$scope.questions[i].question){
+                        return;
+                    }
+                }
                 Interview.edit(response.data).then(function(){
                     console.log("Interview was updated");
-
                 });
             });
         }
 
 
         $scope.isActive = function(q){
-            return q.question === $scope.question.question;
+            return q.question === $scope.questions[$scope.activeIndex].question;
         };
         $scope.isAnswered = function(q){
             return (q.comment) && !$scope.isActive(q);
         };
-        $scope.selectQuestion = function(q){
-            $scope.submitQuestion($scope.question);
-            $scope.question = angular.copy(q);
-        };
-
-        var addQuestion = function(q){
-//            Question.add(q).then(function (response) {
-//                q.id = response;
-                $scope.questions.push(angular.copy(q));
-//            },function(err){
-//                alert("Error during question submit. Check the connection");
-//            });
-        };
-
-        $scope.submitQuestion = function(q){
-            if($scope.isNewQuestion(q)){
-
-                $rootScope.$broadcast('New question was added');
-
-                addQuestion(q);
-            }
+        $scope.selectQuestion = function(index){
+            $scope.activeIndex = index;
             $scope.updateInterview();
-
         };
+
         $scope.intToWeight = function(num){
             var weights = ["low", "normal", "high", "critical"]
             return weights[num-1];
         };
-        $scope.isNewQuestion = function(q){
-            if(!q.question || !$scope.questions){
-                return false;
-            }
-            var i=0, len=$scope.questions.length;
-            for (; i<len; i++) {
-                if(q.question === $scope.questions[i].question)
-                    return false;
-            }
-            return true;
-        }
         $scope.hoveringOver = function(value) {
             $scope.hoverMark = value;
         };
-
-        $scope.isAnyChangesQuestion = function(q){
-            if(!$scope.questions){
-                return false;
-            }
-            var len=$scope.questions.length;
-            for (var i=0; i<len; i++) {
-                if(q.question === $scope.questions[i].question){
-                    return q !== $scope.questions[i].question;
-                }
-            }
-            return false;
-        }
         $scope.newQuestion = function(){
-            $scope.questions.push(question);
-            $scope.activeIndex = $scope.questions.length-1;
-            $scope.question = angular.copy(question);
+            var last = $scope.questions.length-1;
+            //only if the last question has question fomulation
+            if($scope.questions[last].question) {
+                $scope.questions.push(angular.copy(question));
+                $scope.activeIndex = $scope.questions.length-1;
+            }
         }
     }]);
 
     var question = {
+        question: "",
+        comment: "",
+        mark: 1,
+        id: "",
         weight: 2
     };
 })();

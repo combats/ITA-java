@@ -11,25 +11,27 @@ mediapp.controller('finalComCtrl',['$scope','Comment', 'User', 'Appointment', '$
     var list = {applicantId:{"status":"NOT_PASSED", "rank":-1}};
 
     $scope.submitComment = function(){
-        var finalComment = {};
-        finalComment.finalComment = $scope.finalComment;
-
-        $rootScope.$broadcast('Final Comment was submit');
-
         console.log(list);
-
         $http({method: 'PUT',
                url: baseUrl+'/groups/' + groupId + '/applicants',
                data: JSON.stringify(list)
                  });
 
-//        Comment.update(finalComment).then(function(response){
-//                //yoohoo, you completed interview!
-                alert("You're about to leave interview. Thanks!");
-                window.location = "/";
-//        },function(err){
-//                alert("Can't send final comment. Service is unreachable");
-//            }
-//        );
+        Comment.update($scope.finalComment).then(function(response){
+                //yoohoo, you completed interview!
+                if(!$scope.finalComment){
+                    alert("You're about to leave interview. But you haven't left any final comment! Please write one");
+                }
+                else {
+                    alert("You're about to leave interview. Thanks!");
+                    //TODO:
+                    $rootScope.$broadcast('Final Comment was submit');
+                    window.location = "/";
+                }
+        },function(err){
+                alert("Can't send final comment. Service is unreachable");
+            }
+
+        );
     };
 }]);

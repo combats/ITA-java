@@ -44,10 +44,10 @@
         <div class="panel-title">Questions</div>
         <div id="questions-list">
 <div class="list-group">
-    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion(question)">{{ question.question }}</a>
+    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion($index)">{{ question.question }}</a>
     </div>
         </div>
-        <a id="new-question-btn" class="panel-btn" href="#" ng-click="newQuestion()">
+        <a id="new-question-btn" class="panel-btn" href="#" ng-click="newQuestion();document.getElementById('question-area').focus();">
             <span class="glyphicon glyphicon-edit"></span> New Question
         </a>
     </div>
@@ -69,12 +69,12 @@
                 </div>
                 <div id="question-weight">
                 <b>Weight:</b>
-                   <rating ng-model="question.weight" max="4" state-on="'glyphicon-stop'" state-off="'glyphicon-unchecked'"></rating><b>
+                   <rating ng-model="questions[activeIndex].weight" max="4" state-on="'glyphicon-stop'" state-off="'glyphicon-unchecked'"></rating><b>
                 <span id="weight">{{intToWeight(questions[activeIndex].weight)}}</span></b>
                 </div>
             </div>
         </div>
-        <a id="submit-question-btn" class="panel-btn" ng-click="submitQuestion(question)" href="#">
+        <a id="submit-question-btn" class="panel-btn" ng-click="updateInterview()" href="#">
             <span class="glyphicon glyphicon-ok"></span> Submit
         </a>
     </div>
