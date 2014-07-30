@@ -1,21 +1,30 @@
 var  mediapp = angular.module('finalComMod',[]);
-mediapp.controller('finalComCtrl',['$scope','Comment', 'User', 'Appointment', '$rootScope','$http', function($scope, Comment, User, Appointment, $rootScope, $http){
+mediapp.controller('finalComCtrl',['$scope','Comment', 'User', 'Appointment', 'Interview', '$rootScope','$http', function($scope, Comment, User, Appointment,Interview, $rootScope, $http){
 
         $scope.user = User;
-        $scope.finalComment = '';
+    Interview.get(Appointment.appointmentId).then(function(response){
+        $scope.finalComment = response.data.finalComment;
+    })
+
 
     var applicantId = Appointment.applicantId;
     var baseUrl = "http://176.36.11.25:8080/";
     var $cookies = angular.injector(['ngCookies']).get('$cookies');
-    var groupId = $cookies.groupID;
-    var list = {applicantId:{"status":"NOT_PASSED", "rank":-1}};
+    var groupID = $cookies.groupID;
+    var list = {};
+list[applicantId] = {"status":"NOT_PASSED", "rank":-1};
 
     $scope.submitComment = function(){
         console.log(list);
         $http({method: 'PUT',
-               url: baseUrl+'/groups/' + groupId + '/applicants',
+               url: baseUrl+'groups/' + groupID + '/applicants',
                data: JSON.stringify(list)
-                 });
+                 }).then(function(){
+            console.log("applicant updated");
+        },function(err){
+
+        });
+
 
         Comment.update($scope.finalComment).then(function(response){
                 //yoohoo, you completed interview!
