@@ -1,12 +1,12 @@
 package com.softserveinc.ita.service.impl;
 
-
 import com.softserveinc.ita.dao.CourseDAO;
 import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.CourseAlreadyExists;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 import com.softserveinc.ita.service.GroupService;
@@ -157,4 +157,13 @@ public class GroupServiceImpl implements GroupService {
         return result;
     }
 
+    @Override
+    public Course addNewCourse(Course course) throws CourseAlreadyExists {
+        try {
+            Course newCourse = courseDAO.addCourse(course);
+            return newCourse;
+        } catch (JDBCException e) {
+            throw new CourseAlreadyExists();
+        }
+    }
 }
