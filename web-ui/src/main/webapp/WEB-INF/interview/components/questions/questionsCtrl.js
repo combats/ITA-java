@@ -25,9 +25,6 @@
         }
 
         Interview.get(Appointment.appointmentId).then(function (response) {
-//                if(response.data.finalComment){
-//                    window.location = "/sorry?code=6";
-//                }
                 $scope.questions = response.data.questions;
                 if(!$scope.questions){
                     $scope.questions = [];
@@ -37,6 +34,9 @@
                 }
                 else if(hasAnyOfMineQuestions($scope.questions)){
                     $scope.activeIndex = getMineQuestionIndex($scope.questions)
+                }
+                else{
+                    $scope.newQuestion();
                 }
             },
             function (err) {
@@ -67,8 +67,9 @@
                     else if(hasAnyOfMineQuestions($scope.questions)){
                         $scope.activeIndex = getMineQuestionIndex($scope.questions)
                     }
-                    else
-                    $scope.newQuestion();
+                    else{
+                        $scope.newQuestion();
+                    }
                 },function(err){
                     window.location = "/sorry?code=4";
                 });
