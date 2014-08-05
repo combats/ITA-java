@@ -134,6 +134,36 @@
     </div>
 </div>
 
+<div id="dialog-form-create-course" class="dialog" style="padding: 0px;">
+    <div class="inner">
+        <div id="course-box">
+            <form id="courseForm" method="POST">
+                <H2><div id="formTitle"></div></H2>
+                <fieldset>
+                    <div class="fieldgroup">
+                        <div class="headline name" >
+                            <label for="cName">
+                                Name:
+                            </label>
+                        </div>
+                        <div class="fields">
+                            <input name="courseName" id="cName" class="inputDLP"/>
+                        </div>
+                    </div>
+                    <div class="fieldgroup">
+                        <div class="fields">
+                            <input id ="chooseFile" type="file" accept="image/*" name="chooseFile">
+                        </div>
+                    </div>
+                    <br>
+                    <button id="saveCourseButton" class="btn saveButton">SAVE</button>
+                    <button id="cancelCourseButton" class="btn cancelButton">CANCEL</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div id="dialog-information" class="dialog" style="padding: 0px;">
     <div class="inner">
         <div id="delete-user-box">
@@ -161,10 +191,11 @@
                     <option value="FINISHED">Finished</option>
                 </select>
                    <select name="select2" id="courses" onchange="viewGroups()">
-
                    </select>
+                   <button id="AddCourse" class="btn okButton" >Add course</button>
             </span>
                 </h1>
+
             </div>
         </div>
     </div>

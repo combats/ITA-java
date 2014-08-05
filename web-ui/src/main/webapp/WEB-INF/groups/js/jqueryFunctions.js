@@ -52,7 +52,6 @@ function viewGroups() {
 
 
 }
-
 var groupId;
 var editDialog;
 function viewAddDialog() {
@@ -76,4 +75,9 @@ function viewEditInformationDialog(id) {
     editDialog = true;
     $("#dialog-form-add-group").data('content', 'Group edited');
     $('#dialog-form-add-group').dialog('open');
+}
+
+function viewCreateCourseDialog() {
+    $("#dialog-form-create-course").data('content', 'Course created');
+    $('#dialog-form-create-course').dialog('open');
 }

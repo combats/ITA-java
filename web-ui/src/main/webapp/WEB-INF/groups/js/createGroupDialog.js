@@ -96,6 +96,16 @@ $(function () {
         hide: { effect: "fade", duration: 800 }
     });
 
+    $("#dialog-form-create-course").dialog({
+        modal: true,
+        autoOpen: false,
+        width: 'auto',
+        resizable: false,
+        dialogClass: 'dialog',
+        show: { effect: "fade", duration: 800 },
+        hide: { effect: "fade", duration: 800 }
+    });
+
     $("#cancelUButton").click(function (e) {
         e.preventDefault();
         $("#dialog-form-add-group").dialog("close");
@@ -117,6 +127,10 @@ $(function () {
         e.stopPropagation();
         deleteGroup(groupId);
         $("#dialog-form-delete-group").dialog("close");
+    });
+
+    $("#AddCourse").click(function (e) {
+        viewCreateCourseDialog();
     });
 
     function deleteGroup(groupId) {
@@ -153,6 +167,28 @@ $(function () {
             $("#dialog-form-add-group").dialog("close");
         }
     });
+
+    $("#cancelCourseButton").click(function (e) {
+        e.preventDefault();
+        $("#dialog-form-create-course").dialog("close");
+    });
+
+    $("#saveCourseButton").click(function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        sendCourse();
+    });
+
+    function sendCourse() {
+        if ($("#courseForm").valid()) {
+            postCourse();
+        }
+        $("#dialog-form-create-course").dialog("close");
+    }
+
+    function postCourse(){
+
+    }
 
 
     function getGroupFromForm() {
@@ -249,6 +285,30 @@ $(function () {
     jQuery.validator.addMethod("notDefaultValue", function (value) {
         return value != "Select group course";
     });
+
+
+    $("#courseForm").validate({
+        rules: {
+            courseName: {
+                required: true,
+                minlength: 2,
+                maxlength: 15
+            },
+            chooseFile: {
+                required: true
+            }
+        },
+        messages: {
+            courseName: {
+                required: "Course name is required",
+                minlength: jQuery.validator.format("At least {0} characters is required"),
+                maxlength: jQuery.validator.format("No more than {0} characters is allowed")
+            },
+            chooseFile: {
+                required: "Image is required"
+            }
+        }
+    })
 
     $("#userForm").validate({
         rules: {
