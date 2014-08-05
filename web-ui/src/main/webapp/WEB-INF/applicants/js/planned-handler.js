@@ -249,7 +249,7 @@ postCV = function (id) {
     var file = $('input:file')[0].files[0];
     formData.append('file', file);
     $.ajax({
-        async: false,
+        async: true,
         url: '/repository/doc/' + id,
         data: formData,
         type: 'POST',

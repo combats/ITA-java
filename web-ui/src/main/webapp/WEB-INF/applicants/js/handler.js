@@ -3,6 +3,7 @@ var pageTemplate = {};
 var applicants = [];
 var groupCapacity;
 var userList = [];
+var groupID;
 $(function () {
     groupID = getParamByName('groupID');
     $('.nocontent').toggle();
@@ -66,7 +67,7 @@ loadApplicantsByStatus = function (status) {
                             data['employed'] = true;
                         case 'PASSED':
                         case 'NOT_PASSED':
-                            data.photo = '/repository/img/applicant/' + property + '?height=200&width=150';
+                            data.photo = '/repository/imgfile/applicant/' + property + '?height=150&width=150';
                             appID = loadAppointmentID(property);
                             element = {applicant: data, appointmentID: appID};
                             break;
@@ -111,7 +112,7 @@ loadUsersList = function () {
 };
 submitList = function () {
     var list = {};
-    var divlist = $('div.interviewed').children('div.container');
+    var divlist = $('div.interviewed').children('div.applicantContainer');
     $(divlist).each(function (index) {
         var applicant = $(this).children('div.applicant')[0];
         var applicantID = $(applicant).attr('applicantID');
@@ -187,7 +188,7 @@ setEventListeners = function () {
     });
     $("button.submit").button({disabled: true});
     $("#sort").click(function () {
-        sort($('div.interviewed').children('div.container')[0], [], true);
+        sort($('div.interviewed').children('div.applicantContainer')[0], [], true);
     });
     $("#submitList").click(function () {
         submitList();
@@ -231,7 +232,7 @@ setEventListeners = function () {
         employApplicant(event.target);
     });
 };
-notifyListOfApplicants = function (target) {
+notifyListOfApplicants = function () {
     var list = [];
     var hrid = getHRID();
     $('div.applicant').each(function (index, element) {
@@ -257,7 +258,7 @@ postRender = function () {
 };
 sort = function (item, apps, light) {
     var sortableList = $('div.interviewed');
-    var listitems = $('div.container', sortableList);
+    var listitems = $('div.applicantContainer', sortableList);
     listitems.sort(function (a, b) {
         var appIDa = $(a).children('div.applicant').attr('applicantid');
         var appIDb = $(b).children('div.applicant').attr('applicantid');
