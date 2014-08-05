@@ -110,6 +110,11 @@ div.schedule {
     min-height: 250px;
     width: 400px;
 }
+.interviewed .applicant .schedule {
+    max-height: 200px;
+    min-height: 10px;
+    width: 320px;
+}
 
 div.info {
     min-height: 250px;
@@ -220,7 +225,7 @@ form {
 .interviewed .applicant .profile {height: 210px !important; min-height: 210px !important;}
 .interviewed .applicant .info {height: 210px !important; min-height: 210px !important;}
 .interviewed .applicant .profile dl.addingSchedule {margin-bottom: 10px !important;}
-.interviewed .applicant .schedule {display: none;}
+
 .employ {
     float: right;
     font-size: 1em;

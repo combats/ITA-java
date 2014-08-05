@@ -12,7 +12,7 @@ $(function () {
         var interviewedAccordion = $('.interviewed');
         interviewedAccordion.html(interviewedRendered);
 
-        $(".interviewed").sortable({"axis": "y", items: ".container", handle: ".accordion-section",
+        $(".interviewed").sortable({"axis": "y", items: ".applicantContainer", handle: ".accordion-section",
             create: function (event) {
                 sort($(event.target).children()[0], applicants, false);
             }});
@@ -20,7 +20,7 @@ $(function () {
     postRender();
 });
 employApplicant = function (target) {
-    var div = $(target).closest('div.container');
+    var div = $(target).closest('div.applicantContainer');
     var applicantID = $(div).find('div.applicant').attr('applicantID');
     var list = {};
     list[applicantID] = {};
