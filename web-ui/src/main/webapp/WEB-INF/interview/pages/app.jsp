@@ -44,10 +44,10 @@
         <div class="panel-title">Questions</div>
         <div id="questions-list">
 <div class="list-group">
-    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion(question)">{{ question.question }}</a>
+    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion($index)" ng-show="questionIsMine(question)">{{ question.question }}</a>
     </div>
         </div>
-        <a id="new-question-btn" class="panel-btn" href="#" ng-click="newQuestion()">
+        <a id="new-question-btn" class="panel-btn" href="#" ng-click="newQuestion();document.getElementById('question-area').focus();">
             <span class="glyphicon glyphicon-edit"></span> New Question
         </a>
     </div>
@@ -55,26 +55,26 @@
         <div class="panel-title">Question Manager</div>
         <div id="question-manager">
             <div id="question-container">
-                <textarea id="question-area" placeholder="Enter your question over here ..." required ng-model="question.question"></textarea>
+                <textarea id="question-area" placeholder="Enter your question over here ..." required ng-model="questions[activeIndex].question"></textarea>
             </div>
             <div id="comment-container">
-                <textarea id="comment-area" placeholder="Enter your comment over here ..." required ng-model="question.comment"></textarea>
+                <textarea id="comment-area" placeholder="Enter your comment over here ..." required ng-model="questions[activeIndex].comment"></textarea>
             </div>
             <div class="rating-container">
                 <div id="question-mark">
                 <b>Mark:</b>
-                   <rating ng-model="question.mark" max="10" state-on="'glyphicon-star'" state-off="'glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="hoverMark = null"></rating><b>
+                   <rating ng-model="questions[activeIndex].mark" max="10" state-on="'glyphicon-star'" state-off="'glyphicon-star-empty'" on-hover="hoveringOver(value)" on-leave="hoverMark = null"></rating><b>
 
-                <span id="mark">{{hoverMark || question.mark}}</span>/10</b>
+                <span id="mark">{{hoverMark || questions[activeIndex].mark}}</span>/10</b>
                 </div>
                 <div id="question-weight">
                 <b>Weight:</b>
-                   <rating ng-model="question.weight" max="4" state-on="'glyphicon-stop'" state-off="'glyphicon-unchecked'"></rating><b>
-                <span id="weight">{{intToWeight(question.weight)}}</span></b>
+                   <rating ng-model="questions[activeIndex].weight" max="4" state-on="'glyphicon-stop'" state-off="'glyphicon-unchecked'"></rating><b>
+                <span id="weight">{{intToWeight(questions[activeIndex].weight)}}</span></b>
                 </div>
             </div>
         </div>
-        <a id="submit-question-btn" class="panel-btn" ng-click="submitQuestion(question)" href="#">
+        <a id="submit-question-btn" class="panel-btn" ng-click="updateInterview()" href="#">
             <span class="glyphicon glyphicon-ok"></span> Submit
         </a>
     </div>
@@ -142,7 +142,6 @@
     <script type="text/javascript" src="interview/components/questions/questionsCtrl.js"></script>
     <script type="text/javascript" src="interview/components/chat/chatCtrl.js"></script>
     <script type="text/javascript" src="interview/components/chat/chatSvc.js"></script>
-    <script type="text/javascript" src="interview/components/questions/questionSvc.js"></script>
     <script type="text/javascript" src="interview/components/header-menu/timer/appointmentStartTimeSvc.js" ></script>
    <script type="text/javascript" src="interview/components/header-menu/applicant/applicantPhotoSvc.js" ></script>
     <script type="text/javascript" src="interview/components/header-menu/final-comment/finalComCtrl.js"></script>

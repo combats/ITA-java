@@ -30,9 +30,9 @@ app.controller('ChatController', ['$scope', 'ChatService','User', '$rootScope', 
     var appointmentId = $cookies.appointmentId;
     var message = {};
 
-    $rootScope.$on('New question was added', function() {
+    $rootScope.$on('New question was added', function(event, msg) {
         message.nickname = 'Server';
-        message.text = "New question was added";
+        message.text = msg;
         $scope.messages.push(message);
     });
 
