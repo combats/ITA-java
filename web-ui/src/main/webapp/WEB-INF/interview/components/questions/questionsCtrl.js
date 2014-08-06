@@ -98,50 +98,51 @@
             return userId === q.userId;
         }
 
-        $scope.updateInterview = function(){
-
-
+        $scope.updateInterview = function() {
+            //if there's only one question
+            if($scope.questions.length === 1){
+                //and this question has no definition
+                if(!$scope.questions[$scope.questions.length-1].question) {
+                    return;
+                }
+            }
+            //remove all questions with no question definition
+            for(var i=0;i<$scope.questions.length;i++){
+                if(!$scope.questions[i].question){
+                    $scope.questions.splice(i, 1);
+                    i--;
+                }
+            }
+            //
+            if($scope.questions.length <= $scope.activeIndex){
+                $scope.activeIndex = $scope.questions.length-1;
+            }
             Interview.get(Appointment.appointmentId).then(function (response) {
-
                 var qs = response.data.questions;
-                for(var i=0;i<qs.length;i++){
-                    if(qs[i].userId === userId){
-                        qs[i] = getQuestionById(qs[i].id);
+                //remove user questions
+                for(var i=0; i<qs.length; i++){
+                    if (qs[i].userId === userId){
+                        qs.splice(i, 1);
+                        i--;
                     }
                 }
-                var maybeNewQuestion = $scope.questions[$scope.questions.length-1];
-                //check if question is present
-                var q = getQuestionByIdFromArr(maybeNewQuestion.id,qs);
-                if(q) {
-                    if (q.id !== maybeNewQuestion.id) {
-                        qs.push(maybeNewQuestion);
-                        $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
+                //remove not mine questions
+                for(var i=0; i < $scope.questions.length; i++){
+                    if ($scope.questions[i].userId !== userId){
+                        $scope.questions.splice(i, 1);
+                        i--;
+                    }
+                }
+                //concat
+                $scope.questions = $scope.questions.concat(qs);
 
-                    }
-                }
-                else{
-                    qs.push(maybeNewQuestion);
-                    $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
-                }
-
-                var len = $scope.questions.length;
-                for(var i=0;i<len;i++){
-                    if(!$scope.questions[i].question){
-                        var index = array.indexOf(i);
-                        if (index > -1) {
-                            array.splice(index, 1);
-                            i--;
-                        }
-                    }
-                }
-                response.data.questions = qs;
+                response.data.questions = $scope.questions;
                 Interview.edit(response.data).then(function(response){
                     $scope.questions = response.data.questions;
                     console.log("Interview was updated");
                 });
             });
         }
-
 
         $scope.isActive = function(q){
             return q.question === $scope.questions[$scope.activeIndex].question;
@@ -163,15 +164,14 @@
         };
         $scope.newQuestion = function(){
             var last = $scope.questions.length-1;
+            //if there is no questions yet
             if(last===-1){
-                last = 0;
+                $scope.questions.push(angular.copy(question));
             }
             //only if the last question has question fomulation
-            if($scope.questions[last]) {
+            else if($scope.questions[last].question) {
                 $scope.questions.push(angular.copy(question));
-                if ($scope.questions[last].question) {
-                    $scope.activeIndex = $scope.questions.length - 1;
-                }
+                $scope.activeIndex = $scope.questions.length - 1;
             }
         }
     }]);
