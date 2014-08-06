@@ -5,7 +5,7 @@ $(function () {
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('NOT_PASSED');
     if (applicants.length == 0) {
-        $('.scheduleView').toggle();
+        $('.scheduleView').button({disabled: true});
         $('.nocontent').toggle();
     } else {
         applicants.forEach(function (element) {

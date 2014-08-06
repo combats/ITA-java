@@ -4,7 +4,7 @@ $(function () {
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('EMPLOYED');
     if (applicants.length == 0) {
-        $('.scheduleView').toggle();
+        $('.scheduleView').button({disabled: true});
         $('.nocontent').toggle();
     } else {
         //interviewed
