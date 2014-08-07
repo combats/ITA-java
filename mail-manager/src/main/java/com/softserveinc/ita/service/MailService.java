@@ -1,9 +1,7 @@
 package com.softserveinc.ita.service;
 
-import com.softserveinc.ita.dao.ApplicantDAO;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.Appointment;
-import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -39,42 +37,9 @@ public class MailService {
     @Autowired
     private VelocityEngine velocityEngine;
 
-    @Autowired
-    private ApplicantService applicantService;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private AppointmentService appointmentService;
-
     private MimeMessageHelper helper;
     private MimeMessage mimeMessage;
 
-    public void sendMailtoApplicant() throws ApplicantDoesNotExistException {
-        mimeMessage = mailSender.createMimeMessage();
-        try {
-            helper = new MimeMessageHelper(mimeMessage, true);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        // TODO get applicant id from queue
-        String appointmentId = "id1";
-        Appointment appointment = appointmentService.getAppointmentByAppointmentId(appointmentId);
-        String applicantId = appointment.getApplicantId();
-        Applicant applicant = applicantService.getApplicantById(applicantId);
-        switch (applicant.getStatus()) {
-            case NOT_SCHEDULED:
-                sendSchedulingLetter(applicant, appointment);
-                break;
-            case NOT_PASSED:
-                sendNotPassedInterviewLetter(applicant);
-                break;
-            case PASSED:
-                sendPassedInterviewLetter(applicant, appointment);
-                break;
-        }
-    }
 
     public void sendMail() throws MessagingException {
         mimeMessage = mailSender.createMimeMessage();
@@ -89,7 +54,7 @@ public class MailService {
         model.put("assistantPhone", "0663459412");
         String emailText = VelocityEngineUtils.mergeTemplateIntoString(
                 velocityEngine, "mailTemplaits/interviewInvitation.vm", model);
-        helper.setFrom("javasendertest@gmail.com");
+        helper.setFrom("ita@itsve.tk");
         helper.setTo("braslavskiyandrey@gmail.com");
         helper.setText(emailText,true);
         ClassPathResource image = new ClassPathResource("images/softServe.jpg");

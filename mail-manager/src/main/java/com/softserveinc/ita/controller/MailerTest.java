@@ -1,6 +1,5 @@
 package com.softserveinc.ita.controller;
 
-import com.softserveinc.ita.exception.ApplicantDoesNotExistException;
 import com.softserveinc.ita.service.MailService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
