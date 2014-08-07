@@ -137,12 +137,12 @@
 <div id="dialog-form-create-course" class="dialog" style="padding: 0px;">
     <div class="inner">
         <div id="course-box">
-            <form id="courseForm" method="POST">
+            <form id="courseForm" method="POST" name="course">
                 <H2><div id="formTitle"></div></H2>
                 <fieldset>
                     <div class="fieldgroup">
-                        <div class="headline name" >
-                            <label for="cName">
+                        <div class="headline name">
+                        <label for="cName">
                                 Name:
                             </label>
                         </div>
@@ -193,6 +193,7 @@
                    <select name="select2" id="courses" onchange="viewGroups()">
                    </select>
                    <button id="AddCourse" class="btn okButton" >Add course</button>
+                   <button id="AddGroup"  class="btn okButton">Add group</button>
             </span>
                 </h1>
 

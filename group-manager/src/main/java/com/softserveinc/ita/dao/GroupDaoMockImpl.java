@@ -12,42 +12,42 @@ public class GroupDaoMockImpl implements GroupDAO {
 
     public GroupDaoMockImpl() {
         //Planned
-        Group group1 = new Group("id1", new Course("Java", "pen-java.png"), "kv001");
+        Group group1 = new Group("id1", new Course("Java", "groups/images/pen-java.png"), "kv001");
         group1 = setTime(group1, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group1);
-        Group group2 = new Group("id3", new Course("Java", "pen-java.png"), "kv021");
+        Group group2 = new Group("id3", new Course("Java", "groups/images/pen-java.png"), "kv021");
         group2 = setTime(group2, new DateTime(2014, 8, 1, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group2);
         //Boarding
-        Group group3 = new Group("id4", new Course("Sharp", "pen-net.png"), "kv012");
+        Group group3 = new Group("id4", new Course("Sharp", "groups/images/pen-net.png"), "kv012");
         group3 = setTime(group3, new DateTime(2014, 7, 17, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group3);
-        Group group4 = new Group("id6", new Course("JavaScript", "pen-jsui.png"), "kv061");
+        Group group4 = new Group("id6", new Course("JavaScript", "groups/images/pen-jsui.png"), "kv061");
         group4 = setTime(group4, new DateTime(2014, 7, 17, 0, 0, 0).getMillis(),
                 new DateTime(2014, 8, 10, 0, 0, 0).getMillis(), new DateTime(2014, 8, 20, 0, 0, 0).getMillis());
         groups.add(group4);
         //InProcess
-        Group group5 = new Group("id9", new Course("Java", "pen-java.png"), "kv041");
+        Group group5 = new Group("id9", new Course("Java", "groups/images/pen-java.png"), "kv041");
         group5 = setTime(group5, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group5);
-        Group group6 = new Group("id10", new Course("Sharp", "pen-net.png"), "kv064");
+        Group group6 = new Group("id10", new Course("Sharp", "groups/images/pen-net.png"), "kv064");
         group6 = setTime(group6, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 30, 0, 0, 0).getMillis());
         groups.add(group6);
         //Finished
-        Group group7 = new Group("id12", new Course("JavaScript", "pen-jsui.png"), "kv532");
+        Group group7 = new Group("id12", new Course("JavaScript", "groups/images/pen-jsui.png"), "kv532");
         group7 = setTime(group7, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group7);
-        Group group8 = new Group("id13", new Course("DevOps", "pen-devops.png"), "kv0753");
+        Group group8 = new Group("id13", new Course("DevOps", "groups/images/pen-devops.png"), "kv0753");
         group8 = setTime(group8, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group8);
-        Group group9 = new Group("id15", new Course("JavaScript", "pen-jsui.png"), "kv532");
+        Group group9 = new Group("id15", new Course("JavaScript", "groups/images/pen-jsui.png"), "kv532");
         group9 = setTime(group9, new DateTime(2014, 7, 10, 0, 0, 0).getMillis(),
                 new DateTime(2014, 7, 15, 0, 0, 0).getMillis(), new DateTime(2014, 7, 20, 0, 0, 0).getMillis());
         groups.add(group9);

@@ -1,4 +1,6 @@
 var editedGroup;
+var courses;
+
 $(function () {
     $("#gStartDate").datepicker();
     $("#gEndDate").datepicker();
@@ -41,6 +43,7 @@ $(function () {
             $('#gStartTime').val("");
             $('#gStartBoardingDate').val("");
             $("#gCourse").val("Select group course");
+            $(".error").html("");
         }
     });
 
@@ -103,7 +106,12 @@ $(function () {
         resizable: false,
         dialogClass: 'dialog',
         show: { effect: "fade", duration: 800 },
-        hide: { effect: "fade", duration: 800 }
+        hide: { effect: "fade", duration: 800 },
+        close: function(){
+            $("#cName").val("");
+            $("#chooseFile").val("");
+            $(".error").html("");
+        }
     });
 
     $("#cancelUButton").click(function (e) {
@@ -132,6 +140,11 @@ $(function () {
     $("#AddCourse").click(function (e) {
         viewCreateCourseDialog();
     });
+
+    $("#AddGroup").click(function (e) {
+        viewAddDialog();
+    });
+
 
     function deleteGroup(groupId) {
         $.ajax({
@@ -181,15 +194,57 @@ $(function () {
 
     function sendCourse() {
         if ($("#courseForm").valid()) {
-            postCourse();
+            var course = createCourse();
+            postCourse(course);
+            $("#dialog-form-create-course").dialog("close");
         }
-        $("#dialog-form-create-course").dialog("close");
     }
 
-    function postCourse(){
-
+    function postCourse(course) {
+        var jsonCourse = JSON.stringify(course);
+        $.ajax({
+            url: location.origin + "/groups/course",
+            contentType: 'application/json',
+            mimeType: 'application/json',
+            dataType: "json",
+            async: false,
+            type: "POST",
+            data: jsonCourse,
+            success: function (data) {
+                location.reload();
+            },
+            error: function (data) {
+                $('#Information').html(data.responseJSON.reason);
+                viewInformationDialog();
+                console.log("" + data);
+            }
+        });
     }
 
+    function createCourse() {
+        var file = document.getElementById("chooseFile");
+        var formData = new FormData();
+        formData.append("file", file.files[0]);
+        var name = $("#cName").val();
+        var imageUrl = location.origin + "/repository/imgfile/applicant/" + name;
+        var course = {};
+        course.name = name;
+        course.imageRef = imageUrl;
+        $.ajax({
+            url: imageUrl,
+            type: "POST",
+            data: formData,
+            async: false,
+            dataType: 'json',
+            cache: false,
+            contentType: false,
+            processData: false,
+            error: function (data) {
+                console.log("" + data);
+            }
+        });
+        return course;
+    }
 
     function getGroupFromForm() {
         var course = {};
@@ -268,7 +323,6 @@ $(function () {
             if (!/Invalid|NaN/.test(new Date(value))) {
                 return new Date(value) > new Date($(params).val());
             }
-
             return isNaN(value) && isNaN($(params).val())
                 || (Number(value) > Number($(params).val()));
         });
@@ -282,6 +336,29 @@ $(function () {
                 || (Number(value) > Number(params));
         });
 
+    jQuery.validator.addMethod("isUniqueCourseName",
+        function (value, element, params) {
+            var courseName = value;
+            for (var index = 0; index < courses.length; index++) {
+                if (courses[index].name == courseName) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+    jQuery.validator.addMethod("isUniqueGroupName",
+        function (value, element, params) {
+            var groupName = value;
+            for (var index = 0; index < groups.length; index++) {
+                if (groups[index].groupName == groupName) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+
     jQuery.validator.addMethod("notDefaultValue", function (value) {
         return value != "Select group course";
     });
@@ -292,7 +369,8 @@ $(function () {
             courseName: {
                 required: true,
                 minlength: 2,
-                maxlength: 15
+                maxlength: 15,
+                isUniqueCourseName: true
             },
             chooseFile: {
                 required: true
@@ -302,7 +380,8 @@ $(function () {
             courseName: {
                 required: "Course name is required",
                 minlength: jQuery.validator.format("At least {0} characters is required"),
-                maxlength: jQuery.validator.format("No more than {0} characters is allowed")
+                maxlength: jQuery.validator.format("No more than {0} characters is allowed"),
+                isUniqueCourseName: "Course with this name already exists"
             },
             chooseFile: {
                 required: "Image is required"
@@ -313,6 +392,7 @@ $(function () {
     $("#userForm").validate({
         rules: {
             groupName: {
+                isUniqueGroupName: true,
                 required: true,
                 minlength: 3,
                 maxlength: 10
@@ -351,6 +431,7 @@ $(function () {
         },
         messages: {
             groupName: {
+                isUniqueGroupName: "Group with this name already exists",
                 required: "Group name is required",
                 minlength: jQuery.validator.format("At least {0} characters is required"),
                 maxlength: jQuery.validator.format("No more than {0} characters is allowed")
@@ -390,13 +471,15 @@ $(function () {
     });
 });
 
+
 function createCourseMenu(position, value) {
     $.ajax({
-        url: location.origin + "/groups/courses",
         dataType: "json",
+        url: location.origin + "/groups/courses",
         type: "GET",
         async: false,
         success: function (data) {
+            courses = data;
             var output = "<option value='' id='defaultChoose'  selected></option>";
             var template = "<option value={{courseName}}>{{courseName}}</option>";
             for (var index = 0; index < data.length; index++) {

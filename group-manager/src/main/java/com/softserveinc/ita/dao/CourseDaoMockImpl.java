@@ -11,10 +11,10 @@ public class CourseDaoMockImpl implements CourseDAO {
 
     public CourseDaoMockImpl() {
         courses = new ArrayList<>();
-        courses.add(new Course("DevOps", "pen-devops.png"));
-        courses.add(new Course("JavaScript", "pen-jsui.png"));
-        courses.add(new Course("Java", "pen-java.png"));
-        courses.add(new Course("Sharp", "pen-net.png"));
+        courses.add(new Course("DevOps", "groups/images/pen-devops.png"));
+        courses.add(new Course("JavaScript", "groups/images/pen-jsui.png"));
+        courses.add(new Course("Java", "groups/images/pen-java.png"));
+        courses.add(new Course("Sharp", "groups/images/pen-net.png"));
     }
 
     @Override

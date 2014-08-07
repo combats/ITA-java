@@ -157,6 +157,7 @@ public class GroupServiceImpl implements GroupService {
         return result;
     }
 
+    @Transactional(isolation = Isolation.READ_COMMITTED)
     @Override
     public Course addNewCourse(Course course) throws CourseAlreadyExists {
         try {

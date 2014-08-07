@@ -145,4 +145,3 @@ public class MvcGroupTests extends MvcGroupBaseTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
 }
-
