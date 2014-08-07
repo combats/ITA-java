@@ -5,7 +5,7 @@ $(function () {
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('NOT_PASSED');
     if (applicants.length == 0) {
-        $('.scheduleView').toggle();
+        $('.scheduleView').button({disabled: true});
         $('.nocontent').toggle();
     } else {
         applicants.forEach(function (element) {
@@ -16,7 +16,7 @@ $(function () {
         var interviewedAccordion = $('.interviewed');
         interviewedAccordion.html(interviewedRendered);
 
-        $(".interviewed").sortable({"axis": "y", items: ".container", handle: ".accordion-section",
+        $(".interviewed").sortable({"axis": "y", items: ".applicantContainer", handle: ".accordion-section",
             create: function (event) {
                 sort($(event.target).children()[0], applicants, true);
             }, stop: function (event, ui) {
@@ -52,7 +52,7 @@ calculateInterviewResult = function (interview) {
     return result;
 };
 highlight = function (item) {
-    var siblings = $(item).siblings("div.container").addBack();
+    var siblings = $(item).siblings("div.applicantContainer").addBack();
     $(siblings).each(function (index, value) {
         if (index < groupCapacity) {
             $(value).children("h3").addClass("ui-state-highlight");
