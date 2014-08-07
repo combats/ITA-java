@@ -24,8 +24,11 @@ $(function () {
     //init accordion, set event listeners
     postRender();
 });
+//we take him!
 employApplicant = function (target) {
+    //accordion item
     var div = $(target).closest('div.applicantContainer');
+    //get app id from div attr
     var applicantID = $(div).find('div.applicant').attr('applicantID');
     var list = {};
     list[applicantID] = {};
@@ -40,10 +43,14 @@ employApplicant = function (target) {
         type: "PUT",
         data: JSON.stringify(list),
         success: function () {
-            $(div).find('h3').removeClass('ui-state-highlight');
-            $(div).find('h3').find('a').remove();
-            $(div).find('h3').append('<span class="employ">[Employed]</span>');
+            //change href "make an offer" to span "[employed]"
+            var header = $(div).find('h3');
+            header.removeClass('ui-state-highlight');
+            header.find('a').remove();
+            header.append('<span class="employ">[Employed]</span>');
+            //notify every applicant, pass divs as targets
             notifyApplicant($(div).find('div.applicant'));
+            //change status in memory
             elementByApplicantID(applicantID)['applicant']['status'] = 'EMPLOYED';
             $("#dialog").data('content', "Saved!");
             $('#dialog').dialog('open');
