@@ -154,7 +154,6 @@ setEventListeners = function () {
     $('.interview').click(function (event) {
         beginInterview(event.target);
     });
-//    $("input[type=file]").nicefileinput();
     //Event listener for dialog
     $("#dialog").dialog({
         buttons: {

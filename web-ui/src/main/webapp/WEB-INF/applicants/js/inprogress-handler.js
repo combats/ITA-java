@@ -1,22 +1,27 @@
+//on document ready
 $(function () {
     loadApplicantsIDListByStatus('PASSED');
     loadApplicantsIDListByStatus('EMPLOYED');
     loadApplicantsByStatus('PASSED');
     loadApplicantsByStatus('EMPLOYED');
+    //if no applicants in group
     if (applicants.length == 0) {
+        //disable irrelevant buttons
         $('.scheduleView').button({disabled: true});
         $('.nocontent').toggle();
     } else {
-        //interviewed
+        //render applicants with interviews
         var interviewedRendered = Mustache.render(pageTemplate, {'data': applicants, 'offering': true});
         var interviewedAccordion = $('.interviewed');
         interviewedAccordion.html(interviewedRendered);
-
+        //make accordion sortable
         $(".interviewed").sortable({"axis": "y", items: ".applicantContainer", handle: ".accordion-section",
             create: function (event) {
+                //'on create': sort items
                 sort($(event.target).children()[0], applicants, false);
             }});
     }
+    //init accordion, set event listeners
     postRender();
 });
 employApplicant = function (target) {
