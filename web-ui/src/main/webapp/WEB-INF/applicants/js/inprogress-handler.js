@@ -18,7 +18,7 @@ $(function () {
         $(".interviewed").sortable({"axis": "y", items: ".applicantContainer", handle: ".accordion-section",
             create: function (event) {
                 //'on create': sort items
-                sort($(event.target).children()[0], applicants, false);
+                sort($(event.target).children()[0], false, false);
             }});
     }
     //init accordion, set event listeners

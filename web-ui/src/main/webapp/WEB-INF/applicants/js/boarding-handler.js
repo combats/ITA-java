@@ -24,7 +24,7 @@ $(function () {
         $(".interviewed").sortable({"axis": "y", items: ".applicantContainer", handle: ".accordion-section",
             create: function (event) {
                 //'on create': sort items
-                sort($(event.target).children()[0], applicants, true);
+                sort($(event.target).children()[0], true, false);
             }, stop: function (event, ui) {
                 //'on stop':highlight top items
                 highlight(ui.item);
