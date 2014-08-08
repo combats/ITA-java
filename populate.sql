@@ -87,10 +87,10 @@ INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VAL
 INSERT INTO interview.Applicants (Id, Email, Phone, Birthday, Name, Surname) VALUES ('8', 'anton@gmail.com', '', 0, 'Billy', 'Jeam');
 
 
-INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5e0111', 'pen-java.png', 'Java');
-INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5f0012', 'pen-net.png', '.NET');
-INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a600013',  'pen-devops.png', 'DevOps');
-INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540f350015', 'pen-jsui.png', 'JavaScript');
+INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5e0111', 'groups/images/pen-java.png', 'Java');
+INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a5f0012', 'groups/images/pen-net.png', '.NET');
+INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540a600013',  'groups/images/pen-devops.png', 'DevOps');
+INSERT INTO interview.Course (Id, ImageReference, Name) VALUES ('297ea2cd476e53d001476e540f350015', 'groups/images/pen-jsui.png', 'JavaScript');
 
 
 

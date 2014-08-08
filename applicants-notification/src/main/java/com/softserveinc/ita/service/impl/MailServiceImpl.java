@@ -28,10 +28,9 @@ import java.util.Map;
 @Service
 public class MailServiceImpl implements MailService {
     public static final String ENCODING = "UTF-8";
-    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
-    public static final String FROM = "javasendertest@gmail.com";
+    public static final String FROM = "ita@itsve.tk";
     public static final String LOGO = "ItAcademyLogo";
     public static final String LOGO_IMAGE_REF = "images/joinProfessionals.png";
     public static final String TIME = "time";

@@ -22,12 +22,6 @@
             <transportConnector uri="vm://myBroker?create=false"/>
         </transportConnectors>
     </broker>
-    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="localhost"/>
-        <property name="port" value="500"/>
-        <property name="username" value="javasendertest@gmail.com"/>
-        <property name="password" value="ldbtyo946fyfh"/>
-    </bean>
     <bean id="velocityEngine"
           class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
