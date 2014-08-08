@@ -1,5 +1,7 @@
 package com.softserveinc.ita.mvc.impl;
 
+import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.mvc.MvcGroupBaseTest;
@@ -12,6 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -144,5 +149,28 @@ public class MvcGroupTests extends MvcGroupBaseTest {
         ).andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
     }
+
+    @Test
+    public void testUpdateApplicantsInGroupAndExpectIsOkAndJSONType() throws Exception {
+        Map<String, ApplicantBenchmark> applicants = new HashMap<>();
+        applicants.put("id21", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
+        String jsonMap = jsonUtil.toJson(applicants);
+        mockMvc.perform(
+                put("/id1/applicants")
+                        .content(jsonMap)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
+    public void testGetApplicantsByStatusAndGroupIdAndExpectOk() throws Exception {
+        String jsonApplicantStatus = jsonUtil.toJson(Applicant.Status.PASSED);
+        mockMvc.perform(
+                get("/id1/applicants?status=PASSED"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
 }
 

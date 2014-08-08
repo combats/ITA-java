@@ -1,6 +1,8 @@
 package com.softserveinc.ita.service.impl;
 
 import com.softserveinc.ita.dao.GroupDAO;
+import com.softserveinc.ita.entity.Applicant;
+import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
@@ -16,7 +18,9 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static org.mockito.Mockito.*;
@@ -65,7 +69,7 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         expectedList.add(group3);
         when(groupDAO.getAllGroups()).thenReturn(groupList);
         List<Group> groupsByStatus = groupService.getGroupsByStatus(Group.Status.PLANNED, 150);
-        assertEquals(groupsByStatus,expectedList);
+        assertEquals(groupsByStatus, expectedList);
     }
 
     @Test
@@ -115,14 +119,14 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     }
 
     @Test
-    public void testGetGroupByExistingIdAndExpectCorrectGroup() throws Exception{
+    public void testGetGroupByExistingIdAndExpectCorrectGroup() throws Exception {
         Group group = new Group("id1");
         when(groupDAO.getGroupById("id1")).thenReturn(group);
-        assertEquals(group,groupService.getGroupById("id1"));
+        assertEquals(group, groupService.getGroupById("id1"));
     }
 
     @Test(expected = GroupDoesntExistException.class)
-    public void testGetGroupByNotExistingIdAndExpectException()throws Exception{
+    public void testGetGroupByNotExistingIdAndExpectException() throws Exception {
         when(groupDAO.getGroupById("notExistingId")).thenThrow(GroupDoesntExistException.class);
         groupService.getGroupById("notExistingId");
     }
@@ -154,4 +158,32 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         when(groupDAO.updateGroup(group)).thenThrow(Exception.class);
         groupService.updateGroup(group);
     }
+
+    @Test
+    public void testUpdateApplicantsInGroupAndExpectTheSameGroup() throws Exception {
+        Group group = new Group("id1");
+        when(groupDAO.updateGroup(group)).thenReturn(group);
+        when(groupDAO.getGroupById("id1")).thenReturn(group);
+        Map<String, ApplicantBenchmark> applicants = new HashMap<>();
+        applicants.put("idOne", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));
+        applicants.put("idTwo", new ApplicantBenchmark(Applicant.Status.EMPLOYED, 4));
+        assertEquals(groupService.updateApplicantsInGroup("id1", applicants), group);
+        verify(groupDAO, atLeastOnce()).updateGroup(group);
+        verify(groupDAO, atLeastOnce()).getGroupById("id1");
+    }
+
+    @Test
+    public void testUpdateApplicantsInGroupAndGetExpectedApplicants() throws Exception {
+        Group group = new Group("id1");
+        when(groupDAO.updateGroup(group)).thenReturn(group);
+        when(groupDAO.getGroupById("id1")).thenReturn(group);
+        Map<String, ApplicantBenchmark> applicants = new HashMap<>();
+        applicants.put("idOne", new ApplicantBenchmark(Applicant.Status.EMPLOYED, 1));
+        applicants.put("idTwo", new ApplicantBenchmark(Applicant.Status.EMPLOYED, 4));
+        groupService.updateApplicantsInGroup("id1", applicants);
+        assertEquals(groupService.getApplicantsByGroupIdAndStatus("id1", Applicant.Status.EMPLOYED), applicants);
+        verify(groupDAO, atLeastOnce()).updateGroup(group);
+        verify(groupDAO, atLeastOnce()).getGroupById("id1");
+    }
+
 }
