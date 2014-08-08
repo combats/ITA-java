@@ -151,6 +151,28 @@ public class MvcGroupTests extends MvcGroupBaseTest {
     }
 
     @Test
+    public void testPostNewCourseAndExpectIsOk() throws Exception {
+        Course course = new Course("Java", "ref");
+        String jsonCourse = jsonUtil.toJson(course);
+        mockMvc.perform(
+                post("/course")
+                        .content(jsonCourse)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testPostNewCourseAndExpectJSONType() throws Exception {
+        Course course = new Course("Java", "ref");
+        String jsonCourse = jsonUtil.toJson(course);
+        mockMvc.perform(
+                post("/course")
+                        .content(jsonCourse)
+                        .contentType(MediaType.APPLICATION_JSON)
+        ).andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+
+    @Test
     public void testUpdateApplicantsInGroupAndExpectIsOkAndJSONType() throws Exception {
         Map<String, ApplicantBenchmark> applicants = new HashMap<>();
         applicants.put("id21", new ApplicantBenchmark(Applicant.Status.SCHEDULED, -1));

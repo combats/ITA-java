@@ -1,10 +1,12 @@
 package com.softserveinc.ita.service.impl;
 
+import com.softserveinc.ita.dao.CourseDAO;
 import com.softserveinc.ita.dao.GroupDAO;
 import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.CourseAlreadyExists;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 import com.softserveinc.ita.service.GroupService;
@@ -34,6 +36,10 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
     @Autowired
     @Mock
     private GroupDAO groupDAO;
+
+    @Autowired
+    @Mock
+    private CourseDAO courseDAO;
 
     private ArrayList<Group> groupList;
     private Group group1;
@@ -157,6 +163,20 @@ public class ServiceGroupTests extends ServiceGroupBaseTest {
         Group group = new Group("id1");
         when(groupDAO.updateGroup(group)).thenThrow(Exception.class);
         groupService.updateGroup(group);
+    }
+
+    @Test
+     public void testAddCourseAndExpectCorrectResult() throws CourseAlreadyExists {
+        Course course = new Course("Java", "ref");
+        when(courseDAO.addCourse(course)).thenReturn(course);
+        assertEquals(course,groupService.addNewCourse(course));
+    }
+
+    @Test(expected = CourseAlreadyExists.class)
+    public void testAddCourseWithExistingNameAndExpectCorrectResult() throws CourseAlreadyExists {
+        Course course = new Course("Java", "ref");
+        when(courseDAO.addCourse(course)).thenThrow(CourseAlreadyExists.class);
+        groupService.addNewCourse(course);
     }
 
     @Test

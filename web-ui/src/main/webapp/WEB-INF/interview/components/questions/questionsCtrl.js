@@ -7,105 +7,66 @@
         question.userId = userId;
         $scope.activeIndex = 0;
 
-        var hasAnyOfMineQuestions = function(qs){
-            for(var i=0;i<qs.length;i++){
-                if(qs[i].userId===userId){
-                    return true;
+        var getMyQuestions = function (arr) {
+            var res_arr = [];
+            if (arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].userId === userId) {
+                        res_arr.push(arr[i]);
+                    }
                 }
             }
-            return false;
+            if(res_arr.length === 0 && hardcodedQuestions.length !== 0){
+                res_arr = hardcodedQuestions;
+            }
+            else if(res_arr.length === 0){
+                res_arr.push(angular.copy(question));
+            }
+            return res_arr;
         }
-        var getMineQuestionIndex = function(qs){
-            for(var i=0;i<qs.length;i++){
-                if(qs[i].userId===userId){
-                    return i;
+        var getHardcodedQuestions = function(){
+            var hardcodedQuestions = User.questions;
+            if(hardcodedQuestions) {
+                for (var i = 0; i < hardcodedQuestions.length; i++) {
+                    hardcodedQuestions[i].question = hardcodedQuestions[i].questionBody;
+                    delete hardcodedQuestions[i]['questionBody'];
+                    hardcodedQuestions[i].comment = "";
+                    hardcodedQuestions[i].mark = 1;
+                    if(!hardcodedQuestions[i].weight){
+                        hardcodedQuestions[i].weight = 1;
+                    }
+                    hardcodedQuestions[i].id = null;
+                    hardcodedQuestions[i].userId = userId;
                 }
             }
-            return 0;
+            else{
+                hardcodedQuestions = [];
+            }
+            return hardcodedQuestions;
         }
+        var hardcodedQuestions = getHardcodedQuestions();
 
         Interview.get(Appointment.appointmentId).then(function (response) {
-                $scope.questions = response.data.questions;
-                if(!$scope.questions){
-                    $scope.questions = [];
-                }
-                if($scope.questions.length === 0){
-                    $scope.newQuestion();
-                }
-                else if(hasAnyOfMineQuestions($scope.questions)){
-                    $scope.activeIndex = getMineQuestionIndex($scope.questions)
-                }
-                else{
-                    $scope.newQuestion();
-                }
+                $scope.questions = getMyQuestions(response.data.questions);
             },
             function (err) {
                 var interview = {};
                 interview.id = Appointment.appointmentId;
                 interview.applicantId = Applicant.id;
                 interview.usersId = Appointment.userIdList;
-                var qs = User.questions;
-                if(qs) {
-                    for (var i = 0; i < qs.length; i++) {
-                        qs[i].question = qs[i].questionBody;
-                        delete qs[i]['questionBody'];
-                        qs[i].comment = "";
-                        qs[i].mark = 1;
-                    }
-                    interview.questions = qs;
-                }
+
                 interview.finalComment = "";
+                interview.questions = hardcodedQuestions;
 
                 Interview.add(interview).then(function(response){
-                    $scope.questions = response.data.questions;
-                    if(!$scope.questions){
-                        $scope.questions = [];
-                    }
-                    if($scope.questions.length === 0){
-                        $scope.newQuestion();
-                    }
-                    else if(hasAnyOfMineQuestions($scope.questions)){
-                        $scope.activeIndex = getMineQuestionIndex($scope.questions)
-                    }
-                    else{
-                        $scope.newQuestion();
-                    }
+                    $scope.questions = getMyQuestions(response.data.questions);
                 },function(err){
                     window.location = "/sorry?code=4";
                 });
             }
         );
 
-        var getQuestionById = function(id){
-            var arr = $scope.questions;
-            for(var j=0;j<arr.length;j++){
-                if(arr[j].id === id){
-                    return arr[j];
-                }
-            }
-            return undefined;
-        }
-        var getQuestionByIdFromArr = function(id,arr){
-            for(var j=0;j<arr.length;j++){
-                if(arr[j].id === id){
-                    return arr[j];
-                }
-            }
-            return undefined;
-        }
-
-        $scope.questionIsMine = function(q){
-            return userId === q.userId;
-        }
-
         $scope.updateInterview = function() {
-            //if there's only one question
-            if($scope.questions.length === 1){
-                //and this question has no definition
-                if(!$scope.questions[$scope.questions.length-1].question) {
-                    return;
-                }
-            }
             //remove all questions with no question definition
             for(var i=0;i<$scope.questions.length;i++){
                 if(!$scope.questions[i].question){
@@ -117,6 +78,9 @@
             if($scope.questions.length <= $scope.activeIndex){
                 $scope.activeIndex = $scope.questions.length-1;
             }
+            if($scope.activeIndex === -1){
+                $scope.activeIndex = 0;
+            }
             Interview.get(Appointment.appointmentId).then(function (response) {
                 var qs = response.data.questions;
                 //remove user questions
@@ -126,19 +90,10 @@
                         i--;
                     }
                 }
-                //remove not mine questions
-                for(var i=0; i < $scope.questions.length; i++){
-                    if ($scope.questions[i].userId !== userId){
-                        $scope.questions.splice(i, 1);
-                        i--;
-                    }
-                }
-                //concat
-                $scope.questions = $scope.questions.concat(qs);
 
-                response.data.questions = $scope.questions;
+                response.data.questions = $scope.questions.concat(qs);
                 Interview.edit(response.data).then(function(response){
-                    $scope.questions = response.data.questions;
+                    $scope.questions = getMyQuestions(response.data.questions);
                     console.log("Interview was updated");
                 });
             });
@@ -170,6 +125,7 @@
             }
             //only if the last question has question fomulation
             else if($scope.questions[last].question) {
+
                 $scope.questions.push(angular.copy(question));
                 $scope.activeIndex = $scope.questions.length - 1;
             }

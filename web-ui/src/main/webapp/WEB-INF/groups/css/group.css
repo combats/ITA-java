@@ -103,16 +103,22 @@
     padding: 20px 70px 80px 70px;
 }
 
-#user-box h2{
+#course-box {
+    background-color: #dfdeda;
+    display: inline-block;
+    padding: 20px 90px 20px 20px;
+}
+
+#user-box h2,
+#course-box h2 {
     padding:0;
     margin:0;
     font: bold 30px;
 }
 
-#user-box fieldset {
+#user-box fieldset,
+#course-box fieldset {
     display: block;
-    width: 350px;
-    height: 400px;
     -webkit-margin-start: 2px;
     -webkit-margin-end: 2px;
     -webkit-padding-before: 0.35em;
@@ -121,25 +127,44 @@
     -webkit-padding-after: 0.625em;
     min-width: -webkit-min-content;
 }
+
+#user-box fieldset {
+    width: 350px;
+    height: 400px;
+}
+
+#course-box fieldset {
+    width: 350px;
+    height: 150px;
+}
+
 #user-box .btn,
-#delete-user-box .btn{
+#delete-user-box .btn,
+#course-box .btn {
     background-color: #ff6138;
     margin-top: 10px;
 }
-#user-box .saveButton{
+
+#user-box .saveButton,
+#course-box .saveButton {
     float: left;
     margin-left: 60px;
 }
-#user-box .cancelButton{
+
+#user-box .cancelButton,
+#course-box .cancelButton {
     float: right;
 }
 
-#user-box.fieldgroup {
+#user-box.fieldgroup,
+#course-box.fieldgroup {
     display: inline-block;
     padding: 8px 10px;
     width: 340px;
 }
-#user-box .fieldgroup label {
+
+#user-box .fieldgroup label,
+#course-box .fieldgroup label {
     font-size: 16px;
     float: left;
     text-align: right;
@@ -149,7 +174,9 @@
 }
 #user-box .fieldgroup input,
 #user-box .fieldgroup textarea,
-#user-box .fieldgroup select {
+#user-box .fieldgroup select,
+#course-box .fieldgroup input,
+#course-box .fieldgroup textarea {
     float: right;
     margin: 10px 0;
     height: 25px;
@@ -171,12 +198,29 @@
     bottom: 0px;
     line-height: 100%;
 }
-#user-box .fieldgroup {
+
+#course-box .fieldgroup label.error {
+    font-size: 11px;
+    color: #FB3A3A;
+    margin: 0px 0 0px 129px;
+    padding: 0;
+    text-align: right;
+    width: 220px;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    line-height: 100%;
+}
+
+
+#user-box .fieldgroup,
+#course-box .fieldgroup{
     position: relative;
     height: 48px;
 }
 
-#userForm{
+#userForm,
+#courseForm{
     margin-bottom: 0px;
 }
 
@@ -211,4 +255,27 @@
 
 #createGroup {
     height: 401;
+}
+
+#AddCourse{
+    vertical-align: super;
+    background-color: #ff6138;
+}
+
+#AddGroup{
+    vertical-align: super;
+    background-color: #ff6138;
+}
+
+#chooseFile{
+    width: 290 !important;
+}
+
+.titleBox span {
+    max-width: 800px;
+}
+
+#groupImage {
+    height: 244px;
+    width: 200;
 }
