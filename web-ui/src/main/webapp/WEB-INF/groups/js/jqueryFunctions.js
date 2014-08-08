@@ -1,4 +1,5 @@
 var functionCalled = false;
+var groups;
 
 
 function viewGroups() {
@@ -29,6 +30,7 @@ function viewGroups() {
         dataType: "json",
         type: "GET",
         success: function (data) {
+            groups = data;
             var image;
             for (var index = 0; index < data.length; index++) {
                 if (data[index].course.name == selectedCourse || selectedCourse == "All courses") {
@@ -42,7 +44,6 @@ function viewGroups() {
                     output += Mustache.render(template, view);
                 }
             }
-            output += createGroupHtml;
             $("#portfolio1").html(output);
         },
         error: function (data) {
@@ -52,7 +53,6 @@ function viewGroups() {
 
 
 }
-
 var groupId;
 var editDialog;
 function viewAddDialog() {
@@ -76,4 +76,9 @@ function viewEditInformationDialog(id) {
     editDialog = true;
     $("#dialog-form-add-group").data('content', 'Group edited');
     $('#dialog-form-add-group').dialog('open');
+}
+
+function viewCreateCourseDialog() {
+    $("#dialog-form-create-course").data('content', 'Course created');
+    $('#dialog-form-create-course').dialog('open');
 }
