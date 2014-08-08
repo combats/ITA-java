@@ -1,22 +1,68 @@
-div.outter{
-    position:relative;
-    width:940px;
+div.ui-accordion {
     margin-top: 10px;
 }
-.viewName {float: left;}
 
-span.points {
-    float: right;
+div.wrapper {
+    min-width: 1200px;
 }
 
-div.schedule button {
-    top: -10px;
+div.outter {
+    position: relative;
+    width: 940px;
+    margin-top: 10px;
 }
 
-dl.addingApplicant {margin-bottom: 20px !important;}
-dl.addingSchedule {margin-bottom: 60px !important;}
-.schedule dl {margin-bottom: 15px !important;}
-.schedule dl dt {width: 77px !important;}
+div.applicant {
+    position: relative;
+    height: 300px;
+    min-height: 300px;
+}
+
+div.profile {
+    min-height: 250px;
+    width: 450px;
+    position: relative;
+    float: left;
+    margin-right: 50px;
+}
+
+div.schedule {
+    word-wrap: break-word;
+    position: absolute;
+    top: 14px;
+    right: 0;
+    min-height: 250px;
+    width: 400px;
+}
+
+div.info {
+    min-height: 250px;
+    width: 250px;
+    float: left;
+}
+
+div.image {
+    height: 150px;
+    width: 150px;
+    float: left;
+    margin-right: 50px;
+}
+
+dl.addingApplicant {
+    margin-bottom: 20px !important;
+}
+
+dl.addingSchedule {
+    margin-bottom: 60px !important;
+}
+
+.schedule dl {
+    margin-bottom: 15px !important;
+}
+
+.schedule dl dt {
+    width: 77px !important;
+}
 
 dl {
     float: left;
@@ -46,13 +92,20 @@ dl dd {
     height: 35px;
 }
 
-div.ui-accordion {
-    margin-top: 10px;
+.viewName {
+    float: left;
+}
+
+span.points {
+    float: right;
+}
+
+div.schedule button {
+    top: -10px;
 }
 
 .done {
     position: relative;
-    /*top: -25px;*/
     float: right;
     margin-top: 12px;
     margin-left: 20px;
@@ -60,27 +113,22 @@ div.ui-accordion {
 
 button.scheduleView {
     position: relative;
-    /*top: -28px;*/
-    /*left: 885px;*/
     float: right !important;
     margin-top: 12px !important;
     margin-left: 10px !important;
     display: block !important;
 }
 
-button.addUser>.ui-button-text, button.removeUser>.ui-button-text {padding: .4em .2em}
-
-
+button.addUser > .ui-button-text, button.removeUser > .ui-button-text {
+    padding: .4em .2em
+}
 
 .notify, .editAppointment, .postAppointment {
     width: 107px;
 }
-.notify>.ui-button-text, .editAppointment>.ui-button-text, .postAppointment>.ui-button-text {
-    padding: .4em .2em;
-}
 
-div.wrapper {
-    min-width: 1200px;
+.notify > .ui-button-text, .editAppointment > .ui-button-text, .postAppointment > .ui-button-text {
+    padding: .4em .2em;
 }
 
 select {
@@ -88,102 +136,11 @@ select {
     float: left;
 }
 
-div.applicant {
-    position: relative;
-    height: 300px;
-    min-height: 300px;
-}
-
-div.profile {
-    min-height: 250px;
-    width: 450px;
-    position: relative;
-    float: left;
-    margin-right: 50px;
-}
-
-div.schedule {
-    word-wrap: break-word;
-    position: absolute;
-    top: 14px;
-    right: 0px;
-    min-height: 250px;
-    width: 400px;
-}
 .interviewed .applicant .schedule {
     max-height: 200px;
     min-height: 10px;
     width: 320px;
 }
-
-div.info {
-    min-height: 250px;
-    width: 250px;
-    float: left;
-}
-
-div.image {
-    height: 150px;
-    width: 150px;
-    float: left;
-    margin-right: 50px;
-}
-
-/*body {*/
-    /*font: 62.5% "Trebuchet MS", sans-serif;*/
-    /*margin: 50px;*/
-    /*min-width: 500px;*/
-/*}*/
-
-/*input {*/
-    /*border-top-left-radius: 3px;*/
-    /*border-bottom-left-radius: 3px;*/
-    /*border-top-right-radius: 3px;*/
-    /*border-bottom-right-radius: 3px;*/
-    /*border: solid #777 1px;*/
-    /*line-height: 20px;*/
-    /*background: #fff;*/
-    /*-webkit-box-shadow: inset 0px 2px 0px rgba(0, 0, 0, .05);*/
-    /*-moz-box-shadow: inset 0px 2px 0px rgba(0, 0, 0, .05);*/
-    /*box-shadow: inset 0px 2px 0px rgba(0, 0, 0, .05);*/
-    /*color: #777;*/
-    /*text-shadow: 0px 1px 0px #fff;*/
-/*}*/
-
-/*.NFI-filename {*/
-    /*border-left: none;*/
-    /*width: 40px;*/
-    /*height: 20px;*/
-    /*border-top-left-radius: 0px;*/
-    /*border-bottom-left-radius: 0px;*/
-/*}*/
-
-/*.NFI-button {*/
-    /*background-color: #DD9201;*/
-    /*background-image: linear-gradient(bottom, #A37417 0%, #DD9201 56%);*/
-    /*background-image: -o-linear-gradient(bottom, #A37417 0%, #DD9201 56%);*/
-    /*background-image: -moz-linear-gradient(bottom, #A37417 0%, #DD9201 56%);*/
-    /*background-image: -webkit-linear-gradient(bottom, #A37417 0%, #DD9201 56%);*/
-    /*background-image: -ms-linear-gradient(bottom, #A37417 0%, #DD9201 56%);*/
-    /*background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #A37417), color-stop(0.56, #DD9201));*/
-    /*text-shadow: none;*/
-    /*border: solid #bb7200 1px;*/
-    /*border-bottom: solid #995200 1px;*/
-
-    /*overflow: hidden;*/
-    /*position: relative;*/
-    /*display: block;*/
-    /*float: left;*/
-    /*white-space: nowrap;*/
-    /*text-align: center;*/
-    /*color: #fff;*/
-    /*width: 60px;*/
-    /*height: 20px;*/
-    /*line-height: 20px;*/
-    /*border: solid #bb7200 1px;*/
-    /*border-top-left-radius: 3px;*/
-    /*border-bottom-left-radius: 3px;*/
-/*}*/
 
 form {
     display: inline;
@@ -202,7 +159,7 @@ form {
 .interview {
     clear: both;
     width: 100%;
-    margin-left: 0px;
+    margin-left: 0;
     margin-top: 10px;
 }
 
@@ -213,25 +170,39 @@ form {
 .openCV {
     width: 150px;
     position: absolute;
-    top:210px;
-    left:0px;
+    top: 210px;
+    left: 0;
 }
 
 .interviewed .applicant .openCV {
-    top:158px;
+    top: 158px;
 }
 
-.interviewed .applicant {height: 210px !important; min-height: 210px !important;}
-.interviewed .applicant .profile {height: 210px !important; min-height: 210px !important;}
-.interviewed .applicant .info {height: 210px !important; min-height: 210px !important;}
-.interviewed .applicant .profile dl.addingSchedule {margin-bottom: 10px !important;}
+.interviewed .applicant {
+    height: 210px !important;
+    min-height: 210px !important;
+}
+
+.interviewed .applicant .profile {
+    height: 210px !important;
+    min-height: 210px !important;
+}
+
+.interviewed .applicant .info {
+    height: 210px !important;
+    min-height: 210px !important;
+}
+
+.interviewed .applicant .profile dl.addingSchedule {
+    margin-bottom: 10px !important;
+}
 
 .employ {
     float: right;
     font-size: 1em;
 }
 
-a.employ{
+a.employ {
     text-decoration: underline;
 }
 
@@ -246,8 +217,6 @@ a.employ{
     cursor: pointer;
     font-size: 100px;
     height: 100%;
-    filter: alpha(opacity=1);
-    -moz-opacity: 0.01;
     opacity: 0.01;
     position: absolute;
     right: 0;
@@ -256,9 +225,7 @@ a.employ{
 
 .file-wrapper .button {
     background: #ffffff;
-    -moz-border-radius: 0px;
-    -webkit-border-radius: 0px;
-    border-radius: 0px;
+    border-radius: 0;
     color: #000;
     cursor: pointer;
     display: inline-block;
@@ -269,8 +236,18 @@ a.employ{
     text-transform: uppercase;
 }
 
-.applicantContainer {margin-bottom: 10px;}
+.applicantContainer {
+    margin-bottom: 10px;
+}
 
-input.theMostImportantSomething {width:235px; height:30px !important; min-height: 30px !important; background-color: #ffffff; padding: 5px;}
+input.theMostImportantSomething {
+    width: 235px;
+    height: 30px !important;
+    min-height: 30px !important;
+    background-color: #ffffff;
+    padding: 5px;
+}
 
-.ui-selectmenu-button span.ui-selectmenu-text {padding: 0.2em 2.1em 0.2em 1em !important;}
+.ui-selectmenu-button span.ui-selectmenu-text {
+    padding: 0.2em 2.1em 0.2em 1em !important;
+}
