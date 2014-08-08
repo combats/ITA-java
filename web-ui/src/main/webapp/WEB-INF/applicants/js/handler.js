@@ -203,7 +203,7 @@ setEventListeners = function () {
     });
     $("button.submit").button({disabled: true});
     $("#sort").click(function () {
-        sort($('div.interviewed').children('div.applicantContainer')[0], [], true);
+        sort($('div.interviewed').children('div.applicantContainer')[0], true, true);
     });
     $("#submitList").click(function () {
         submitList();
@@ -282,7 +282,7 @@ postRender = function () {
     setEventListeners();
 };
 //sort div items representing applicants
-sort = function (item, light) {
+sort = function (item, light, sortByPoints) {
     //accordion
     var sortableList = $('div.interviewed');
     //accordion items representing applicants
@@ -295,17 +295,22 @@ sort = function (item, light) {
         //sort elements by applicants rank, get this rank from in-memory elements
         var indexOfAppA = elementByApplicantID(appIDa)['applicant']['rank'];
         var indexOfAppB = elementByApplicantID(appIDb)['applicant']['rank'];
-        //when both of them have valid ranks
-        if (indexOfAppA != -1 && indexOfAppB != -1) {
-            return indexOfAppA > indexOfAppB;
-        }
-        //otherwise sort by total points(interview)
-        if (indexOfAppA == -1 && indexOfAppB == -1) {
+        if (sortByPoints) {
             return $(a).children("h3").children("span.points").text()
                 < $(b).children("h3").children("span.points").text();
+        } else {
+            //when both of them have valid ranks
+            if (indexOfAppA != -1 && indexOfAppB != -1) {
+                return indexOfAppA > indexOfAppB;
+            }
+            //otherwise sort by total points(interview)
+            if (indexOfAppA == -1 && indexOfAppB == -1) {
+                return $(a).children("h3").children("span.points").text()
+                    < $(b).children("h3").children("span.points").text();
+            }
+            //only one of them is ranked
+            return indexOfAppA != -1;
         }
-        //only one of them is ranked
-        return indexOfAppA != -1;
     });
     //set sorted items to accordion
     sortableList.append(listitems);
