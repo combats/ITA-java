@@ -352,7 +352,12 @@ $(function () {
             var groupName = value;
             for (var index = 0; index < groups.length; index++) {
                 if (groups[index].groupName == groupName) {
-                    return false;
+                    if (editDialog && groups[index].groupID != editedGroup.groupID) {
+                        return false;
+                    }
+                    if (!editedGroup) {
+                        return false;
+                    }
                 }
             }
             return true;
