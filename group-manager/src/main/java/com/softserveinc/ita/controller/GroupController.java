@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.CourseAlreadyExists;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 import com.softserveinc.ita.service.GroupService;
@@ -91,5 +92,12 @@ public class GroupController {
     Group updateApplicantsInGroup(@PathVariable String groupID,
                                   @RequestBody Map<String, ApplicantBenchmark> applicants) {
         return groupService.updateApplicantsInGroup(groupID, applicants);
+    }
+
+    @RequestMapping(value = "/course", method = RequestMethod.POST, produces = "application/json")
+    public
+    @ResponseBody
+    Course addNewCourse(@RequestBody Course course) throws CourseAlreadyExists {
+        return groupService.addNewCourse(course);
     }
 }

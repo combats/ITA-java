@@ -28,10 +28,9 @@ import java.util.Map;
 @Service
 public class MailServiceImpl implements MailService {
     public static final String ENCODING = "UTF-8";
-    public static final String DATE_FORMAT = "dd/MM/yyyy hh:mm";
     public static final String NAME = "name";
     public static final String SURNAME = "surname";
-    public static final String FROM = "javasendertest@gmail.com";
+    public static final String FROM = "ita@itsve.tk";
     public static final String LOGO = "ItAcademyLogo";
     public static final String LOGO_IMAGE_REF = "images/joinProfessionals.png";
     public static final String TIME = "time";
@@ -75,15 +74,9 @@ public class MailServiceImpl implements MailService {
         String applicantId = notificationInfo.getApplicantId();
         String groupId =  notificationInfo.getGroupId();
         String responsibleHrId =  notificationInfo.getResponsibleHrId();
-        Applicant applicant = null;
-        Group group = null;
-        User responsibleHr = null;
-//        try {
-            applicant = httpRequestExecutor.getObjectByID(applicantId, Applicant.class);
-
-            group = httpRequestExecutor.getObjectByID(groupId, Group.class);
-            responsibleHr = httpRequestExecutor.getObjectByID(responsibleHrId, User.class);
-
+        Applicant applicant = httpRequestExecutor.getObjectByID(applicantId, Applicant.class);
+        Group group = httpRequestExecutor.getObjectByID(groupId, Group.class);
+        User responsibleHr = httpRequestExecutor.getObjectByID(responsibleHrId, User.class);
             Applicant.Status status = group.getApplicants().get(applicantId).getStatus();
             switch (status) {
                 case NOT_SCHEDULED:
@@ -101,9 +94,6 @@ public class MailServiceImpl implements MailService {
                 case EMPLOYED:
                     sendEmployedLetter(applicant, group, responsibleHr);
             }
-//        } catch (HttpRequestException e) {
-//            e.printStackTrace();
-//        }
     }
 
     private void sendEmployedLetter(Applicant applicant, Group group, User responsibleHr) {
@@ -159,15 +149,11 @@ public class MailServiceImpl implements MailService {
     private void sendScheduledLetter(Applicant applicant, Group group, User responsibleHr) throws HttpRequestException {
         Appointment appointment = null;
         String appointmentID;
-//        try {
             Map<Class, String> groupAndApplicantIDs = new HashMap<>();
             groupAndApplicantIDs.put(Group.class, group.getGroupID());
             groupAndApplicantIDs.put(Applicant.class, applicant.getId());
             appointmentID = httpRequestExecutor.getListObjectsIdByPrams(Appointment.class, groupAndApplicantIDs);
             appointment = httpRequestExecutor.getObjectByID(appointmentID, Appointment.class);
-//        } catch (HttpRequestException e) {
-//            e.printStackTrace();
-//        }
         Map<String, Object> model = new HashMap<>();
         model.put(NAME, applicant.getName());
         model.put(SURNAME, applicant.getSurname());

@@ -7,140 +7,97 @@
         question.userId = userId;
         $scope.activeIndex = 0;
 
-        var hasAnyOfMineQuestions = function(qs){
-            for(var i=0;i<qs.length;i++){
-                if(qs[i].userId===userId){
-                    return true;
+        var getMyQuestions = function (arr) {
+            var res_arr = [];
+            if (arr) {
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i].userId === userId) {
+                        res_arr.push(arr[i]);
+                    }
                 }
             }
-            return false;
+            if(res_arr.length === 0 && hardcodedQuestions.length !== 0){
+                res_arr = hardcodedQuestions;
+            }
+            else if(res_arr.length === 0){
+                res_arr.push(angular.copy(question));
+            }
+            return res_arr;
         }
-        var getMineQuestionIndex = function(qs){
-            for(var i=0;i<qs.length;i++){
-                if(qs[i].userId===userId){
-                    return i;
+        var getHardcodedQuestions = function(){
+            var hardcodedQuestions = User.questions;
+            if(hardcodedQuestions) {
+                for (var i = 0; i < hardcodedQuestions.length; i++) {
+                    hardcodedQuestions[i].question = hardcodedQuestions[i].questionBody;
+                    delete hardcodedQuestions[i]['questionBody'];
+                    hardcodedQuestions[i].comment = "";
+                    hardcodedQuestions[i].mark = 1;
+                    if(!hardcodedQuestions[i].weight){
+                        hardcodedQuestions[i].weight = 1;
+                    }
+                    hardcodedQuestions[i].id = null;
+                    hardcodedQuestions[i].userId = userId;
                 }
             }
-            return 0;
+            else{
+                hardcodedQuestions = [];
+            }
+            return hardcodedQuestions;
         }
+        var hardcodedQuestions = getHardcodedQuestions();
 
         Interview.get(Appointment.appointmentId).then(function (response) {
-//                if(response.data.finalComment){
-//                    window.location = "/sorry?code=6";
-//                }
-                $scope.questions = response.data.questions;
-                if(!$scope.questions){
-                    $scope.questions = [];
-                }
-                if($scope.questions.length === 0){
-                    $scope.newQuestion();
-                }
-                else if(hasAnyOfMineQuestions($scope.questions)){
-                    $scope.activeIndex = getMineQuestionIndex($scope.questions)
-                }
+                $scope.questions = getMyQuestions(response.data.questions);
             },
             function (err) {
                 var interview = {};
                 interview.id = Appointment.appointmentId;
                 interview.applicantId = Applicant.id;
                 interview.usersId = Appointment.userIdList;
-                var qs = User.questions;
-                if(qs) {
-                    for (var i = 0; i < qs.length; i++) {
-                        qs[i].question = qs[i].questionBody;
-                        delete qs[i]['questionBody'];
-                        qs[i].comment = "";
-                        qs[i].mark = 1;
-                    }
-                    interview.questions = qs;
-                }
+
                 interview.finalComment = "";
+                interview.questions = hardcodedQuestions;
 
                 Interview.add(interview).then(function(response){
-                    $scope.questions = response.data.questions;
-                    if(!$scope.questions){
-                        $scope.questions = [];
-                    }
-                    if($scope.questions.length === 0){
-                        $scope.newQuestion();
-                    }
-                    else if(hasAnyOfMineQuestions($scope.questions)){
-                        $scope.activeIndex = getMineQuestionIndex($scope.questions)
-                    }
-                    else
-                    $scope.newQuestion();
+                    $scope.questions = getMyQuestions(response.data.questions);
                 },function(err){
                     window.location = "/sorry?code=4";
                 });
             }
         );
 
-        var getQuestionById = function(id){
-            var arr = $scope.questions;
-            for(var j=0;j<arr.length;j++){
-                if(arr[j].id === id){
-                    return arr[j];
+        $scope.updateInterview = function() {
+            //remove all questions with no question definition
+            for(var i=0;i<$scope.questions.length;i++){
+                if(!$scope.questions[i].question){
+                    $scope.questions.splice(i, 1);
+                    i--;
                 }
             }
-            return undefined;
-        }
-        var getQuestionByIdFromArr = function(id,arr){
-            for(var j=0;j<arr.length;j++){
-                if(arr[j].id === id){
-                    return arr[j];
-                }
+            //
+            if($scope.questions.length <= $scope.activeIndex){
+                $scope.activeIndex = $scope.questions.length-1;
             }
-            return undefined;
-        }
-
-        $scope.questionIsMine = function(q){
-            return userId === q.userId;
-        }
-
-        $scope.updateInterview = function(){
-
-
+            if($scope.activeIndex === -1){
+                $scope.activeIndex = 0;
+            }
             Interview.get(Appointment.appointmentId).then(function (response) {
-
                 var qs = response.data.questions;
-                for(var i=0;i<qs.length;i++){
-                    if(qs[i].userId === userId){
-                        qs[i] = getQuestionById(qs[i].id);
+                //remove user questions
+                for(var i=0; i<qs.length; i++){
+                    if (qs[i].userId === userId){
+                        qs.splice(i, 1);
+                        i--;
                     }
-                }
-                var maybeNewQuestion = $scope.questions[$scope.questions.length-1];
-                //check if question is present
-                var q = getQuestionByIdFromArr(maybeNewQuestion.id,qs);
-                if(q) {
-                    if (q.id !== maybeNewQuestion.id) {
-                        qs.push(maybeNewQuestion);
-                        $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
-
-                    }
-                }
-                else{
-                    qs.push(maybeNewQuestion);
-                    $rootScope.$broadcast('New question was added', 'User ' + User.name + ' asked: "' + maybeNewQuestion.question + '" mark: ' + maybeNewQuestion.mark);
                 }
 
-                var len = $scope.questions.length;
-                for(var i=0;i<len;i++){
-                    if(!$scope.questions[i].question){
-                        var index = array.indexOf(i);
-                        if (index > -1) {
-                            array.splice(index, 1);
-                            i--;
-                        }
-                    }
-                }
-                response.data.questions = qs;
+                response.data.questions = $scope.questions.concat(qs);
                 Interview.edit(response.data).then(function(response){
-                    $scope.questions = response.data.questions;
+                    $scope.questions = getMyQuestions(response.data.questions);
                     console.log("Interview was updated");
                 });
             });
         }
-
 
         $scope.isActive = function(q){
             return q.question === $scope.questions[$scope.activeIndex].question;
@@ -162,10 +119,15 @@
         };
         $scope.newQuestion = function(){
             var last = $scope.questions.length-1;
-            //only if the last question has question fomulation
-            if($scope.questions[last].question) {
+            //if there is no questions yet
+            if(last===-1){
                 $scope.questions.push(angular.copy(question));
-                $scope.activeIndex = $scope.questions.length-1;
+            }
+            //only if the last question has question fomulation
+            else if($scope.questions[last].question) {
+
+                $scope.questions.push(angular.copy(question));
+                $scope.activeIndex = $scope.questions.length - 1;
             }
         }
     }]);

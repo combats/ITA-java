@@ -4,6 +4,7 @@ import com.softserveinc.ita.entity.Applicant;
 import com.softserveinc.ita.entity.ApplicantBenchmark;
 import com.softserveinc.ita.entity.Course;
 import com.softserveinc.ita.entity.Group;
+import com.softserveinc.ita.exception.impl.CourseAlreadyExists;
 import com.softserveinc.ita.exception.impl.GroupDoesntExistException;
 import com.softserveinc.ita.exception.impl.GroupWithThisNameIsAlreadyExists;
 
@@ -25,7 +26,7 @@ public interface GroupService {
     void removeGroup(String groupId) throws GroupDoesntExistException;
 
     Group updateGroup(Group group) throws GroupWithThisNameIsAlreadyExists, GroupDoesntExistException;
-    
+
     int getGroupCapacity(String groupID);
 
     Group updateApplicantsInGroup(String groupID, Map<String,
@@ -33,4 +34,6 @@ public interface GroupService {
 
     Map<String, ApplicantBenchmark> getApplicantsByGroupIdAndStatus(
             String groupID, Applicant.Status status);
+
+    Course addNewCourse(Course course) throws CourseAlreadyExists;
 }

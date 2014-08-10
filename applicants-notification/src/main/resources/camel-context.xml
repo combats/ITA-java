@@ -7,10 +7,10 @@
          http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="smtp.gmail.com"/>
-        <property name="port" value="587"/>
-        <property name="username" value="AcademySender@gmail.com"/>
-        <property name="password" value="ldbtyo946fyfh"/>
+        <property name="host" value="mail.ukraine.com.ua"/>
+        <property name="port" value="25"/>
+        <property name="username" value="ita@itsve.tk"/>
+        <property name="password" value="tUp9t77E"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.starttls.enable">true</prop>

@@ -44,7 +44,7 @@
         <div class="panel-title">Questions</div>
         <div id="questions-list">
 <div class="list-group">
-    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion($index)" ng-show="questionIsMine(question)">{{ question.question }}</a>
+    <a ng-repeat="question in questions" class="list-group-item" ng-class="{'answered': isAnswered(question) ,'active':isActive(question) }" href="#" data-toggle="tab" ng-click="selectQuestion($index)">{{ question.question }}</a>
     </div>
         </div>
         <a id="new-question-btn" class="panel-btn" href="#" ng-click="newQuestion();document.getElementById('question-area').focus();">
