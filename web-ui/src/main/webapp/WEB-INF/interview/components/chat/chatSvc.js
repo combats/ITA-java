@@ -8,13 +8,13 @@ angular.module('chatMod').factory('ChatService', function() {
 
         console.log("ws://176.36.11.25:8080/chat/websocket/" + appointmentId);
 
-        var websocket = new WebSocket("ws://176.36.11.25:8080/chat/websocket/" + appointmentId);
+        var websocket = new WebSocket("ws://localhost:8080/chat/websocket/" + appointmentId);
 
-        var ONLINE;
+                var ONLINE;
 
         window.onbeforeunload = function() {
             websocket.close();
-        }
+        };
 
         websocket.onopen = function(event) {
             console.log("Connection succesful");
@@ -22,17 +22,18 @@ angular.module('chatMod').factory('ChatService', function() {
         };
 
         websocket.onclose = function(event){
-            service.callback('Close');
-        }
+            service.callback(websocket.readyState);
+        };
         websocket.onerror = function(event) {
-            service.callback('Error');
-        }
+            service.callback(websocket.readyState);
+        };
 
         websocket.onmessage = function(event) {
             service.callback(JSON.parse(event.data));
         };
 
         service.websocket = websocket;
+
     }
 
     service.send = function(message) {

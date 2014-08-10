@@ -27,12 +27,20 @@ public class ChatEndpoint {
 
         String currentNickName = message.getNickname();
 
-        if (!clients.containsValue(currentNickName)) {
+        if (clients.containsValue(currentNickName) && !clients.containsKey(session)){
+
+            logger.info("Error occured, User Exist");
+
+            session.getBasicRemote().sendObject(userExist());
+
+        } else if (!clients.containsValue(currentNickName)) {
 
             clients.put(currentSession, message.getNickname());
 
             logger.info(message.getNickname() + " added to clients collections");
+
             online = true;
+
             sentToAllExceptThis(session, joinUser(currentNickName));
 
         } else {
@@ -54,25 +62,44 @@ public class ChatEndpoint {
     }
     @OnOpen
     public void onOpen(Session session, @PathParam("appointmentId") final String appointment) {
+
         connections.add(session);
         this.currentSession = session;
+
         logger.info("New session added and current session is: " + currentSession);
 
         session.getUserProperties().put("appointmentId", appointment);
+
         logger.info("Current appointment is: " + appointment);
+
+
     }
 
     @OnClose
     public void onClose(Session session) {
         String nick = clients.get(session);
         connections.remove(session);
-        logger.info("Connection" + session.getId() + " was removed");
+        logger.info("Connection " + session.getId() + " was removed");
 
         clients.remove(session);
-        logger.info("Client" + nick + " was removed");
+        logger.info("Client " + nick + " was removed");
 
-        quitUser(nick);
-        logger.info("Connection closed" + session.getId());
+        sentToAllExceptThis(session,quitUser(nick));
+        logger.info("Connection closed, session: " + session.getId());
+    }
+
+    @OnError
+    public void onError(Session session, Throwable error) throws IOException, EncodeException{
+      error.printStackTrace();
+     }
+
+    public Message userExist(){
+
+        Message infoMessage = new Message();
+        infoMessage.setNickname("Server");
+        infoMessage.setText("Sorry, but just one user per session can exist in interview");
+        infoMessage.setTime(new Date().getTime());
+        return infoMessage;
     }
 
     public Message joinUser(String nick){

@@ -19,7 +19,7 @@ app.directive('ngEnter', function () {
     }
 })
 
-app.controller('ChatController', ['$scope', 'ChatService','User', '$rootScope', function ($scope,ChatService, User, $rootScope) {
+app.controller('ChatController', ['$scope',  'ChatService','User', '$rootScope', function ($scope, ChatService, User, $rootScope) {
 
     $scope.message = {};
     $scope.message.nickname = User.name + ' ' + User.surname;
@@ -29,6 +29,8 @@ app.controller('ChatController', ['$scope', 'ChatService','User', '$rootScope', 
     var $cookies = angular.injector(['ngCookies']).get('$cookies');
     var appointmentId = $cookies.appointmentId;
     var message = {};
+    var messageInfo = {};
+    var error = 0;
 
     $rootScope.$on('New question was added', function(event, msg) {
         message.nickname = 'Server';
@@ -38,9 +40,25 @@ app.controller('ChatController', ['$scope', 'ChatService','User', '$rootScope', 
 
     ChatService.subscribe(function(message) {
 
-        console.log("Hi from Subscribe - controller" + message.toJson);
+        if (message == 3) {
+
+            $scope.ONLINE = false;
+
+            if (error == 0) {
+                messageInfo.nickname = "Server";
+                messageInfo.text = "Oops, something wrong, connection are not established. " +
+                    "Check your internet connection";
+
+                console.log("Push message" + messageInfo);
+                $scope.messages.push(messageInfo);
+                error++;
+            }
+        }
+        console.log("Hi from Subscribe - controller" + message);
+
         if (!$scope.ONLINE) {
-            if (message.data = 1) $scope.ONLINE = true;
+            console.log("Current status...." + message);
+            if (message == 1) $scope.ONLINE = true;
             ChatService.send(JSON.stringify($scope.message));
         }
         else {
@@ -61,7 +79,7 @@ app.controller('ChatController', ['$scope', 'ChatService','User', '$rootScope', 
         console.log("Connect() function from Controller" + $scope.message.nickname);
     }
 
-    $scope.send = function() {
+    $scope.send = function(){
 
         console.log("Send() function from Controller" );
 //        console.log($scope.message);
