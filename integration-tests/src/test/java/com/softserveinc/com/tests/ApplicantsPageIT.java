@@ -54,25 +54,25 @@ public class ApplicantsPageIT extends BaseUIIntegrationTest{
         assertTrue(UIApplicantsPage.isAtApplicantsPage(getDrv(), getSiteBase(), ID)); //because of # in the end
     }
 
-    @Test
-    public void testAddApplicant() {
-        getDrv().get(getSiteBase().toString());
-        setApplicantCvPath("docx");
-
-        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
-                .goToApplicants(GROUP_NAME)
-                .createApplicant(APPL_NAME, APPL_SURNAME, PHONE_NUMB, EMALE, BIRTH_DATE, ApplCv);
-
-        assertTrue(getDrv().getPageSource().contains(APPL_NAME));
-    }
-
-    @Test
-    public void testEditApplicantsInterview() throws InterruptedException {
-        getDrv().get(getSiteBase().toString());
-        setApplicantCvPath("docx");
-
-        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
-                .goToApplicants(GROUP_NAME).setInterviewDate(APPL_NAME, APPL_SURNAME, EMALE);
-
-    }
+//    @Test
+//    public void testAddApplicant() {
+//        getDrv().get(getSiteBase().toString());
+//        setApplicantCvPath("docx");
+//
+//        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
+//                .goToApplicants(GROUP_NAME)
+//                .createApplicant(APPL_NAME, APPL_SURNAME, PHONE_NUMB, EMALE, BIRTH_DATE, ApplCv);
+//
+//        assertTrue(getDrv().getPageSource().contains(APPL_NAME));
+//    }
+//
+//    @Test
+//    public void testEditApplicantsInterview() throws InterruptedException {
+//        getDrv().get(getSiteBase().toString());
+//        setApplicantCvPath("docx");
+//
+//        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
+//                .goToApplicants(GROUP_NAME).setInterviewDate(APPL_NAME, APPL_SURNAME, EMALE);
+//
+//    }
 }

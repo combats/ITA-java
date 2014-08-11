@@ -121,12 +121,12 @@
                     <container>
                         <timeout>1800000</timeout>
                         <containerId>tomcat8x</containerId>
-                        <home>G:\test_serv\apache-tomcat-8.0.9-windows-x64\apache-tomcat-8.0.9</home>
+                        <home>@{env.CATALINA_HOME}</home>
                     </container>
                     <configuration>
                         <type>standalone</type>
                         <type>existing</type>
-                        <home>G:\test_serv\apache-tomcat-8.0.9-windows-x64\apache-tomcat-8.0.9</home>
+                        <home>@{env.CATALINA_HOME}</home>
                         <properties>
                             <cargo.jvmargs>-Xms128m -Xmx1024m -XX:PermSize=64m -XX:MaxPermSize=256m</cargo.jvmargs>
                         </properties>

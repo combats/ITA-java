@@ -72,10 +72,6 @@ public class UIApplicantsPage  extends AbstractPageObject{
     }
 
     public UIApplicantsPage setInterviewDate(String applName, String applSurname, String emaile) throws InterruptedException {
-        setStartTime();
-        String applId = getApplicantId(emaile);
-
-        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         JavascriptExecutor js = ((JavascriptExecutor) drv);
 
@@ -86,6 +82,8 @@ public class UIApplicantsPage  extends AbstractPageObject{
                 "    };\n" +
                 "});");
 
+        setStartTime();
+        String applId = getApplicantId(emaile);
         drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 //
 //        drv.findElement(By.xpath("//h3[@id='ui-id-3']/span[2]")).click();
@@ -100,6 +98,9 @@ public class UIApplicantsPage  extends AbstractPageObject{
 //        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();
         String id = drv.findElement(By.xpath("//div[@applicantid='" + applId + "']")).getAttribute("id");
         System.out.println(id);
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        String spanClass = drv.findElement(By.xpath("//div[@applicantid='" + applId + "']/div[2]/span[1]")).getAttribute("class");
+        System.out.println(spanClass);
 //        drv.findElement(By.id("ui-id-11")).click();
 //        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/button")).click();
 //        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();

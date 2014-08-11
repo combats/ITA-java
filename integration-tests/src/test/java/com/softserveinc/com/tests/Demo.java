@@ -13,7 +13,7 @@ import java.util.Random;
 
 import static org.junit.Assert.assertTrue;
 
-public class DemoTestCase extends BaseUIIntegrationTest{
+public class Demo extends BaseUIIntegrationTest{
     private static final String DEMO_ADM_NAME = "Yuriy";
     private static final String DEMO_ADM_SURNAME = "Mutniy";
     private static final String DEMO_ADM_PASSWORD = "qwerty";
@@ -64,8 +64,19 @@ public class DemoTestCase extends BaseUIIntegrationTest{
 
     private static final String PHONE_NUMB = "1234567890";
 
-
     @Test
+    public void runTests() {
+        testAddAdmin();
+        testAddUser();
+        testAddHr();
+        testAddQuestionAsHr();
+        testAddQuestionAsExpert();
+        testAddGroupAsHr();
+        testAddApplicant();
+    }
+
+
+//    @Test
     public void testAddAdmin() {
         getDrv().get(getSiteBase().toString());
 
@@ -79,7 +90,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         usersPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddUser() {
         getDrv().get(getSiteBase().toString());
 
@@ -94,7 +105,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         usersPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddHr() {
         getDrv().get(getSiteBase().toString());
 
@@ -108,7 +119,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         usersPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddQuestionAsHr() {
         getDrv().get(getSiteBase().toString());
 
@@ -129,7 +140,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         questionsPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddQuestionAsExpert() {
         getDrv().get(getSiteBase().toString());
 
@@ -154,7 +165,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         questionsPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddGroupAsHr() {
         getDrv().get(getSiteBase().toString());
 
@@ -168,7 +179,7 @@ public class DemoTestCase extends BaseUIIntegrationTest{
         groupsPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testAddApplicant() {
         getDrv().get(getSiteBase().toString());
         String extension = "docx";
@@ -190,26 +201,18 @@ public class DemoTestCase extends BaseUIIntegrationTest{
 //                .createApplicant(firstNames.get(7), secNames.get(7), PHONE_NUMB, emails.get(7), bDays.get(7), ApplCv)
 //                .createApplicant(firstNames.get(8), secNames.get(8), PHONE_NUMB, emails.get(8), bDays.get(8), ApplCv)
 //                .createApplicant(firstNames.get(9), secNames.get(9), PHONE_NUMB, emails.get(9), bDays.get(9), ApplCv);
-
-
-
-
-
-
-
-
 //
-//        UIApplicantsPage applicant1 = new LogInPage(getDrv(), getSiteBase()).logIn(DEMO_HR_EMAIL, DEMO_HR_PASSWORD).goToGroups()
-//                .goToApplicants(GROUP_NAME)
-//                .createApplicant(firstNames.get(0), secNames.get(0), PHONE_NUMB, emails.get(0), bDays.get(0), ApplCv);
-//        assertTrue(getDrv().getPageSource().contains(names.get(0)));
-//        applicant1.logOut();
-//
-//        UIApplicantsPage applicant2 = new LogInPage(getDrv(), getSiteBase()).logIn(DEMO_HR_EMAIL, DEMO_HR_PASSWORD).goToGroups()
-//                .goToApplicants(GROUP_NAME)
-//                .createApplicant(firstNames.get(1), secNames.get(1), PHONE_NUMB, emails.get(1), bDays.get(1), ApplCv);
-//        assertTrue(getDrv().getPageSource().contains(names.get(1)));
-//        applicant2.logOut();
+        UIApplicantsPage applicant1 = new LogInPage(getDrv(), getSiteBase()).logIn(DEMO_HR_EMAIL, DEMO_HR_PASSWORD).goToGroups()
+                .goToApplicants(GROUP_NAME)
+                .createApplicant(firstNames.get(0), secNames.get(0), PHONE_NUMB, emails.get(0), bDays.get(0), ApplCv);
+        assertTrue(getDrv().getPageSource().contains(names.get(0)));
+        applicant1.logOut();
+
+        UIApplicantsPage applicant2 = new LogInPage(getDrv(), getSiteBase()).logIn(DEMO_HR_EMAIL, DEMO_HR_PASSWORD).goToGroups()
+                .goToApplicants(GROUP_NAME)
+                .createApplicant(firstNames.get(1), secNames.get(1), PHONE_NUMB, emails.get(1), bDays.get(1), ApplCv);
+        assertTrue(getDrv().getPageSource().contains(names.get(1)));
+        applicant2.logOut();
 
         UIApplicantsPage applicant3 = new LogInPage(getDrv(), getSiteBase()).logIn(DEMO_HR_EMAIL, DEMO_HR_PASSWORD).goToGroups()
                 .goToApplicants(GROUP_NAME)
