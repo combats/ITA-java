@@ -10,7 +10,13 @@ public class LogInPage {
     private final URI siteBase;
 
     public static boolean isAtUsersPage(WebDriver drv, URI siteBase) {
-        return drv.getCurrentUrl().matches(siteBase.toString() + "login");
+
+        boolean res;
+        res = drv.getCurrentUrl().matches(siteBase.toString() + "login");
+        if(!res) {
+            res = drv.getCurrentUrl().matches(siteBase.toString() + "login[?]logout");
+        }
+        return res;
     }
 
     public LogInPage(WebDriver drv, URI siteBase) {

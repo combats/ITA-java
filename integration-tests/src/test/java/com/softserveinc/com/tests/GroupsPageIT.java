@@ -26,11 +26,11 @@ public class GroupsPageIT extends BaseUIIntegrationTest {
     private static final String EDITED_START_TIME = "15:00";
     private static final String EDITED_END_DATE = "12/14/2015";
 
-    @Test
+//    @Test
     public void testAddGroup() {
         getDrv().get(getSiteBase().toString());
 
-        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
+        UiGroupsPage groupsPage = new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
                 .addGroup(GROUP_NAME,
                           ADDRESS,
                           COURSE,
@@ -41,14 +41,16 @@ public class GroupsPageIT extends BaseUIIntegrationTest {
                           END_DATE);
 
         assertTrue(getDrv().getPageSource().contains(GROUP_NAME));
-        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase())); //because of # in the end
+        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase()));
+
+        groupsPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testEditGroup() {
         getDrv().get(getSiteBase().toString());
 
-        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
+        UiGroupsPage groupsPage = new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
                 .editGroup(GROUP_NAME,
                            EDITED_GROUP_NAME,
                            EDITED_ADDRESS,
@@ -60,16 +62,27 @@ public class GroupsPageIT extends BaseUIIntegrationTest {
                            EDITED_END_DATE);
 
         assertTrue(getDrv().getPageSource().contains(EDITED_GROUP_NAME));
-        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase())); //because of # in the end
+        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase()));
+
+        groupsPage.logOut();
     }
 
-    @Test
+//    @Test
     public void testDeleteGroup() {
         getDrv().get(getSiteBase().toString());
 
-        new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups().deleteGroup(EDITED_GROUP_NAME);
+        UiGroupsPage groupsPage = new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups().deleteGroup(EDITED_GROUP_NAME);
 
         assertFalse(getDrv().getPageSource().contains(EDITED_GROUP_NAME));
-        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase())); //because of # in the end
+        assertTrue(UiGroupsPage.isAtGroupsPage(getDrv(), getSiteBase()));
+
+        groupsPage.logOut();
+    }
+
+    @Test
+    public void runTests() {
+        testAddGroup();
+        testEditGroup();
+        testDeleteGroup();
     }
 }

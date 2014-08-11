@@ -16,15 +16,15 @@ public class ApplicantsPageIT extends BaseUIIntegrationTest{
     private static final String ADDRESS = "unknown address";
     private static final String COURSE = "Java"; // available now values: "Java", ".NET", "DevOps", "JavaScript".
     private static final String CAPACITY = "12";
-    private static final String START_BOARDING_DATE = "08/10/2014"; // must be like mm/dd/yyyy
+    private static final String START_BOARDING_DATE = "08/12/2014"; // must be like MM/dd/yyyy and greater than today's date
     private static final String START_DATE = "08/06/2015"; // must be bigger than boarding date
     private static final String START_TIME = "11:00";
     private static final String END_DATE = "11/14/2015";
 
-    private static final String APPL_NAME = "Sasha";
-    private static final String APPL_SURNAME = "Grey";
+    private static final String APPL_NAME = "Ololo";
+    private static final String APPL_SURNAME = "Trololo";
     private static final String PHONE_NUMB = "0963215879";
-    private static final String EMALE = "Grey.Grey@gmail.com";
+    private static final String EMALE = "Lololo.Ololo.Trololo@gmail.com";
     private static final String BIRTH_DATE = "09/15/2013";
 
     private String ApplCv;
@@ -60,19 +60,19 @@ public class ApplicantsPageIT extends BaseUIIntegrationTest{
         setApplicantCvPath("docx");
 
         new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
-                .goToApplicants("Demo")
+                .goToApplicants(GROUP_NAME)
                 .createApplicant(APPL_NAME, APPL_SURNAME, PHONE_NUMB, EMALE, BIRTH_DATE, ApplCv);
 
         assertTrue(getDrv().getPageSource().contains(APPL_NAME));
     }
 
     @Test
-    public void testEditApplicantsInterview() {
+    public void testEditApplicantsInterview() throws InterruptedException {
         getDrv().get(getSiteBase().toString());
         setApplicantCvPath("docx");
 
         new LogInPage(getDrv(), getSiteBase()).logIn(LOGIN, PASSWORD).goToGroups()
-                .goToApplicants("Demo").setInterviewDate();
+                .goToApplicants(GROUP_NAME).setInterviewDate(APPL_NAME, APPL_SURNAME, EMALE);
 
     }
 }

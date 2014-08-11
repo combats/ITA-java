@@ -1,6 +1,7 @@
 package com.softserveinc.com.pageobjects;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -26,9 +27,6 @@ public class UIApplicantsPage  extends AbstractPageObject{
     private String appointmentID; // example: 4028819947789da3014778a3bf850000
     private long startTime; // example: 1406732400000 it is long
 
-//    @FindBy(css = "a[href='/']")
-//    private WebElement fileUpload;
-
     public static boolean isAtApplicantsPage(WebDriver drv, URI siteBase, String groupID) {
         return drv.getCurrentUrl().matches(siteBase.toString() + "ui/group[?]groupID=" + groupID);
     }
@@ -42,7 +40,6 @@ public class UIApplicantsPage  extends AbstractPageObject{
     }
 
     public String getGroupID() {
-//        String hrefID = drv.findElement(By.linkText(groupName)).getAttribute("href");
         String hrefID = drv.getCurrentUrl();
         String delStr = siteBase.toString() + "ui/group?groupID=";
         return hrefID.replace(delStr, "");
@@ -50,7 +47,8 @@ public class UIApplicantsPage  extends AbstractPageObject{
 
     public UIApplicantsPage createApplicant(String applName, String applSurname, String phoneNum, String email,
                                             String birthDate, String pathCV) {
-//        drv.findElement(By.partialLinkText("[New applicant]")).click();
+
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         drv.findElement(By.id("ui-id-1")).click();
         drv.findElement(By.name("name")).clear();
         drv.findElement(By.name("name")).sendKeys(applName);
@@ -68,41 +66,97 @@ public class UIApplicantsPage  extends AbstractPageObject{
         drv.findElement(By.xpath("//input[@type='file']")).sendKeys(pathCV);
         drv.findElement(By.xpath("//div[@id='ui-id-2']/div/div/button")).click();
 
-//        WebDriverWait wait = new WebDriverWait(drv, 10);
-//        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//button[@type='button'][2]")));
-
-//        WebElement myDynamicElement = (new WebDriverWait(drv, 10))
-//                .until(ExpectedConditions.presenceOfElementLocated(By.id("myDynamicElement")));
+        drv.findElement(By.xpath("(//button[@type='button'])[2]")).click(); //alert
 
         return this;
     }
 
-    public UIApplicantsPage setInterviewDate() {
-        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        drv.findElement(By.xpath("//h3[@id='ui-id-10']/span[2]")).click();
+    public UIApplicantsPage setInterviewDate(String applName, String applSurname, String emaile) throws InterruptedException {
+        setStartTime();
+        String applId = getApplicantId(emaile);
 
         drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        drv.findElement(By.cssSelector(".date.schedulable")).click();
-        drv.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-        pickDate(getTomorrowsDate()); //something wrong
-        drv.findElement(By.cssSelector(".duration")).clear();
-        drv.findElement(By.cssSelector(".duration")).sendKeys("30");
-        drv.findElement(By.cssSelector(".time")).clear();
-        drv.findElement(By.cssSelector(".time")).sendKeys("12:30");
-        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();
-        drv.findElement(By.id("ui-id-11")).click();
-        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/button")).click();
-        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();
-        drv.findElement(By.id("ui-id-17")).click();
-        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/button")).click();
-        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/div/button")).click();
-        drv.findElement(By.xpath("(//button[@type='button'])[2]")).click();
 
-        drv.findElement(By.xpath("//h3[@id='ui-id-10']/span[2]")).click();
-//        setAppointmentID();
-        setAppointmentDate();
+        JavascriptExecutor js = ((JavascriptExecutor) drv);
+
+        js.executeScript("$('h3 span').each(function(index, element) {\n" +
+                "    var name = $(element).text().split(/\\s+/)[1];\n" +
+                "    if (name === '" + applName + " " + applSurname + "') {\n" +
+                "        $(element).click();\n" +
+                "    };\n" +
+                "});");
+
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+//
+//        drv.findElement(By.xpath("//h3[@id='ui-id-3']/span[2]")).click();
+//        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+//        drv.findElement(By.cssSelector(".date.schedulable")).click();
+//        drv.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
+//        pickDate(getTomorrowsDate());
+//        drv.findElement(By.cssSelector(".duration")).clear();
+//        drv.findElement(By.cssSelector(".duration")).sendKeys("30");
+//        drv.findElement(By.cssSelector(".time")).clear();
+//        drv.findElement(By.cssSelector(".time")).sendKeys("12:30");
+//        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();
+        String id = drv.findElement(By.xpath("//div[@applicantid='" + applId + "']")).getAttribute("id");
+        System.out.println(id);
+//        drv.findElement(By.id("ui-id-11")).click();
+//        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/button")).click();
+//        drv.findElement(By.cssSelector("#ui-id-6-button > span.ui-icon.ui-icon-triangle-1-s")).click();
+//        drv.findElement(By.id("ui-id-17")).click();
+//        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/button")).click();
+//        drv.findElement(By.xpath("//div[@id='ui-id-4']/div[2]/div/button")).click();
+//        drv.findElement(By.xpath("(//button[@type='button'])[2]")).click();
+//
+//        setAppointmentDate(applId, startTime);
 
         return this;
+    }
+
+    private void setAppointmentDate(String applicantID, long newStartTime) {
+        try {
+            Class.forName(JDBC_DRIVER);
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
+
+        Connection connection = null;
+        Statement stmt = null;
+        String query = "update interview.Appointments set StartTime ='" + newStartTime + "' where ApplicantId ='" + applicantID + "'";
+        try {
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
+
+            stmt = connection.createStatement();
+
+            stmt.executeUpdate(query);
+
+            String sql = "SELECT StartTime FROM interview.Appointments where ApplicantId ='" + applicantID + "'";
+            ResultSet rs = stmt.executeQuery(sql);
+
+
+//            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                long ID = rs.getLong("StartTime");
+                System.out.println(ID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 
@@ -117,56 +171,44 @@ public class UIApplicantsPage  extends AbstractPageObject{
         startTime = System.currentTimeMillis(); // or add 15 minutes, or 15*60*1000
     }
 
-    private void setAppointmentID() {
-        String ID = drv.findElement(By.xpath("//div[@class='schedule']")).getAttribute("appointmentid");
-        System.out.println(ID);
-//        appointmentID = drv.findElement(By.xpath("//div[@class='schedule']")).getAttribute("appointmentid");
-        appointmentID = ID;
-    }
-
-    private void setAppointmentDate() {
-        Connection conn = null;
-        Statement stmt = null;
-
-        { // populating some fields
-            setStartTime();
-            setAppointmentID();
-        }
-
+    private String getApplicantId(String email) {
+        String ID = null;
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
 
+        Connection connection = null;
+        Statement stmt = null;
+        String query = "select Id from interview.Applicants where Email ='" + email + "'";
         try {
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
+            connection = DriverManager.getConnection(DB_URL, USER, PASS);
 
-            System.out.println("Creating statement...");
-            stmt = conn.createStatement();
-            String sql;
-            sql = "UPDATE interview.Appointments SET StartTime='" + startTime + "' WHERE Id='" + appointmentID + "'";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch(SQLException ex) {
-            ex.printStackTrace();
+            stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ID = rs.getString("Id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
-            //finally block used to close resources
-            try{
-                if(stmt!=null)
+            if (stmt != null) {
+                try {
                     stmt.close();
-            }catch(SQLException se2){
-            }// nothing we can do
-            try{
-                if(conn!=null)
-                    conn.close();
-            }catch(SQLException se){
-                se.printStackTrace();
-            }//end finally try
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+            if(connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
+        return ID;
     }
 }

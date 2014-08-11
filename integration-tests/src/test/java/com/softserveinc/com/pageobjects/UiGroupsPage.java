@@ -27,7 +27,7 @@ public class UiGroupsPage extends AbstractPageObject{
         if (!isAtGroupsPage(drv, siteBase)) {
             throw new IllegalStateException("This is not groups page, current page is: " + drv.getCurrentUrl());
         }
-        PageFactory.initElements(drv, this); //populates all fields @FindBy...
+        PageFactory.initElements(drv, this);
     }
 
     public UIApplicantsPage goToApplicants(String groupName) {
@@ -38,9 +38,8 @@ public class UiGroupsPage extends AbstractPageObject{
         return new UIApplicantsPage(drv, siteBase, ID);
     }
 
-    public UiGroupsPage addGroup(String groupName, String address, String course, String capacity, String strBoarding, String strDate, String strtTime, String endDate) {
-        new Select(drv.findElement(By.id("statuses"))).selectByVisibleText("Planned");
-        drv.findElement(By.cssSelector("option[value=\"PLANNED\"]")).click();
+    public UiGroupsPage addGroup(String groupName, String address, String course, String capacity, String strBoarding,
+                                 String strDate, String strtTime, String endDate) {
         drv.findElement(By.id("AddGroup")).click();
         drv.findElement(By.id("gName")).clear();
         drv.findElement(By.id("gName")).sendKeys(groupName);
@@ -50,20 +49,20 @@ public class UiGroupsPage extends AbstractPageObject{
         drv.findElement(By.id("gCapacity")).clear();
         drv.findElement(By.id("gCapacity")).sendKeys(capacity);
         drv.findElement(By.id("gStartBoardingDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+        drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         pickDate(strBoarding);
         drv.findElement(By.id("gStartDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+        drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         pickDate(strDate);
         drv.findElement(By.id("gStartTime")).clear();
         drv.findElement(By.id("gStartTime")).sendKeys(strtTime);
         drv.findElement(By.id("gEndDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
+        drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         pickDate(endDate);
         drv.findElement(By.id("saveUButton")).click();
         new Select(drv.findElement(By.id("statuses"))).selectByVisibleText("All groups");
         drv.findElement(By.cssSelector("option[value=\"All groups\"]")).click();
-        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // waits until page will be loaded completely
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         setGroupID(groupName);
 
         return this;
@@ -73,28 +72,45 @@ public class UiGroupsPage extends AbstractPageObject{
                                   String editedCapacity, String editedBoardDate, String editedStartDate,
                                   String editedStartTime, String editedEndDate) {
 
-        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // waits until page will be loaded completely
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         setGroupID(groupName);
         drv.findElement(By.xpath("//img[@onclick='viewEditInformationDialog(\"" + ID + "\")']")).click();
-        drv.findElement(By.id("gName")).clear();
-        drv.findElement(By.id("gName")).sendKeys(newGroupName);
-        drv.findElement(By.id("gAddress")).clear();
-        drv.findElement(By.id("gAddress")).sendKeys(editedAddress);
-        new Select(drv.findElement(By.id("gCourse"))).selectByVisibleText(editedCourse);
-        drv.findElement(By.id("gCapacity")).clear();
-        drv.findElement(By.id("gCapacity")).sendKeys(editedCapacity);
-        drv.findElement(By.id("gStartBoardingDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        pickDate(editedBoardDate);
-        drv.findElement(By.id("gStartDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        pickDate(editedStartDate);
-        drv.findElement(By.id("gStartTime")).clear();
-        drv.findElement(By.id("gStartTime")).sendKeys(editedStartTime);
-        drv.findElement(By.id("gEndDate")).click();
-        drv.manage().timeouts().implicitlyWait(300, TimeUnit.SECONDS);
-        pickDate(editedEndDate);
+        if(newGroupName != null) {
+            drv.findElement(By.id("gName")).clear();
+            drv.findElement(By.id("gName")).sendKeys(newGroupName);
+        }
+        if(editedAddress != null) {
+            drv.findElement(By.id("gAddress")).clear();
+            drv.findElement(By.id("gAddress")).sendKeys(editedAddress);
+        }
+        if(editedCourse != null) {
+            new Select(drv.findElement(By.id("gCourse"))).selectByVisibleText(editedCourse);
+        }
+        if(editedCapacity != null) {
+            drv.findElement(By.id("gCapacity")).clear();
+            drv.findElement(By.id("gCapacity")).sendKeys(editedCapacity);
+        }
+        if(editedBoardDate != null) {
+            drv.findElement(By.id("gStartBoardingDate")).click();
+            drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            pickDate(editedBoardDate);
+        }
+        if(editedStartDate != null) {
+            drv.findElement(By.id("gStartDate")).click();
+            drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            pickDate(editedStartDate);
+        }
+        if(editedStartTime != null) {
+            drv.findElement(By.id("gStartTime")).clear();
+            drv.findElement(By.id("gStartTime")).sendKeys(editedStartTime);
+        }
+        if(editedEndDate != null) {
+            drv.findElement(By.id("gEndDate")).click();
+            drv.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            pickDate(editedEndDate);
+        }
         drv.findElement(By.id("saveUButton")).click();
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         new Select(drv.findElement(By.id("statuses"))).selectByVisibleText("All groups");
         drv.findElement(By.cssSelector("option[value=\"All groups\"]")).click();
 
@@ -102,7 +118,7 @@ public class UiGroupsPage extends AbstractPageObject{
     }
 
     public UiGroupsPage deleteGroup(String groupName) {
-        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS); // waits until page will be loaded completely
+        drv.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         setGroupID(groupName);
         drv.findElement(By.xpath("//img[@onclick='viewDeleteDialog(\"" + ID + "\");']")).click();
         drv.findElement(By.id("okDUButton")).click();
@@ -116,11 +132,5 @@ public class UiGroupsPage extends AbstractPageObject{
         String hrefID = drv.findElement(By.linkText(groupName)).getAttribute("href");
         String delStr = siteBase.toString() + "ui/group?groupID=";
         ID = hrefID.replace(delStr, "");
-    }
-
-    public String getGroupID(String groupName) {
-        String hrefID = drv.findElement(By.linkText(groupName)).getAttribute("href");
-        String delStr = siteBase.toString() + "ui/group?groupID=";
-        return hrefID.replace(delStr, "");
     }
 }
